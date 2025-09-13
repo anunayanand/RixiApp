@@ -22,14 +22,16 @@
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/js/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="/js/vendor/aos/aos.css" rel="stylesheet">
+  <!-- <link href="assets/vendor/aos/aos.css" rel="stylesheet"> -->
   <link href="/js/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="/js/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/internship.css" rel="stylesheet">
 
 </head>
+
 
 <body class="index-page">
 
@@ -47,7 +49,7 @@
           <li><a href="internship">Internship</a></li>
           <li><a href="/#about">About</a></li>
           <li><a href="/#services">Services</a></li>
-          <li><a href="certificate.html">Certificate</a></li>
+          <li><a href="certificate">Certificate</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -78,17 +80,17 @@
                 <p>At Rixi Lab an MSME registerd startup, internships and training are designed to provide hands-on experience through live projects, aimed at nurturing future-ready skills in technology and design. Our programs are tailored to students and freshers who are eager to dive into real-world projects, gaining practical insights and building their portfolios.
                 </p>
                 <hr>
-                <h5>Online Project Based Internship September Batch</h5>
+                <h5>Online Project Based Internship October Batch</h5>
               </div>
               
-              <marquee><h5>The deadline has passed. If you still want to start on <span style="color: #00ff00;">1 Sept</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee>
+              <!-- <marquee><h5>The deadline has passed. If you still want to start on <span style="color: #00ff00;">1 Sept</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
               <h5>Internship Important Dates:</h5>
                 <ul>
-                  <s><li style="color: red;">Last date to apply: 30 Aug 2025</li></s>
-                  <li style="color: #00ff00;">Extended date to apply: 09 Sept 2025</li>
-                  <li>Offer Letter provide: 31 Aug 2025</li>
-                  <li>Internship start date: 1 Sept 2025</li>
-                  <li>Project Assign Date: 1 Sept 2025</li>
+                  <li>Last date to apply: 20 Sept 2025</li>
+                  <!-- <li style="color: #00ff00;">Extended date to apply: 09 Sept 2025</li> -->
+                  <li>Offer Letter provide: 30 Sept 2025</li>
+                  <li>Internship Start Date: 1 Oct 2025</li>
+                  <li>Project Assign Date: 1 Oct 2025</li>
                 </ul>
 
               <h5>Benefites for Students:</h5>
@@ -157,7 +159,7 @@
                     <option value="Python Programming">Python Programming</option>
                     <option value="Java Programming">Java Programming</option>
                     <option value="Data Analytics">Data Analytics</option>
-                    <option value="Dsa in C++">DSA in C++</option>
+                    <option value="Dsa in C++">DSA</option>
                     <option value="Graphics Design">Graphics Design</option>
                   </select>
                 </div>
@@ -172,13 +174,23 @@
                     <!-- <option value="12 Week">12 Week</option> -->
                   </select>
                 </div>
-                <br>
-                <h5>Registration Fee: Rs 199/-(Only online Payment Accepted)</h5>
-                <h5>UPI ID for Payment: <b>9305516673@ptsbi</b></h5>
+                <!-- <br> -->
+                <!-- <h5>Registration Fee: Rs 199/-(Only online Payment Accepted)</h5>
+                <h5>Click for payment: <span id="payBtn">Pay Now</span></h5>
+
+                <div id="qrPopup" class="popup">
+                  <div class="popup-content">
+                    <span class="close" id="closeBtn">X</span>
+                    <h3>Scan & Pay</h3>
+                    <img src="/img/QR_Code.png" alt="QR Code">
+                  </div>
+                </div>
+                <p><i> After payment enter your Transaction ID or Payment ID in the box provided below. This helps us verify your payment and confirm your application.</i></p>
+
                 <div class="mb-3">
                   <label for="contactPayment" class="form-label">Transaction/Payment ID</label>
-                  <input type="text" class="form-control" name="data[PayID]" id="contactPayment" placeholder="Enter your transaction/payment id" required="">
-                </div>
+                  <input type="text" class="form-control" name="data[PayID]" id="contactPayment" placeholder="Enter your transaction/payment id" required>
+                </div> -->
 
                 <div class="">
                   <input type="checkbox" class="form-check-input" name="data[Terms]" id="contactTerms" required="">
@@ -194,6 +206,14 @@
                   <span>Submit Registration Form</span>
                   <i class="bi bi-arrow-right"></i>
                 </button>
+                <!-- Popup -->
+                <div class="popup-overlay" id="popup">
+                  <div class="popup-box">
+                    <h3>Application Submitted!</h3>
+                    <p id="popupMsg"></p>
+                    <button onclick="closePopup()">OK</button>
+                  </div>
+                </div>
               </form>
             </div>
           </div>
@@ -203,13 +223,13 @@
 
   </main>
 
-  <!-- <footer id="footer" class="footer light-background">
+  <footer id="footer" class="footer light-background">
 
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-4 col-md-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/" class="logo d-flex align-items-center">
               <span class="sitename">Rixi Lab</span>
             </a>
             <div class="footer-contact pt-3">
@@ -226,8 +246,8 @@
               <li><a href="#">Home</a></li>
               <li><a href="#">About us</a></li>
               <li><a href="#">Services</a></li>
-              <li><a href="./TERMS AND CONDITIONS.html">Terms of service</a></li>
-              <li><a href="./TERMS AND CONDITIONS.html">Privacy policy</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -289,8 +309,7 @@
       </div>
     </div>
 
-  </footer> -->
-   <%- include('partials/footer') %>
+  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -298,15 +317,16 @@
   <!-- Vendor JS Files -->
   <script src="js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
-  <script src="js/vendor/aos/aos.js"></script>
-  <script src="js/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="js/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="js/vendor/typed.js/typed.umd.js"></script>
-  <script src="js/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/js/vendor/aos/aos.js"></script>
+  <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/js/vendor/typed.js/typed.umd.js"></script>
+  <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="js/main.js"></script>
+  <script src="/js/main.js"></script>
 
+  
 
   <script>
         var form = document.getElementById('sheetdb-form');
@@ -318,14 +338,44 @@
             }).then(
                 response => response.json()
             ).then((html) => {
-                alert('Submitted !! 😊 Thank you ' + document.getElementById('contactName').value)
-                window.location.href = '';
-                location.reload();
+                // alert('Submitted !! 😊 Thank you ' + document.getElementById('contactName').value)
+                // window.location.href = '';
+                // location.reload();
+                let userName = document.getElementById("contactName").value.trim();
+                if(userName === "") userName = "User";  // fallback if empty
+                document.getElementById("popupMsg").innerText = "Thank you, " + userName + "!";
+                document.getElementById("popup").style.display = "flex"; // show popup
             });
         });
+        function closePopup() {
+        document.getElementById("popup").style.display = "none";
+        location.reload(); // reload page
+    }
     </script>
 
+    <script>
+      // Get elements
+      const popup = document.getElementById("qrPopup");
+      const payBtn = document.getElementById("payBtn");
+      const closeBtn = document.getElementById("closeBtn");
 
+      // Show popup when Pay Now is clicked
+      payBtn.onclick = function() {
+        popup.style.display = "flex";
+      }
+
+      // Close popup when X is clicked
+      closeBtn.onclick = function() {
+        popup.style.display = "none";
+      }
+
+      // Close popup when clicking outside content
+      window.onclick = function(event) {
+        if (event.target === popup) {
+          popup.style.display = "none";
+        }
+      }
+    </script>
 
   <!-- <script>
     const form = document.getElementById('form');
