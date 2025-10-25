@@ -594,7 +594,7 @@
                       >
                         (<%= sub.status.toUpperCase() %>)
                       </button>
-                      <% } %> <% if (sub.status !== 'accepted') { %>
+                      <% } %> <% if (sub.status !== 'accepted' && proj.isHidden != true) { %>
                       <a
                         href="<%= proj ? proj.uploadLink : '#' %>"
                         target="_blank"
@@ -602,9 +602,15 @@
                         >Upload</a
                       >
                       <% } else { %>
-                      <button class="btn btn-sm btn-outline-success" disabled>
+                        <% if (proj.isHidden == true) { %>
+                      <button class="btn btn-sm btn-outline-danger px-3" disabled>
+                        Closed
+                      </button>
+                      <% } else { %>
+                        <button class="btn btn-sm btn-outline-success" disabled>
                         Uploaded
                       </button>
+                      <% } %>
                       <% } %>
                     </div>
                   </div>

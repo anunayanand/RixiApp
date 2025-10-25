@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const authRole = require('../middleware/authRole');
 const Project = require("../models/Project");
-
+const Quiz = require("../models/Quiz");
 
 router.get("/superAdmin/admin/:adminId", authRole("superAdmin"), async (req, res) => {
   try {
@@ -29,15 +29,13 @@ router.get("/superAdmin/admin/:adminId", authRole("superAdmin"), async (req, res
     upcomingMeetings = upcomingMeetings.sort(
       (a, b) => getObjectIdTime(b._id) - getObjectIdTime(a._id)
     );
-  
+   const quizzes = await Quiz.find({ domain: admin.domain }).sort({ createdAt: -1 });
   req.flash('info', `Viewing Admin: ${admin.name}`);
-  res.render("admin", { admin, interns,projects,batches, certifiedInternsCount,notices,meetings: upcomingMeetings,showPasswordPopup: admin.isFirstLogin });
+  res.render("admin", { admin, interns,projects,batches, certifiedInternsCount,notices,meetings: upcomingMeetings,showPasswordPopup: admin.isFirstLogin,quizzes });
   } catch (err) {
     // console.error(err);
     res.redirect("/superAdmin");
   }
 });
-
-module.exports = router;
 
 module.exports = router;

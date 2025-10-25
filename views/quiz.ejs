@@ -149,11 +149,11 @@ body.modal-open {
     <div class="row" id="quizContent">
 
   <!-- MAIN QUIZ AREA (takes most space) -->
-  <div class="col-12 col-md-9" >
+  <div class="col-12 col-md-9">
     <form id="quizForm" method="POST" action="/intern/quiz/<%= quiz._id %>/submit" autocomplete="off">
-      <div id="questionsContainer">
+      <div id="questionsContainer" >
         <% quiz.questions.forEach((q, index) => { %>
-          <div class="card mb-4 question-card p-3" style="border: 1px solid #ff6600;" data-index="<%= index %>" <%= index === 0 ? '' : 'style="display:none;"' %>>
+          <div class="card mb-4 question-card p-3" style="border: 1px solid #ff6600;" data-index="<%= index %>" <%= index === 0 ? '' : 'style="display:none;"' %> >
             <h5 class="mb-3 text-white">Q<%= index + 1 %>. <%= q.questionText %></h5>
             <% if (q.image) { %>
               <img src="<%= q.image %>" alt="Question Image" class="question-image mb-3">
@@ -177,11 +177,11 @@ body.modal-open {
         </button>
         <button type="button" class="btn btn-submit" id="submitBtn">Submit Quiz</button>
       </div>
-     </form>
+    </form>
   </div>
 
   <!-- SIDEBAR (small area) -->
-  <div class="col-12 col-md-3">
+  <div class="col-12 col-md-3" >
     <div class="question-nav" style="border: 1px solid #ff6600;">
       <div class="row g-2">
         <% quiz.questions.forEach((q, index) => { %>
@@ -192,7 +192,8 @@ body.modal-open {
           </div>
         <% }) %>
       </div>
-    </div>
+    </div> <audio id="warningSound" src="/sound/alert.mp3" preload="auto"></audio>
+
       <!-- live-user-camera preview (will be filled after permission) -->
       <div id="videoContainer " title="Camera preview (required)" style="display: flex; align-items: center; justify-content: center;"  class="mt-2">
         <video id="userVideo" autoplay playsinline muted class="w-100 " style="border: 1px solid #ff6600; height: 20vh;"></video>
@@ -225,9 +226,9 @@ body.modal-open {
 
   <h5 class="fw-bold">Quiz Structure</h5>
   <ul class="mb-3">
-    <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 12/20 (60%)</li>
-    <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 18/30 (60%)</li>
-    <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 24/40 (60%)</li>
+    <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 14/20 (70%)</li>
+    <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 21/30 (70%)</li>
+    <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 28/40 (70%)</li>
   </ul>
 
   <h5 class="fw-bold">Additional Rules</h5>
@@ -285,9 +286,9 @@ body.modal-open {
   <!-- Quiz Structure -->
   <h5 class="fw-bold">Quiz Structure</h5>
   <ul class="mb-3">
-    <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 12/20 (60%)</li>
-    <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 18/30 (60%)</li>
-    <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 24/40 (60%)</li>
+    <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 14/20 (70%)</li>
+    <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 21/30 (70%)</li>
+    <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 28/40 (70%)</li>
   </ul>
 
   <!-- Rules -->
@@ -601,9 +602,8 @@ startQuizBtn.addEventListener('click', async () => {
   enableFullscreen();
 
 setInterval(() => {
-    takeScreenshotAndUpload(); // take screenshot every 60 second 
+    takeScreenshotAndUpload();
   }, 60000);
-
   // ✅ If user exits fullscreen, force it back
   document.addEventListener("fullscreenchange", () => {
     if (!document.fullscreenElement && quizStarted) {
@@ -638,7 +638,6 @@ document.addEventListener('fullscreenchange', () => {
 
 
   </script>
-
   <script>
   async function takeScreenshotAndUpload() {
   const video = document.getElementById('userVideo');
@@ -674,9 +673,8 @@ document.addEventListener('fullscreenchange', () => {
 }
 
   </script>
-
-   <script>
-  function isMobileDevice() {
+  <script>
+    function isMobileDevice() {
     if (/Mobi|Android|iPhone|iPad|Tablet/i.test(navigator.userAgent)) {
       return true;
     }
@@ -696,8 +694,120 @@ document.addEventListener('fullscreenchange', () => {
     window.location.href = "/mobile-blocked";
   }
 
-</script>
+  </script>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection/dist/face-detection.min.js"></script>
+
+<script>
+let detector;
+let faceMissingSince = null;
+let warningShown = false;
+let violationCount = 0;
+
+const video = document.getElementById("userVideo");
+const warningSound = document.getElementById("warningSound");
+
+// ✅ Create warning box
+const warningBox = document.createElement("div");
+warningBox.style.position = "fixed";
+warningBox.style.bottom = "20px";
+warningBox.style.right = "20px";
+warningBox.style.background = "rgba(255, 0, 0, 0.85)";
+warningBox.style.color = "#fff";
+warningBox.style.padding = "12px 18px";
+warningBox.style.borderRadius = "8px";
+warningBox.style.fontSize = "14px";
+warningBox.style.fontWeight = "600";
+warningBox.style.zIndex = "9999";
+warningBox.style.display = "none";
+warningBox.innerText = "⚠ Face not detected! Please stay visible.";
+document.body.appendChild(warningBox);
+
+// ✅ Start webcam
+async function startCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+  } catch (err) {
+    console.error("Camera error:", err);
+  }
+}
+
+// ✅ Load TensorFlow face detector
+async function loadFaceDetector() {
+  console.log("⏳ Loading face detector model...");
+  detector = await faceDetection.createDetector(
+    faceDetection.SupportedModels.MediaPipeFaceDetector,
+    { runtime: "tfjs", maxFaces: 1 }
+  );
+  console.log("✅ Face detection model loaded.");
+}
+
+// ✅ Monitor face
+async function monitorFace() {
+  if (!detector || video.readyState < 2) return;
+
+  try {
+    const faces = await detector.estimateFaces(video, { flipHorizontal: false });
+
+    if (faces.length > 0) {
+      // Face detected → reset everything
+      warningBox.style.display = "none";
+      faceMissingSince = null;
+      warningShown = false;
+      warningSound.pause();
+      warningSound.currentTime = 0;
+      video.style.border = "1px solid #ff6600";
+    } else {
+      // Face not detected
+      if (!faceMissingSince) faceMissingSince = Date.now();
+      const secondsAbsent = (Date.now() - faceMissingSince) / 1000;
+
+      if (secondsAbsent > 3 && !warningShown) { // 3 seconds threshold
+        warningShown = true;
+        warningSound.loop = true;
+        warningSound.play().catch(() => {});
+        warningBox.style.display = "block";
+        violationCount++;
+        console.warn(`⚠ Face missing for ${secondsAbsent.toFixed(1)}s (violation ${violationCount})`);
+      }
+      if (secondsAbsent > 10) { // auto-submit after 10 sec
+        warningBox.innerText = "🚨 Face absent for too long. Quiz auto-submitting.";
+        warningSound.pause();
+        warningSound.currentTime = 0;
+        setTimeout(() => document.getElementById("quizForm").submit(), 2000);
+      }
+
+      video.style.border = "3px solid red";
+
+      if (violationCount >= 3) {
+        warningBox.innerText = "🚨 Multiple face absences detected. Quiz auto-submitting.";
+        warningSound.pause();
+        warningSound.currentTime = 0;
+        setTimeout(() => document.getElementById("quizForm").submit(), 3000);
+      }
+    }
+  } catch (err) {
+    console.error("Face detection error:", err);
+  }
+}
+
+// ✅ Start monitoring
+async function startFaceMonitoring() {
+  await loadFaceDetector();
+  setInterval(monitorFace, 1000); // check every 1 second
+}
+
+// 🔗 Start quiz button
+document.getElementById("startQuizBtn").addEventListener("click", async () => {
+  await startCamera();
+  setTimeout(() => startFaceMonitoring(), 2000); // wait for camera to start
+});
+</script>
 
 </body>
 </html>

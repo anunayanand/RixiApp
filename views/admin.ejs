@@ -490,6 +490,7 @@
               <th>Week</th>
               <th>Batch</th>
               <th>Domain</th>
+              <th>Upload Button</th>
               <th style="width: 200px;">Actions</th>
             </tr>
           </thead>
@@ -500,6 +501,18 @@
                 <td><%= p.week %></td>
                 <td><%= p.batch_no %></td>
                 <td><%= p.domain %></td>
+                <td>
+  <div class="form-check form-switch d-flex justify-content-center">
+    <input 
+      class="form-check-input visibility-toggle"
+      type="checkbox"
+      role="switch"
+      id="toggle-<%= p._id %>"
+      <%= !p.isHidden ? 'checked' : '' %>
+      onchange="toggleVisibility('<%= p._id %>', this.checked)">
+  </div>
+</td>
+
                 <td class="d-flex justify-content-evenly">
                   <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#updateModal<%= p._id %>">Update</button>
                   <button class="btn btn-outline-danger btn-sm px-3 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteProjectModal<%= p._id %>">Delete</button>
@@ -629,10 +642,10 @@
                     <i class="bi bi-patch-check-fill text-success"></i>
                      <% } %>
                      <%= intern.name.trim().split(" ")[0]%> (<%= intern.batch_no %>)</span>
-                  <span>
+                  <span> 
                     <% if (intern.screenshot_img) { %>
         <button 
-          class="btn  viewScreenshotBtn" 
+          class="btn px-2 py-0 viewScreenshotBtn" 
           data-bs-toggle="modal" 
           data-bs-target="#viewScreenshotModal"
           data-img="<%= intern.screenshot_img %>"
@@ -640,10 +653,13 @@
           <i class="bi bi-eye"></i>
         </button>
       <% } %>
+                            
+                      
                    <% if (intern.quiz_score > 0) { %>
                     <span class="text-success"> <b>Quiz score: </b><%= intern.quiz_score %>&nbsp;&nbsp;</span>
                      <% } %>
-                      <% if (intern.quiz_score > 1) { %>
+                      
+                     <% if (intern.quiz_score > 1) { %>
                        <% if (intern.isPassed) { %>
                          <span class="badge bg-success ms-2">Pass</span>
                        <% } else { %>
@@ -651,6 +667,8 @@
                        <% } %>
                        &nbsp;
                      <% } %>
+
+
                     <b>Duration:</b> <%= intern.duration %> Weeks&nbsp;
                     <b>Intern ID:</b>
                     <span class="intern-id d-none"><%= intern.intern_id %></span>
@@ -707,11 +725,11 @@
 
 
 <section id="internAttendance">
-
+<div class="container px-0">
   <% const currentBatch = typeof attendanceBatch !== 'undefined' ? attendanceBatch : 'all'; %>
   <% const currentWeek = typeof attendanceWeek !== 'undefined' ? attendanceWeek : 'all'; %>
 
-  <div class="card p-3 mb-3 shadow-sm" style="border-color: #ff6600 !important;">
+  <div class="card p-3 mb-3 shadow-sm border rounded" style="border-color: #ff6600 !important;">
     <h4 class="section-title mb-3 text-center">Manage Attendance</h4>
     <div class="d-flex flex-wrap align-items-center gap-3">
 
@@ -754,7 +772,7 @@
 
     <!-- Attendance Table -->
   <div class="card mt-2">
-    <div class="table-responsive" style="max-height: 60vh; overflow-y:auto;">
+    <div class="table-responsive" style="max-height: 65vh; overflow-y:auto;">
       <table class="table table-bordered table-striped align-middle text-center mb-0" id="attendanceTable">
         <thead class="table-light sticky-top" style="z-index:2">
           <tr>
@@ -798,7 +816,7 @@
   </div>
 
   </div>
-
+</div>
   
 </section>
 
@@ -1032,7 +1050,6 @@
 })();
 </script>
 
-<!-- Manage Quizzes Section -->
 <!-- Manage & Assign Quizzes Section -->
 <section id="manageQuizzes">
   <div class="card p-4 shadow-sm" style="border:1px solid #ff6600;">
@@ -1225,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Screenshot Modal -->
 <div class="modal fade" id="viewScreenshotModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style=" border: 1px solid #ff6600">
+    <div class="modal-content" style="background-color: #1e1e1e; border: 1px solid #ff6600">
       <div class="modal-header">
         <h5 class="modal-title text-white">Intern Screenshot</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -1297,6 +1314,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   </div>
 </div>
+<script>
+  async function toggleVisibility(projectId, isVisible) {
+    try {
+      const response = await fetch(`/project/toggle-visibility/${projectId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isHidden: !isVisible }) // reverse logic
+      });
+
+      const data = await response.json();
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+</script>
+
 
 <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/js/admin.js"></script>
