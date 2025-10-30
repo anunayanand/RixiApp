@@ -116,6 +116,8 @@ app.post('/verify-certificate', verifyCertificateRouter);
 app.get("/internship", (req, res) => {
   res.render("internship");
 });
+
+app.get('/cap',(req,res) => res.render('cap'));
 // --- Admin Routes ---
 
 const adminRoute = require('./routes/adminRoute');
