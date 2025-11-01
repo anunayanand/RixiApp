@@ -23,6 +23,10 @@ const projectSchema = new mongoose.Schema({
     ref: "User",   // use "User" if Admins are stored in User collection
     required: true,
   },
+   isHidden: {
+    type: Boolean,
+    default: false, // false = visible by default
+  },
 
   // Submissions tracking
 
