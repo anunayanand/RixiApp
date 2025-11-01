@@ -16,7 +16,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       let duration = intern.duration;
       let arr = [0,1,2,3,4,6,8];
       const progress = Math.round((arr[acceptedCount] / duration)*100);
-      console.log("Progress:", progress);
+      // console.log("Progress:", progress);
       const totalMeetings = intern.meetings.length;
       const totalProjects = intern.projectAssigned.length;
       const attended = intern.meetings.filter(m => m.attendance === "present").length;  
@@ -28,7 +28,8 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       .map(a => ({
         quiz: a.quizId,
         score: a.score,
-        attemptCount: a.attemptCount
+        attemptCount: a.attemptCount,
+        isClosed: a.quizId.isClosed
       }));
 
   const projects = await Project.find({ domain: intern.domain });

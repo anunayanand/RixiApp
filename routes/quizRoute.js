@@ -121,9 +121,9 @@ router.post('/toggle-start', async (req, res) => {
 
     await Quiz.findByIdAndUpdate(quizId, { isClosed });
 
-    res.flash("success",`Response ${isClosed ? 'Disabled' : 'Enabled'}`)
+    req.flash("success",`Response ${isClosed ? 'Disabled' : 'Enabled'}`)
   } catch(err) {
-    res.flash("error","Quiz Route Error");
+    req.flash("error","Quiz Route Error");
   }
 });
 

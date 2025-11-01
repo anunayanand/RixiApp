@@ -43,7 +43,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       .map(a => ({
         quiz: a.quizId,        // full quiz object now
         score: a.score,
-        attemptCount: a.attemptCount
+        attemptCount: a.attemptCount,
+        isClosed: a.quizId.isClosed
       }));
 
     req.flash('success_msg', 'Welcome to Intern Dashboard');
