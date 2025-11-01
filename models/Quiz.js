@@ -14,6 +14,7 @@ const quizSchema = new mongoose.Schema({
   questions: [questionSchema],
   assignedBatches: { type: [String], default: [] },
   createdAt: { type: Date, default: Date.now },
+  isClosed : {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model("Quiz", quizSchema);
