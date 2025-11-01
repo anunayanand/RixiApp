@@ -40,6 +40,16 @@
     <!-- Main CSS File -->
     <link href="/css/main.css" rel="stylesheet" />
     <link href="/css/internship.css" rel="stylesheet" />
+    <style>
+      textarea::-webkit-scrollbar{
+        width: 0;
+        height: 0;
+      }
+      textarea.form-control {
+  height: auto !important;
+  min-height: 120px; /* ~5 rows */
+}
+    </style>
   </head>
 
   <body class="index-page">
@@ -182,6 +192,10 @@
   <div class="mb-3">
     <label class="form-label">Instagram Profile Link</label>
     <input type="url" name="data[Instagram]" class="form-control" placeholder="Instagram" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Why do you ant to join RixiLab CAP?</label>
+    <textarea name="data[Response]"  class="form-control" placeholder="Write your answer in minimum 50 words" rows="5" required></textarea>
   </div>
   <div class="">
                     <input

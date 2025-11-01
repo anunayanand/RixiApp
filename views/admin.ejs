@@ -490,7 +490,7 @@
               <th>Week</th>
               <th>Batch</th>
               <th>Domain</th>
-              <th>Upload Button</th>
+              <th>Response</th>
               <th style="width: 200px;">Actions</th>
             </tr>
           </thead>
@@ -1081,6 +1081,7 @@
             <!-- <th>Domain</th> -->
             <th>No. of Q.</th>
             <th>Assigned Batches</th>
+            <th>Response</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -1104,7 +1105,14 @@
                     <span class="text-muted">Not Assigned</span>
                   <% } %>
               </td>
-
+               <td>
+                <div class="form-check form-switch d-flex justify-content-center">
+                  <input class="form-check-input start-toggle" 
+                    type="checkbox"
+                    data-id="<%= quiz._id %>"
+                    <%= !quiz.isClosed ? "checked" : "" %>>
+                </div>
+              </td>
               <td>
                 <div class="d-flex gap-2 justify-content-evenly flex-wrap">
                   <!-- Assign Form -->
@@ -1314,6 +1322,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   </div>
 </div>
+<!--Upload Button Enable/Disable-->
 <script>
   async function toggleVisibility(projectId, isVisible) {
     try {
@@ -1331,6 +1340,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 </script>
 
+<!--Quiz Start Button Button Enable/Disable-->
+<script>
+document.querySelectorAll('.start-toggle').forEach(toggle => {
+  toggle.addEventListener('change', function() {
+    const quizId = this.getAttribute('data-id');
+    const isClosed = !this.checked; // if unchecked, quiz is closed
+
+    fetch('/quiz/toggle-start', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ quizId, isClosed })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.success){
+        console.log("Quiz start status updated");
+      } else {
+        alert("Error updating quiz start status");
+      }
+    })
+    .catch(err => console.log(err));
+  });
+});
+</script>
 
 <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/js/admin.js"></script>

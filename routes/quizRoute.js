@@ -115,4 +115,16 @@ router.post("/delete-quiz/:quizId", async (req, res) => {
   }
 });
 
+router.post('/toggle-start', async (req, res) => {
+  try {
+    const { quizId, isClosed } = req.body;
+
+    await Quiz.findByIdAndUpdate(quizId, { isClosed });
+
+    res.flash("success",`Response ${isClosed ? 'Disabled' : 'Enabled'}`)
+  } catch(err) {
+    res.flash("error","Quiz Route Error");
+  }
+});
+
 module.exports = router;
