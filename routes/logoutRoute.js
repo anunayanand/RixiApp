@@ -6,6 +6,7 @@ try{
     if (!req.session) {
     return res.redirect("/login"); // or handle gracefully
   }
+  const userRole = req.session.role;
 
   req.session.destroy((err) => {
     if (err) {
@@ -13,7 +14,11 @@ try{
       return res.status(500).send("Failed to log out");
     }
     res.clearCookie("connect.sid");
-    res.redirect("/login");
+     if (userRole === "admin" || userRole === "superAdmin") {
+        return res.redirect("/organizer-login");
+      } else {
+        return res.redirect("/login");
+      }
   });
 }catch(err){
     // console.error(err);

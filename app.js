@@ -95,7 +95,18 @@ app.post("/register-admin", async (req, res) => {
 });
 
 // Login page
-app.get("/login", (req, res) => res.render("login"));
+app.get("/login", (req, res) => {
+  // Generate a random 5-letter code
+  const randomText = Math.random().toString(36).substring(2, 7).toUpperCase();
+  req.session.captcha = randomText; // store in session
+
+  res.render("login", { captchaText: randomText });
+});
+app.get("/organizer-login", (req, res) => { 
+  res.render("orgLogin");
+});
+const orgLoginRouter = require('./routes/orgLoginRoute');
+app.post('/org/login', orgLoginRouter);
 
 const loginRouter = require('./routes/loginRoute');
 app.post('/login', loginRouter);

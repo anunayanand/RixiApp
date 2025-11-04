@@ -16,7 +16,6 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +41,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-         <li><a href="/" class="active">Home</a></li>
+          <li><a href="/" class="active">Home</a></li>
           <li><a href="internship">Internship</a></li>
           <li><a href="cap">CAP</a></li>
           <li><a href="/#about">About</a></li>
@@ -63,7 +62,7 @@
     <section id="contact" class="contact section ">
       <!-- Section Title -->
       <div class="container  section-title" data-aos="fade-up">
-        <h2>Student Login</h2>
+        <h2>Administrator Login</h2>
         <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
       </div><!-- End Section Title -->
 
@@ -77,8 +76,7 @@
                 <h3>Login With Your Email & Password</h3>
               </div>
 
-              <form id="loginForm" class="php-email-form needs-validation" action="/login" method="POST" novalidate>
-                
+              <form id="loginForm" class="php-email-form needs-validation" action="/org/login" method="POST" novalidate>
                   <div class="mb-3">
                     <label for="contactEmail" class="form-label">Email Address</label>
                     <input type="email" class="form-control" name="email" id="contactEmail" placeholder="Enter your email address" required>
@@ -87,26 +85,6 @@
                   <label for="InternID" class="form-label">Password</label>
                   <input type="password" name="password" class="form-control" id="InternID" placeholder="Password" required>
                 </div>
-             <div class="mb-3">
-  <label for="captchaInput" class="form-label">Enter the captcha below:</label>
-
-  <div id="captcha-container" class="mb-2" style="display:flex; align-items:center; justify-content:center;">
-    <div id="captcha-text"
-         class="form-control text-center fw-bold"
-         style="letter-spacing: 6px; font-size: 1.75rem; background: #000; color: #ff6600; font-family: 'Special Elite',system-ui;">
-      <%= captchaText %>
-    </div>
-    <button type="button" id="refresh-captcha"
-            style="background:none; border:none; margin-left:5px;margin-right: 5px; font-size:22px; color:#ff6600; cursor:pointer;">↻</button>
-    <input type="text" id="captchaInput" name="captchaInput"
-         class="form-control"
-         placeholder="Enter captcha here" required>
-    
-  </div>
-
-</div>
-
-
 
                 <div class="mb-2 text-center" id="errorMsg"></div>
 
@@ -140,13 +118,6 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
- <script>
- document.getElementById("refresh-captcha").addEventListener("click", async () => {
-    const res = await fetch("/generate-captcha");
-    const data = await res.json();
-    document.getElementById("captcha-text").textContent = data.captcha;
-  });
-</script>
 
 </body>
 

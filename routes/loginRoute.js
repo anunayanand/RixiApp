@@ -3,16 +3,23 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Ambassador = require("../models/Ambassador");
-const loginLimiter = require("../middleware/rateLimiter")
+const loginLimiter = require("../middleware/rateLimiter");
 
-// 🔑 Login Route (for all roles)
-router.post("/login", loginLimiter,async (req, res) => {
+router.post("/login", loginLimiter, async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, captchaInput } = req.body;
 
-    // ✅ First, check in User collection (Admin, SuperAdmin, Intern)
-    let user = await User.findOne({ email });
+    // 🔒 Verify CAPTCHA
+    if (!captchaInput || captchaInput.toLowerCase() !== (req.session.captcha || "").toLowerCase()) {
+      req.flash("error", "Invalid CAPTCHA. Please try again.");
+      return res.redirect("/login");
+    }
 
+    // Clear CAPTCHA so it’s valid only once
+    req.session.captcha = null;
+
+    // ✅ Check User collection
+    const user = await User.findOne({ email });
     if (user) {
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
@@ -20,23 +27,22 @@ router.post("/login", loginLimiter,async (req, res) => {
         return res.redirect("/login");
       }
 
-      // ✅ Save session
+      // Save session
       req.session.user = user._id;
       req.session.role = user.role;
 
-      req.flash("success", `Welcome, ${user.name.trim()}!`);
-
-      // ✅ Role-based redirect
-      if (user.role === "admin") {
-        return res.redirect("/admin");
-      } else if (user.role === "superAdmin") {
-        return res.redirect("/superAdmin");
-      } else {
-        return res.redirect("/intern");
+      // 🔹 Redirect based on role
+      if (user.role === "admin" || user.role === "superAdmin") {
+        // No flash message for admins or superadmins
+        return res.redirect("/organizer-login");
       }
+
+      // ✅ Intern only: show success flash
+      req.flash("success", `Welcome, ${user.name.trim()}!`);
+      return res.redirect("/intern");
     }
 
-    // ✅ If not found in User, check in Ambassador collection
+    // ✅ Check Ambassador collection
     const ambassador = await Ambassador.findOne({ email });
     if (ambassador) {
       const match = await bcrypt.compare(password, ambassador.password);
@@ -45,16 +51,15 @@ router.post("/login", loginLimiter,async (req, res) => {
         return res.redirect("/login");
       }
 
-      // ✅ Save ambassador session
       req.session.user = ambassador._id;
       req.session.role = "ambassador";
-      req.session.isFirstLogin = ambassador.isFirstLogin; 
+      req.session.isFirstLogin = ambassador.isFirstLogin;
 
       req.flash("success", `Welcome, Ambassador ${ambassador.name.trim()}!`);
       return res.redirect("/ambassador");
     }
 
-    // ❌ If neither found
+    // ❌ No user found
     req.flash("error", "Invalid email address or password");
     return res.redirect("/login");
 
