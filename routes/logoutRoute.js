@@ -15,7 +15,7 @@ try{
     }
     res.clearCookie("connect.sid");
      if (userRole === "admin" || userRole === "superAdmin") {
-        return res.redirect("/organizer-login");
+        return res.redirect("/admin-login");
       } else {
         return res.redirect("/login");
       }

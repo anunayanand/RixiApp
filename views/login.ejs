@@ -142,9 +142,13 @@
   <script src="/js/main.js"></script>
  <script>
  document.getElementById("refresh-captcha").addEventListener("click", async () => {
-    const res = await fetch("/generate-captcha");
-    const data = await res.json();
-    document.getElementById("captcha-text").textContent = data.captcha;
+   try {
+      const res = await fetch("/generate-captcha");
+      const data = await res.json();
+      document.getElementById("captcha-text").textContent = data.captcha;
+    } catch (err) {
+      console.error("Failed to refresh captcha:", err);
+    }
   });
 </script>
 

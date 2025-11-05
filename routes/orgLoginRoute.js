@@ -13,14 +13,14 @@ router.post("/org/login", loginLimiter, async (req, res) => {
 
     if (!user) {
       req.flash("error", "Invalid email address or password");
-      return res.redirect("/organizer-login");
+      return res.redirect("/admin-login");
     }
 
     // ✅ Validate password
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       req.flash("error", "Invalid email address or password");
-      return res.redirect("/organizer-login");
+      return res.redirect("/admin-login");
     }
 
     // ✅ Block interns from logging in here
@@ -48,7 +48,7 @@ router.post("/org/login", loginLimiter, async (req, res) => {
   } catch (err) {
     console.error("🔥 Organizer Login Error:", err);
     req.flash("error", "Something went wrong, please try again.");
-    return res.redirect("/organizer-login");
+    return res.redirect("/admin-login");
   }
 });
 

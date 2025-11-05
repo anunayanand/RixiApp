@@ -102,7 +102,14 @@ app.get("/login", (req, res) => {
 
   res.render("login", { captchaText: randomText });
 });
-app.get("/organizer-login", (req, res) => { 
+
+app.get("/generate-captcha", (req, res) => {
+  const newCaptcha = Math.random().toString(36).substring(2, 7).toUpperCase();
+  req.session.captcha = newCaptcha; // update session
+  res.json({ captcha: newCaptcha });
+});
+
+app.get("/admin-login", (req, res) => { 
   res.render("orgLogin");
 });
 const orgLoginRouter = require('./routes/orgLoginRoute');
