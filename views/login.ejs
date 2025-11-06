@@ -150,6 +150,10 @@
       console.error("Failed to refresh captcha:", err);
     }
   });
+const captchaText = document.getElementById("captcha-text");
+captchaText.addEventListener("contextmenu", e => e.preventDefault());
+captchaText.addEventListener("copy", e => e.preventDefault());
+captchaText.style.userSelect = "none";
 </script>
 
 </body>

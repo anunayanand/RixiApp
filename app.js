@@ -112,6 +112,10 @@ app.get("/generate-captcha", (req, res) => {
 app.get("/admin-login", (req, res) => { 
   res.render("orgLogin");
 });
+app.get('/terms-and-conditions', (req, res) => {
+  res.render('termsAndConditions');
+});
+
 const orgLoginRouter = require('./routes/orgLoginRoute');
 app.post('/org/login', orgLoginRouter);
 

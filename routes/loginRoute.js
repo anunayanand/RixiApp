@@ -36,7 +36,7 @@ router.post("/login", loginLimiter, async (req, res) => {
         req.session.role = user.role;
 
         if (user.role === "admin" || user.role === "superAdmin") {
-          return res.redirect("/organizer-login");
+          return res.redirect("/admin-login");
         }
 
         req.flash("success", `Welcome, ${user.name.trim()}!`);
