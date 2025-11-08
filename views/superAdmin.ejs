@@ -1136,6 +1136,19 @@
             <% }) %>
           </select>
         </div>
+        <!-- Duration Filter -->
+  <div class="col-md-2">
+    <select id="durationFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
+      <option value="all" selected>All Durations</option>
+      <% 
+        const completedDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
+        completedDurations.forEach(duration => { 
+      %>
+        <option value="<%= duration %>"><%= duration %> Weeks</option>
+      <% }) %>
+    </select>
+  </div>
+
         <div class="col-md-2 flex-grow-1">
           <input type="text" id="completedSearchInput" class="form-control" placeholder="Search by Intern ID" onkeyup="applyCompletedFilters()">
         </div>
@@ -1163,7 +1176,7 @@
             <% interns
                  .filter(i => i.intern_progress === 100)
                  .forEach(i => { %>
-              <tr class="completed-intern-row" data-batch="<%= i.batch_no %>" data-domain="<%= i.domain %>">
+              <tr class="completed-intern-row" data-batch="<%= i.batch_no %>" data-domain="<%= i.domain %>" data-duration="<%= i.duration %>">
                 <td><%= i.name %></td>
                 <td><%= i.domain %></td>
                 <td><%= i.batch_no %></td>
@@ -1215,32 +1228,33 @@
 function applyCompletedFilters() {
   const batch = document.getElementById('batchFilterCompleted').value.toLowerCase();
   const domain = document.getElementById('domainFilterCompleted').value.toLowerCase();
+  const duration = document.getElementById('durationFilterCompleted').value;
   const search = document.getElementById('completedSearchInput').value.toLowerCase();
 
   document.querySelectorAll('.completed-intern-row').forEach(row => {
     const rowBatch = row.dataset.batch.toLowerCase();
     const rowDomain = row.dataset.domain.toLowerCase();
+    const rowDuration = row.dataset.duration;
     const internId = row.querySelector('.intern-id').innerText.toLowerCase();
 
     const matchBatch = (batch === 'all' || rowBatch === batch);
     const matchDomain = (domain === 'all' || rowDomain === domain);
+    const matchDuration = (duration === 'all' || rowDuration === duration);
     const matchSearch = (internId.includes(search));
 
-    if(matchBatch && matchDomain && matchSearch) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
+    row.style.display = (matchBatch && matchDomain && matchDuration && matchSearch) ? '' : 'none';
   });
 }
 
 function clearCompletedFilters() {
   document.getElementById('batchFilterCompleted').value = 'all';
   document.getElementById('domainFilterCompleted').value = 'all';
+  document.getElementById('durationFilterCompleted').value = 'all';
   document.getElementById('completedSearchInput').value = '';
   applyCompletedFilters();
 }
 </script>
+
 
 <!-- ================= COMPLETION MAIL ================= -->
 <section id="completionMail" style="display:none; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);  border: 1px solid #ff6600 !important;">
