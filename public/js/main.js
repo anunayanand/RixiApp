@@ -215,3 +215,17 @@
       });
     }, false);
   })()
+
+  //   // Hide loader when the page is fully loaded
+  // window.addEventListener("load", () => {
+  //   const loader = document.getElementById("pageLoader");
+  //   loader.classList.add("hidden");
+  //   setTimeout(() => loader.style.display = "none", 600);
+  // });
+
+  // // Show loader when navigating away or reloading
+  // window.addEventListener("beforeunload", () => {
+  //   const loader = document.getElementById("pageLoader");
+  //   loader.style.display = "flex";
+  //   loader.classList.remove("hidden");
+  // });

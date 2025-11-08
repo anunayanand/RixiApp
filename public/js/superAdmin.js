@@ -399,3 +399,5 @@ const imageInput = document.getElementById('imageInput');
   // Show all on page load
   cards.forEach(card => card.style.display = "block");
 });
+
+

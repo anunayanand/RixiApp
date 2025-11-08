@@ -1,0 +1,153 @@
+<!-- 🌟 Global RixiLab Glassmorphic Full-Page Loader -->
+<style>
+  /* 🧭 Full-page glass background while loading */
+  #pageLoaderWrapper {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.58);
+    backdrop-filter: blur(8.3px);
+    -webkit-backdrop-filter: blur(8.3px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  /* When loader hides */
+  #pageLoaderWrapper.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* 🔹 Floating glass card (top-centered) */
+  #pageLoader {
+    margin-top: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 25px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideDown 0.6s ease;
+    border: 1px solid #ff6600;
+  }
+
+  @keyframes slideDown {
+    0% { transform: translateY(-40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* 🌀 Custom Rixi orange spinner */
+  .spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/10px 10px no-repeat,
+                conic-gradient(#0000 30%, #ff6600);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+    animation: spinner-c7wet2 1s infinite linear;
+    margin-bottom: 15px;
+  }
+
+  @keyframes spinner-c7wet2 {
+    100% { transform: rotate(1turn); }
+  }
+
+  /* ✍️ Text below spinner */
+  #pageLoader p {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  /* 📱 Mobile adjustments */
+  @media (max-width: 768px) {
+    #pageLoader {
+      margin-top: 40px;
+      padding: 15px 30px;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/7px 7px no-repeat,
+                  conic-gradient(#0000 30%, #ff6600);
+      -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
+    }
+
+    #pageLoader p {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* 🦴 Skeleton effect on content while loading */
+  body.loading main,
+  body.loading section,
+  body.loading .content-area {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  body.loaded main,
+  body.loaded section,
+  body.loaded .content-area {
+    opacity: 1;
+  }
+</style>
+
+<!-- 🔄 Loader HTML -->
+<div id="pageLoaderWrapper">
+  <div id="pageLoader" class="shadow-lg text-center">
+    <div class="spinner"></div>
+    <p>Loading, please wait...</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loaderWrapper = document.getElementById("pageLoaderWrapper");
+
+    // Content starts hidden
+    document.body.classList.add("loading");
+
+    // ✅ Hide loader after full page load
+    window.addEventListener("load", () => {
+      document.body.classList.remove("loading");
+      document.body.classList.add("loaded");
+
+      if (loaderWrapper) {
+        loaderWrapper.classList.add("hidden");
+        setTimeout(() => loaderWrapper.style.display = "none", 600);
+      }
+    });
+
+    // ✅ Show loader on navigation or reload
+    window.addEventListener("beforeunload", () => {
+      if (loaderWrapper) {
+        loaderWrapper.style.display = "flex";
+        loaderWrapper.classList.remove("hidden");
+      }
+    });
+
+    // ✅ Trigger loader on normal link clicks
+    document.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", e => {
+        const href = link.getAttribute("href");
+        if (href && !href.startsWith("#") && link.target !== "_blank" && !link.dataset.bsToggle) {
+          document.body.classList.add("loading");
+          loaderWrapper.style.display = "flex";
+          loaderWrapper.classList.remove("hidden");
+        }
+      });
+    });
+  });
+</script>

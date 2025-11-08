@@ -16,9 +16,23 @@
 <link rel="stylesheet" href="/css/superAdmin.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<style>
+  #pageLoader {
+    z-index: 1055; /* above modals */
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  #pageLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+</style>
+
 
 </head>
 <body>
+ <%- include('partials/loader') %>
+
   <div class="d-flex">
   <button class="btn btn-primary d-md-none" id="sidebarToggle" style="position: fixed; top: 10px; left: 10px; z-index: 1050;">
   <i class="bi bi-list"></i>

@@ -1,8 +1,5 @@
-/* Badges for submission status
-.badge-pending { background-color: #ffc107; color: black; }
-.badge-approved { background-color: #28a745; }
-.badge-rejected { background-color: #dc3545; }
-
-/* Card hover */
-/* .card { transition: transform 0.2s; }
-.card:hover { transform: scale(1.02); } 
+/* 🔄 Smooth fade-out for the loader */
+#pageLoader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
