@@ -44,25 +44,37 @@ document.querySelectorAll('.sidebar a').forEach(link => {
     filterByBatch();
   });
 
-   function applyInternFilters() {
+
+function applyInternFilters() {
   const batchFilter = document.getElementById("batchFilter").value.toLowerCase();
-  const searchValue = document.getElementById("internSearchInput").value.toLowerCase();
+  const domainFilter = document.getElementById("domainFilter").value.toLowerCase();
+  const durationFilter = document.getElementById("durationFilter").value;
+  const searchValue = document.getElementById("internSearchInput").value.toLowerCase().trim();
+
   const rows = document.querySelectorAll("#viewInterns table tbody .intern-row");
 
   rows.forEach(row => {
-    const rowBatch = row.getAttribute("data-batch").toLowerCase();
-    const name = row.cells[0].textContent.toLowerCase();      // Name column
-    const internId = row.cells[3].textContent.toLowerCase();  // Intern ID column
+    const rowBatch = row.dataset.batch.toLowerCase();
+    const rowDomain = row.dataset.domain.toLowerCase();
+    const rowDuration = row.dataset.duration;
+    const name = row.cells[0].textContent.toLowerCase();
+    const internId = row.cells[3].textContent.toLowerCase();
 
-    const matchesBatch = batchFilter === "all" || rowBatch === batchFilter;
-    const matchesSearch = name.includes(searchValue) || internId.includes(searchValue);
+    const matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
+    const matchesDomain = (domainFilter === "all" || rowDomain === domainFilter);
+    const matchesDuration = (durationFilter === "all" || rowDuration === durationFilter);
+    const matchesSearch = (name.includes(searchValue) || internId.includes(searchValue));
 
-    row.style.display = (matchesBatch && matchesSearch) ? "" : "none";
+    row.style.display = (matchesBatch && matchesDomain && matchesDuration && matchesSearch)
+      ? ""
+      : "none";
   });
 }
 
 function clearInternFilters() {
   document.getElementById("batchFilter").value = "all";
+  document.getElementById("domainFilter").value = "all";
+  document.getElementById("durationFilter").value = "all";
   document.getElementById("internSearchInput").value = "";
   applyInternFilters();
 }

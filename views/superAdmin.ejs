@@ -705,6 +705,34 @@
             <% }) %>
           </select>
         </div>
+
+         <!-- Domain Filter -->
+  <div class="col-md-2">
+    <select id="domainFilter" class="form-select" onchange="applyInternFilters()">
+      <option value="all" selected>All Domains</option>
+    <% 
+  const internDomains = [...new Set(interns.map(i => i.domain))];
+  internDomains.forEach(domain => { 
+%>
+  <option value="<%= domain.toLowerCase() %>"><%= domain %></option>
+<% }) %>
+
+    </select>
+  </div>
+
+ <!-- Duration Filter -->
+<div class="col-md-2">
+  <select id="durationFilter" class="form-select" onchange="applyInternFilters()">
+    <option value="all" selected>All Durations</option>
+    <% 
+      const internDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
+      internDurations.forEach(duration => { 
+    %>
+      <option value="<%= duration %>"><%= duration %> Weeks</option>
+    <% }) %>
+  </select>
+</div>
+
         <div class="col-md-2 flex-grow-1">
           <input type="text" id="internSearchInput" class="form-control" placeholder="Search by Name or ID" onkeyup="applyInternFilters()">
         </div>
@@ -728,7 +756,7 @@
           </thead>
           <tbody>
             <% interns.forEach(i => { %>
-              <tr class="intern-row" data-batch="<%= i.batch_no %>">
+              <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>">
                 <td><%= i.name %></td>
                 <td><%= i.email %></td>
                 <td><%= i.domain %></td>
