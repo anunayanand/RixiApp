@@ -328,11 +328,29 @@
 
 <!-- View Ambassador -->
 <section id="viewAmbassador" style="display:none;">
-  <h4 class="section-title mb-3">List of Ambassadors</h4>
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 ">
+  <h4 class="section-title mb-0">List of Ambassadors</h4>
+  <div class="d-flex align-items-center" style="gap: 10px;">
+    <input 
+      type="text" 
+      id="ambassadorSearch" 
+      class="form-control shadow-sm" 
+      placeholder="Search by Name or Ambassador ID..." 
+      style="max-width: 300px; border-radius: 25px; padding: 8px 15px;"
+    >
+    <button 
+      id="clearFilter" 
+      class="btn btn-outline-secondary shadow-sm rounded-pill px-3"
+      style="white-space: nowrap;"
+    >
+      Clear
+    </button>
+  </div>
+</div>
 
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <% ambassadors.forEach(ambassador => { %>
-      <div class="col">
+      <div class="col ambassador-card">
         <div class="card shadow-sm p-3 h-100 profile-card" style="border-radius: 20px;">
 
           <!-- Top: Profile Image + Name + Badge -->
@@ -342,15 +360,15 @@
                  class="rounded-circle me-3 profile-img"
                  style="width:80px; height:80px; object-fit:cover;">
             <div>
-              <h4 class="mb-1"><%= ambassador.name %></h4>
+              <h4 class="mb-1 ambassador-name"><%= ambassador.name %></h4>
               <span class="badge bg-info"><%= ambassador.badge %></span>
             </div>
           </div>
 
           <!-- Info List -->
           <dl class="row mb-3 small">
-            <dt class="col-5 text-muted">Ambassador ID</dt>
-            <dd class="col-7 text-end fw-bold mb-2"><%= ambassador.ambassador_id %></dd>
+            <dt class="col-5 text-muted ">Ambassador ID</dt>
+            <dd class="col-7 text-end fw-bold mb-2 ambassador-id"><%= ambassador.ambassador_id %></dd>
 
             <dt class="col-5 text-muted">Referral ID</dt>
             <dd class="col-7 text-end fw-bold mb-2"><%= ambassador.referralId %></dd>

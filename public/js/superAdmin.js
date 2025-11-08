@@ -354,3 +354,36 @@ const imageInput = document.getElementById('imageInput');
       reader.readAsDataURL(file);
     }
   });
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("ambassadorSearch");
+  const clearButton = document.getElementById("clearFilter");
+  const cards = document.querySelectorAll(".ambassador-card");
+
+  function filterCards() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    cards.forEach(card => {
+      const nameEl = card.querySelector(".ambassador-name");
+      const idEl = card.querySelector(".ambassador-id");
+
+      const name = nameEl ? nameEl.textContent.toLowerCase().trim() : "";
+      const id = idEl ? idEl.textContent.toLowerCase().trim() : "";
+
+      // Show card if either name or ambassador_id includes search query
+      card.style.display = (name.includes(query) || id.includes(query)) ? "block" : "none";
+    });
+  }
+
+  searchInput.addEventListener("input", filterCards);
+
+  clearButton.addEventListener("click", () => {
+    searchInput.value = "";
+    cards.forEach(card => card.style.display = "block");
+    searchInput.focus();
+  });
+
+  // Show all on page load
+  cards.forEach(card => card.style.display = "block");
+});
