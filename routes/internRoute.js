@@ -6,7 +6,6 @@ const authRole = require('../middleware/authRole');
 
 router.get("/intern", authRole("intern"), async (req, res) => {
   try {
-    // Populate quizAssignments.quizId to get full quiz details
     const intern = await User.findById(req.session.user)
       .populate('quizAssignments.quizId');
 
@@ -26,8 +25,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     const assignedMeetings = intern.meetings || [];
     const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
     const duration = intern.duration;
-    const arr = [0,1,2,3,4,6,8];
-    const progress = Math.round((arr[acceptedCount] / duration)*100);
+    const arr = [0, 1, 2, 3, 4, 6, 8];
+    const progress = Math.round((arr[acceptedCount] / duration) * 100);
 
     // Attendance
     const totalMeetings = assignedMeetings.length;
@@ -37,11 +36,14 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     const totalProjects = assignedProjects.length;
     const mentor = await User.findOne({ role: "admin", domain: intern.domain });
 
+    // Sort notifications (newest first)
+    const notifications = intern.notifications.sort((a, b) => b.createdAt - a.createdAt);
+
     // Assigned quizzes with populated quiz
     const assignedQuizzes = (intern.quizAssignments || [])
       .filter(a => a.assigned)
       .map(a => ({
-        quiz: a.quizId,        // full quiz object now
+        quiz: a.quizId,
         score: a.score,
         attemptCount: a.attemptCount,
         isClosed: a.quizId.isClosed
@@ -57,11 +59,11 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       totalProjects,
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,
-      assignedQuizzes
+      assignedQuizzes,
+      notifications
     });
 
   } catch (err) {
-    console.error("Error in /intern:", err);
     res.status(500).send("Server Error");
   }
 });

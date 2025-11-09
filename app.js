@@ -178,7 +178,7 @@ app.get('/admin/intern/:internId', viewInternRouter);
 const projectStatusRouter = require('./routes/projectStatusRoute');
 app.use('/admin', projectStatusRouter);
   
-
+app.use("/", require("./routes/notificationRoute"));
 
 // Email placeholders
 const confirmationMailRouter = require('./routes/confirmationMailRoute');

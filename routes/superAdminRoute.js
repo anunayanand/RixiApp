@@ -4,42 +4,6 @@ const User = require("../models/User");
 const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 
-// router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
-//   try {
-//     const interns = await User.find({ role: "intern" });
-//     const batches = [...new Set(interns.map(i => i.batch_no))];
-//     const admins = await User.find({ role: "admin" });
-//     const ambassadors = await Ambassador.find({});
-//     const superAdmin = await User.findOne({ role: "superAdmin" });
-//     const certifiedInternsCount = interns.filter(
-//       i => i.certificate_link && i.certificate_link.trim() !== ""
-//     ).length;
-//       const adminNotices = admins.flatMap(a =>
-//       a.notice.map(n => ({
-//         title: n.title,
-//         description: n.description,
-//         adminName: a.name
-//       }))
-//     );
-
-//     res.render("superAdmin", {
-//       interns,
-//       admins,
-//       superAdmin,
-//       ambassadors,
-//       batches,
-//       certifiedInternsCount,
-//       adminNotices
-//     });
-//   } catch (err) {
-//     // console.error(err);
-//     req.flash("error", "Failed to load Super Admin Dashboard");
-//     res.redirect("/login");
-//   }
-// });
-
-// module.exports = router;
-
 router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
   try {
     const interns = await User.find({ role: "intern" });
@@ -48,35 +12,88 @@ router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
     const ambassadors = await Ambassador.find({});
     const superAdmin = await User.findOne({ role: "superAdmin" });
 
-    // Count certified interns
+    if (!superAdmin) {
+      req.flash("error", "SuperAdmin not found");
+      return res.redirect("/login");
+    }
+
+    // ==============================
+    // 🔔 Notification Logic
+    // ==============================
+    if (!superAdmin.notifiedInterns) superAdmin.notifiedInterns = [];
+    const arr = [0, 1, 2, 3, 4, 6, 8];
+    let newNotificationCount = 0;
+
+    for (const intern of interns) {
+      const assignedProjects = intern.projectAssigned || [];
+      const acceptedCount = assignedProjects.filter(p => p.status === "accepted").length;
+      const duration = intern.duration || 1;
+      const progress = Math.round((arr[acceptedCount] / duration) * 100);
+
+      intern.intern_progress = progress;
+
+      if (progress === 100) {
+        const alreadyNotified = superAdmin.notifiedInterns.includes(intern._id.toString());
+        if (!alreadyNotified) {
+          const message = `Intern ${intern.name} from domain "${intern.domain}" has completed 100% progress.`;
+
+          superAdmin.notifications.push({
+            title: "Intern Completed Internship",
+            message,
+            type: "progress",
+            createdAt: new Date(),
+            isRead: false,
+          });
+
+          superAdmin.notifiedInterns.push(intern._id.toString());
+          newNotificationCount++;
+        }
+      }
+    }
+
+    if (newNotificationCount > 0) {
+      await superAdmin.save();
+    }
+
+    // ==============================
+    // 🧾 Count Certified Interns
+    // ==============================
     const certifiedInternsCount = interns.filter(
       i => i.certificate_link && i.certificate_link.trim() !== ""
     ).length;
 
-    // Aggregate unique meetings
-  // Aggregate unique meetings for display
-let meetingsMap = new Map();
-interns.forEach(intern => {
-  intern.meetings.forEach(meeting => {
-    const key = `${intern.domain}-${intern.batch_no}-${meeting.week}-${meeting.title}`;
-    if (!meetingsMap.has(key)) {
-      meetingsMap.set(key, {
-        ...meeting.toObject(),
-        domain: intern.domain,
-        batch_no: intern.batch_no
+    // ==============================
+    // 🧭 Ambassador Count
+    // ==============================
+    const ambassadorCount = ambassadors.length;
+
+    // ==============================
+    // 📅 Aggregate Meetings
+    // ==============================
+    const meetingsMap = new Map();
+    interns.forEach(intern => {
+      intern.meetings.forEach(meeting => {
+        const key = `${intern.domain}-${intern.batch_no}-${meeting.week}-${meeting.title}`;
+        if (!meetingsMap.has(key)) {
+          meetingsMap.set(key, {
+            ...meeting.toObject(),
+            domain: intern.domain,
+            batch_no: intern.batch_no
+          });
+        }
       });
-    }
-  });
-});
+    });
 
-const getObjectIdTime = id => new Date(parseInt(id.toString().substring(0, 8), 16) * 1000);
+    const getObjectIdTime = id =>
+      new Date(parseInt(id.toString().substring(0, 8), 16) * 1000);
 
-const meetings = Array.from(meetingsMap.values()).sort(
-  (a, b) => getObjectIdTime(b._id) - getObjectIdTime(a._id)
-);
+    const meetings = Array.from(meetingsMap.values()).sort(
+      (a, b) => getObjectIdTime(b._id) - getObjectIdTime(a._id)
+    );
 
-
-    // Admin notices
+    // ==============================
+    // 📢 Admin Notices
+    // ==============================
     const adminNotices = admins.flatMap(a =>
       a.notice.map(n => ({
         title: n.title,
@@ -85,14 +102,10 @@ const meetings = Array.from(meetingsMap.values()).sort(
       }))
     );
 
-   const arr = [0, 1, 2, 3, 4, 6, 8];
-interns.forEach(intern => {
-  const assignedProjects = intern.projectAssigned || [];
-  const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-  const duration = intern.duration || 1;
-  intern.intern_progress = Math.round((arr[acceptedCount] / duration) * 100);
-});
+    // Sort notifications newest first
+    const notifications = superAdmin.notifications.sort((a, b) => b.createdAt - a.createdAt);
 
+    // Render Dashboard (no flash for normal)
     res.render("superAdmin", {
       interns,
       admins,
@@ -100,14 +113,16 @@ interns.forEach(intern => {
       ambassadors,
       batches,
       certifiedInternsCount,
+      ambassadorCount,
       adminNotices,
       meetings,
+      notifications,
       showPasswordPopup: superAdmin.isFirstLogin,
     });
   } catch (err) {
-    console.error(err);
     req.flash("error", "Failed to load Super Admin Dashboard");
     res.redirect("/login");
   }
 });
-module.exports = router
+
+module.exports = router;

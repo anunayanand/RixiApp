@@ -1,17 +1,18 @@
-// routes/internQuizRoutes.js
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User"); // Adjust path if needed
-const Quiz = require("../models/Quiz"); // Adjust path if needed
+const User = require("../models/User");
+const Quiz = require("../models/Quiz");
 
 // GET /intern/quiz/:quizId - render quiz page
 router.get("/quiz/:quizId", async (req, res) => {
   try {
-     const userAgent = req.headers['user-agent'];
+    const userAgent = req.headers["user-agent"];
 
-  if (/mobile|android|iphone|ipad|tablet/i.test(userAgent)) {
-    return req.flash("error", "Quiz can only be taken on a desktop / laptop."), res.redirect("/intern");
-  }
+    if (/mobile|android|iphone|ipad|tablet/i.test(userAgent)) {
+      req.flash("error", "Quiz can only be taken on a desktop / laptop.");
+      return res.redirect("/intern");
+    }
+
     const intern_id = req.session.user;
     const { quizId } = req.params;
 
@@ -41,9 +42,9 @@ router.get("/quiz/:quizId", async (req, res) => {
       return res.redirect("/intern");
     }
 
-     // ===== Quiz Duration: 1.5 min per question =====
+    // Quiz duration: 1.5 minutes per question
     const numQuestions = quiz.questions.length;
-    const quizDuration = numQuestions * 1.5; // minutes
+    const quizDuration = numQuestions * 1.5;
 
     res.render("quiz", {
       quiz,
@@ -53,32 +54,32 @@ router.get("/quiz/:quizId", async (req, res) => {
       quizDuration,
     });
   } catch (error) {
-    console.error(error);
     req.flash("error", "Failed to load quiz");
     res.redirect("/intern");
   }
 });
 
+// POST /intern/quiz/:quizId/submit - handle quiz submission
 router.post("/quiz/:quizId/submit", async (req, res) => {
   try {
-    const intern_id = req.session.user; // get intern from session
+    const intern_id = req.session.user;
     const { quizId } = req.params;
 
-    // 1) Find intern
+    // 1️⃣ Find intern
     const intern = await User.findById(intern_id);
     if (!intern) {
       req.flash("error", "Unauthorized access");
       return res.redirect("/login");
     }
 
-    // 2) Find quiz
+    // 2️⃣ Find quiz
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
       req.flash("error", "Quiz not found");
       return res.redirect("/intern/my-quizzes");
     }
 
-    // 3) Check assignment
+    // 3️⃣ Find assignment
     const assignmentIndex = intern.quizAssignments.findIndex(
       (a) => a.quizId.toString() === quizId.toString()
     );
@@ -90,42 +91,32 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
 
     const assignment = intern.quizAssignments[assignmentIndex];
 
-    // 4) Check attempt limit
+    // 4️⃣ Check attempt limit
     if (assignment.attemptCount >= 2) {
       req.flash("error", "You have reached the maximum attempts for this quiz");
       return res.redirect("/intern");
     }
 
-    // 5) Calculate score
+    // 5️⃣ Calculate score
     const answers = req.body.answers || {};
-    // console.log("DEBUG: answers received from form:", answers); // <-- debug log
-
     let score = 0;
 
     quiz.questions.forEach((q, index) => {
       const key = index.toString();
       const selected = answers[key];
-      // console.log(
-      //   `DEBUG: Question ${index + 1} correctAnswer=${
-      //     q.correctAnswer
-      //   }, selected=${selected}`
-      // );
-
       if (selected != null && Number(selected) === Number(q.correctAnswer)) {
         score += 1;
-        // console.log(`DEBUG: Question ${index + 1} correct! Score=${score}`);
       }
     });
 
-    // console.log(`DEBUG: Final Score = ${score} / ${quiz.questions.length}`);
-
     const totalQuestions = quiz.questions.length;
     const percentage = ((score / totalQuestions) * 100).toFixed(2);
+
+    // 6️⃣ Update intern record
     if (percentage >= 60) {
       intern.isPassed = true;
     }
 
-    // 6) Update User assignment
     assignment.score = score;
     assignment.attemptCount += 1;
     intern.quizAssignments[assignmentIndex] = assignment;
@@ -136,13 +127,42 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
 
     await intern.save();
 
+    // 7️⃣ Notify SuperAdmin and Admins
+    const notificationMessage = `${intern.name} has submitted the quiz "${quiz.title}" (Week ${quiz.week}) in domain "${quiz.domain}".`;
+
+    // SuperAdmin notification
+    const superAdmin = await User.findOne({ role: "superAdmin" });
+    if (superAdmin) {
+      superAdmin.notifications.push({
+        title: "Quiz Submitted by Intern",
+        message: notificationMessage,
+        type: "quizSubmitted",
+        createdAt: new Date(),
+        isRead: false,
+      });
+      await superAdmin.save();
+    }
+
+    // Admin notification
+    const admins = await User.find({ role: "admin", domain: intern.domain });
+    for (let admin of admins) {
+      admin.notifications.push({
+        title: "Quiz Submitted",
+        message: notificationMessage,
+        type: "quizSubmitted",
+        createdAt: new Date(),
+        isRead: false,
+      });
+      await admin.save();
+    }
+
+    // 8️⃣ Confirmation message to intern
     req.flash(
       "success",
-      `Quiz submitted successfully!`
+      `Quiz submitted successfully! You scored ${score}/${totalQuestions} (${percentage}%).`
     );
     res.redirect("/intern");
   } catch (error) {
-    // console.error(error);
     req.flash("error", "Failed to submit quiz");
     res.redirect("/intern");
   }
