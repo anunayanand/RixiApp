@@ -401,3 +401,47 @@ const imageInput = document.getElementById('imageInput');
 });
 
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("notificationList");
+  const clearAllBtn = document.getElementById("clearAllBtn");
+  const dot = document.getElementById("notificationDot");
+
+  // ✅ Mark single notification as read
+  list.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("mark-read-btn")) {
+      const li = e.target.closest("li");
+      const id = li.getAttribute("data-id");
+      try {
+        const res = await fetch(`/notification/read/${id}`, { method: "POST" });
+        const data = await res.json();
+        if (data.success) {
+          li.remove(); // remove notification from dropdown
+          if (list.querySelectorAll("li[data-id]").length === 0) {
+            list.innerHTML = '<li class="p-3 text-center text-muted">No new notifications 🎉</li>';
+            if (dot) dot.style.display = "none";
+          }
+        }
+      } catch (err) {
+        console.error("Error removing notification", err);
+      }
+    }
+  });
+
+  // ✅ Clear all notifications
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch("/notification/clear", { method: "POST" });
+        const data = await res.json();
+        if (data.success) {
+          list.innerHTML = '<li class="p-3 text-center text-muted">No new notifications 🎉</li>';
+          if (dot) dot.style.display = "none";
+        }
+      } catch (err) {
+        console.error("Error clearing notifications", err);
+      }
+    });
+  }
+});

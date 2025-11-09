@@ -236,3 +236,48 @@ document.addEventListener("contextmenu", function(e) {
   e.preventDefault(); // block right-click
   // alert("Right-click is disabled!");
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("notificationList");
+  const markAllBtn = document.getElementById("markAllBtn");
+  const dot = document.getElementById("notificationDot");
+
+  // ✅ Mark single notification as read
+  list.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("mark-as-read")) {
+      const li = e.target.closest("li");
+      const notificationId = li.getAttribute("data-id");
+
+      const res = await fetch(`/notification/read/${notificationId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        li.remove();
+        if (list.querySelectorAll("li[data-id]").length === 0) {
+          list.innerHTML = '<li class="p-3 text-center text-muted">No new notifications 🎉</li>';
+          if (dot) dot.style.display = "none";
+        }
+      }
+    }
+  });
+
+  // ✅ Mark all as read
+  if (markAllBtn) {
+    markAllBtn.addEventListener("click", async () => {
+      const res = await fetch("/notification/clear", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        list.innerHTML = '<li class="p-3 text-center text-muted">No new notifications 🎉</li>';
+        if (dot) dot.style.display = "none";
+      }
+    });
+  }
+});
