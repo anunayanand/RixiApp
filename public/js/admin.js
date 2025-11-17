@@ -281,3 +281,103 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// Function to update project status with loader + flash-style toasts
+document.addEventListener("DOMContentLoaded", () => {
+  const forms = document.querySelectorAll('form[action="/admin/projects/update-status"]');
+
+  forms.forEach(form => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const userId = form.querySelector('input[name="userId"]').value;
+      const projectId = form.querySelector('input[name="projectId"]').value;
+      const status = form.querySelector('select[name="status"]').value;
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+
+      // Add loader inside the button
+      btn.innerHTML = `
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        Updating...
+      `;
+
+      try {
+        const res = await fetch("/admin/projects/update-status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, projectId, status })
+        });
+
+        const data = await res.json();
+
+        // Restore button
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+
+        const badge = form.closest("tr").querySelector(".badge");
+
+        if (data.success) {
+          badge.textContent = status;
+          badge.classList.remove("badge-approved", "badge-rejected", "badge-pending");
+
+          if (status === "accepted") badge.classList.add("badge-approved");
+          else if (status === "rejected") badge.classList.add("badge-rejected");
+          else badge.classList.add("badge-pending");
+
+          showFlashToast(data.message, "success");
+        } else {
+          showFlashToast(data.message, "error");
+        }
+
+      } catch (err) {
+        console.error("🔥 Error:", err);
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+        showFlashToast("Error updating project status", "error");
+      }
+    });
+  });
+
+  // 👇 Flash-style toast (matches req.flash styling)
+  function showFlashToast(message, type) {
+    // Find or create the toast container (top-right)
+    let container = document.querySelector(".toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.className = "toast-container position-fixed top-0 end-0 p-3";
+      container.style.zIndex = 2000;
+      document.body.appendChild(container);
+    }
+
+    // Choose background color class (like your flash)
+    const bgClass =
+      type === "success" ? "text-bg-success" :
+      type === "error" ? "text-bg-danger" :
+      "text-bg-info";
+
+    // Create toast element
+    const toastEl = document.createElement("div");
+    toastEl.className = `toast align-items-center ${bgClass} border-0 mb-2`;
+    toastEl.setAttribute("role", "alert");
+    toastEl.setAttribute("aria-live", "assertive");
+    toastEl.setAttribute("aria-atomic", "true");
+
+    toastEl.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+
+    container.appendChild(toastEl);
+
+    // Initialize and show the toast
+    const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+    toast.show();
+
+    // Remove from DOM when hidden
+    toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+  }
+});
