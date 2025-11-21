@@ -276,7 +276,12 @@ app.use("/", uploadScreenshotRoute);
 const blockedMobileRouter = require('./routes/mobileBlockedRoute');
 app.use('/',blockedMobileRouter);
 
+// Toggle Project Visibility
 const toggleUpdateButton = require('./routes/toggleUpdateButton');
 app.post('/project/toggle-visibility/:id',toggleUpdateButton);
+
+// Update Intern Quiz Details
+const updateInternQuizRouter = require('./routes/updateInternQuizRoute');
+app.use('/', updateInternQuizRouter);
 
 app.listen(3000, () => console.log("Server running at http://localhost:3000"));

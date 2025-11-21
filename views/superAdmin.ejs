@@ -161,8 +161,8 @@
     </div>
     <div class="col-md-3">
       <div class="card stat-card text-center p-3">
-        <h6 class="text-muted">Total Ambassadors</h6>
-        <p class="display-5 fw-bold text-info mb-0"><%=ambassadorCount %></p>
+        <h6 class="text-muted">Total Batches</h6>
+        <p class="display-5 fw-bold text-info mb-0"><%= batches.length %></p>
       </div>
     </div>
     <div class="col-md-3">
@@ -1200,6 +1200,7 @@
             <% }) %>
           </select>
         </div>
+
         <div class="col-md-2">
           <select id="domainFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
             <option value="all" selected>All Domains</option>
@@ -1209,22 +1210,24 @@
             <% }) %>
           </select>
         </div>
+
         <!-- Duration Filter -->
-  <div class="col-md-2">
-    <select id="durationFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
-      <option value="all" selected>All Durations</option>
-      <% 
-        const completedDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
-        completedDurations.forEach(duration => { 
-      %>
-        <option value="<%= duration %>"><%= duration %> Weeks</option>
-      <% }) %>
-    </select>
-  </div>
+        <div class="col-md-2">
+          <select id="durationFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
+            <option value="all" selected>All Durations</option>
+            <% 
+              const completedDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
+              completedDurations.forEach(duration => { 
+            %>
+              <option value="<%= duration %>"><%= duration %> Weeks</option>
+            <% }) %>
+          </select>
+        </div>
 
         <div class="col-md-2 flex-grow-1">
           <input type="text" id="completedSearchInput" class="form-control" placeholder="Search by Intern ID" onkeyup="applyCompletedFilters()">
         </div>
+
         <div class="col-md-2">
           <button class="btn btn-secondary w-100" onclick="clearCompletedFilters()">Clear Filters</button>
         </div>
@@ -1243,20 +1246,29 @@
               <th>Quiz Score</th>
               <th>Status</th>
               <th>Screenshot</th>
+              <th>Update</th>
             </tr>
           </thead>
+
           <tbody id="completedInternTable">
             <% interns
-                 .filter(i => i.intern_progress === 100)
-                 .forEach(i => { %>
-              <tr class="completed-intern-row" data-batch="<%= i.batch_no %>" data-domain="<%= i.domain %>" data-duration="<%= i.duration %>">
+              .filter(i => i.intern_progress === 100)
+              .forEach(i => { %>
+
+              <tr class="completed-intern-row"
+                  data-batch="<%= i.batch_no %>"
+                  data-domain="<%= i.domain %>"
+                  data-duration="<%= i.duration %>"
+                  data-id="<%= i._id %>">
+
                 <td><%= i.name %></td>
                 <td><%= i.domain %></td>
                 <td><%= i.batch_no %></td>
                 <td><%= i.duration %> Weeks</td>
                 <td class="intern-id"><%= i.intern_id %></td>
-                <td><%= i.quiz_score %></td>
-                <td>
+                <td class="quiz-score"><%= i.quiz_score %></td>
+
+                <td class="status-badge">
                   <% if (i.quizAssignments && i.quizAssignments.some(q => q.attemptCount >= 1)) { %>
                     <% if (i.isPassed) { %>
                       <span class="badge bg-success">Pass</span>
@@ -1265,6 +1277,7 @@
                     <% } %>
                   <% } %>
                 </td>
+
                 <td>
                   <% if (i.screenshot_img) { %>
                     <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#screenshotModal<%= i._id %>">
@@ -1287,7 +1300,99 @@
                     </div>
                   <% } %>
                 </td>
+
+                <!-- Update Button & Modal -->
+                <td>
+                  <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill"
+                          data-bs-toggle="modal"
+                          data-bs-target="#updateModal<%= i._id %>">
+                     Update
+                  </button>
+
+                  <div class="modal fade" id="updateModal<%= i._id %>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Intern - <%= i.name %></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                       <div class="modal-body">
+
+  <input type="hidden" id="uid-<%= i._id %>" value="<%= i._id %>">
+
+  <!-- ROW 1 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Status</label>
+      <select id="isPassed-<%= i._id %>" class="form-select">
+        <option value="true" <%= i.isPassed ? 'selected' : '' %>>Pass</option>
+        <option value="false" <%= !i.isPassed ? 'selected' : '' %>>Fail</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Final Score</label>
+      <input type="number" id="quizScore-<%= i._id %>" class="form-control"
+             value="<%= i.quiz_score %>" min="0">
+    </div>
+  </div>
+
+  <!-- ROW 3 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Attempt Count</label>
+      <input type="number" id="attemptCount-<%= i._id %>" class="form-control"
+             value="<%= i.quizAssignments?.[0]?.attemptCount || 0 %>" min="0" max="2">
+    </div>
+  </div>
+
+  <!-- ROW 4 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Quiz Score</label>
+      <input type="number" id="assignmentScore-<%= i._id %>" class="form-control"
+             value="<%= i.quizAssignments?.[0]?.score || 0 %>" min="0">
+    </div>
+  </div>
+
+  <!-- ROW 5 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Certificate ID</label>
+      <input type="text" id="certificateId-<%= i._id %>" class="form-control"
+             value="<%= i.certificate_id %>">
+    </div>
+  </div>
+
+  <!-- ROW 6 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Certificate Link</label>
+      <input type="text" id="certificateLink-<%= i._id %>" class="form-control"
+             value="<%= i.certificate_link %>">
+    </div>
+  </div>
+
+</div>
+
+                        <div class="modal-footer">
+                          <button class="btn btn-success" onclick="updateIntern('<%= i._id %>')">
+                            Save Changes
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
               </tr>
+
             <% }) %>
           </tbody>
         </table>
@@ -1296,6 +1401,51 @@
     </div>
   </div>
 </section>
+
+<script>
+function updateIntern(id) {
+
+    const data = {
+        isPassed: document.getElementById(`isPassed-${id}`).value,
+        quiz_score: document.getElementById(`quizScore-${id}`).value,
+        attemptCount: document.getElementById(`attemptCount-${id}`).value,
+        assignmentScore: document.getElementById(`assignmentScore-${id}`).value,
+        certificate_id: document.getElementById(`certificateId-${id}`).value,
+        certificate_link: document.getElementById(`certificateLink-${id}`).value
+    };
+
+    fetch(`/superAdmin/updateIntern/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+
+            // Update UI in table
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            if (row) {
+                row.querySelector(".quiz-score").innerText = data.quiz_score;
+
+                row.querySelector(".status-badge").innerHTML =
+                    data.isPassed === "true"
+                        ? '<span class="badge bg-success">Pass</span>'
+                        : '<span class="badge bg-danger">Fail</span>';
+            }
+
+            // Close modal smoothly
+            const modalEl = document.getElementById(`updateModal${id}`);
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.hide();
+        }
+    })
+    .catch(err => {
+        console.error("Update Error:", err);
+    });
+}
+</script>
+
 
 <script>
 function applyCompletedFilters() {
