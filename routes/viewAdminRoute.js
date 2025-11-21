@@ -35,6 +35,7 @@ router.get("/superAdmin/admin/:adminId", authRole("superAdmin"), async (req, res
     );
 
     const quizzes = await Quiz.find({ domain: admin.domain }).sort({ createdAt: -1 });
+    const showPasswordPopup = false;
 
     req.flash('info', `Viewing Admin: ${admin.name}`);
     res.render("admin", {
@@ -45,7 +46,7 @@ router.get("/superAdmin/admin/:adminId", authRole("superAdmin"), async (req, res
       certifiedInternsCount,
       notices,
       meetings: upcomingMeetings,
-      showPasswordPopup: admin.isFirstLogin,
+      showPasswordPopup,
       quizzes,
       notifications: admin.notifications || [],
     });

@@ -110,11 +110,6 @@ const userSchema = new mongoose.Schema({
         enum: ["meeting", "project", "quizAssigned", "quizSubmitted","progress"],
         required: true,
       },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 60 * 60 * 24 * 7, // 7 days TTL
-      },
       isRead: { type: Boolean, default: false },
     },
   ],

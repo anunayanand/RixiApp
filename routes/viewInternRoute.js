@@ -33,8 +33,9 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       }));
 
   const projects = await Project.find({ domain: intern.domain });
+  const showPasswordPopup = false;
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentor,totalProjects,assignedMeetings,showPasswordPopup: intern.isFirstLogin ,assignedQuizzes});
+  res.render("intern", { intern, projects,progress,attendanceRate,mentor,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes});
   }catch(err){
     // console.error(err);
     req.flash("error", "Intern details loading failed");

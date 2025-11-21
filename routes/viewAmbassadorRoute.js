@@ -26,7 +26,7 @@ router.get("/superAdmin/ambassador/:ambassadorId", authRole("superAdmin"), async
     const leaderboard = await Ambassador.find({}, { name: 1, email: 1, internCount: 1, _id: 0 })
         .sort({ internCount: -1 })
         .lean();
-
+    const showPasswordPopup = false;
     req.flash('info', `Viewing Ambassador: ${ambassador.name}`);
     res.render("ambassador", { 
       ambassador, 
@@ -35,7 +35,7 @@ router.get("/superAdmin/ambassador/:ambassadorId", authRole("superAdmin"), async
       earnings, 
       badge ,
       leaderboard,
-      showPasswordPopup: ambassador.isFirstLogin,
+      showPasswordPopup,
       bronzeMail: ambassador.bronze_mail_sent,
       silverMail: ambassador.silver_mail_sent,
       goldMail: ambassador.gold_mail_sent
