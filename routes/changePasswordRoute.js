@@ -47,7 +47,7 @@ router.post("/ambassador/change-password",async (req, res) => {
 router.post("/intern/change-password", authRole(['admin','intern','superAdmin']), async (req, res) => {
   try {
     // console.log("🔹 Intern password change route hit");
-    console.log("Session user:", req.session.user);
+    // console.log("Session user:", req.session.user);
 
     const { newPassword, confirmPassword } = req.body;
 
@@ -83,7 +83,7 @@ router.post("/intern/change-password", authRole(['admin','intern','superAdmin'])
      return res.redirect(redirectUrl);
     }
 
-    console.log("🔸 Hashing new password...");
+    // console.log("🔸 Hashing new password...");
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     // console.log("🔸 Hash complete:", hashedPassword);
 

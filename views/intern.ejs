@@ -269,18 +269,74 @@
     >
       <!-- Sidebar -->
       <nav
-        class="col-md-3 d-md-block collapse show sidebar"
+        class="col-md-3 d-md-block collapse show sidebar position-relative"
         id="sidebarMenu"
         style="border: 1px solid #ff6600"
       >
+   <div 
+  class="dropdown position-absolute" 
+  style="top: 10px; right: 10px; z-index: 2000;"
+>
+  <button 
+    class="btn  position-relative rounded-circle"
+    id="notificationButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style="color: #ff6600; background-color: #1e1e1e; border: none !important;"
+    >
+
+    <i class="bi bi-bell fs-4"></i>
+
+    <% const unreadCount = notifications ? notifications.length : 0; %>
+    <% if (unreadCount > 0) { %>
+      <span 
+        id="notificationDot"
+        class="position-absolute top-5 start-90 translate-middle p-1 rounded-circle" style="background-color: #ff6600;">
+        <span class="visually-hidden">New alerts</span>
+      </span>
+    <% } %>
+  </button>
+
+  <ul 
+    class="dropdown-menu dropdown-menu-end shadow p-2"
+    style="width: 320px; max-height: 400px; overflow-y: auto;"
+    id="notificationList">
+
+    <li class="dropdown-header fw-bold d-flex justify-content-between align-items-center" style="padding-left: 0.25rem; padding-right: 0.25rem;">
+      <span>Notifications</span>
+      <% if (notifications && notifications.length > 0) { %>
+        <button type="button" id="markAllBtn" class="btn btn-sm btn-danger">Mark All</button>
+      <% } %>
+    </li>
+    <hr class="my-1">
+
+    <% if (notifications && notifications.length > 0) { %>
+      <% notifications.forEach(n => { %>
+        <li class="p-2 border-bottom d-flex justify-content-between align-items-start" data-id="<%= n._id %>">
+          <div style="white-space: normal;">
+            <small><strong><%= n.title %></strong></small><br>
+            <small><%= n.message %></small><br>
+            <small class="text-muted"><%= new Date(n.createdAt).toLocaleString() %></small>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-success mark-as-read">✔</button>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li class="p-3 text-center text-muted">No new notifications</li>
+    <% } %>
+  </ul>
+</div>
+
+
         <div class="text-center mb-4">
+          
           <!-- Circular Profile Image -->
           <div
             class="rounded-circle overflow-hidden mx-auto mb-2"
             style="width: 120px; height: 120px; cursor: pointer"
             data-bs-toggle="modal"
             data-bs-target="#updateProfileModal"
-          >
+          > 
             <img
               src="<%= intern.img_url %>"
               alt="Profile"

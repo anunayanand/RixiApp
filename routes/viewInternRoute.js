@@ -31,11 +31,12 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
         attemptCount: a.attemptCount,
         isClosed: a.quizId.isClosed
       }));
-
+  // Sort notifications (newest first)
+  const notifications = intern.notifications.sort((a, b) => b.createdAt - a.createdAt);
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentor,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes});
+  res.render("intern", { intern, projects,progress,attendanceRate,mentor,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications});
   }catch(err){
     // console.error(err);
     req.flash("error", "Intern details loading failed");
