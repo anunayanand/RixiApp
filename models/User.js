@@ -114,7 +114,7 @@ const userSchema = new mongoose.Schema({
       isRead: { type: Boolean, default: false },
     },
   ],
-  // notifiedInterns: [{ type: String, default: [] }],
+  notifiedInterns: [{ type: String, default: [] }],
 });
 
 module.exports = mongoose.model("User", userSchema);
