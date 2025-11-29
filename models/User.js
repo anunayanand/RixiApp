@@ -110,10 +110,11 @@ const userSchema = new mongoose.Schema({
         enum: ["meeting", "project", "quizAssigned", "quizSubmitted","progress"],
         required: true,
       },
+      createdAt: { type: Date, default: Date.now },
       isRead: { type: Boolean, default: false },
     },
   ],
-  notifiedInterns: [{ type: String, default: [] }],
+  // notifiedInterns: [{ type: String, default: [] }],
 });
 
 module.exports = mongoose.model("User", userSchema);

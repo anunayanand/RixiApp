@@ -316,7 +316,7 @@
           <div style="white-space: normal;">
             <small><strong><%= n.title %></strong></small><br>
             <small><%= n.message %></small><br>
-            <small class="text-muted"><%= new Date(n.createdAt).toLocaleString() %></small>
+            <!-- <small class="text-muted"><%= n.createdAt ? new Date(n.createdAt).toLocaleString() : 'Date not available' %></small> -->
           </div>
           <button type="button" class="btn btn-sm btn-outline-success mark-as-read">✔</button>
         </li>

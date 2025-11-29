@@ -6,19 +6,17 @@ const Project = require("../models/Project");
 
 router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (req, res) => {
   try{
-    const intern = await User.findById(req.params.internId);
+    const intern = await User.findById(req.params.internId).populate('quizAssignments.quizId');
   if (!intern || intern.role !== "intern"){
     req.flash("error", "Intern not found");
     return res.redirect("/admin")
   } ;
       const assignedProjects = intern.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-      let duration = intern.duration;
-      let arr = [0,1,2,3,4,6,8];
-      const progress = Math.round((arr[acceptedCount] / duration)*100);
+      const totalProjects = intern.projectAssigned.length;
+      const progress = totalProjects > 0 ? Math.round((acceptedCount / totalProjects) * 100) : 0;
       // console.log("Progress:", progress);
       const totalMeetings = intern.meetings.length;
-      const totalProjects = intern.projectAssigned.length;
       const attended = intern.meetings.filter(m => m.attendance === "present").length;  
       const attendanceRate = totalMeetings > 0 ? Math.round((attended / totalMeetings) * 100) : 0;
       const mentor = await User.findOne({ role: "admin", domain: intern.domain });
@@ -32,7 +30,11 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
         isClosed: a.quizId.isClosed
       }));
   // Sort notifications (newest first)
-  const notifications = intern.notifications.sort((a, b) => b.createdAt - a.createdAt);
+  const notifications = intern.notifications.sort((a, b) => {
+    const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return bTime - aTime;
+  });
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
   req.flash('info', `Viewing Intern: ${intern.name}`);

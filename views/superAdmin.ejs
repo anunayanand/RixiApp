@@ -68,17 +68,10 @@
 
     <!-- Main Content -->
     <div class="main-content flex-grow-1">
+<!--Header Section -->
+<!-- 🔹 Header + Notification Bell Container -->
+<div class="d-flex justify-content-between align-items-center mb-3 px-3  ">
 
-      <!-- Welcome Message -->
-
-
-      <!-- Dashboard -->
-<section id="dashboard" >
-
-  <!-- Header -->
-     <!-- 🔹 Header + Notification Bell Container -->
-<div class="d-flex justify-content-between align-items-center mb-3 px-3">
-  
   <!-- 🏷️ Left Side: Header -->
   <div class="header">
     <h4 class="section-title mb-0">
@@ -88,7 +81,7 @@
 
   <!-- 🔔 Right Side: Notification Bell -->
   <div class="dropdown position-relative">
-  <button 
+  <button
     class="btn btn-light position-relative"
     id="notificationButton"
     data-bs-toggle="dropdown"
@@ -98,7 +91,7 @@
     <% const unreadCount = notifications ? notifications.length : 0; %>
     <% if (unreadCount > 0) { %>
       <!-- 🔴 Red Dot -->
-      <span 
+      <span
         id="notificationDot"
         class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
         <span class="visually-hidden">New alerts</span>
@@ -107,14 +100,14 @@
   </button>
 
   <!-- 🔽 Dropdown Menu -->
-  <ul 
+  <ul
     class="dropdown-menu dropdown-menu-end shadow p-2"
     style="width: 320px; max-height: 400px; overflow-y: auto;"
     id="notificationList">
 
     <li class="dropdown-header fw-bold d-flex justify-content-between align-items-center">
       <span>Notifications</span>
-      <% if (unreadCount > 0) { %>
+      <% if (notifications && notifications.length > 0) { %>
         <button id="clearAllBtn" class="btn btn-sm btn-danger">Mark All</button>
       <% } %>
     </li>
@@ -135,7 +128,7 @@
       <li class="p-3 text-center text-muted">No new notifications 🎉</li>
     <% } %>
   </ul>
-</div>
+  </div>
 
 
 
@@ -143,6 +136,13 @@
 
 <!-- Divider -->
 <hr class="mt-2">
+
+      <!-- Welcome Message -->
+
+
+      <!-- Dashboard -->
+<section id="dashboard" >
+
 
 
   <!-- Stats Row -->
@@ -1185,7 +1185,7 @@
 <!-- Certified Interns Section -->
 <section id="completedInterns" style="display:none;">
   <div class="container px-0">
-    <div class="card shadow-sm border rounded p-3" style="border: 1px solid #ff6600 !important;">
+    <div class="card shadow-sm border rounded p-3 " style="border: 1px solid #ff6600 !important;">
 
       <!-- Section Header -->
       <h4 class="text-center mb-3">Certified Interns</h4>
