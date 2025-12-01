@@ -115,6 +115,8 @@ const userSchema = new mongoose.Schema({
     },
   ],
   notifiedInterns: [{ type: String, default: [] }],
+  otp: String,
+  otpExpiry: Date,
 });
 
 module.exports = mongoose.model("User", userSchema);

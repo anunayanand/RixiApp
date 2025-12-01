@@ -32,6 +32,7 @@ const cloudinary = require("cloudinary").v2;
 
 
 const app = express();
+app.use(express.json());
 app.use(express.static("public"));
 app.use(express.json({ limit: '15mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -101,6 +102,10 @@ app.get("/login", (req, res) => {
   req.session.captcha = randomText; // store in session
 
   res.render("login", { captchaText: randomText });
+});
+
+app.get("/reset-password", (req, res) => {
+  res.render("resetPassword");
 });
 
 app.get("/generate-captcha", (req, res) => {
@@ -256,9 +261,17 @@ const updateImageRoute = require('./routes/updateImageRoute');
 app.post('/update-image',updateImageRoute);
 app.post('/ambassador/update-image',updateImageRoute);
 
-// forgott password
+// forgott password 
 const forgotPasswordRouter = require('./routes/forgotPassword');
 app.use('/', forgotPasswordRouter);
+
+// Reset Password
+const sendOtpRouter = require('./routes/send-otpRoute');
+app.use('/', sendOtpRouter);
+
+const verifyResetRouter = require('./routes/verifyResetRoute');
+app.use('/', verifyResetRouter);
+
 
 // Assign and create Quiz
 const quizRoutes = require("./routes/quizRoute");
@@ -276,12 +289,9 @@ app.use("/", uploadScreenshotRoute);
 const blockedMobileRouter = require('./routes/mobileBlockedRoute');
 app.use('/',blockedMobileRouter);
 
-// Toggle Project Visibility
 const toggleUpdateButton = require('./routes/toggleUpdateButton');
 app.post('/project/toggle-visibility/:id',toggleUpdateButton);
 
-// Update Intern Quiz Details
 const updateInternQuizRouter = require('./routes/updateInternQuizRoute');
 app.use('/', updateInternQuizRouter);
-
 app.listen(3000, () => console.log("Server running at http://localhost:3000"));
