@@ -6,10 +6,10 @@ const User = require("../models/User");
 const SCRIPT_URL = process.env.SCRIPT_URL;
 
 router.post("/send-otp", async (req, res) => {
-  const { intern_id, email, phone } = req.body;
-//   console.log("POST /send-otp body:", req.body);
+  const { intern_id, email } = req.body;
+  // console.log("POST /send-otp body:", req.body);
 
-  if (!intern_id || !email || !phone) {
+  if (!intern_id || !email) {
     req.flash("error", "All fields are required");
     return res.status(400).json({ success: false, msg: "All fields are required", flash: req.flash("error") });
   }
@@ -21,7 +21,7 @@ router.post("/send-otp", async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ intern_id, email, phone });
+    const user = await User.findOne({ intern_id, email });
 
     if (!user) {
       req.flash("error", "User not found with provided details");
@@ -34,7 +34,7 @@ router.post("/send-otp", async (req, res) => {
     user.otpExpiry = Date.now() + 5 * 60 * 1000;
     await user.save();
 
-    // console.log("Generated OTP:", otp);
+    console.log("Generated OTP:", otp);
 
     await axios.post(SCRIPT_URL, { email, otp });
 

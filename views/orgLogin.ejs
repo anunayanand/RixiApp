@@ -82,9 +82,18 @@
                     <input type="email" class="form-control" name="email" id="contactEmail" placeholder="Enter your email address" required>
                   </div>
                 <div class="mb-3">
-                  <label for="InternID" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control" id="InternID" placeholder="Password" required>
-                </div>
+  <label for="InternID" class="form-label">Password</label>
+
+  <div class="position-relative">
+    <input type="password" name="password" class="form-control pe-5"
+           id="InternID" placeholder="Password" required>
+
+    <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3"
+       id="toggleIcon"
+       style="cursor: pointer;"
+       onclick="togglePassword()"></i>
+  </div>
+</div>
 
                 <div class="mb-2 text-center" id="errorMsg"></div>
 
@@ -118,6 +127,21 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
+  <script>
+  function togglePassword() {
+    const passwordInput = document.getElementById("InternID");
+    const toggleIcon = document.getElementById("toggleIcon");
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      toggleIcon.classList.remove("bi-eye-slash");
+      toggleIcon.classList.add("bi-eye");
+    } else {
+      passwordInput.type = "password";
+      toggleIcon.classList.remove("bi-eye");
+      toggleIcon.classList.add("bi-eye-slash");
+    }
+  }
+</script>
 
 </body>
 
