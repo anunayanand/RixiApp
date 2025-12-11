@@ -19,7 +19,8 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       const totalMeetings = intern.meetings.length;
       const attended = intern.meetings.filter(m => m.attendance === "present").length;  
       const attendanceRate = totalMeetings > 0 ? Math.round((attended / totalMeetings) * 100) : 0;
-      const mentor = await User.findOne({ role: "admin", domain: intern.domain });
+      const mentor = await User.findOne({ role: "admin", domain: intern.domain }).select("name"); 
+      const mentorName = mentor?.name ?? "No Mentor";
       const assignedMeetings = intern.meetings || [];
       const assignedQuizzes = (intern.quizAssignments || [])
       .filter(a => a.assigned)
@@ -38,9 +39,9 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentor,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications});
+  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications});
   }catch(err){
-    // console.error(err);
+    console.error(err);
     req.flash("error", "Intern details loading failed");
     res.redirect("/admin");
   }

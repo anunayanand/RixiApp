@@ -34,7 +34,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     const attendanceRate = totalMeetings > 0 ? Math.round((attended / totalMeetings) * 100) : 0;
 
     const totalProjects = assignedProjects.length;
-    const mentor = await User.findOne({ role: "admin", domain: intern.domain });
+    const mentor = await User.findOne({ role: "admin", domain: intern.domain }).select("name"); 
+    const mentorName = mentor?.name ?? "No Mentor";
 
     // Sort notifications (newest first)
     const notifications = intern.notifications.sort((a, b) => b.createdAt - a.createdAt);
@@ -55,7 +56,7 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       projects,
       progress,
       attendanceRate,
-      mentor,
+      mentorName,
       totalProjects,
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,

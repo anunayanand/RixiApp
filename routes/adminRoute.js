@@ -99,7 +99,7 @@ router.get("/admin", authRole("admin"), async (req, res) => {
 
   } catch (err) {
     req.flash("error", "Server Error");
-    res.redirect("/login");
+    res.redirect("/admin-login");
   }
 });
 
