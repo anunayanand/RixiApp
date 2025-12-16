@@ -74,7 +74,7 @@
                 <div class="d-flex justify-content-center">
                   <img src="/img/success.gif" alt="">
                 </div>
-                <h3>This is to certify that "<%= user.name.toUpperCase()%>" has successfully completed <%= user.duration%> week online project based “<%= user.domain%>” Internship at “Rixi Lab”.</h3>
+                <h3>This is to certify that "<%= user.name.toUpperCase()%>" has successfully completed <%= user.duration%> week online project based “<%= user.domain%>” Internship at “Rixi Lab”, from <%= new Date(user.starting_date).toDateString().slice(4) %> to <%= new Date(user.completion_date).toDateString().slice(4) %>. </h3>
               </div>
             </div>
           </div>

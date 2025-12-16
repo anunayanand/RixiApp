@@ -5,10 +5,10 @@ const User = require("../models/User");
 
 // Certificate Verification Route
 router.post("/verify-certificate", async (req, res) => {
- const { certificate_id } = req.body;
+ const {intern_id, certificate_id } = req.body;
   try {
     // Find user by intern_id and certificate_id
-    const user = await User.findOne({certificate_id: certificate_id });
+    const user = await User.findOne({intern_id:intern_id,certificate_id: certificate_id });
     if (user) {
       
      req.flash('success_msg', 'Certificate Verified Successfully!');
