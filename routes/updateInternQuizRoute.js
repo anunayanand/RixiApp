@@ -26,11 +26,6 @@ router.post("/superAdmin/updateIntern/:id", authRole('superAdmin'), async (req, 
     
     }
 
-    // Check if no quiz assigned
-    // if (user.quizAssignments.length === 0) {
-    //   req.flash("error", "Quiz not assigned");
-    //   return res.redirect("/superAdmin");
-    // }
 
     // -------- Optional Updates (Only update if provided) -------- //
 
@@ -46,7 +41,7 @@ router.post("/superAdmin/updateIntern/:id", authRole('superAdmin'), async (req, 
       user.certificate_id = certificate_id;
     }
 
-    if (certificate_link !== undefined && certificate_link !== "") {
+    if (certificate_link !== undefined ) {
       user.certificate_link = certificate_link;
     }
 
