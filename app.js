@@ -140,6 +140,9 @@ const verifyCertificateRouter = require('./routes/verifyCertificateRouter');
 app.get("/certificate", (req, res) => res.render("certificate"));
 app.post('/verify-certificate', verifyCertificateRouter);
 
+const downloadCertificateRoute = require('./routes/downloadCertificateRoute');
+app.use('/', downloadCertificateRoute);
+
 app.get("/internship", (req, res) => {
   res.render("internship");
 });

@@ -1254,7 +1254,7 @@
 
           <tbody id="completedInternTable">
             <% interns
-              .filter(i => i.intern_progress === 100)
+              .filter(i => i.intern_progress === 100 && i.quizAssignments.length != 0)
               .forEach(i => { %>
 
               <tr class="completed-intern-row"
@@ -1380,6 +1380,24 @@
     </div>
   </div>
 
+  <!-- ROW 7 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Starting Date</label>
+      <input type="date" id="startingDate-<%= i._id %>" class="form-control"
+             value="<%= i.starting_date ? new Date(i.starting_date).toISOString().split('T')[0] : '' %>">
+    </div>
+  </div>
+
+  <!-- ROW 8 -->
+  <div class="row align-items-center mb-3">
+    <div class="col-12 d-flex align-items-center">
+      <label class="form-label mb-0 me-3" style="width: 180px;">Completion Date</label>
+      <input type="date" id="completionDate-<%= i._id %>" class="form-control"
+             value="<%= i.completion_date ? new Date(i.completion_date).toISOString().split('T')[0] : '' %>">
+    </div>
+  </div>
+
 </div>
 
                         <div class="modal-footer">
@@ -1413,7 +1431,9 @@ function updateIntern(id) {
         attemptCount: document.getElementById(`attemptCount-${id}`).value,
         assignmentScore: document.getElementById(`assignmentScore-${id}`).value,
         certificate_id: document.getElementById(`certificateId-${id}`).value,
-        certificate_link: document.getElementById(`certificateLink-${id}`).value
+        certificate_link: document.getElementById(`certificateLink-${id}`).value,
+        starting_date: document.getElementById(`startingDate-${id}`).value,
+        completion_date: document.getElementById(`completionDate-${id}`).value
     };
 
     fetch(`/superAdmin/updateIntern/${id}`, {

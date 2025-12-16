@@ -5,21 +5,32 @@ const authRole = require("../middleware/authRole");
 
 router.post("/superAdmin/updateIntern/:id", authRole('superAdmin'), async (req, res) => {
   try {
-    const { 
-      isPassed, 
-      quiz_score, 
-      attemptCount, 
+    const {
+      isPassed,
+      quiz_score,
+      attemptCount,
       assignmentScore,
       certificate_id,
-      certificate_link 
+      certificate_link,
+      starting_date,
+      completion_date
     } = req.body;
 
-    console.log("Incoming Update:", req.body);
+    // console.log("Incoming Update:", req.body);
 
     const user = await User.findById(req.params.id);
     if (!user) {
+      req.flash("error", "Intern not found");
       return res.json({ success: false, message: "Intern not found" });
+     
+    
     }
+
+    // Check if no quiz assigned
+    // if (user.quizAssignments.length === 0) {
+    //   req.flash("error", "Quiz not assigned");
+    //   return res.redirect("/superAdmin");
+    // }
 
     // -------- Optional Updates (Only update if provided) -------- //
 
@@ -37,6 +48,14 @@ router.post("/superAdmin/updateIntern/:id", authRole('superAdmin'), async (req, 
 
     if (certificate_link !== undefined && certificate_link !== "") {
       user.certificate_link = certificate_link;
+    }
+
+    if (starting_date !== undefined && starting_date !== "") {
+      user.starting_date = new Date(starting_date);
+    }
+
+    if (completion_date !== undefined && completion_date !== "") {
+      user.completion_date = new Date(completion_date);
     }
 
     // ---- Optional Quiz Assignment Update ---- //

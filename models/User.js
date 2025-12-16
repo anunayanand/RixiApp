@@ -35,6 +35,8 @@ const userSchema = new mongoose.Schema({
   },
   img_public_id: { type: String },
   joining_date: { type: Date, default: Date.now, immutable: true },
+  starting_date: { type: Date },
+  completion_date: { type: Date },
   lastLogin: { type: Date },
   confirmationSent: { type: Boolean, default: false },
   completionSent: { type: Boolean, default: false },
