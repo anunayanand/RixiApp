@@ -94,7 +94,7 @@ async function generateOfferLetterPDF(data) {
     const formatDate = (d) =>
       d.toLocaleDateString("en-GB", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         year: "numeric"
       });
 
@@ -116,7 +116,7 @@ async function generateOfferLetterPDF(data) {
     // Date (Right)
     doc.font("Montserrat-Bold")
        .fontSize(12)
-       .text(formatDate(assignedDate), 445, 210);
+       .text(formatDate(assignedDate), 465, 210);
 
     // Intern ID
     doc.font("Montserrat")
