@@ -143,6 +143,9 @@ app.post('/verify-certificate', verifyCertificateRouter);
 const downloadCertificateRoute = require('./routes/downloadCertificateRoute');
 app.use('/', downloadCertificateRoute);
 
+const downloadOfferLetterRoute = require('./routes/downloadOfferLetterRoute');
+app.use('/', downloadOfferLetterRoute);
+
 app.get("/internship", (req, res) => {
   res.render("internship");
 });

@@ -59,7 +59,7 @@ router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
     // 🧾 Count Certified Interns
     // ==============================
     const certifiedInternsCount = interns.filter(
-      i => i.certificate_link && i.certificate_link.trim() !== ""
+      i => i.completion_date
     ).length;
 
     // ==============================

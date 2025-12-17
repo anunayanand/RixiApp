@@ -824,7 +824,7 @@
                   </div>
                 </div>
                 <a
-                  href="<%= intern.offer_letter %>"
+                  href="<%= intern.offer_letter || `/download-offer-letter/${intern._id}` %>"
                   target="_blank"
                   class="btn btn-outline-success"
                 >

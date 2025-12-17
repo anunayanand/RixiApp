@@ -43,7 +43,7 @@ router.get("/download-certificate/:userId", authRole(['intern','admin','superAdm
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader(
     "Content-Disposition",
-    `attachment; filename=${user.name}_${user.certificate_id}.pdf`
+    `attachment; filename=${user.name}_Internship_Certificate_Rixi_Lab.pdf`
   );
 
   res.send(pdf);
