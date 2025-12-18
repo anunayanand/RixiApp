@@ -5,6 +5,9 @@ function authRole(roles) {
   return async (req, res, next) => {
     try {
       if (!req.session.user || !req.session.role) {
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+          return res.status(401).json({ success: false, message: "You must be logged in." });
+        }
         req.flash("error", "You must be logged in to access this page.");
         return res.redirect("/login");
       }
@@ -18,6 +21,9 @@ function authRole(roles) {
       }
 
       if (!user) {
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+          return res.status(401).json({ success: false, message: "User not found." });
+        }
         req.flash("error", "User not found.");
         return res.redirect("/login");
       }
@@ -30,6 +36,9 @@ function authRole(roles) {
       const sessionRole = req.session.role.toLowerCase();
 
       if (!allowedRoles.includes(sessionRole)) {
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+          return res.status(403).json({ success: false, message: "Access denied." });
+        }
         req.flash("error", "Access denied.");
         return res.redirect("/");
       }
@@ -37,6 +46,9 @@ function authRole(roles) {
       next();
     } catch (err) {
       console.error("Auth middleware error:", err);
+      if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        return res.status(500).json({ success: false, message: "Server error." });
+      }
       req.flash("error", "Something went wrong. Please log in again.");
       res.redirect("/login");
     }

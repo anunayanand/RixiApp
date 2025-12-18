@@ -380,3 +380,82 @@ document.addEventListener("DOMContentLoaded", () => {
     toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
   }
 });
+
+function showAcceptToast(message, type) {
+  let container = document.getElementById("accept-toast-container");
+
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "accept-toast-container";
+    container.className = "toast-container position-fixed top-0 end-0 p-3";
+    container.style.zIndex = 3000;
+    document.body.appendChild(container);
+  }
+
+  const bgClass =
+    type === "success" ? "text-bg-success" :
+    type === "error" ? "text-bg-danger" :
+    "text-bg-info";
+
+  const toastEl = document.createElement("div");
+  toastEl.className = `toast align-items-center ${bgClass} border-0 mb-2`;
+  toastEl.setAttribute("role", "alert");
+  toastEl.setAttribute("aria-live", "assertive");
+  toastEl.setAttribute("aria-atomic", "true");
+
+  toastEl.innerHTML = `
+    <div class="d-flex">
+      <div class="toast-body">${message}</div>
+      <button type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  `;
+
+  container.appendChild(toastEl);
+
+  const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+  toast.show();
+
+  toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+}
+
+async function acceptRegistration(id, btn) {
+  const row = btn.closest('tr');
+  const internId = row.querySelector('.intern-id-input').value.trim();
+  const batchNo = row.querySelector('.batch-input').value.trim();
+
+  if (!internId || !batchNo) {
+    showAcceptToast('Intern ID and Batch are required', 'error');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+
+  try {
+    const response = await fetch(`/admin/accept-registration/${id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ intern_id: internId, batch_no: batchNo })
+    });
+    const data = await response.json();
+    // console.log('Response data:', data);
+    if (data.success) {
+      showAcceptToast(data.message, "success");
+       btn.innerHTML = 'Accepted';
+       row.remove();
+      // location.reload(); // Reload to update the table
+    } else {
+      showAcceptToast(data.message, "error");
+      btn.disabled = false;
+      btn.innerHTML = 'Accept';
+    }
+  } catch (error) {
+    // console.error('Error:', error);
+    showAcceptToast('An error occurred', 'error');
+    btn.disabled = false;
+    btn.innerHTML = 'Accept';
+  }
+}

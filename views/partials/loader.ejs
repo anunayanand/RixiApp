@@ -40,8 +40,14 @@
   }
 
   @keyframes slideDown {
-    0% { transform: translateY(-40px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+      transform: translateY(-40px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   /* 🌀 Custom Rixi orange spinner */
@@ -49,15 +55,22 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/10px 10px no-repeat,
-                conic-gradient(#0000 30%, #ff6600);
-    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+    background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/10px 10px
+        no-repeat,
+      conic-gradient(#0000 30%, #ff6600);
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      #0000 calc(100% - 10px),
+      #000 0
+    );
     animation: spinner-c7wet2 1s infinite linear;
     margin-bottom: 15px;
   }
 
   @keyframes spinner-c7wet2 {
-    100% { transform: rotate(1turn); }
+    100% {
+      transform: rotate(1turn);
+    }
   }
 
   /* ✍️ Text below spinner */
@@ -67,6 +80,12 @@
     font-size: 1rem;
     letter-spacing: 0.5px;
     margin: 0;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
   }
 
   /* 📱 Mobile adjustments */
@@ -79,9 +98,14 @@
     .spinner {
       width: 48px;
       height: 48px;
-      background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/7px 7px no-repeat,
-                  conic-gradient(#0000 30%, #ff6600);
-      -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
+      background: radial-gradient(farthest-side, #ff6600 94%, #0000) top/7px 7px
+          no-repeat,
+        conic-gradient(#0000 30%, #ff6600);
+      -webkit-mask: radial-gradient(
+        farthest-side,
+        #0000 calc(100% - 7px),
+        #000 0
+      );
     }
 
     #pageLoader p {
@@ -126,7 +150,7 @@
 
       if (loaderWrapper) {
         loaderWrapper.classList.add("hidden");
-        setTimeout(() => loaderWrapper.style.display = "none", 600);
+        setTimeout(() => (loaderWrapper.style.display = "none"), 600);
       }
     });
 
@@ -139,10 +163,15 @@
     });
 
     // ✅ Trigger loader on normal link clicks
-    document.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", e => {
+    document.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
-        if (href && !href.startsWith("#") && link.target !== "_blank" && !link.dataset.bsToggle) {
+        if (
+          href &&
+          !href.startsWith("#") &&
+          link.target !== "_blank" &&
+          !link.dataset.bsToggle
+        ) {
           document.body.classList.add("loading");
           loaderWrapper.style.display = "flex";
           loaderWrapper.classList.remove("hidden");

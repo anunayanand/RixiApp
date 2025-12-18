@@ -150,16 +150,19 @@ app.get("/internship", (req, res) => {
   res.render("internship");
 });
 
+const internshipRouter = require('./routes/internshipRoute');
+app.use('/internship', internshipRouter);
+
 app.get('/cap',(req,res) => res.render('cap'));
 // --- Admin Routes ---
 
 const adminRoute = require('./routes/adminRoute');
-app.get('/admin', adminRoute);
+app.use('/admin', adminRoute);
 
 // Superadmin dashboard
 
 const superAdminRoute = require('./routes/superAdminRoute');
-app.get('/superAdmin', superAdminRoute);
+app.use('/superAdmin', superAdminRoute);
 
 // Create Interns
 const createInternRouter = require('./routes/createInternRoute');

@@ -445,3 +445,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+  function approveReject(id, action, btn) {
+    const originalHTML = btn.innerHTML;
+
+    // Show spinner
+    btn.innerHTML = `
+      <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+      Processing
+    `;
+    btn.disabled = true;
+
+    // Disable the other button in the same row
+    const row = btn.closest("tr");
+    row.querySelectorAll("button").forEach(b => b.disabled = true);
+
+    fetch(`/superAdmin/registration/${id}/${action}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        // Remove row after success
+        row.remove();
+      } else {
+        alert(data.message || "Action failed");
+
+        // Restore buttons on failure
+        row.querySelectorAll("button").forEach(b => {
+          b.disabled = false;
+          b.innerHTML = b === btn ? originalHTML : b.innerText;
+        });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Server error");
+
+      // Restore buttons on error
+      row.querySelectorAll("button").forEach(b => {
+        b.disabled = false;
+        b.innerHTML = b === btn ? originalHTML : b.innerText;
+      });
+    });
+  }

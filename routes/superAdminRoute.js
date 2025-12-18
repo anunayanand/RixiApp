@@ -3,15 +3,16 @@ const router = express.Router();
 const User = require("../models/User");
 const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
+const NewRegistration = require("../models/NewRegistration");
 
-router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
+router.get("/", authRole("superAdmin"), async (req, res) => {
   try {
     const interns = await User.find({ role: "intern" });
     const batches = [...new Set(interns.map(i => i.batch_no))];
     const admins = await User.find({ role: "admin" });
     const ambassadors = await Ambassador.find({});
     const superAdmin = await User.findOne({ role: "superAdmin" });
-
+    const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
     if (!superAdmin) {
       req.flash("error", "SuperAdmin not found");
       return res.redirect("/login");
@@ -118,10 +119,40 @@ router.get("/superAdmin", authRole("superAdmin"), async (req, res) => {
       meetings,
       notifications,
       showPasswordPopup: superAdmin.isFirstLogin,
+      registrations
     });
   } catch (err) {
     req.flash("error", "Failed to load Super Admin Dashboard");
     res.redirect("/login");
+  }
+});
+
+// Approve or reject registration
+router.post("/registration/:id/:action", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { id, action } = req.params;
+    const superAdmin = await User.findOne({ role: "superAdmin" });
+
+    if (action === "approve") {
+      await NewRegistration.findByIdAndUpdate(id, {
+        status: "approved",
+        approvedBy: superAdmin._id,
+        approvedAt: new Date()
+      });
+      res.json({ success: true, message: "Registration approved" });
+    } else if (action === "reject") {
+      await NewRegistration.findByIdAndUpdate(id, {
+        status: "rejected",
+        approvedBy: superAdmin._id,
+        approvedAt: new Date()
+      });
+      res.json({ success: true, message: "Registration rejected" });
+    } else {
+      res.status(400).json({ success: false, message: "Invalid action" });
+    }
+  } catch (error) {
+    // console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
