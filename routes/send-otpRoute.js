@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');            
 const User = require("../models/User");
-const SCRIPT_URL = process.env.SCRIPT_URL;
+const SCRIPT_URL = process.env.OTP_SCRIPT_URL;
 
 router.post("/send-otp", async (req, res) => {
   const { intern_id, email } = req.body;
@@ -34,7 +34,7 @@ router.post("/send-otp", async (req, res) => {
     user.otpExpiry = Date.now() + 5 * 60 * 1000;
     await user.save();
 
-    console.log("Generated OTP:", otp);
+    // console.log("Generated OTP:", otp);
 
     await axios.post(SCRIPT_URL, { email, otp });
 

@@ -6,9 +6,23 @@ const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
-
+const axios = require("axios");
+const GOOGLE_SCRIPT_URL = process.env.CNF_MAIL_SCRIPT_URL;
 // Function to split intern_id into parts
-
+const startingDate = {
+  2601: "2026-01-01T00:00:00.000+00:00",
+  2602: "2026-02-01T00:00:00.000+00:00",
+  2603: "2026-03-01T00:00:00.000+00:00",
+  2604: "2026-04-01T00:00:00.000+00:00",
+  2605: "2026-05-01T00:00:00.000+00:00",
+  2606: "2026-06-01T00:00:00.000+00:00",
+  2607: "2026-07-01T00:00:00.000+00:00",
+  2608: "2026-08-01T00:00:00.000+00:00",
+  2609: "2026-09-01T00:00:00.000+00:00",
+  2610: "2026-10-01T00:00:00.000+00:00",
+  2611: "2026-11-01T00:00:00.000+00:00",
+  2612: "2026-12-01T00:00:00.000+00:00",
+};
 router.get("/", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
@@ -102,6 +116,7 @@ router.get("/", authRole("admin"), async (req, res) => {
     const registrations = await NewRegistration.find({
       status: "approved",
       domain: admin.domain,
+      isCreated: false,
     }).sort({ approvedAt: -1 });
     // Render dashboard
     req.flash("info", `Welcome ${admin.name}`);
@@ -157,10 +172,11 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
         .status(400)
         .json({ success: false, message: "Intern ID already exists" });
     }
-
+    registration.isCreated = true;
+    await registration.save();
     // Hash the password (intern_id as password)
     const hashedPassword = await bcrypt.hash(intern_id, 10);
-
+    const startDate = startingDate[batch_no];
     // Create new user
     const newUser = new User({
       name: registration.name,
@@ -176,13 +192,70 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       year_sem: registration.year_sem,
       intern_id,
       batch_no,
+      starting_date: startDate,
       role: "intern",
     });
 
     await newUser.save();
 
+    function getOrdinal(day) {
+      if (day > 3 && day < 21) return "th"; // 11–13
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    }
+    function formatDateWithOrdinal(dateValue) {
+      const date = new Date(dateValue);
+
+      const day = date.getDate();
+      const month = date.toLocaleString("en-US", { month: "long" });
+      const year = date.getFullYear();
+
+      return `${day}${getOrdinal(day)} ${month} ${year}`;
+    }
+    //  console.log('Sending email with data:', {
+    //   intern_id: intern_id,
+    //   name: registration.name,
+    //   email: registration.email,
+    //   domain: registration.domain,
+    //   duration: registration.duration,
+    //   batch_no: batch_no,
+    //   starting_date: formatDateWithOrdinal(startDate),
+    // });
+    try {
+      await axios.post(
+        GOOGLE_SCRIPT_URL,
+        {
+          intern_id: intern_id,
+          name: registration.name,
+          email: registration.email,
+          domain: registration.domain,
+          duration: registration.duration,
+          batch_no: batch_no,
+          starting_date: formatDateWithOrdinal(startDate),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
+    } catch (mailError) {
+      // console.error("Email failed:", mailError.message);
+      res.json({ success: false, message: "Email failed to send" });
+      // ❗ Do NOT fail intern creation if mail fails
+    }
+
     // Optionally, mark registration as accepted or delete it
-    await NewRegistration.findByIdAndDelete(id);
+    // await NewRegistration.findByIdAndDelete(id);
 
     res.json({ success: true, message: "Intern created successfully" });
   } catch (error) {
