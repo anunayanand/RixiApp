@@ -19,6 +19,23 @@ sidebarLinks.forEach(link => {
     if (targetSection) targetSection.style.display = 'block';
   });
 });
+
+// Function to show a section (for buttons)
+function showSection(id) {
+  // Hide all sections
+  sections.forEach(sec => sec.style.display = 'none');
+
+  // Show the target section
+  const targetSection = document.getElementById(id);
+  if (targetSection) targetSection.style.display = 'block';
+
+  // Also trigger the sidebar link click to add active class
+  const sidebarLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+  if (sidebarLink) {
+    document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+    sidebarLink.classList.add('active');
+  }
+}
     function filterByBatch() {
     const selectedBatch = document.getElementById("batchFilter").value;
     const cards = document.querySelectorAll(".intern-card");
@@ -471,6 +488,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         // Remove row after success
         row.remove();
+
+        // Update the registration counter
+        const countSpan = document.getElementById('superRegCount');
+        if (countSpan) {
+          let count = parseInt(countSpan.textContent) - 1;
+          if (count > 0) {
+            countSpan.textContent = count;
+          } else {
+            const badge = document.getElementById('superRegBadge');
+            if (badge) badge.style.display = 'none';
+          }
+        }
       } else {
         alert(data.message || "Action failed");
 
