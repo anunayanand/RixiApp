@@ -20,7 +20,6 @@ sidebarLinks.forEach(link => {
   });
 });
 
-// Function to show a section (for buttons)
 function showSection(id) {
   // Hide all sections
   sections.forEach(sec => sec.style.display = 'none');
@@ -35,6 +34,25 @@ function showSection(id) {
     document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
     sidebarLink.classList.add('active');
   }
+}
+
+// Offer Letter Button to open offerLetterMail section
+const offerLetterButton = document.getElementById('offerLetterButton');
+if (offerLetterButton) {
+  offerLetterButton.addEventListener('click', e => {
+    e.preventDefault();
+
+    // Hide all sections, including dashboard
+    sections.forEach(sec => sec.style.display = 'none');
+
+    // Show only the offerLetterMail section
+    const targetSection = document.getElementById('offerLetterMail');
+    if (targetSection) {
+      targetSection.style.display = 'block';
+      // Apply default filter
+      applyFilters('offerLetter');
+    }
+  });
 }
     function filterByBatch() {
     const selectedBatch = document.getElementById("batchFilter").value;
@@ -239,6 +257,73 @@ async function sendMails(type) {
   }
 }
 
+async function sendOfferLetterMails() {
+  const checkboxes = document.querySelectorAll(".offerLetterCheckbox:checked");
+  const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+
+  if (selectedIds.length === 0) {
+    alert("Please select at least one intern");
+    return;
+  }
+
+  try {
+    const response = await fetch("/send-offerletter-mail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ interns: selectedIds }),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert(`✅ ${data.sent} mails sent. ${data.failed} failed.`);
+
+      // Update the pending count (decrement by sent)
+      const dot = document.getElementById('offerLetterDot');
+      if (dot) {
+        // Assume count decreases by sent
+        // Since we don't have the exact count, if sent > 0, and if no more pending, hide dot
+        // But to be simple, if data.sent > 0, check if there are still pending
+        // For now, just update the table
+      }
+
+      // Update the table rows
+      checkboxes.forEach(cb => {
+        cb.disabled = true;
+        cb.checked = false;
+        const row = cb.closest('tr');
+        row.dataset.status = 'sent';
+        row.style.backgroundColor = '#d4edda';
+      });
+
+      updateMasterCheckbox('offerLetter');
+      applyFilters('offerLetter'); // Reapply filters to hide sent rows if filter is notSent
+
+      // Hide dot if no more pending checkboxes
+      const remainingCheckboxes = document.querySelectorAll('.offerLetterCheckbox:not([disabled])');
+      if (remainingCheckboxes.length === 0) {
+        const dot = document.getElementById('offerLetterDot');
+        if (dot) dot.style.display = 'none';
+      }
+
+    } else {
+      alert(`⚠️ Error: ${data.message}`);
+    }
+  } catch (err) {
+    console.error("Unexpected error while sending mails:", err);
+    alert("Unexpected error while sending mails. Check console.");
+  }
+}
+
+// Add event listener for offerLetterForm
+document.addEventListener('DOMContentLoaded', () => {
+  const offerLetterForm = document.getElementById('offerLetterForm');
+  if (offerLetterForm) {
+    offerLetterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await sendOfferLetterMails();
+    });
+  }
+});
 
 function updateRowColor(checkbox, type) {
   const row = checkbox.closest("tr");
@@ -254,7 +339,7 @@ function toggleSelectAll(type) {
   const table = document.getElementById(type + "Table");
   const rows = table.querySelectorAll("tr");
   const master = document.getElementById(
-    type === "confirm" ? "selectAllConfirm" : "selectAllCompletion"
+    type === "confirm" ? "selectAllConfirm" : type === "completion" ? "selectAllCompletion" : "selectAllOfferLetter"
   );
 
   // only check/uncheck checkboxes from visible rows
@@ -273,7 +358,7 @@ function updateMasterCheckbox(type) {
   const table = document.getElementById(type + "Table");
   const rows = table.querySelectorAll("tr");
   const master = document.getElementById(
-    type === "confirm" ? "selectAllConfirm" : "selectAllCompletion"
+    type === "confirm" ? "selectAllConfirm" : type === "completion" ? "selectAllCompletion" : "selectAllOfferLetter"
   );
 
   if (!master) return;
@@ -308,13 +393,17 @@ function applyFilters(type) {
 
   // reset master checkbox whenever filters or batch changes
   const master = document.getElementById(
-    type === "confirm" ? "selectAllConfirm" : "selectAllCompletion"
+    type === "confirm" ? "selectAllConfirm" : type === "completion" ? "selectAllCompletion" : "selectAllOfferLetter"
   );
   if (master) master.checked = false;
 }
 
 function clearFilters(type) {
-  document.getElementById("filter" + capitalize(type)).value = "all";
+  if (type === "offerLetter") {
+    document.getElementById("filter" + capitalize(type)).value = "notSent";
+  } else {
+    document.getElementById("filter" + capitalize(type)).value = "all";
+  }
   document.getElementById("batch" + capitalize(type)).value = "all";
   document.getElementById("search" + capitalize(type)).value = "";
   applyFilters(type);
@@ -461,6 +550,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
 });
 
   function approveReject(id, action, btn) {

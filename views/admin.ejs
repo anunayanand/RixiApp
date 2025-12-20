@@ -45,7 +45,7 @@
 
   <!-- Footer at the bottom -->
   <div class="text-center mb-2 mx-3" style="font-size: 0.85rem; color: #888;">
-    © Copyright 2025 Rixi Lab.<br/> All Rights Reserved <br/><span style="font-size: smaller;">Developed by Anunay Anand (Director)</span>  
+    © Copyright 2025-26 Rixi Lab<br/> All Rights Reserved <br/><span style="font-size: smaller;">Developed by Anunay Anand (Director)</span>  
   </div>
 </div>
 
@@ -70,7 +70,9 @@
     <button
       class="btn btn-light position-relative"
       onclick="showSection('approvedRegistrations')"
-      title="View Registrations">
+      title="View Registrations"
+     style="border: 1px solid #000;"
+      >
       <i class="bi bi-clipboard-check fs-4"></i>
 
       <% const regCount = registrations ? registrations.length : 0; %>
@@ -88,15 +90,18 @@
         class="btn btn-light position-relative"
         id="notificationButton"
         data-bs-toggle="dropdown"
-        aria-expanded="false">
+        aria-expanded="false"
+        title="Notifications"
+        style="border: 1px solid #000;"
+        >
         <i class="bi bi-bell fs-4"></i>
 
         <% const unreadCount = notifications ? notifications.length : 0; %>
         <% if (unreadCount > 0) { %>
-          <!-- 🔴 Red Dot -->
+          <!--  Yellow Dot -->
           <span
             id="notificationDot"
-            class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+            class="position-absolute top-0 start-100 translate-middle p-1 bg-warning border border-light rounded-circle">
             <span class="visually-hidden">New alerts</span>
           </span>
         <% } %>

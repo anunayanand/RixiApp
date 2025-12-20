@@ -48,7 +48,6 @@
     <br/>
     <a href="#dashboard"><i class="bi bi-person-lines-fill"></i> Dashboard</a>
     <a href="#viewAdmin"><i class="bi bi-person-workspace"></i> View Admins</a>
-    <!-- <a href="#registration"><i class="bi bi-clipboard-check"></i> Registrations</a> -->
     <a href="#viewInterns"><i class="bi bi-people"></i> View Interns</a>
     <a href="#completedInterns"><i class="bi bi-person-check"></i> Certified Interns</a>
     <a href="#viewAmbassador"><i class="bi bi-person-circle"></i> View Ambassador</a>
@@ -63,7 +62,7 @@
 
   <!-- Footer at the bottom -->
   <div class="text-center mb-2" style="font-size: 0.85rem; color: #888;">
-    © Copyright 2025 Rixi Lab.<br/> All Rights Reserved <br/><span style="font-size: smaller;">Developed by Anunay Anand (Director)</span>
+    © Copyright 2025-26 Rixi Lab<br/> All Rights Reserved <br/><span style="font-size: smaller;">Developed by Anunay Anand (Director)</span>
   </div>
 </div>
 
@@ -79,76 +78,98 @@
       Welcome to Rixi Lab, <%= superAdmin.name %> - <%= superAdmin.designation %>
     </h4>
   </div>
-
-  <!-- Right Side: Registration Button and Notification Bell -->
   <div class="d-flex gap-2">
-    <!-- 📋 Registration Button -->
-    <button
-      class="btn btn-light position-relative"
-      onclick="showSection('registration')"
-      title="View Registrations">
-      <i class="bi bi-clipboard-check fs-4"></i>
+ <button
+     class="btn btn-light position-relative"
+     onclick="showSection('registration')"
+     title="View Registrations"
+     style="border: 1px solid #000;"
+     title="View Registrations"
+     >
+     <i class="bi bi-clipboard-check fs-4"></i>
 
-      <% const superRegCount = registrations ? registrations.length : 0; %>
-      <% if (superRegCount > 0) { %>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="superRegBadge">
-          <span id="superRegCount"><%= superRegCount %></span>
-          <span class="visually-hidden">New registrations</span>
-        </span>
+     <% const superRegCount = registrations ? registrations.length : 0; %>
+     <% if (superRegCount > 0) { %>
+       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="superRegBadge">
+         <span id="superRegCount"><%= superRegCount %></span>
+         <span class="visually-hidden">New registrations</span>
+       </span>
+     <% } %>
+   </button>
+     <!-- 📧 Offer Letter Bell -->
+ <button
+   class="btn btn-light position-relative"
+   id="offerLetterButton"
+    style="border: 1px solid #000;"
+    title="Offer Letter"
+    >
+   <i class="bi bi-envelope-paper fs-4"></i>
+
+   <% const pendingOfferCount = interns.filter(i => !i.offer_letter_sent).length; %>
+   <% if (pendingOfferCount > 0) { %>
+     <!-- 🔴 Red Dot -->
+     <span
+       id="offerLetterDot"
+       class="position-absolute top-0 start-100 translate-middle p-1 bg-warning border border-light rounded-circle">
+       <span class="visually-hidden">Pending offer letters</span>
+     </span>
+   <% } %>
+ </button>
+ <!-- 🔔 Right Side: Notification Bell -->
+ <div class="dropdown position-relative">
+  <button
+    class="btn btn-light position-relative"
+    id="notificationButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style="border: 1px solid #000;"
+    title="Notifications">
+    <i class="bi bi-bell fs-4"></i>
+
+    <% const unreadCount = notifications ? notifications.length : 0; %>
+    <% if (unreadCount > 0) { %>
+      <!-- 🔴 Red Dot -->
+      <span
+        id="notificationDot"
+        class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+        <span class="visually-hidden">New alerts</span>
+      </span>
+    <% } %>
+  </button>
+
+  <!-- 🔽 Dropdown Menu -->
+  <ul
+    class="dropdown-menu dropdown-menu-end shadow p-2"
+    style="width: 320px; max-height: 400px; overflow-y: auto;"
+    id="notificationList">
+
+    <li class="dropdown-header fw-bold d-flex justify-content-between align-items-center">
+      <span>Notifications</span>
+      <% if (notifications && notifications.length > 0) { %>
+        <button id="clearAllBtn" class="btn btn-sm btn-danger">Mark All</button>
       <% } %>
-    </button>
+    </li>
+    <hr class="my-1">
 
-    <!-- 🔔 Notification Bell -->
-    <div class="dropdown position-relative">
-      <button
-        class="btn btn-light position-relative"
-        id="notificationButton"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">
-        <i class="bi bi-bell fs-4"></i>
-
-        <% const unreadCount = notifications ? notifications.length : 0; %>
-        <% if (unreadCount > 0) { %>
-          <!-- 🔴 Red Dot -->
-          <span
-            id="notificationDot"
-            class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-            <span class="visually-hidden">New alerts</span>
-          </span>
-        <% } %>
-      </button>
-
-      <!-- 🔽 Dropdown Menu -->
-      <ul
-        class="dropdown-menu dropdown-menu-end shadow p-2"
-        style="width: 320px; max-height: 400px; overflow-y: auto;"
-        id="notificationList">
-
-        <li class="dropdown-header fw-bold d-flex justify-content-between align-items-center">
-          <span>Notifications</span>
-          <% if (notifications && notifications.length > 0) { %>
-            <button id="clearAllBtn" class="btn btn-sm btn-danger">Mark All</button>
-          <% } %>
+    <% if (notifications && notifications.length > 0) { %>
+      <% notifications.forEach(n => { %>
+        <li class="p-2 border-bottom d-flex justify-content-between align-items-start" data-id="<%= n._id %>">
+          <div style="white-space: normal;">
+            <small><strong><%= n.title %></strong></small><br>
+            <small><%= n.message %></small><br>
+            <small class="text-muted"><%= new Date(n.createdAt).toLocaleString() %></small>
+          </div>
+          <button class="btn btn-sm btn-outline-success mark-read-btn" title="Mark as Read">✔</button>
         </li>
-        <hr class="my-1">
+      <% }) %>
+    <% } else { %>
+      <li class="p-3 text-center text-muted">No new notifications 🎉</li>
+    <% } %>
+  </ul>
+</div>
+</div>
 
-        <% if (notifications && notifications.length > 0) { %>
-          <% notifications.forEach(n => { %>
-            <li class="p-2 border-bottom d-flex justify-content-between align-items-start" data-id="<%= n._id %>">
-              <div style="white-space: normal;">
-                <small><strong><%= n.title %></strong></small><br>
-                <small><%= n.message %></small><br>
-                <small class="text-muted"><%= new Date(n.createdAt).toLocaleString() %></small>
-              </div>
-              <button class="btn btn-sm btn-outline-success mark-read-btn" title="Mark as Read">✔</button>
-            </li>
-          <% }) %>
-        <% } else { %>
-          <li class="p-3 text-center text-muted">No new notifications 🎉</li>
-        <% } %>
-      </ul>
-    </div>
-  </div>
+
 
 
 
@@ -1591,7 +1612,7 @@ function clearCompletedFilters() {
       </div>
 
       <div class="flex-grow-1">
-        <input type="text" id="searchCompletion" class="form-control" placeholder="Search by name or email">
+        <input type="text" id="searchCompletion" class="form-control" placeholder="Search by name or email" onkeyup="applyFilters('completion')">
       </div>
 
       <div class="flex-grow-0">
@@ -1651,9 +1672,8 @@ function clearCompletedFilters() {
       
       <div class="flex-grow-0">
         <select id="filterOfferLetter" class="form-select" onchange="applyFilters('offerLetter')">
-          <option value="all">Show All</option>
           <option value="sent">Sent</option>
-          <option value="notSent">Pending</option>
+          <option value="notSent" selected>Pending</option>
         </select>
       </div>
 
@@ -1667,7 +1687,7 @@ function clearCompletedFilters() {
       </div>
 
       <div class="flex-grow-1">
-        <input type="text" id="searchOfferLetter" class="form-control" placeholder="Search by name or email">
+        <input type="text" id="searchOfferLetter" class="form-control" placeholder="Search by name or email" onkeyup="applyFilters('offerLetter')">
       </div>
 
       <div class="flex-grow-0">
