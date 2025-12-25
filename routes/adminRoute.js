@@ -194,6 +194,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       batch_no,
       starting_date: startDate,
       role: "intern",
+      referal_code: registration.referral_code || "",
     });
 
     await newUser.save();

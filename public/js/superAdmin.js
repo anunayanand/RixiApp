@@ -194,46 +194,13 @@ function clearFilters(type) {
   applyFilters(type);
 }
 
-// ==========================
-// Send Mails
-// ==========================
-async function sendMails(type) {
-  let checkboxes = document.querySelectorAll("." + type + "Checkbox:checked");
-  if (checkboxes.length === 0) {
-    alert("Please select at least one intern to send mails.");
-    return;
-  }
-
-  const selectedIds = Array.from(checkboxes).map(cb => cb.value);
-
-  try {
-    const response = await fetch(
-      type === "confirm" ? "/send-confirmation-mail" : "/send-completion-mail",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interns: selectedIds })
-      }
-    );
-
-    if (response.ok) {
-      alert("Mails sent successfully!");
-      location.reload();
-    } else {
-      alert("Error sending mails. Check server logs.");
-    }
-  } catch (err) {
-    console.error("Mail sending failed:", err);
-    alert("Server error while sending mails.");
-  }
-}
 
 async function sendMails(type) {
   const checkboxes = document.querySelectorAll("." + type + "Checkbox:checked");
   const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
   if (selectedIds.length === 0) {
-    alert("Please select at least one intern");
+    showToast("Please select at least one intern", "warning");
     return;
   }
 
@@ -246,15 +213,15 @@ async function sendMails(type) {
 
     const data = await response.json();
     if (data.success) {
-      alert(`✅ ${data.sent} mails sent. ${data.failed} failed.`);
+      showToast(`${data.sent} mails sent. ${data.failed} failed.`, data.failed > 0 ? "warning" : "success");
       console.log(`${type} mail results:`, data);
     } else {
-      alert(`⚠️ Error: ${data.message}`);
+      showToast(`Error: ${data.message}`, "error");
     }
   } catch (err) {
-    console.error("Unexpected error while sending mails:", err);
-    alert("Unexpected error while sending mails. Check console.");
-  }
+   console.error("Unexpected error while sending mails:", err);
+   showToast("Unexpected error while sending mails. Check console.", "error");
+ }
 }
 
 async function sendOfferLetterMails() {
@@ -262,7 +229,7 @@ async function sendOfferLetterMails() {
   const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
   if (selectedIds.length === 0) {
-    alert("Please select at least one intern");
+    showToast("Please select at least one intern", "warning");
     return;
   }
 
@@ -275,7 +242,7 @@ async function sendOfferLetterMails() {
 
     const data = await response.json();
     if (data.success) {
-      alert(`✅ ${data.sent} mails sent. ${data.failed} failed.`);
+      showToast(`${data.sent} mails sent. ${data.failed} failed.`, data.failed > 0 ? "warning" : "success");
 
       // Update the pending count (decrement by sent)
       const dot = document.getElementById('offerLetterDot');
@@ -306,12 +273,12 @@ async function sendOfferLetterMails() {
       }
 
     } else {
-      alert(`⚠️ Error: ${data.message}`);
+      showToast(`Error: ${data.message}`, "error");
     }
   } catch (err) {
-    console.error("Unexpected error while sending mails:", err);
-    alert("Unexpected error while sending mails. Check console.");
-  }
+   console.error("Unexpected error while sending mails:", err);
+   showToast("Unexpected error while sending mails. Check console.", "error");
+ }
 }
 
 // Add event listener for offerLetterForm
@@ -559,7 +526,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show spinner
     btn.innerHTML = `
       <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-      Processing
     `;
     btn.disabled = true;
 
@@ -578,7 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         // Remove row after success
         row.remove();
-
+        showToast("Intern registration approved", "success");
         // Update the registration counter
         const countSpan = document.getElementById('superRegCount');
         if (countSpan) {
@@ -591,18 +557,18 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       } else {
-        alert(data.message || "Action failed");
+       showToast(data.message || "Action failed", "error");
 
-        // Restore buttons on failure
-        row.querySelectorAll("button").forEach(b => {
-          b.disabled = false;
-          b.innerHTML = b === btn ? originalHTML : b.innerText;
-        });
-      }
+       // Restore buttons on failure
+       row.querySelectorAll("button").forEach(b => {
+         b.disabled = false;
+         b.innerHTML = b === btn ? originalHTML : b.innerText;
+       });
+     }
     })
     .catch(err => {
       console.error(err);
-      alert("Server error");
+      showToast("Server error", "error");
 
       // Restore buttons on error
       row.querySelectorAll("button").forEach(b => {
