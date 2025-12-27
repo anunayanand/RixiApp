@@ -59,10 +59,7 @@ router.post("/create-order", async (req, res) => {
     }
 
     // Check if email already exists
-    if (
-      (await User.findOne({ email: sanitizedEmail })) ||
-      (await NewRegistration.findOne({ email: sanitizedEmail }))
-    ) {
+    if (await User.findOne({ email: sanitizedEmail })) {
       return res.status(400).json({
         success: false,
         message: "Email already registered",
