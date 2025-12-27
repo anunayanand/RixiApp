@@ -1480,7 +1480,7 @@
               <th>Email</th>
               <th>Domain</th>
               <th>Duration</th>
-              <th>Pay ID</th>
+              <th>Transaction ID</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -1493,16 +1493,17 @@
                 <td><%= reg.domain %></td>
                 <td><%= reg.duration %> Weeks</td>
                 <td><%= reg.payID %></td>
-                <% if (reg.payment_status === 'SUCCESS') { %>
-                   <span class="badge bg-success">Success</span>
-                 <% } else if (reg.payment_status === 'FAILED') { %>
-                   <span class="badge bg-danger">Failed</span>
-                 <% } else { %>
-                   <span class="badge bg-warning">Pending</span>
-                 <% } %>
+                <td><% if (reg.payment_status === 'SUCCESS') { %>
+                      <span class="badge bg-success">Success</span>
+                    <% } else if (reg.payment_status === 'FAILED') { %>
+                      <span class="badge bg-danger">Failed</span>
+                    <% } else { %>
+                      <span class="badge bg-warning">Pending</span>
+                    <% } %>
+                </td>
                 <td>
-                  <button class="btn btn-outline-success btn-sm px-3 rounded-pill" onclick="approveReject('<%= reg._id %>', 'approve', this)">Approve</button>
-                  <button class="btn btn-outline-danger btn-sm px-3 rounded-pill" onclick="approveReject('<%= reg._id %>', 'reject', this)">Reject</button>
+                  <button class="btn btn-outline-success btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'approve', this)"><i class="bi bi-check-lg" style="font-size: large;"></i></button>
+                  <button class="btn btn-outline-danger btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'reject', this)"><i class="bi bi-x-lg" style="font-size: large;"></i></button>
                 </td>
               </tr>
             <% }) %>

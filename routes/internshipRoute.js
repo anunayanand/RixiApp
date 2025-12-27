@@ -93,7 +93,7 @@ router.post("/create-order", async (req, res) => {
 
    const request = {
   order_id: orderId,
-  order_amount: 10,
+  order_amount: 100,
   order_currency: "INR",
 
   customer_details: {
