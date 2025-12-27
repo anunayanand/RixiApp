@@ -109,11 +109,10 @@ router.post("/create-order", async (req, res) => {
 };
 
 
-console.log("Cashfree Request:", request);
 
 
 
-    console.log("Cashfree Request:", request);
+    // console.log("Cashfree Request:", request);
 
     const response = await axios.post(`${CASHFREE_BASE_URL}/orders`, request, {
       headers: {
