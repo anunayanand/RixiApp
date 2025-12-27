@@ -12,13 +12,19 @@ const newRegistrationSchema = new mongoose.Schema({
   domain: { type: String, required: true },
   duration: { type: Number, required: true },
   referral_code: { type: String, default: "" },
-  payID: { type: String, required: true },
+  payID: { type: String, default: "" },
+  order_id: { type: String, default: "" },
   terms: { type: Boolean, required: true },
   status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
+  isCreated: { type: Boolean, default: false },
   approvedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   approvedAt: { type: Date },
   createdAt: { type: Date, default: Date.now },
-  isCreated: { type: Boolean, default: false },
+  payment_status: {
+  type: String,
+  enum: ["PENDING", "SUCCESS", "FAILED"],
+  default: "PENDING"
+}
 });
 
 module.exports = mongoose.model("NewRegistration", newRegistrationSchema);

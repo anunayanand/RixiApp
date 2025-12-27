@@ -1,91 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Rixi Lab Internship</title>
+    <meta
+      name="description"
+      content="Rixi Lab is a dynamic and innovative web development and design and MSME Registered company since 2020 committed to building powerful digital experiences. Founded with a passion for technology and creativity, Rixi Lab specializes in Custom Website Development, Responsive Web Design, E-Commerce Solutions, UI/UX Design, and Internship & Training Programs for aspiring developers and designers. Build your digital future with us at rixilab.tech."
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Rixi Lab Internship</title>
-  <meta name="description" content="Rixi Lab is a dynamic and innovative web development and design and MSME Registered company since 2020 committed to building powerful digital experiences. Founded with a passion for technology and creativity, Rixi Lab specializes in Custom Website Development, Responsive Web Design, E-Commerce Solutions, UI/UX Design, and Internship & Training Programs for aspiring developers and designers. Build your digital future with us at rixilab.tech.">
+    <meta
+      name="keywords"
+      content="Rixi Lab, web development, responsive web design, custom websites, e-commerce development, UI UX design, internship, website design India, RixiLab.tech, IT services, software company, tech startup"
+    />
+    <meta name="author" content="Rixi Lab" />
 
-  <meta name="keywords" content="Rixi Lab, web development, responsive web design, custom websites, e-commerce development, UI UX design, internship, website design India, RixiLab.tech, IT services, software company, tech startup">
-  <meta name="author" content="Rixi Lab">
+    <!-- Favicons -->
+    <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-  <!-- Favicons -->
-  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
-  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="/js/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- <link href="/js/vendor/aos/aos.css" rel="stylesheet"> -->
+    <link href="/js/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="/js/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/js/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <!-- <link href="/js/vendor/aos/aos.css" rel="stylesheet"> -->
-  <link href="/js/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="/js/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/internship.css" rel="stylesheet" />
 
-  <!-- Main CSS File -->
-  <link href="/css/main.css" rel="stylesheet">
-  <link href="/css/internship.css" rel="stylesheet">
+    <!-- Cashfree JS SDK -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+  </head>
 
-</head>
+  <body class="index-page">
+    <%- include('partials/loader') %>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div
+        class="container position-relative d-flex align-items-center justify-content-between"
+      >
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+          <img src="/img/Rixi Lab New Logo PNG.png" alt="" />
+          <h1 class="sitename">Rixi Lab</h1>
+        </a>
 
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/" class="active">Home</a></li>
+            <li>
+              <a href="internship" style="color: #ff6600 !important"
+                >Internship</a
+              >
+            </li>
+            <li><a href="cap">CAP</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/certificate">Certificate</a></li>
+            <li>
+              <a href="/#contact" style="color: white !important">Contact</a>
+            </li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
-<body class="index-page">
- <%- include('partials/loader') %>
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a class="btn-getstarted" href="/login">Login</a>
+      </div>
+    </header>
 
-      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="">
-        <h1 class="sitename">Rixi Lab</h1>
-      </a>
+    <main class="main">
+      <br /><br />
+      <!-- Contact Section -->
+      <section id="contact" class="contact section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Internship</h2>
+          <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+        </div>
+        <!-- End Section Title -->
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-         <li><a href="/" class="active">Home</a></li>
-          <li><a href="internship" style="color: #ff6600 !important;">Internship</a></li>
-          <li><a href="cap">CAP</a></li>
-          <li><a href="/#about">About</a></li>
-          <li><a href="/#services">Services</a></li>
-          <li><a href="/certificate">Certificate</a></li>
-          <li><a href="/#contact" style="color: white !important;">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+              <div class="contact-form-wrapper">
+                <div class="form-header">
+                  <h3>Winter Internship Registration Form</h3>
+                  <p>
+                    At Rixi Lab an MSME registerd startup, internships and
+                    training are designed to provide hands-on experience through
+                    live projects, aimed at nurturing future-ready skills in
+                    technology and design. Our programs are tailored to students
+                    and freshers who are eager to dive into real-world projects,
+                    gaining practical insights and building their portfolios.
+                  </p>
+                  <hr />
+                  <h5>Online Project Based Winter Internship Program</h5>
+                </div>
 
-      <a class="btn-getstarted" href="/login">Login</a>
-
-    </div>
-  </header>
-
-  <main class="main "><br><br>
-    <!-- Contact Section -->
-    <section id="contact" class="contact section ">
-      <!-- Section Title -->
-      <div class="container  section-title" data-aos="fade-up">
-        <h2>Internship</h2>
-        <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row d-flex justify-content-center">
-          
-
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-            <div class="contact-form-wrapper">
-              <div class="form-header">
-                <h3>Winter Internship Registration Form</h3>
-                <p>At Rixi Lab an MSME registerd startup, internships and training are designed to provide hands-on experience through live projects, aimed at nurturing future-ready skills in technology and design. Our programs are tailored to students and freshers who are eager to dive into real-world projects, gaining practical insights and building their portfolios.
-                </p>
-                <hr>
-                <h5>Online Project Based Winter Internship Program</h5>
-              </div>
-              
-              <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
-              <h5>Internship Important Dates:</h5>
+                <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
+                <h5>Internship Important Dates:</h5>
                 <ul>
                   <li>Last date to apply: 30 Dec 2025</li>
                   <!-- <li style="color: #00ff00;">Extended date to apply: 30 Sept 2025</li> -->
@@ -94,259 +118,394 @@
                   <li>Project Assign Date: 1 Jan 2026</li>
                 </ul>
 
-              <h5>Benefites for Students:</h5>
+                <h5>Benefites for Students:</h5>
                 <ul>
                   <li>Internship Offer Letter</li>
                   <li>Internship Certificate</li>
                   <li>Work on real time projects</li>
                   <li>Canva Premium free for 1 Year</li>
                 </ul>
-                <h5 class="mt-3">Read notification for more info before apply :  <a href="/brochure/Notice.pdf" target="_blank" class="btn btn-outline rounded-pill " style="border : 1px solid #ff6600; color: #ff6600;" download><i class="bi bi-download"></i> Notice</a> </h5>
-                <hr>
-              <form id="internship-form" action="/internship/register" method="POST" class="php-email-form">
-                <!-- <input type="hidden" name="access_key" value="db870915-874b-4d37-acd1-c71aa371eb7c"> -->
-                <div class="mb-3">
-                  <label for="contactName" class="form-label">Full Name</label>
-                  <input type="text" name="data[Name]" class="form-control" id="contactName" placeholder="Enter your full name" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactEmail" class="form-label">Email Address</label>
-                  <input type="email" class="form-control" name="data[Email]" id="contactEmail" placeholder="Enter your email address" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactPhone" class="form-label">Phone Number</label>
-                  <input type="tel" class="form-control" name="data[Phone]" id="contactPhone" placeholder="Enter your phone number" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactuniversity" class="form-label">University Name</label>
-                  <input type="text" class="form-control" name="data[University]" id="contactuniversity" placeholder="Enter your university name" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactCollege" class="form-label">College Name</label>
-                  <input type="text" class="form-control" name="data[College]" id="contactCollege" placeholder="Enter your college name" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactCourse" class="form-label">Course</label>
-                  <input type="text" class="form-control" name="data[Course]" id="contactCourse" placeholder="Enter your course name" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactBranch" class="form-label">Branch</label>
-                  <input type="text" class="form-control" name="data[Branch]" id="contactBranch" placeholder="Enter your branch name" required="">
-                </div>
-                
-                <div class="mb-3">
-                  <label for="contactyear" class="form-label">Year/Semester</label>
-                  <select class="form-control" name="data[Y/S]" id="contactyear" required>
-                    <option value="" disabled selected>-- Select Year/Semester --</option>
-                    <option value="1st Year/1st Sem">1st Year/1st Sem</option>
-                    <option value="1st Year/2nd Sem">1st Year/2nd Sem</option>
-                    <option value="2nd Year/3rd Sem">2nd Year/3rd Sem</option>
-                    <option value="2nd Year/4th Sem">2nd Year/4th Sem</option>
-                    <option value="3rd Year/5th Sem">3rd Year/5th Sem</option>
-                    <option value="3rd Year/6th Sem">3rd Year/6th Sem</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactDomain" class="form-label">Internship Domain</label>
-                  <select class="form-control" name="data[Domain]" id="contactDomain" required>
-                    <option value="" disabled selected>-- Select internship domain --</option>
-                    <option value="Web Development">Web Development</option>
-                    <option value="Python Programming">Python Programming</option>
-                    <option value="Java Programming">Java Programming</option>
-                    <option value="Data Analytics">Data Analytics</option>
-                    <option value="DSA">DSA</option>
-                    <option value="Graphics Design">Graphics Design</option>
-                    <option value="Full Stack Development">Full Stack Development</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label for="contactDuration" class="form-label">Internship Duration</label>
-                  <select class="form-control" name="data[Duration]" id="contactDuration" required>
-                    <option value="" disabled selected>-- Select internship duration --</option>
-                    <option value="4 Week">4 Week</option>
-                    <option value="6 Week">6 Week</option>
-                    <option value="8 Week">8 Week</option>
-                    <!-- <option value="12 Week">12 Week</option> -->
-                  </select>
-                </div>
-                <div class="mb-3">
-  <label for="contactReferral" class="form-label">Referral Code (if any)</label>
-  <input 
-    type="text" 
-    class="form-control" 
-    name="data[Referral_Code]" 
-    id="contactReferral" 
-    placeholder="Enter referral code (optional)">
-</div>
-                <!-- <br> -->
-                <h5>Registration Fee: <s style="color: red;">Rs 499/-</s> <span style="color: #00ff00;">Rs 100/-</span>(Only online Payment Accepted)</h5>
-                <h5>Click for payment: <span id="payBtn">Pay Now</span></h5>
-
-                <div id="qrPopup" class="popup">
-                  <div class="popup-content">
-                    <span class="close" id="closeBtn">X</span>
-                    <h3>Scan & Pay</h3>
-                    <img src="/img/QR_Code.jpg" alt="QR Code">
+                <h5 class="mt-3">
+                  Read notification for more info before apply :
+                  <a
+                    href="/brochure/Notice.pdf"
+                    target="_blank"
+                    class="btn btn-outline rounded-pill"
+                    style="border: 1px solid #ff6600; color: #ff6600"
+                    download
+                    ><i class="bi bi-download"></i> Notice</a
+                  >
+                </h5>
+                <hr />
+                <form
+                  id="internship-form"
+                  action="/internship/register"
+                  method="POST"
+                  class="php-email-form"
+                >
+                  <!-- <input type="hidden" name="access_key" value="db870915-874b-4d37-acd1-c71aa371eb7c"> -->
+                  <div class="mb-3">
+                    <label for="contactName" class="form-label"
+                      >Full Name</label
+                    >
+                    <input
+                      type="text"
+                      name="data[Name]"
+                      class="form-control"
+                      id="contactName"
+                      placeholder="Enter your full name"
+                      required=""
+                    />
                   </div>
-                </div>
-                <p><i> After payment enter your Transaction ID or Payment ID in the box provided below. This helps us verify your payment and confirm your application.</i></p>
 
-                <div class="mb-3">
-                  <label for="contactPayment" class="form-label">Transaction/Payment ID</label>
-                  <input type="text" class="form-control" name="data[PayID]" id="contactPayment" placeholder="Enter your transaction/payment id" required>
-                </div>
-
-                <div class="">
-                  <input type="checkbox" class="form-check-input" name="data[Terms]" id="contactTerms" required="">
-                  <label for="contactTerms" class="form-label">I accept the Terms and Conditions.</label>
-                </div>
-                <p><i>After submitting this registration form. You will receive a confirmation mail with further instruction and Whatsapp group link.</i></p>
-
-                <p><i>For any type of technical support mail us at: <a href="mailto:support@rixilab.tech">support@rixilab.tech</a></i></p>
-                <hr>
-                <div class="mb-2 text-center" id="result"></div>
-
-                <button type="submit" class="submit-btn">
-                  <span>Submit Registration Form</span>
-                  <i class="bi bi-arrow-right"></i>
-                </button>
-                <!-- Popup -->
-                <div class="popup-overlay" id="popup">
-                  <div class="popup-box">
-                    <h3>Application Submitted!</h3>
-                    <p id="popupMsg"></p>
-                    <button onclick="closePopup()">OK</button>
+                  <div class="mb-3">
+                    <label for="contactEmail" class="form-label"
+                      >Email Address</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="data[Email]"
+                      id="contactEmail"
+                      placeholder="Enter your email address"
+                      required=""
+                    />
                   </div>
-                </div>
-              </form>
+
+                  <div class="mb-3">
+                    <label for="contactPhone" class="form-label"
+                      >Phone Number</label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      name="data[Phone]"
+                      id="contactPhone"
+                      placeholder="Enter your phone number"
+                      pattern="[0-9]{10}"
+                      title="Please enter a 10-digit phone number"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactuniversity" class="form-label"
+                      >University Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="data[University]"
+                      id="contactuniversity"
+                      placeholder="Enter your university name"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactCollege" class="form-label"
+                      >College Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="data[College]"
+                      id="contactCollege"
+                      placeholder="Enter your college name"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactCourse" class="form-label">Course</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="data[Course]"
+                      id="contactCourse"
+                      placeholder="Enter your course name"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactBranch" class="form-label">Branch</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="data[Branch]"
+                      id="contactBranch"
+                      placeholder="Enter your branch name"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactyear" class="form-label"
+                      >Year/Semester</label
+                    >
+                    <select
+                      class="form-control"
+                      name="data[Y/S]"
+                      id="contactyear"
+                      required
+                    >
+                      <option value="" disabled selected>
+                        -- Select Year/Semester --
+                      </option>
+                      <option value="1st Year/1st Sem">1st Year/1st Sem</option>
+                      <option value="1st Year/2nd Sem">1st Year/2nd Sem</option>
+                      <option value="2nd Year/3rd Sem">2nd Year/3rd Sem</option>
+                      <option value="2nd Year/4th Sem">2nd Year/4th Sem</option>
+                      <option value="3rd Year/5th Sem">3rd Year/5th Sem</option>
+                      <option value="3rd Year/6th Sem">3rd Year/6th Sem</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactDomain" class="form-label"
+                      >Internship Domain</label
+                    >
+                    <select
+                      class="form-control"
+                      name="data[Domain]"
+                      id="contactDomain"
+                      required
+                    >
+                      <option value="" disabled selected>
+                        -- Select internship domain --
+                      </option>
+                      <option value="Web Development">Web Development</option>
+                      <option value="Python Programming">
+                        Python Programming
+                      </option>
+                      <option value="Java Programming">Java Programming</option>
+                      <option value="Data Analytics">Data Analytics</option>
+                      <option value="DSA">DSA</option>
+                      <option value="Graphics Design">Graphics Design</option>
+                      <option value="Full Stack Development">
+                        Full Stack Development
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="contactDuration" class="form-label"
+                      >Internship Duration</label
+                    >
+                    <select
+                      class="form-control"
+                      name="data[Duration]"
+                      id="contactDuration"
+                      required
+                    >
+                      <option value="" disabled selected>
+                        -- Select internship duration --
+                      </option>
+                      <option value="4 Week">4 Week</option>
+                      <option value="6 Week">6 Week</option>
+                      <option value="8 Week">8 Week</option>
+                      <!-- <option value="12 Week">12 Week</option> -->
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="contactReferral" class="form-label"
+                      >Referral Code (if any)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="data[Referral_Code]"
+                      id="contactReferral"
+                      placeholder="Enter referral code (optional)"
+                    />
+                  </div>
+                  <!-- <br> -->
+                  <h5>
+                    Registration Fee: <s style="color: red">Rs 499/-</s>
+                    <span style="color: #00ff00">Rs 100/-</span>(Only online
+                    Payment Accepted)
+                  </h5>
+
+                  <div class="">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="data[Terms]"
+                      id="contactTerms"
+                      required=""
+                    />
+                    <label for="contactTerms" class="form-label"
+                      >I accept the Terms and Conditions.</label
+                    >
+                  </div>
+                  <p>
+                    <i
+                      >After submitting this registration form. You will receive
+                      a confirmation mail with further instruction and Whatsapp
+                      group link.</i
+                    >
+                  </p>
+
+                  <p>
+                    <i
+                      >For any type of technical support mail us at:
+                      <a href="mailto:support@rixilab.tech"
+                        >support@rixilab.tech</a
+                      ></i
+                    >
+                  </p>
+                  <hr />
+                  <div class="mb-2 text-center" id="result"></div>
+
+                  <button type="submit" class="submit-btn" id="payID">
+                    <span>Continue to Payment & Submit</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+                  <!-- Popup -->
+                  <div class="popup-overlay" id="popup">
+                    <div class="popup-box">
+                      <h3>Application Submitted!</h3>
+                      <p id="popupMsg"></p>
+                      <button onclick="closePopup()">OK</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Contact Section -->
+    </main>
+
+    <%- include('partials/toaster') %>
+
+    <footer id="footer" class="footer light-background">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+              <a href="/" class="logo d-flex align-items-center">
+                <span class="sitename">Rixi Lab</span>
+              </a>
+              <div class="footer-contact pt-3">
+                <p>Bhatpar Rani, Deoria,</p>
+                <p>Uttar Pradesh, 274506 INDIA</p>
+                <p class="mt-3">
+                  <strong>Phone:</strong> <span>Currently not available</span>
+                </p>
+                <p><strong>Email:</strong> <span>rixilab7@gmail.com</span></p>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Useful Links</h4>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Terms of service</a></li>
+                <li><a href="#">Privacy policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Our Services</h4>
+              <ul>
+                <li><a href="#">Web Design</a></li>
+                <li><a href="#">Web Development</a></li>
+                <li><a href="#">Product Management</a></li>
+                <li><a href="#">Marketing</a></li>
+                <li><a href="#">Graphic Design</a></li>
+              </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Internships & Training</h4>
+              <ul>
+                <li><a href="#">Full Stack Web Development</a></li>
+                <li><a href="#">UI/UX Design</a></li>
+                <li><a href="#">Live Project Experience</a></li>
+                <li><a href="#">Canva Premium free</a></li>
+                <li><a href="#">Career Mentorship</a></li>
+              </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Courses & Certification</h4>
+              <ul>
+                <li><a href="#">Training Certificate</a></li>
+                <li><a href="#">Internship Certificate</a></li>
+                <li><a href="#">Couce Certificate.</a></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </section><!-- /Contact Section -->
 
-  </main>
-
-  <%- include('partials/toaster') %>
-
-  <footer id="footer" class="footer light-background">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 footer-about">
-            <a href="/" class="logo d-flex align-items-center">
-              <span class="sitename">Rixi Lab</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>Bhatpar Rani, Deoria,</p>
-              <p>Uttar Pradesh, 274506 INDIA</p>
-              <p class="mt-3"><strong>Phone:</strong> <span>Currently not available</span></p>
-              <p><strong>Email:</strong> <span>rixilab7@gmail.com</span></p>
+      <div class="copyright text-center">
+        <div
+          class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-lg-start"
+          >
+            <div>
+              © Copyright 2025 <strong><span>Rixi Lab</span></strong
+              >. All Rights Reserved
             </div>
+            <div class="credits">Designed by <a href="#">Rixi Lab</a></div>
           </div>
 
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
-            </ul>
+          <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+            <a href="https://www.linkedin.com/company/rixilab"
+              ><i class="bi bi-linkedin"></i
+            ></a>
+            <a href="https://www.facebook.com/rixilab"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a href="https://www.instagram.com/rixilab.in"
+              ><i class="bi bi-instagram"></i
+            ></a>
+            <a href=""><i class="bi bi-twitter-x"></i></a>
           </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Web Development</a></li>
-              <li><a href="#">Product Management</a></li>
-              <li><a href="#">Marketing</a></li>
-              <li><a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Internships & Training</h4>
-            <ul>
-              <li><a href="#">Full Stack Web Development</a></li>
-              <li><a href="#">UI/UX Design</a></li>
-              <li><a href="#">Live Project Experience</a></li>
-              <li><a href="#">Canva Premium free</a></li>
-              <li><a href="#">Career Mentorship</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Courses & Certification</h4>
-            <ul>
-              <li><a href="#">Training Certificate</a></li>
-              <li><a href="#">Internship Certificate</a></li>
-              <li><a href="#">Couce Certificate.</a></li>
-              
-            </ul>
-          </div>
-
         </div>
       </div>
-    </div>
+    </footer>
 
-    <div class="copyright text-center">
-      <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
 
-        <div class="d-flex flex-column align-items-center align-items-lg-start">
-          <div>
-            © Copyright 2025 <strong><span>Rixi Lab</span></strong>. All Rights Reserved
-          </div>
-          <div class="credits">
-            Designed by <a href="#">Rixi Lab</a>
-          </div>
-        </div>
+    <!-- Vendor JS Files -->
+    <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
+    <script src="/js/vendor/aos/aos.js"></script>
+    <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="/js/vendor/typed.js/typed.umd.js"></script>
+    <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
 
-        <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-          <a href="https://www.linkedin.com/company/rixilab"><i class="bi bi-linkedin"></i></a>
-          <a href="https://www.facebook.com/rixilab"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/rixilab.in"><i class="bi bi-instagram"></i></a>
-          <a href=""><i class="bi bi-twitter-x"></i></a>
-        </div>
+    <!-- Main JS File -->
+    <script src="/js/main.js"></script>
 
-      </div>
-    </div>
+    <script>
+      // Initialize Cashfree
+      const cashfree = new Cashfree({
+        mode: "production",
+      });
 
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
-  <script src="/js/vendor/aos/aos.js"></script>
-  <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="/js/vendor/typed.js/typed.umd.js"></script>
-  <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="/js/main.js"></script>
-
-  
-
-  <script>
-       function showToast(message, type) {
-           const toastContainer = document.querySelector('.toast-container') || document.body;
-           const toastClass = type === 'success' ? 'text-bg-success' : 'text-bg-danger';
-           const toastHTML = `
+      function showToast(message, type) {
+        const toastContainer =
+          document.querySelector(".toast-container") || document.body;
+        const toastClass =
+          type === "success" ? "text-bg-success" : "text-bg-danger";
+        const toastHTML = `
                <div class="toast ${toastClass} show" role="alert">
                    <div class="d-flex">
                        <div class="toast-body">${message}</div>
@@ -354,120 +513,237 @@
                    </div>
                </div>
            `;
-           toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-           const toastEl = toastContainer.lastElementChild;
-           const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
-           toast.show();
-           toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
-       }
-
-       function showLoader() {
-           const loaderWrapper = document.getElementById("pageLoaderWrapper");
-           if (loaderWrapper) {
-               loaderWrapper.style.display = "flex";
-               loaderWrapper.classList.remove("hidden");
-           }
-       }
-
-       function hideLoader() {
-           const loaderWrapper = document.getElementById("pageLoaderWrapper");
-           if (loaderWrapper) {
-               loaderWrapper.classList.add("hidden");
-               setTimeout(() => (loaderWrapper.style.display = "none"), 600);
-           }
-       }
-
-       var form = document.getElementById('internship-form');
-       form.addEventListener("submit", e => {
-           e.preventDefault();
-           const submitButton = form.querySelector('button[type="submit"]');
-           submitButton.disabled = true;
-           showLoader();
-           const formData = new FormData(form);
-           const data = {};
-           for (let [key, value] of formData.entries()) {
-               data[key] = value;
-           }
-           fetch(form.action, {
-               method: "POST",
-               headers: { "Content-Type": "application/json" },
-               body: JSON.stringify(data),
-           }).then(
-               response => response.json()
-           ).then((data) => {
-               hideLoader();
-               if (data.success) {
-                   let userName = document.getElementById("contactName").value.trim();
-                   if(userName === "") userName = "User";
-                   showToast(data.message, 'success');
-                   showPopup(`Thank you ${userName}! Your internship application has been submitted successfully. You will receive a confirmation email shortly with further instructions.`);
-                    submitButton.disabled = false;
-                   document.getElementById("internship-form").reset();
-               } else {
-                   showToast(data.message, 'error');
-                   submitButton.disabled = false;
-               }
-           }).catch(err => {
-               hideLoader();
-               showToast('An error occurred. Please try again.', 'error');
-               submitButton.disabled = false;
-           });
-       });
-   </script>
-
-    <script>
-      // Get elements
-      const popup = document.getElementById("qrPopup");
-      const payBtn = document.getElementById("payBtn");
-      const closeBtn = document.getElementById("closeBtn");
-
-      // Show popup when Pay Now is clicked
-      payBtn.onclick = function() {
-        popup.style.display = "flex";
+        toastContainer.insertAdjacentHTML("beforeend", toastHTML);
+        const toastEl = toastContainer.lastElementChild;
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        toast.show();
+        toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
       }
 
-      // Close popup when X is clicked
-      closeBtn.onclick = function() {
+      function showLoader() {
+        const loaderWrapper = document.getElementById("pageLoaderWrapper");
+        if (loaderWrapper) {
+          loaderWrapper.style.display = "flex";
+          loaderWrapper.classList.remove("hidden");
+        }
+      }
+
+      function hideLoader() {
+        const loaderWrapper = document.getElementById("pageLoaderWrapper");
+        if (loaderWrapper) {
+          loaderWrapper.classList.add("hidden");
+          setTimeout(() => (loaderWrapper.style.display = "none"), 600);
+        }
+      }
+
+      var form = document.getElementById("internship-form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        showLoader();
+        const formData = new FormData(form);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+        fetch(form.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            hideLoader();
+            if (data.success) {
+              let userName = document
+                .getElementById("contactName")
+                .value.trim();
+              if (userName === "") userName = "User";
+              showToast(data.message, "success");
+              let message = `Thank you ${userName}! Your internship application has been submitted successfully. You will receive a confirmation email shortly with further instructions.`;
+              const invoiceUrl = localStorage.getItem("invoiceUrl");
+              showPopup(message, invoiceUrl);
+              if (invoiceUrl) {
+                localStorage.removeItem("invoiceUrl"); // Clear after use
+              }
+              submitButton.disabled = false;
+              document.getElementById("internship-form").reset();
+              document.getElementById("payID").disabled = true;
+              document.getElementById("payID").textContent = "Submitted";
+            } else {
+              showToast(data.message, "error");
+              submitButton.disabled = false;
+            }
+          })
+          .catch((err) => {
+            hideLoader();
+            showToast("An error occurred. Please try again.", "error");
+            submitButton.disabled = false;
+          });
+      });
+
+      // Payment initiation
+      document
+        .getElementById("payID")
+        .addEventListener("click", async function (e) {
+          e.preventDefault();
+          const payBtn = this;
+          payBtn.disabled = true;
+          payBtn.textContent = "Submitting...";
+
+          // Collect form data
+          const form = document.getElementById("internship-form");
+          const formData = new FormData(form);
+          const data = {};
+          for (let [key, value] of formData.entries()) {
+            data[key] = value;
+          }
+
+          // Validate required fields except PayID
+          const requiredFields = [
+            "data[Name]",
+            "data[Email]",
+            "data[Phone]",
+            "data[University]",
+            "data[College]",
+            "data[Course]",
+            "data[Branch]",
+            "data[Y/S]",
+            "data[Domain]",
+            "data[Duration]",
+            "data[Terms]",
+          ];
+          for (let field of requiredFields) {
+            if (
+              !data[field] ||
+              (field === "data[Terms]" && data[field] !== "on")
+            ) {
+              showToast("Please fill all required fields", "error");
+              payBtn.disabled = false;
+              payBtn.textContent = "Continue to Payment & Submit";
+              return;
+            }
+          }
+
+          // Store form data in localStorage
+          localStorage.setItem("internshipFormData", JSON.stringify(data));
+          localStorage.setItem("userName", data["data[Name]"]?.trim() || "User");
+
+          // Create Cashfree order
+          const email = document.getElementById("contactEmail").value;
+          const phone = document.getElementById("contactPhone").value;
+          try {
+            showLoader();
+            const response = await fetch("/internship/create-order", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ data: data }),
+            });
+            const result = await response.json();
+            hideLoader();
+            if (result.success) {
+              // Check if Cashfree is loaded
+              if (!window.Cashfree || !cashfree.checkout) {
+                showToast(
+                  "Payment system not loaded. Please refresh and try again.",
+                  "error"
+                );
+                payBtn.disabled = false;
+                payBtn.textContent = "Continue to Payment & Submit";
+                return;
+              }
+              try {
+                // Initiate Cashfree checkout
+                cashfree.checkout({
+                  paymentSessionId: result.payment_session_id,
+                  redirectTarget: "_self",
+                });
+              } catch (error) {
+                console.error("Cashfree checkout error:", error);
+                showToast(
+                  "Failed to start payment. Please try again.",
+                  "error"
+                );
+                payBtn.disabled = false;
+                payBtn.textContent = "Continue to Payment & Submit";
+              }
+            } else {
+              showToast(
+                result.message || "Failed to create payment order",
+                "error"
+              );
+              payBtn.disabled = false;
+              payBtn.textContent = "Continue to Payment & Submit";
+            }
+          } catch (error) {
+            hideLoader();
+            showToast("An error occurred. Please try again.", "error");
+            payBtn.disabled = false;
+            payBtn.textContent = "Continue to Payment & Submit";
+          }
+        });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const referralCode = params.get("referral_code");
+        if (referralCode) {
+          const referralInput = document.getElementById("contactReferral");
+          if (referralInput) {
+            referralInput.value = referralCode;
+            referralInput.readOnly = true;
+          }
+        }
+      });
+
+      function showPopup(message, invoiceUrl = null) {
+        const popup = document.getElementById("popup");
+        const msgEl = document.getElementById("popupMsg");
+        msgEl.innerHTML = message
+        popup.style.display = "flex";
+      }
+      function closePopup() {
+        const popup = document.getElementById("popup");
         popup.style.display = "none";
       }
 
-      // Close popup when clicking outside content
-      window.onclick = function(event) {
-        if (event.target === popup) {
-          popup.style.display = "none";
+      // Check for payment success
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const paymentSuccess = params.get("payment_success");
+        const orderId = params.get("order_id");
+        const transactionId = params.get("transaction_id");
+        const invoiceUrl = params.get("invoice_url");
+        if (paymentSuccess === "true") {
+          // Get user name before clearing
+          let userName = "User";
+          const formData = localStorage.getItem("internshipFormData");
+          if (formData) {
+            const data = JSON.parse(formData);
+            userName = data["data[Name]"]?.trim() || "User";
+          }
+          // Clear localStorage
+          localStorage.removeItem("internshipFormData");
+          // Store invoice URL for later use
+          if (invoiceUrl) {
+            localStorage.setItem("invoiceUrl", invoiceUrl);
+          }
+          // Show success message
+          const message = `Thank you ${userName}! Your internship application and payment have been successfully processed. You will receive a confirmation email shortly with further instructions.`;
+          showPopup(message, invoiceUrl);
+          // Reset form
+          document.getElementById("internship-form").reset();
+          document.getElementById("payID").disabled = true;
+          document.getElementById("payID").textContent = "Submitted";
+        } else if (paymentSuccess === "false") {
+          showToast(
+            "Payment failed or was cancelled. Please try again.",
+            "error"
+          );
         }
-      }
+      });
     </script>
-
-    <script>
-       document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const referralCode = params.get("referral_code");
-    if (referralCode) {
-      const referralInput = document.getElementById("contactReferral");
-      if (referralInput) {
-        referralInput.value = referralCode;
-        referralInput.readOnly = true;
-      }
-    }
-  });
-
-  function showPopup(message) {
-  const popup = document.getElementById("popup");
-  const msgEl = document.getElementById("popupMsg");
-
-  msgEl.textContent = message;
-  popup.style.display = "flex";
-}
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-    </script>
-
-  
-
-
-
-</body>
-
+  </body>
 </html>
