@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Project = require("../models/Project");
 const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
+const Ambassador = require("../models/Ambassador");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -198,6 +199,11 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     });
 
     await newUser.save();
+    
+    await Ambassador.findOneAndUpdate(
+      {referralId: registration.referral_code},
+      { $inc: { internCount: 1 } }
+    );
 
     function getOrdinal(day) {
       if (day > 3 && day < 21) return "th"; // 11–13

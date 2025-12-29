@@ -10,7 +10,7 @@ const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
 
 router.post("/create-order", async (req, res) => {
   try {
-    const data = req.body.data; 
+    const data = req.body.data;
 
     // Extract fields
     const name = data["data[Name]"];
@@ -88,26 +88,22 @@ router.post("/create-order", async (req, res) => {
 
     await newReg.save();
 
-   const request = {
-  order_id: orderId,
-  order_amount: 100,
-  order_currency: "INR",
+    const request = {
+      order_id: orderId,
+      order_amount: 100,
+      order_currency: "INR",
 
-  customer_details: {
-    customer_id: `cust_${Date.now()}`,   // ✅ REQUIRED
-    customer_name: name,  
-    customer_email: sanitizedEmail,      // ✅ recommended
-    customer_phone: sanitizedPhone       // ✅ recommended
-  },
+      customer_details: {
+        customer_id: `cust_${Date.now()}`, // ✅ REQUIRED
+        customer_name: name,
+        customer_email: sanitizedEmail, // ✅ recommended
+        customer_phone: sanitizedPhone, // ✅ recommended
+      },
 
-  order_meta: {
-    return_url: `${process.env.BASE_URL}/internship/payment/callback?order_id=${orderId}`,
-  },
-};
-
-
-
-
+      order_meta: {
+        return_url: `${process.env.BASE_URL}/internship/payment/callback?order_id=${orderId}`,
+      },
+    };
 
     // console.log("Cashfree Request:", request);
 
@@ -138,7 +134,6 @@ router.post("/create-order", async (req, res) => {
     });
   }
 });
-
 
 router.get("/payment/callback", async (req, res) => {
   try {
@@ -172,22 +167,20 @@ router.get("/payment/callback", async (req, res) => {
 
       if (registration) {
         // Send to sheets
-        const timestampMs = Date.now();
-        const d = new Date(timestampMs);
+        const d = new Date();
 
-        const pad = (n) => String(n).padStart(2, "0");
-
-        let hours = d.getHours();
-        const minutes = pad(d.getMinutes());
-        const seconds = pad(d.getSeconds());
-        const ampm = hours >= 12 ? "PM" : "AM";
-
-        hours = hours % 12;
-        hours = hours ? hours : 12; // 0 -> 12
-
-        const formattedTimestamp =
-          `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ` +
-          `${pad(hours)}:${minutes}:${seconds} ${ampm}`;
+        const formattedTimestamp = d
+          .toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+          })
+          .replace(",", "");
 
         const sheetData = {
           Name: registration.name,
@@ -224,11 +217,10 @@ router.get("/payment/callback", async (req, res) => {
           encodeURIComponent(invoiceUrl)
       );
     } else {
-
-       await NewRegistration.findOneAndUpdate(
-    { order_id },
-    { payment_status: "FAILED" }
-  );
+      await NewRegistration.findOneAndUpdate(
+        { order_id },
+        { payment_status: "FAILED" }
+      );
       res.redirect("/internship?payment_success=false");
     }
   } catch (error) {
