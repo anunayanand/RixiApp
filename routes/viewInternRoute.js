@@ -38,8 +38,29 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
   });
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
-  req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications});
+      // Starting Date Formatting
+  function formatWithOrdinal(dateStr) {
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = date.toLocaleString("en-US", { month: "short" });
+
+  function getOrdinal(n) {
+    if (n > 3 && n < 21) return "th";
+    switch (n % 10) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  }
+
+  return `${day}${getOrdinal(day)} ${month} ${year}`;
+}
+const str_date = formatWithOrdinal(intern.starting_date);
+  req.flash('success', `Viewing Intern: ${intern.name}`);
+  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications, startingDate: str_date });
   }catch(err){
     console.error(err);
     req.flash("error", "Intern details loading failed");

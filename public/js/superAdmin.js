@@ -544,7 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         // Remove row after success
         row.remove();
-        showToast("Intern registration approved", "success");
+        showToast(data.message, "success");
         // Update the registration counter
         const countSpan = document.getElementById('superRegCount');
         if (countSpan) {

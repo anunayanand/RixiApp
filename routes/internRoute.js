@@ -50,7 +50,29 @@ router.get("/intern", authRole("intern"), async (req, res) => {
         isClosed: a.quizId.isClosed
       }));
 
-    req.flash('success_msg', 'Welcome to Intern Dashboard');
+    // Starting Date Formatting
+  function formatWithOrdinal(dateStr) {
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = date.toLocaleString("en-US", { month: "short" });
+
+  function getOrdinal(n) {
+    if (n > 3 && n < 21) return "th";
+    switch (n % 10) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  }
+
+  return `${day}${getOrdinal(day)} ${month} ${year}`;
+}
+const str_date = formatWithOrdinal(intern.starting_date);
+
+    req.flash('success', 'Welcome to Intern Dashboard');
     res.render("intern", {
       intern,
       projects,
@@ -61,7 +83,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,
       assignedQuizzes,
-      notifications
+      notifications,
+      startingDate: str_date
     });
 
   } catch (err) {
