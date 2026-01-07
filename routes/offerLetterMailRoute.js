@@ -138,8 +138,8 @@ async function sendBulkOfferLetterMails(interns) {
       // console.log(`✅ Offer Letter sent to ${email}`);
       return { status: "fulfilled", email, intern_id };
     } catch (err) {
-      // console.error(`❌ Offer Letter failed for ${email}:`, err.message);
-      return { status: "rejected", email, intern_id, reason: err.message };
+      // console.error(`❌ Offer Letter failed for ${intern.email}:`, err.message);
+      return { status: "rejected", email: intern.email, intern_id: intern.intern_id, reason: err.message };
     }
   });
 
@@ -151,6 +151,7 @@ async function sendBulkOfferLetterMails(interns) {
 // ==============================
 router.post("/send-offerletter-mail", async (req, res) => {
   try {
+    // console.log("Offer letter mail route called with body:", req.body);
     const { interns } = req.body;
 
     // Normalize interns to array
@@ -162,16 +163,14 @@ router.post("/send-offerletter-mail", async (req, res) => {
 
     // Validation: interns must be selected
     if (!internIds.length) {
-      req.flash("error", "No interns selected for offer letter mail.");
-      return res.redirect("/superAdmin");
+      return res.status(400).json({ success: false, message: "No interns selected for offer letter mail." });
     }
 
     // Fetch selected interns from DB
     const matchedInterns = await User.find({ intern_id: { $in: internIds } });
 
     if (!matchedInterns.length) {
-      req.flash("error", "No matching interns found in the database.");
-      return res.redirect("/superAdmin");
+      return res.status(404).json({ success: false, message: "No matching interns found in the database." });
     }
 
     // Send emails
@@ -193,21 +192,11 @@ router.post("/send-offerletter-mail", async (req, res) => {
     // Flash messages
     const successCount = results.filter(r => r.status === "fulfilled").length;
     const failedCount = results.filter(r => r.status === "rejected").length;
-
-    if (failedCount === 0) {
-      req.flash("success", `✅ ${successCount} offer letters sent successfully.`);
-    } else {
-      req.flash(
-        "error",
-        `⚠️ ${successCount} sent, ${failedCount} failed. Check logs.`
-      );
-    }
-
-    res.redirect("/superAdmin");
+    // console.log(`Success: ${successCount}, Failed: ${failedCount}`);
+    res.json({ success: true, sent: successCount, failed: failedCount });
   } catch (err) {
     // console.error("Error in offer letter route:", err);
-    req.flash("error", "Server error while sending offer letters.");
-    res.redirect("/superAdmin");
+    res.status(500).json({ success: false, message: "Server error while sending offer letters." });
   }
 });
 
