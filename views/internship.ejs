@@ -94,9 +94,9 @@
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
               <div class="contact-form-wrapper">
-                <div class="form-header">
-                  <h3>Winter Internship Registration Form</h3>
-                  <p>
+                <div class="form-header" style="margin-bottom: 1rem;">
+                  <h3>Internship Registration Form</h3>
+                  <p style=" text-align: justify;">
                     At Rixi Lab an MSME registerd startup, internships and
                     training are designed to provide hands-on experience through
                     live projects, aimed at nurturing future-ready skills in
@@ -105,17 +105,17 @@
                     gaining practical insights and building their portfolios.
                   </p>
                   <hr />
-                  <h5>Online Project Based Winter Internship Program</h5>
+                  <h5>Online Project Based Internship Program</h5>
                 </div>
 
                 <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
                 <h5>Internship Important Dates:</h5>
                 <ul>
-                  <li>Last date to apply: 30 Jan 2026</li>
+                  <li>Last date to apply: 28 Feb 2026</li>
                   <!-- <li style="color: #00ff00;">Extended date to apply: 30 Sept 2025</li> -->
-                  <li>Offer Letter provide: 31 Jan 2026</li>
-                  <li>Internship Start Date: 1 Feb 2026</li>
-                  <li>Project Assign Date: 1 Feb 2026</li>
+                  <li>Offer Letter provide: 28 Feb 2026</li>
+                  <li>Internship Start Date: 1 Mar 2026</li>
+                  <li>Project Assign Date: 1 Mar 2026</li>
                 </ul>
 
                 <h5>Benefites for Students:</h5>
@@ -321,13 +321,31 @@
                     />
                   </div>
                   <!-- <br> -->
-                  <h5>
-                    Registration Fee: <s style="color: red">Rs 499/-</s>
-                    <span style="color: #00ff00">Rs 100/-</span>(Only online
-                    Payment Accepted)
-                  </h5>
+                  <!-- Billing Table -->
+                  <table class="billing-table" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                    <tr>
+                      <td>Registration Fee</td>
+                      <td style="text-align: right;">₹<span id="regFee">499</span></td>
+                    </tr>
+                    <tr>
+                      <td>Discount (80%)</td>
+                      <td style=" text-align: right; color: #ffff;">- ₹399</td>
+                    </tr>
+                    <tr>
+                      <td>Service Charges (incl. GST)</td>
+                      <td style=" text-align: right;">₹1.95</td>
+                    </tr>
+                    <tr>
+                      <td>Service Tax</td>
+                      <td style=" text-align: right;">₹0.45</td>
+                    </tr>
+                    <tr style="border-top: 1px solid #ddd;">
+                      <td style="padding: 10px 0 0 0; font-weight: bold;">Total Registration Fee <span style="font-weight: 400;">(Only online Payment Accepted)</span></td>
+                      <td style="padding: 10px 0 0 0; text-align: right; font-weight: bold; color: #ffff; font-size: 1.1em;">₹102.4/-</td>
+                    </tr>
+                  </table>
 
-                  <div class="">
+                  <div class="mt-1">
                     <input
                       type="checkbox"
                       class="form-check-input"
@@ -499,6 +517,24 @@
       // Initialize Cashfree
       const cashfree = new Cashfree({
         mode: "production",
+      });
+
+      // Domain-wise prices (must match backend DOMAIN_PRICES)
+      const domainPrices = {
+        "Web Development": 102.4,
+        "Python Programming": 102.4,
+        "Java Programming": 102.4,
+        "Data Analytics": 102.4,
+        "DSA": 102.4,
+        "Graphics Design": 102.4,
+        "Full Stack Development": 102.4
+      };
+
+      // Update price when domain changes
+      document.getElementById("contactDomain").addEventListener("change", function() {
+        const selectedDomain = this.value;
+        const price = domainPrices[selectedDomain] || 102.4;
+        document.getElementById("registrationFee").textContent = `Rs ${price}/-`;
       });
 
       function showToast(message, type) {

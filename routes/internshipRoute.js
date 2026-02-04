@@ -8,6 +8,17 @@ const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
 const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
 
+// Domain-wise registration charges
+const DOMAIN_PRICES = {
+  "Web Development": 102.4,
+  "Python Programming": 102.4,
+  "Java Programming": 102.4,
+  "Data Analytics": 102.4,
+  "DSA": 102.4,
+  "Graphics Design": 102.4,
+  "Full Stack Development": 102.4
+};
+
 router.post("/create-order", async (req, res) => {
   try {
     const data = req.body.data;
@@ -68,6 +79,9 @@ router.post("/create-order", async (req, res) => {
 
     const orderId = `order_${Date.now()}`;
 
+    // Get price based on domain
+    const domainPrice = DOMAIN_PRICES[domain.trim()] || 100;
+
     // Create dummy registration
     const newReg = new NewRegistration({
       name: name.trim(),
@@ -90,7 +104,7 @@ router.post("/create-order", async (req, res) => {
 
     const request = {
       order_id: orderId,
-      order_amount: 100,
+      order_amount: domainPrice,
       order_currency: "INR",
 
       customer_details: {
