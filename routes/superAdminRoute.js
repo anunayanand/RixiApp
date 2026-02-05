@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 const NewRegistration = require("../models/NewRegistration");
@@ -9,9 +11,9 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
   try {
     const interns = await User.find({ role: "intern" });
     const batches = [...new Set(interns.map(i => i.batch_no))];
-    const admins = await User.find({ role: "admin" });
+    const admins = await Admin.find({});
     const ambassadors = await Ambassador.find({});
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
     if (!superAdmin) {
       req.flash("error", "SuperAdmin not found");
@@ -73,13 +75,27 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
     // ==============================
     const meetingsMap = new Map();
     interns.forEach(intern => {
-      intern.meetings.forEach(meeting => {
+      const meetings = intern.meetings || [];
+      meetings.forEach(meeting => {
         const key = `${intern.domain}-${intern.batch_no}-${meeting.week}-${meeting.title}`;
         if (!meetingsMap.has(key)) {
           meetingsMap.set(key, {
             ...meeting.toObject(),
             domain: intern.domain,
             batch_no: intern.batch_no
+          });
+        }
+      });
+    });
+    admins.forEach(admin => {
+      const meetings = admin.meetings || [];
+      meetings.forEach(meeting => {
+        const key = `${admin.domain}-admin-${meeting.week}-${meeting.title}`;
+        if (!meetingsMap.has(key)) {
+          meetingsMap.set(key, {
+            ...meeting.toObject(),
+            domain: admin.domain,
+            batch_no: "admin"
           });
         }
       });
@@ -131,7 +147,7 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
 router.post("/registration/:id/:action", authRole("superAdmin"), async (req, res) => {
   try {
     const { id, action } = req.params;
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
 
     if (action === "approve") {
       await NewRegistration.findByIdAndUpdate(id, {
@@ -153,6 +169,51 @@ router.post("/registration/:id/:action", authRole("superAdmin"), async (req, res
   } catch (error) {
     // console.error(error);
     res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// Send offer letter to interns
+router.post("/send-offer-letter", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { interns } = req.body;
+
+    // Normalize interns to array
+    const internIds = interns
+      ? Array.isArray(interns)
+        ? interns
+        : [interns]
+      : [];
+
+    // Validation: interns must be selected
+    if (!internIds.length) {
+      return res.json({ success: false, message: "No interns selected" });
+    }
+
+    // Fetch selected interns from DB
+    const matchedInterns = await User.find({ intern_id: { $in: internIds } });
+
+    if (!matchedInterns.length) {
+      return res.json({ success: false, message: "No matching interns found" });
+    }
+
+    // Import the send function
+    const { sendBulkOfferLetterMails } = require("./offerLetterMailRoute");
+
+    // Send emails
+    const results = await sendBulkOfferLetterMails(matchedInterns);
+
+    // Flash messages
+    const successCount = results.filter(r => r.status === "fulfilled").length;
+    const failedCount = results.filter(r => r.status === "rejected").length;
+
+    if (failedCount === 0) {
+      res.json({ success: true, message: `${successCount} offer letters sent successfully.` });
+    } else {
+      res.json({ success: false, message: `${successCount} sent, ${failedCount} failed.` });
+    }
+  } catch (err) {
+    // console.error("Error in send offer letter route:", err);
+    res.json({ success: false, message: "Server error while sending offer letters." });
   }
 });
 

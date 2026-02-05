@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
+const SuperAdmin = require("../models/SuperAdmin");
 
 router.get("/", async (req, res) => {
   
   try{
-    const superAdminExists = await User.findOne({ role: "superAdmin" });
+    const superAdminExists = await SuperAdmin.findOne({});
   if (!superAdminExists) return res.redirect("/register-superAdmin");
   res.render("index");
   }catch(err){

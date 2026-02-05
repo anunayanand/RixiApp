@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  role: { type: String , default: "intern" },
   domain: { type: String },
   college: { type: String },
   isFirstLogin: { type: Boolean, default: true },
@@ -14,9 +15,6 @@ const userSchema = new mongoose.Schema({
   year_sem: { type: String },
   intern_id: { type: String, unique: true, sparse: true },
   phone: { type: String, required: true },
-  role: { type: String, default: "intern" },
-  emp_id: { type: String, unique: true, sparse: true },
-  designation: { type: String },
   batch_no: { type: String },
   certificate_id: {
     type: String,
@@ -47,13 +45,6 @@ const userSchema = new mongoose.Schema({
   screenshot_img: { type: String, default: "" },
   screenshot_public_id: { type: String },
 
-  notice: [
-    {
-      title: { type: String },
-      description: { type: String },
-    },
-  ],
-
   projectAssigned: [
     {
       projectId: {
@@ -69,29 +60,6 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
-  meetings: [
-    {
-      _id: { type: mongoose.Schema.Types.ObjectId, required: true },
-      link: { type: String, required: true },
-      title: { type: String, required: true },
-      scheduledTime: { type: Date, required: true },
-      week: { type: Number, required: true },
-      status: {
-        type: String,
-        enum: ["upcoming", "completed", "cancelled"],
-        default: "upcoming",
-      },
-      attendance: {
-        type: String,
-        enum: ["pending", "present", "absent"],
-        default: "pending",
-      },
-    },
-  ],
-
-  twoFASecret: { type: String, default: null },
-  resetToken: { type: String, default: null },
-
   quizAssignments: [
     {
       quizId: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz" },
@@ -101,24 +69,6 @@ const userSchema = new mongoose.Schema({
       attemptCount: { type: Number, default: 0 },
     },
   ],
-
-  // ✅ Embedded Notifications (auto-delete in 7 days)
-  notifications: [
-    {
-      title: { type: String, required: true },
-      message: { type: String, required: true },
-      type: {
-        type: String,
-        enum: ["meeting", "project", "quizAssigned", "quizSubmitted","progress"],
-        required: true,
-      },
-      createdAt: { type: Date, default: Date.now },
-      isRead: { type: Boolean, default: false },
-    },
-  ],
-  notifiedInterns: [{ type: String, default: [] }],
-  otp: String,
-  otpExpiry: Date,
 });
 
 module.exports = mongoose.model("User", userSchema);

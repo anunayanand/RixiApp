@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 const Project = require("../models/Project");
 const authRole = require('../middleware/authRole');
 
@@ -34,7 +35,7 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     const attendanceRate = totalMeetings > 0 ? Math.round((attended / totalMeetings) * 100) : 0;
 
     const totalProjects = assignedProjects.length;
-    const mentor = await User.findOne({ role: "admin", domain: intern.domain }).select("name"); 
+    const mentor = await Admin.findOne({ domain: intern.domain }).select("name");
     const mentorName = mentor?.name ?? "No Mentor";
 
     // Sort notifications (newest first)
@@ -50,29 +51,7 @@ router.get("/intern", authRole("intern"), async (req, res) => {
         isClosed: a.quizId.isClosed
       }));
 
-    // Starting Date Formatting
-  function formatWithOrdinal(dateStr) {
-  const date = new Date(dateStr);
-
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const month = date.toLocaleString("en-US", { month: "short" });
-
-  function getOrdinal(n) {
-    if (n > 3 && n < 21) return "th";
-    switch (n % 10) {
-      case 1: return "st";
-      case 2: return "nd";
-      case 3: return "rd";
-      default: return "th";
-    }
-  }
-
-  return `${day}${getOrdinal(day)} ${month} ${year}`;
-}
-const str_date = formatWithOrdinal(intern.starting_date);
-
-    req.flash('success', 'Welcome to Intern Dashboard');
+    req.flash('success_msg', 'Welcome to Intern Dashboard');
     res.render("intern", {
       intern,
       projects,
@@ -83,8 +62,7 @@ const str_date = formatWithOrdinal(intern.starting_date);
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,
       assignedQuizzes,
-      notifications,
-      startingDate: str_date
+      notifications
     });
 
   } catch (err) {

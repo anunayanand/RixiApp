@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const Quiz = require("../models/Quiz");
 
 // GET /intern/quiz/:quizId - render quiz page
@@ -131,7 +133,7 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
     const notificationMessage = `${intern.name} has submitted the quiz "${quiz.title}" (Week ${quiz.week}) in domain "${quiz.domain}".`;
 
     // SuperAdmin notification
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
       superAdmin.notifications.push({
         title: "Quiz Submitted by Intern",
@@ -144,7 +146,7 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
     }
 
     // Admin notification
-    const admins = await User.find({ role: "admin", domain: intern.domain });
+    const admins = await Admin.find({ domain: intern.domain });
     for (let admin of admins) {
       admin.notifications.push({
         title: "Quiz Submitted",

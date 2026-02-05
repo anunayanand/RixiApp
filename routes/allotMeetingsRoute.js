@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 const authRole = require("../middleware/authRole");
 
 // =============================
@@ -12,7 +13,7 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
     const { domain, week, batch_no, title, link, scheduledTime } = req.body;
 
     const interns = await User.find({ role: "intern", domain, batch_no });
-    const admins = await User.find({ role: "admin", domain });
+    const admins = await Admin.find({ domain });
 
     if (!interns.length && !admins.length) {
       req.flash("error", "No interns or admins found for selected criteria");
@@ -37,6 +38,7 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
     // ===== Interns =====
     for (let intern of interns) {
       if (week <= intern.duration) {
+        intern.meetings = intern.meetings || [];
         intern.meetings.push(meetingObj);
         await intern.save();
         allottedCount++;
@@ -78,7 +80,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
 
     // Fetch interns and admins separately
     const interns = await User.find({ role: "intern", domain, batch_no });
-    const admins = await User.find({ role: "admin", domain });
+    const admins = await Admin.find({ domain });
 
     if (!interns.length && !admins.length) {
       req.flash("error", "No interns or admins found for selected domain and batch");
@@ -91,6 +93,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
     for (let intern of interns) {
       // Only update if week <= intern.duration
       if (week <= intern.duration) {
+        intern.meetings = intern.meetings || [];
         const meetingIndex = intern.meetings.findIndex(m => m._id.toString() === meetingId);
         if (meetingIndex !== -1) {
           const meeting = intern.meetings[meetingIndex];
@@ -146,7 +149,7 @@ router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, re
 
     // Fetch interns and admins separately
     const interns = await User.find({ role: "intern", domain, batch_no });
-    const admins = await User.find({ role: "admin", domain });
+    const admins = await Admin.find({ domain });
 
     if (!interns.length && !admins.length) {
       req.flash("error", "No interns or admins found for selected domain and batch");

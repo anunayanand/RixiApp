@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Project = require("../models/Project");
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require('../middleware/authRole');
 
 router.post("/admin/projects", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
-    const admin = await User.findById(adminId);
+    const admin = await Admin.findById(adminId);
     if (!admin) return res.status(404).send("Admin not found");
 
     let { title, description, downloadLink, uploadLink, week, batch_no } = req.body;
@@ -49,6 +51,8 @@ router.post("/admin/projects", authRole("admin"), async (req, res) => {
 
     // Push notification and project assignment
     for (let intern of interns) {
+      intern.projectAssigned = intern.projectAssigned || [];
+      intern.notifications = intern.notifications || [];
       intern.projectAssigned.push({
         projectId: newProject._id,
         week: newProject.week,
@@ -59,7 +63,7 @@ router.post("/admin/projects", authRole("admin"), async (req, res) => {
     }
 
     // 🟣 Notify SuperAdmin
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
       superAdmin.notifications.push({
         title: "New Project Created",

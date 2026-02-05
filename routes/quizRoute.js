@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Quiz = require("../models/Quiz");
 const User = require("../models/User");
+const SuperAdmin = require("../models/SuperAdmin");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
@@ -41,7 +42,7 @@ router.post("/create", quizUpload.array("images"), async (req, res) => {
     await quiz.save();
 
     // 🟣 Notify SuperAdmin
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
       superAdmin.notifications.push({
         title: "New Quiz Created",
@@ -118,7 +119,7 @@ router.post("/assign", async (req, res) => {
     });
 
     // 🔹 Notify superAdmin
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
       superAdmin.notifications.push({
         title: "Quiz Assigned to Interns",

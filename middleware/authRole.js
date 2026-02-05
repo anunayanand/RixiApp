@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const Ambassador = require("../models/Ambassador");
 
 function authRole(roles) {
@@ -12,10 +14,14 @@ function authRole(roles) {
         return res.redirect("/login");
       }
 
-      // ✅ Check from both models based on session role
+      // ✅ Check from appropriate model based on session role
       let user;
       if (req.session.role === "ambassador") {
         user = await Ambassador.findById(req.session.user);
+      } else if (req.session.role === "admin") {
+        user = await Admin.findById(req.session.user);
+      } else if (req.session.role === "superAdmin") {
+        user = await SuperAdmin.findById(req.session.user);
       } else {
         user = await User.findById(req.session.user);
       }

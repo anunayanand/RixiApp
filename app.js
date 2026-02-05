@@ -75,7 +75,17 @@ const authRole = require('./middleware/authRole');
 const homeRoute = require('./routes/homeRoute');
 
 // Register first superAdmin
-app.get("/register-superAdmin", (req, res) => res.render("register"));
+app.get("/register-superAdmin", async (req, res) => {
+  try {
+    const SuperAdmin = require("./models/SuperAdmin");
+    const superAdminExists = await SuperAdmin.findOne({});
+    if (superAdminExists) return res.redirect("/login");
+    res.render("register");
+  } catch (err) {
+    req.flash("error", "Server Error");
+    res.redirect("/login");
+  }
+});
 
 const registerSuperAdminRouter = require('./routes/registerSuperAdminRoute');
 app.use('/', registerSuperAdminRouter); // now POST /register-superAdmin works
@@ -297,6 +307,10 @@ app.use("/", uploadScreenshotRoute);
 // Desktop Mode change prevent route
 const blockedMobileRouter = require('./routes/mobileBlockedRoute');
 app.use('/',blockedMobileRouter);
+
+// Migration route for SuperAdmin
+const migrateSuperAdminRouter = require('./routes/migrateSuperAdminRoute');
+app.use('/', migrateSuperAdminRouter);
 
 const toggleUpdateButton = require('./routes/toggleUpdateButton');
 app.post('/project/toggle-visibility/:id',toggleUpdateButton);

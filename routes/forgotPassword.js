@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const SuperAdmin = require("../models/SuperAdmin");
 const bcrypt = require("bcrypt");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
 
 // 🧠 1. Setup 2FA (One-time setup by SuperAdmin)
 router.get("/setup-2fa", async (req, res) => {
-  const superAdmin = await User.findOne({ role: "superAdmin" });
+  const superAdmin = await SuperAdmin.findOne({});
   if (!superAdmin) return res.send("SuperAdmin not found.");
 
   const secret = speakeasy.generateSecret({
@@ -86,7 +86,7 @@ router.get("/forgot-password", (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
-  const superAdmin = await User.findOne({ role: "superAdmin" });
+  const superAdmin = await SuperAdmin.findOne({});
   if (!superAdmin) return res.send("SuperAdmin not found.");
   if (email !== superAdmin.email) return req.flash("error", "Unauthorized Access."), res.redirect("/forgot-password");
   res.send(`
@@ -122,7 +122,7 @@ router.post("/forgot-password", async (req, res) => {
 // 🧠 3. Verify 2FA Code before allowing reset
 router.post("/verify-2fa", async (req, res) => {
   const { token } = req.body;
-  const superAdmin = await User.findOne({ role: "superAdmin" });
+  const superAdmin = await SuperAdmin.findOne({});
   if (!superAdmin) return res.send("SuperAdmin not found.");
 
   const verified = speakeasy.totp.verify({
@@ -170,7 +170,7 @@ router.post("/verify-2fa", async (req, res) => {
 // 🧠 4. Reset password after 2FA verified
 router.post("/reset-password", async (req, res) => {
   const { newPassword } = req.body;
-  const superAdmin = await User.findOne({ role: "superAdmin" });
+  const superAdmin = await SuperAdmin.findOne({});
   if (!superAdmin) return res.send("SuperAdmin not found.");
 
   const hashed = await bcrypt.hash(newPassword, 10);

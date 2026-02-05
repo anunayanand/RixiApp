@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const Admin = require("../models/Admin");
 const authRole = require('../middleware/authRole');
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
@@ -31,7 +31,7 @@ router.post("/create-admin", authRole("superAdmin"), upload.single("image"), asy
     }
 
     // Check if admin already exists
-    const existingAdmin = await User.findOne({ $or: [{ email }, { emp_id }] });
+    const existingAdmin = await Admin.findOne({ $or: [{ email }, { emp_id }] });
     if (existingAdmin) {
       if (existingAdmin.email === email) req.flash("error", "Email already exists!");
       else req.flash("error", "Employee ID already exists!");
@@ -40,26 +40,25 @@ router.post("/create-admin", authRole("superAdmin"), upload.single("image"), asy
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Prepare user data
-    let userData = {
+    // Prepare admin data
+    let adminData = {
       name,
       email,
       password: hashedPassword,
       domain,
       phone,
       emp_id,
-      designation,
-      role: "admin"
+      designation
     };
 
     // Add uploaded image if exists
     if (req.file) {
-      userData.img_url = req.file.path;
-      userData.img_public_id = req.file.filename;
+      adminData.img_url = req.file.path;
+      adminData.img_public_id = req.file.filename;
     }
 
-    const user = new User(userData);
-    await user.save();
+    const admin = new Admin(adminData);
+    await admin.save();
 
     req.flash("success", "Admin created successfully!");
     res.redirect("/superAdmin");

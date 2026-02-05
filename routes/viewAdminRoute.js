@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const Project = require("../models/Project");
 const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
@@ -14,8 +16,8 @@ router.get(
   authRole("superAdmin"),
   async (req, res) => {
     try {
-      const admin = await User.findById(req.params.adminId);
-      if (!admin || admin.role !== "admin") return res.redirect("/superAdmin");
+      const admin = await Admin.findById(req.params.adminId);
+      if (!admin) return res.redirect("/superAdmin");
 
       // Fetch interns under that admin’s domain
       const interns = await User.find({
@@ -31,7 +33,7 @@ router.get(
         (i) => i.certificate_link && i.certificate_link.trim() !== ""
       ).length;
 
-      const superAdmin = await User.findOne({ role: "superAdmin" });
+      const superAdmin = await SuperAdmin.findOne({});
       const notices = superAdmin ? superAdmin.notice : [];
 
       // ✅ Filter upcoming meetings

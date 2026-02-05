@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const Project = require("../models/Project");
 const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
-const Ambassador = require("../models/Ambassador");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -24,42 +25,10 @@ const startingDate = {
   2611: "2026-11-01T00:00:00.000+00:00",
   2612: "2026-12-01T00:00:00.000+00:00",
 };
-// Function to format name
-function formatName(name = "") {
-  return name
-    .trim()
-    .replace(/\s+/g, " ")
-    .toLowerCase()
-    .split(" ")
-    .map(word => {
-      if (word.includes(".")) {
-        return word
-          .split(".")
-          .map(part => part ? part[0].toUpperCase() + part.slice(1) : "")
-          .join(".");
-      }
-      if (word.includes("-")) {
-        return word
-          .split("-")
-          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-          .join("-");
-      }
-      if (word.includes("'")) {
-        return word
-          .split("'")
-          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-          .join("'");
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(" ");
-}
-
-
 router.get("/", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
-    const admin = await User.findById(adminId);
+    const admin = await Admin.findById(adminId);
 
     if (!admin) {
       req.flash("error", "Admin not found");
@@ -74,7 +43,7 @@ router.get("/", authRole("admin"), async (req, res) => {
       domain: admin.domain,
     }).populate("projectAssigned.projectId");
 
-    const superAdmin = await User.findOne({ role: "superAdmin" });
+    const superAdmin = await SuperAdmin.findOne({});
     const notices = superAdmin ? superAdmin.notice : [];
 
     // ===================================
@@ -177,30 +146,42 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
   try {
     const { id } = req.params;
     const { intern_id, batch_no } = req.body;
-
+    // console.log('Parsed data:', { id, intern_id, batch_no });
     if (!intern_id || !batch_no) {
-      return res.status(400).json({ success: false, message: "Intern ID and Batch are required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Intern ID and Batch are required" });
     }
+    const adminId = req.session.user;
+    const admin = await Admin.findById(adminId);
 
-    const admin = await User.findById(req.session.user);
     const registration = await NewRegistration.findById(id);
-
-    if (!registration || registration.status !== "approved" || registration.domain !== admin.domain) {
-      return res.status(400).json({ success: false, message: "Invalid registration" });
+    if (
+      !registration ||
+      registration.status !== "approved" ||
+      registration.domain !== admin.domain
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid registration" });
     }
 
-    // Check unique intern_id
-    if (await User.findOne({ intern_id })) {
-      return res.status(400).json({ success: false, message: "Intern ID already exists" });
+    // Check if intern_id is unique
+    const existingUser = await User.findOne({ intern_id });
+    if (existingUser) {
+      // console.log('Intern ID already exists:', intern_id);
+      return res
+        .status(400)
+        .json({ success: false, message: "Intern ID already exists" });
     }
-
-    const startDate = startingDate[batch_no];
+    registration.isCreated = true;
+    await registration.save();
+    // Hash the password (intern_id as password)
     const hashedPassword = await bcrypt.hash(intern_id, 10);
-
-    const formattedName = formatName(registration.name);
-
-    const newUser = await User.create({
-      name: formattedName,
+    const startDate = startingDate[batch_no];
+    // Create new user
+    const newUser = new User({
+      name: registration.name,
       email: registration.email,
       password: hashedPassword,
       phone: registration.phone,
@@ -215,69 +196,74 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       batch_no,
       starting_date: startDate,
       role: "intern",
-      referal_code: registration.referral_code || "",
-      img_url: registration.profile_image_url,
-      img_public_id: registration.profile_image_public_id
     });
 
-    // ✅ Assign projects correctly
-    const projects = await Project.find({
-      domain: registration.domain,
-      batch_no,
-    });
+    await newUser.save();
 
-    const duration = Number(registration.duration);
-
-    const eligibleProjects = projects.filter(p => {
-      if (p.week <= 4 && [4,6,8].includes(duration)) return true;
-      if (p.week === 6 && [6,8].includes(duration)) return true;
-      if (p.week === 8 && duration === 8) return true;
-      return false;
-    });
-
-    if (eligibleProjects.length) {
-      newUser.projectAssigned = eligibleProjects.map(p => ({
-        projectId: p._id,
-        week: p.week,
-        status: "pending"
-      }));
-      await newUser.save();
+    function getOrdinal(day) {
+      if (day > 3 && day < 21) return "th"; // 11–13
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
     }
+    function formatDateWithOrdinal(dateValue) {
+      const date = new Date(dateValue);
 
-    // ✅ Update ambassador count
-    if (registration.referral_code) {
-      await Ambassador.findOneAndUpdate(
-        { referralId: registration.referral_code },
-        { $inc: { internCount: 1 } }
-      );
+      const day = date.getDate();
+      const month = date.toLocaleString("en-US", { month: "long" });
+      const year = date.getFullYear();
+
+      return `${day}${getOrdinal(day)} ${month} ${year}`;
     }
-
-    // ✅ Mark registration created AFTER success
-    registration.isCreated = true;
-    await registration.save();
-
-    // ✅ Send email (don’t break flow if fails)
+    //  console.log('Sending email with data:', {
+    //   intern_id: intern_id,
+    //   name: registration.name,
+    //   email: registration.email,
+    //   domain: registration.domain,
+    //   duration: registration.duration,
+    //   batch_no: batch_no,
+    //   starting_date: formatDateWithOrdinal(startDate),
+    // });
     try {
-      await axios.post(GOOGLE_SCRIPT_URL, {
-        intern_id,
-        name: formattedName,
-        email: registration.email,
-        domain: registration.domain,
-        duration: registration.duration,
-        batch_no,
-        starting_date: new Date(startDate).toDateString(),
-      });
+      await axios.post(
+        GOOGLE_SCRIPT_URL,
+        {
+          intern_id: intern_id,
+          name: registration.name,
+          email: registration.email,
+          domain: registration.domain,
+          duration: registration.duration,
+          batch_no: batch_no,
+          starting_date: formatDateWithOrdinal(startDate),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
-    } catch (e) {
-      console.log("Mail failed but user created");
+    } catch (mailError) {
+      console.error("Email failed:", mailError.message);
+      // ❗ Do NOT fail intern creation if mail fails
     }
+
+    
+    
+    // await NewRegistration.findByIdAndDelete(id);
 
     res.json({ success: true, message: "Intern created successfully" });
-
-  } catch (err) {
+  } catch (error) {
+    // console.error(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
-
 
 module.exports = router;

@@ -1,48 +1,54 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const Admin = require("../models/Admin");
+const SuperAdmin = require("../models/SuperAdmin");
 const loginLimiter = require("../middleware/rateLimiter");
 
 router.post("/org/login", loginLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // ✅ Check if user exists
-    const user = await User.findOne({ email });
+    // ✅ Check if admin or superAdmin exists (parallel)
+    const [admin, superAdmin] = await Promise.all([
+      Admin.findOne({ email }),
+      SuperAdmin.findOne({ email }),
+    ]);
 
-    if (!user) {
-      req.flash("error", "Invalid email address or password");
-      return res.redirect("/admin-login");
+    let userMatch = null;
+
+    // 👨‍💼 Check Admin credentials
+    if (admin) {
+      const match = await bcrypt.compare(password, admin.password);
+      if (match) {
+        userMatch = { user: admin, role: "admin" };
+      }
     }
 
-    // ✅ Validate password
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      req.flash("error", "Invalid email address or password");
-      return res.redirect("/admin-login");
+    // 👨‍💼 Check SuperAdmin credentials
+    if (superAdmin && !userMatch) {
+      const match = await bcrypt.compare(password, superAdmin.password);
+      if (match) {
+        userMatch = { user: superAdmin, role: "superAdmin" };
+      }
     }
 
-    // ✅ Block interns from logging in here
-    if (user.role === "intern") {
-      req.flash("error", "Access denied. Please use the regular login page.");
-      return res.redirect("/login");
+    if (!userMatch) {
+      req.flash("error", "Invalid email address or password");
+      return res.redirect("/admin-login");
     }
 
     // ✅ Save session
-    req.session.user = user._id;
-    req.session.role = user.role;
+    req.session.user = userMatch.user._id;
+    req.session.role = userMatch.role;
 
     // ✅ Role-based redirects
-    if (user.role === "admin") {
-      req.flash("success", `Welcome, ${user.name.trim()}!`);
+    if (userMatch.role === "admin") {
+      req.flash("success", `Welcome, ${userMatch.user.name.trim()}!`);
       return res.redirect("/admin");
-    } else if (user.role === "superAdmin") {
-      req.flash("success", `Welcome, ${user.name.trim()}!`);
+    } else if (userMatch.role === "superAdmin") {
+      req.flash("success", `Welcome, ${userMatch.user.name.trim()}!`);
       return res.redirect("/superAdmin");
-    } else {
-      req.flash("error", "Access denied. Invalid role for organizer login.");
-      return res.redirect("/login");
     }
 
   } catch (err) {
