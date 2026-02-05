@@ -144,7 +144,7 @@ router.post("/create-order", async (req, res) => {
 
     const request = {
       order_id: orderId,
-      order_amount: 10, //domainPrice,
+      order_amount: domainPrice, //domainPrice,
       order_currency: "INR",
 
       customer_details: {
