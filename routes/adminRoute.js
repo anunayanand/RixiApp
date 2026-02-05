@@ -216,8 +216,8 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       starting_date: startDate,
       role: "intern",
       referal_code: registration.referral_code || "",
-      profile_image_url: registration.profile_image_url,
-      profile_image_public_id: registration.profile_image_public_id
+      img_url: registration.profile_image_url,
+      img_public_id: registration.profile_image_public_id
     });
 
     // ✅ Assign projects correctly

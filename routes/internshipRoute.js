@@ -118,7 +118,7 @@ router.post("/create-order", async (req, res) => {
     const orderId = `order_${Date.now()}`;
 
     // Get price based on domain
-    const domainPrice = DOMAIN_PRICES[domain.trim()] || 100;
+    const domainPrice = DOMAIN_PRICES[domain.trim()] || 102.4;
 
     // Create registration with profile image
     const newReg = new NewRegistration({
