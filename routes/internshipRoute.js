@@ -3,10 +3,44 @@ const router = express.Router();
 const NewRegistration = require("../models/NewRegistration");
 const User = require("../models/User");
 const axios = require("axios");
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
+
 const SHEET_URL = process.env.SHEET_URL;
 const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
 const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
+
+// Cloudinary storage for profile images
+const profileStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "intern_profiles",
+    allowed_formats: ["jpg", "png", "jpeg"],
+    transformation: [{ width: 300, height: 300, crop: "fill" }]
+  }
+});
+
+const uploadProfile = multer({ storage: profileStorage });
+
+// Profile image upload endpoint
+router.post("/upload-profile-image", uploadProfile.single("profileImage"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No image uploaded" });
+    }
+    
+    res.json({
+      success: true,
+      imageUrl: req.file.path,
+      publicId: req.file.filename
+    });
+  } catch (error) {
+    console.error("Image upload error:", error);
+    res.status(500).json({ success: false, message: "Failed to upload image" });
+  }
+});
 
 // Domain-wise registration charges
 const DOMAIN_PRICES = {
@@ -36,6 +70,10 @@ router.post("/create-order", async (req, res) => {
     const duration = data["data[Duration]"];
     const referral_code = data["data[Referral_Code]"];
     const terms = data["data[Terms]"];
+    
+    // Extract profile image data
+    const profileImageUrl = data["data[ProfileImageUrl]"] || "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+    const profileImagePublicId = data["data[ProfileImagePublicId]"] || "";
 
     // ✅ sanitize inputs
     const sanitizedEmail = email?.trim();
@@ -82,7 +120,7 @@ router.post("/create-order", async (req, res) => {
     // Get price based on domain
     const domainPrice = DOMAIN_PRICES[domain.trim()] || 100;
 
-    // Create dummy registration
+    // Create registration with profile image
     const newReg = new NewRegistration({
       name: name.trim(),
       email: sanitizedEmail,
@@ -98,13 +136,15 @@ router.post("/create-order", async (req, res) => {
       payID: "",
       order_id: orderId,
       terms: terms === "on",
+      profile_image_url: profileImageUrl,
+      profile_image_public_id: profileImagePublicId
     });
 
     await newReg.save();
 
     const request = {
       order_id: orderId,
-      order_amount: domainPrice,
+      order_amount: 10, //domainPrice,
       order_currency: "INR",
 
       customer_details: {

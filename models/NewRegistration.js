@@ -21,10 +21,16 @@ const newRegistrationSchema = new mongoose.Schema({
   approvedAt: { type: Date },
   createdAt: { type: Date, default: Date.now },
   payment_status: {
-  type: String,
-  enum: ["PENDING", "SUCCESS", "FAILED"],
-  default: "PENDING"
-}
+    type: String,
+    enum: ["PENDING", "SUCCESS", "FAILED"],
+    default: "PENDING"
+  },
+  // Profile image fields
+  profile_image_url: { 
+    type: String, 
+    default: "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg" 
+  },
+  profile_image_public_id: { type: String }
 });
 
 module.exports = mongoose.model("NewRegistration", newRegistrationSchema);

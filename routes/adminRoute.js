@@ -24,6 +24,38 @@ const startingDate = {
   2611: "2026-11-01T00:00:00.000+00:00",
   2612: "2026-12-01T00:00:00.000+00:00",
 };
+// Function to format name
+function formatName(name = "") {
+  return name
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .split(" ")
+    .map(word => {
+      if (word.includes(".")) {
+        return word
+          .split(".")
+          .map(part => part ? part[0].toUpperCase() + part.slice(1) : "")
+          .join(".");
+      }
+      if (word.includes("-")) {
+        return word
+          .split("-")
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+          .join("-");
+      }
+      if (word.includes("'")) {
+        return word
+          .split("'")
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+          .join("'");
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
+
 router.get("/", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
@@ -145,42 +177,30 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
   try {
     const { id } = req.params;
     const { intern_id, batch_no } = req.body;
-    // console.log('Parsed data:', { id, intern_id, batch_no });
+
     if (!intern_id || !batch_no) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Intern ID and Batch are required" });
+      return res.status(400).json({ success: false, message: "Intern ID and Batch are required" });
     }
-    const adminId = req.session.user;
-    const admin = await User.findById(adminId);
 
+    const admin = await User.findById(req.session.user);
     const registration = await NewRegistration.findById(id);
-    if (
-      !registration ||
-      registration.status !== "approved" ||
-      registration.domain !== admin.domain
-    ) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid registration" });
+
+    if (!registration || registration.status !== "approved" || registration.domain !== admin.domain) {
+      return res.status(400).json({ success: false, message: "Invalid registration" });
     }
 
-    // Check if intern_id is unique
-    const existingUser = await User.findOne({ intern_id });
-    if (existingUser) {
-      // console.log('Intern ID already exists:', intern_id);
-      return res
-        .status(400)
-        .json({ success: false, message: "Intern ID already exists" });
+    // Check unique intern_id
+    if (await User.findOne({ intern_id })) {
+      return res.status(400).json({ success: false, message: "Intern ID already exists" });
     }
-    registration.isCreated = true;
-    await registration.save();
-    // Hash the password (intern_id as password)
-    const hashedPassword = await bcrypt.hash(intern_id, 10);
+
     const startDate = startingDate[batch_no];
-    // Create new user
-    const newUser = new User({
-      name: registration.name,
+    const hashedPassword = await bcrypt.hash(intern_id, 10);
+
+    const formattedName = formatName(registration.name);
+
+    const newUser = await User.create({
+      name: formattedName,
       email: registration.email,
       password: hashedPassword,
       phone: registration.phone,
@@ -196,79 +216,68 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       starting_date: startDate,
       role: "intern",
       referal_code: registration.referral_code || "",
+      profile_image_url: registration.profile_image_url,
+      profile_image_public_id: registration.profile_image_public_id
     });
 
-    await newUser.save();
-    
-    await Ambassador.findOneAndUpdate(
-      {referralId: registration.referral_code},
-      { $inc: { internCount: 1 } }
-    );
+    // ✅ Assign projects correctly
+    const projects = await Project.find({
+      domain: registration.domain,
+      batch_no,
+    });
 
-    function getOrdinal(day) {
-      if (day > 3 && day < 21) return "th"; // 11–13
-      switch (day % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
+    const duration = Number(registration.duration);
+
+    const eligibleProjects = projects.filter(p => {
+      if (p.week <= 4 && [4,6,8].includes(duration)) return true;
+      if (p.week === 6 && [6,8].includes(duration)) return true;
+      if (p.week === 8 && duration === 8) return true;
+      return false;
+    });
+
+    if (eligibleProjects.length) {
+      newUser.projectAssigned = eligibleProjects.map(p => ({
+        projectId: p._id,
+        week: p.week,
+        status: "pending"
+      }));
+      await newUser.save();
     }
-    function formatDateWithOrdinal(dateValue) {
-      const date = new Date(dateValue);
 
-      const day = date.getDate();
-      const month = date.toLocaleString("en-US", { month: "long" });
-      const year = date.getFullYear();
-
-      return `${day}${getOrdinal(day)} ${month} ${year}`;
-    }
-    //  console.log('Sending email with data:', {
-    //   intern_id: intern_id,
-    //   name: registration.name,
-    //   email: registration.email,
-    //   domain: registration.domain,
-    //   duration: registration.duration,
-    //   batch_no: batch_no,
-    //   starting_date: formatDateWithOrdinal(startDate),
-    // });
-    try {
-      await axios.post(
-        GOOGLE_SCRIPT_URL,
-        {
-          intern_id: intern_id,
-          name: registration.name,
-          email: registration.email,
-          domain: registration.domain,
-          duration: registration.duration,
-          batch_no: batch_no,
-          starting_date: formatDateWithOrdinal(startDate),
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+    // ✅ Update ambassador count
+    if (registration.referral_code) {
+      await Ambassador.findOneAndUpdate(
+        { referralId: registration.referral_code },
+        { $inc: { internCount: 1 } }
       );
-      await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
-    } catch (mailError) {
-      // console.error("Email failed:", mailError.message);
-      res.json({ success: false, message: "Email failed to send" });
-      // ❗ Do NOT fail intern creation if mail fails
     }
 
-    // Optionally, mark registration as accepted or delete it
-    // await NewRegistration.findByIdAndDelete(id);
+    // ✅ Mark registration created AFTER success
+    registration.isCreated = true;
+    await registration.save();
+
+    // ✅ Send email (don’t break flow if fails)
+    try {
+      await axios.post(GOOGLE_SCRIPT_URL, {
+        intern_id,
+        name: formattedName,
+        email: registration.email,
+        domain: registration.domain,
+        duration: registration.duration,
+        batch_no,
+        starting_date: new Date(startDate).toDateString(),
+      });
+      await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
+    } catch (e) {
+      console.log("Mail failed but user created");
+    }
 
     res.json({ success: true, message: "Intern created successfully" });
-  } catch (error) {
-    // console.error(error);
+
+  } catch (err) {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
 
 module.exports = router;

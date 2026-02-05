@@ -142,8 +142,12 @@
                   action="/internship/register"
                   method="POST"
                   class="php-email-form"
+                  enctype="multipart/form-data"
                 >
                   <!-- <input type="hidden" name="access_key" value="db870915-874b-4d37-acd1-c71aa371eb7c"> -->
+                  
+                <!-- Profile Image Upload -->
+
                   <div class="mb-3">
                     <label for="contactName" class="form-label"
                       >Full Name</label
@@ -308,6 +312,57 @@
                       <!-- <option value="12 Week">12 Week</option> -->
                     </select>
                   </div>
+
+                  <div class="mb-3">
+  <label for="profileImage" class="form-label">Upload Your Photograph</label>
+  <div class="input-group">
+    <input
+  type="file"
+  class="form-control "
+  name="profileImage"
+  id="profileImage"
+  accept="image/*"
+  onchange="handleImageUpload(event)"
+  style=" cursor: pointer;"
+
+>
+
+    <!-- Preview thumbnail -->
+    <div id="imagePreviewContainer" style="display:none;">
+      <img 
+        id="imagePreviewThumb" 
+        src="" 
+        alt="Preview" 
+        class="rounded ms-2"
+        style="width:50px;height:50px;object-fit:cover;cursor:pointer;border-radius: 12px;"
+        onclick="openImagePreviewModal()"
+      >
+    </div>
+  </div>
+  <div class="text-sm form-text text-white" style="font-size: 0.75rem; font-style: italic;">Please upload a square image (1:1 aspect ratio, Max: 1000 x 1000 px)</div>
+</div>
+
+<!-- Image Preview Modal (View & Delete) -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Profile Picture</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="imagePreviewFull" src="" alt="Full Preview" class="img-fluid rounded" style="max-height:400px;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" onclick="deleteImage()">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
                   <div class="mb-3">
                     <label for="contactReferral" class="form-label"
                       >Referral Code (if any)</label
@@ -513,6 +568,122 @@
     <!-- Main JS File -->
     <script src="/js/main.js"></script>
 
+    <!-- Image Preview Script -->
+    <script>
+      let uploadedImageUrl = null;
+      let uploadedImagePublicId = null;
+      
+      function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+          showToast('Please select an image file', 'error');
+          event.target.value = '';
+          return;
+        }
+        
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          showToast('Image size should be less than 5MB', 'error');
+          event.target.value = '';
+          return;
+        }
+        
+        // Create image to check dimensions
+        const img = new Image();
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          img.src = e.target.result;
+        };
+        
+        img.onload = function() {
+          // Check if image is square (1:1 aspect ratio)
+          if (img.width !== img.height) {
+            showToast(`Please upload a square image. Your image is ${img.width}x${img.height}. Square images work best for profile pictures.`, 'error');
+            event.target.value = '';
+            return;
+          }
+          
+          // Image is valid square, upload it
+          uploadImage(file);
+        };
+        
+        img.onerror = function() {
+          showToast('Invalid image file', 'error');
+          event.target.value = '';
+        };
+        
+        reader.readAsDataURL(file);
+      }
+      
+      async function uploadImage(file) {
+        try {
+          const formData = new FormData();
+          formData.append('profileImage', file);
+          
+          showLoader();
+          const response = await fetch('/internship/upload-profile-image', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          hideLoader();
+          
+          if (data.success) {
+            uploadedImageUrl = data.imageUrl;
+            uploadedImagePublicId = data.publicId;
+            
+            // Show preview thumbnail
+            document.getElementById('imagePreviewThumb').src = uploadedImageUrl;
+            document.getElementById('imagePreviewContainer').style.display = 'block';
+            
+            showToast('Profile picture uploaded successfully', 'success');
+          } else {
+            showToast(data.message || 'Failed to upload image', 'error');
+            event.target.value = '';
+          }
+        } catch (error) {
+          hideLoader();
+          console.error('Error uploading image:', error);
+          showToast('Error uploading image', 'error');
+          event.target.value = '';
+        }
+      }
+      
+      function openImagePreviewModal() {
+        if (uploadedImageUrl) {
+          document.getElementById('imagePreviewFull').src = uploadedImageUrl;
+          const modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+          modal.show();
+        }
+      }
+      
+      function deleteImage() {
+        // Clear the image
+        uploadedImageUrl = null;
+        uploadedImagePublicId = null;
+        
+        // Clear file input
+        document.getElementById('profileImage').value = '';
+        
+        // Hide preview
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        
+        // Close modal
+        const modalEl = document.getElementById('imagePreviewModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) {
+          modal.hide();
+        }
+        
+        showToast('Profile picture removed', 'success');
+      }
+    </script>
+
     <script>
       // Initialize Cashfree
       const cashfree = new Cashfree({
@@ -584,6 +755,11 @@
         for (let [key, value] of formData.entries()) {
           data[key] = value;
         }
+        
+        // Add profile image data
+        data["data[ProfileImageUrl]"] = uploadedImageUrl || "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+        data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
+        
         fetch(form.action, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -636,6 +812,10 @@
           for (let [key, value] of formData.entries()) {
             data[key] = value;
           }
+          
+          // Add profile image data
+          data["data[ProfileImageUrl]"] = uploadedImageUrl || "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+          data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
 
           // Validate required fields except PayID
           const requiredFields = [

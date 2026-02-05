@@ -15,12 +15,12 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
   try {
     const { 
       name, email, password, role, domain, college, university, 
-      phone, course, year_sem, branch, duration, intern_id, batch_no,referal_code
+      phone, course, year_sem, branch, duration, intern_id, batch_no,referal_code, starting_date
     } = req.body;
 
     // ✅ Validation
     if (!name || !email || !password || !domain || !college || !university ||
-        !phone || !course || !year_sem || !duration || !intern_id || !batch_no) {
+        !phone || !course || !year_sem || !duration || !intern_id || !batch_no || !starting_date) {
       req.flash("error", "All required fields must be filled!");
       return res.redirect("/admin"); 
     }
@@ -40,7 +40,7 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
     let userData = {
       name, email, password: hashedPassword, role, domain, college, university,
       phone, course, year_sem, branch, duration: Number(duration),
-      intern_id, batch_no, referal_code
+      intern_id, batch_no, referal_code, starting_date
     };
 
     // ✅ Create the user
