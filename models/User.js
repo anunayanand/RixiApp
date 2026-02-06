@@ -69,6 +69,26 @@ const userSchema = new mongoose.Schema({
       attemptCount: { type: Number, default: 0 },
     },
   ],
+
+  meetings: [
+    {
+      _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+      link: { type: String, required: true },
+      title: { type: String, required: true },
+      scheduledTime: { type: Date, required: true },
+      week: { type: Number, required: true },
+      status: {
+        type: String,
+        enum: ["upcoming", "completed", "cancelled"],
+        default: "upcoming",
+      },
+      attendance: {
+        type: String,
+        enum: ["pending", "present", "absent"],
+        default: "pending",
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

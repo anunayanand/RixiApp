@@ -71,13 +71,16 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
     const ambassadorCount = ambassadors.length;
 
     // ==============================
-    // 📅 Aggregate Meetings
+    // 📅 Aggregate Meetings (unique by meeting _id)
     // ==============================
     const meetingsMap = new Map();
+    
+    // Process intern meetings
     interns.forEach(intern => {
       const meetings = intern.meetings || [];
       meetings.forEach(meeting => {
-        const key = `${intern.domain}-${intern.batch_no}-${meeting.week}-${meeting.title}`;
+        // Use meeting _id as the key to uniquely identify each meeting
+        const key = meeting._id.toString();
         if (!meetingsMap.has(key)) {
           meetingsMap.set(key, {
             ...meeting.toObject(),
@@ -87,10 +90,12 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
         }
       });
     });
+    
+    // Process admin meetings (check for duplicates with intern meetings)
     admins.forEach(admin => {
       const meetings = admin.meetings || [];
       meetings.forEach(meeting => {
-        const key = `${admin.domain}-admin-${meeting.week}-${meeting.title}`;
+        const key = meeting._id.toString();
         if (!meetingsMap.has(key)) {
           meetingsMap.set(key, {
             ...meeting.toObject(),

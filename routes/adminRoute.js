@@ -200,6 +200,35 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
 
     await newUser.save();
 
+    // ===========================================
+    // 📅 Sync existing meetings from admin to new intern
+    // ===========================================
+    const adminMeetings = admin.meetings || [];
+    if (adminMeetings.length > 0) {
+      const existingMeetingIds = newUser.meetings?.map(m => m._id.toString()) || [];
+      
+      for (const meeting of adminMeetings) {
+        // Only add meeting if intern doesn't already have it
+        if (!existingMeetingIds.includes(meeting._id.toString())) {
+          newUser.meetings = newUser.meetings || [];
+          newUser.meetings.push({
+            _id: meeting._id,
+            link: meeting.link,
+            title: meeting.title,
+            scheduledTime: meeting.scheduledTime,
+            week: meeting.week,
+            status: meeting.status,
+            attendance: "pending"
+          });
+        }
+      }
+      
+      if (newUser.meetings?.length > 0) {
+        await newUser.save();
+        console.log(`✅ Synced ${newUser.meetings.length} meetings to new intern ${newUser.name}`);
+      }
+    }
+
     function getOrdinal(day) {
       if (day > 3 && day < 21) return "th"; // 11–13
       switch (day % 10) {
@@ -262,6 +291,64 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     res.json({ success: true, message: "Intern created successfully" });
   } catch (error) {
     // console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// ===========================================
+// 📅 SYNC MEETINGS FOR ALL INTERNS (Admin)
+// ===========================================
+router.post("/sync-meetings", authRole("admin"), async (req, res) => {
+  try {
+    const adminId = req.session.user;
+    const admin = await Admin.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({ success: false, message: "Admin not found" });
+    }
+
+    const adminMeetings = admin.meetings || [];
+    
+    if (adminMeetings.length === 0) {
+      return res.json({ success: true, message: "No meetings to sync" });
+    }
+
+    // Get all interns in admin's domain
+    const interns = await User.find({ role: "intern", domain: admin.domain });
+    let syncedCount = 0;
+
+    for (let intern of interns) {
+      const existingMeetingIds = (intern.meetings || []).map(m => m._id.toString());
+      let meetingsAdded = 0;
+
+      for (const meeting of adminMeetings) {
+        if (!existingMeetingIds.includes(meeting._id.toString())) {
+          intern.meetings = intern.meetings || [];
+          intern.meetings.push({
+            _id: meeting._id,
+            link: meeting.link,
+            title: meeting.title,
+            scheduledTime: meeting.scheduledTime,
+            week: meeting.week,
+            status: meeting.status,
+            attendance: "pending"
+          });
+          meetingsAdded++;
+        }
+      }
+
+      if (meetingsAdded > 0) {
+        await intern.save();
+        syncedCount += meetingsAdded;
+      }
+    }
+
+    res.json({ 
+      success: true, 
+      message: `Synced ${syncedCount} meetings to ${interns.length} interns` 
+    });
+  } catch (err) {
+    console.error("Sync meetings error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });

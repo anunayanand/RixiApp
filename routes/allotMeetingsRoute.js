@@ -39,20 +39,29 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
     for (let intern of interns) {
       if (week <= intern.duration) {
         intern.meetings = intern.meetings || [];
-        intern.meetings.push(meetingObj);
-        await intern.save();
-        allottedCount++;
+        
+        // Check if meeting already exists
+        const existingMeeting = intern.meetings.find(m => m._id.toString() === meetingId.toString());
+        if (!existingMeeting) {
+          intern.meetings.push(meetingObj);
+          await intern.save();
+          allottedCount++;
+        }
       }
     }
 
     // ===== Admins =====
     for (let admin of admins) {
-      admin.meetings.push(meetingObj);
-      await admin.save();
-      allottedCount++;
+      // Check if meeting already exists
+      const existingMeeting = admin.meetings.find(m => m._id.toString() === meetingId.toString());
+      if (!existingMeeting) {
+        admin.meetings.push(meetingObj);
+        await admin.save();
+        allottedCount++;
+      }
     }
 
-    console.log("✅ Meeting Allotted with ID:", meetingObj._id);
+    // console.log("✅ Meeting Allotted with ID:", meetingObj._id);
 
     if (allottedCount === 0) {
       req.flash("warning", "No meetings allotted. Possibly all interns exceed the week limit.");
@@ -76,14 +85,21 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
 router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, res) => {
   try {
     const { meetingId } = req.params;
-    const { domain, batch_no, title, link, scheduledTime, week, status } = req.body;
+    const { title, link, scheduledTime, week, status } = req.body;
 
-    // Fetch interns and admins separately
-    const interns = await User.find({ role: "intern", domain, batch_no });
-    const admins = await Admin.find({ domain });
+    // Find ALL interns who have this meeting (regardless of domain/batch)
+    const interns = await User.find({ 
+      role: "intern",
+      "meetings._id": meetingId 
+    });
+    
+    // Find ALL admins who have this meeting
+    const admins = await Admin.find({ 
+      "meetings._id": meetingId 
+    });
 
     if (!interns.length && !admins.length) {
-      req.flash("error", "No interns or admins found for selected domain and batch");
+      req.flash("error", "Meeting not found for any users");
       return res.redirect("/superAdmin");
     }
 
@@ -91,20 +107,17 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
 
     // ===== Update interns =====
     for (let intern of interns) {
-      // Only update if week <= intern.duration
-      if (week <= intern.duration) {
-        intern.meetings = intern.meetings || [];
-        const meetingIndex = intern.meetings.findIndex(m => m._id.toString() === meetingId);
-        if (meetingIndex !== -1) {
-          const meeting = intern.meetings[meetingIndex];
-          if (title !== undefined) meeting.title = title;
-          if (link !== undefined) meeting.link = link;
-          if (scheduledTime !== undefined) meeting.scheduledTime = scheduledTime;
-          if (week !== undefined) meeting.week = week;
-          if (status !== undefined) meeting.status = status;
-          await intern.save();
-          updatedCount++;
-        }
+      intern.meetings = intern.meetings || [];
+      const meetingIndex = intern.meetings.findIndex(m => m._id.toString() === meetingId);
+      if (meetingIndex !== -1) {
+        const meeting = intern.meetings[meetingIndex];
+        if (title !== undefined) meeting.title = title;
+        if (link !== undefined) meeting.link = link;
+        if (scheduledTime !== undefined) meeting.scheduledTime = scheduledTime;
+        if (week !== undefined) meeting.week = week;
+        if (status !== undefined) meeting.status = status;
+        await intern.save();
+        updatedCount++;
       }
     }
 
@@ -124,7 +137,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
     }
 
     if (updatedCount === 0) {
-      req.flash("warning", "No meetings updated. Possibly due to week restrictions for interns.");
+      req.flash("warning", "No meetings updated.");
     } else {
       req.flash("success", `Meeting updated successfully for ${updatedCount} users.`);
     }
@@ -145,14 +158,20 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
 router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, res) => {
   try {
     const { meetingId } = req.params;
-    const { domain, batch_no } = req.body;
 
-    // Fetch interns and admins separately
-    const interns = await User.find({ role: "intern", domain, batch_no });
-    const admins = await Admin.find({ domain });
+    // Find ALL interns who have this meeting (regardless of domain/batch)
+    const interns = await User.find({ 
+      role: "intern",
+      "meetings._id": meetingId 
+    });
+    
+    // Find ALL admins who have this meeting
+    const admins = await Admin.find({ 
+      "meetings._id": meetingId 
+    });
 
     if (!interns.length && !admins.length) {
-      req.flash("error", "No interns or admins found for selected domain and batch");
+      req.flash("error", "Meeting not found for any users");
       return res.redirect("/superAdmin");
     }
 
@@ -179,7 +198,7 @@ router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, re
     }
 
     if (deletedCount === 0) {
-      req.flash("warning", "No meetings were deleted. Meeting may not exist for selected users.");
+      req.flash("warning", "No meetings were deleted.");
     } else {
       req.flash("success", `Meeting deleted successfully for ${deletedCount} users.`);
     }
@@ -194,6 +213,129 @@ router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, re
 
 
 
+// ===========================================
+// 📅 SYNC ALL MEETINGS TO ALL INTERNS (SuperAdmin)
+// ===========================================
+router.post("/sync-all-meetings", authRole("superAdmin"), async (req, res) => {
+  try {
+    // Get all admins
+    const admins = await Admin.find({});
+    
+    if (admins.length === 0) {
+      req.flash("warning", "No admins found");
+      return res.redirect("/superAdmin");
+    }
+
+    let totalSynced = 0;
+    let internsProcessed = 0;
+
+    for (const admin of admins) {
+      const adminMeetings = admin.meetings || [];
+      
+      if (adminMeetings.length === 0) continue;
+
+      // Get all interns in admin's domain
+      const interns = await User.find({ 
+        role: "intern", 
+        domain: admin.domain 
+      });
+
+      for (let intern of interns) {
+        const existingMeetingIds = (intern.meetings || []).map(m => m._id.toString());
+        let meetingsAdded = 0;
+
+        for (const meeting of adminMeetings) {
+          if (!existingMeetingIds.includes(meeting._id.toString())) {
+            intern.meetings = intern.meetings || [];
+            intern.meetings.push({
+              _id: meeting._id,
+              link: meeting.link,
+              title: meeting.title,
+              scheduledTime: meeting.scheduledTime,
+              week: meeting.week,
+              status: meeting.status,
+              attendance: "pending"
+            });
+            meetingsAdded++;
+          }
+        }
+
+        if (meetingsAdded > 0) {
+          await intern.save();
+          totalSynced += meetingsAdded;
+        }
+        internsProcessed++;
+      }
+    }
+
+    req.flash("success", `Synced ${totalSynced} meetings to ${internsProcessed} interns`);
+    res.redirect("/superAdmin");
+  } catch (err) {
+    console.log(err);
+    req.flash("error", "Error while syncing meetings");
+    res.redirect("/superAdmin");
+  }
+});
+
+
+// ===========================================
+// 🧹 CLEANUP DUPLICATE MEETINGS (SuperAdmin)
+// ===========================================
+router.post("/cleanup-duplicate-meetings", authRole("superAdmin"), async (req, res) => {
+  try {
+    // Clean up User (intern) meetings
+    const users = await User.find({ role: "intern" });
+    let totalRemovedFromUsers = 0;
+
+    for (let user of users) {
+      if (user.meetings && user.meetings.length > 0) {
+        const meetingIds = user.meetings.map(m => m._id.toString());
+        const uniqueMeetingIds = [...new Set(meetingIds)];
+        
+        if (meetingIds.length !== uniqueMeetingIds.length) {
+          // Remove duplicates
+          const uniqueMeetings = user.meetings.filter((meeting, index, self) => 
+            index === self.findIndex(m => m._id.toString() === meeting._id.toString())
+          );
+          
+          const removed = meetingIds.length - uniqueMeetings.length;
+          user.meetings = uniqueMeetings;
+          await user.save();
+          totalRemovedFromUsers += removed;
+        }
+      }
+    }
+
+    // Clean up Admin meetings
+    const admins = await Admin.find({});
+    let totalRemovedFromAdmins = 0;
+
+    for (let admin of admins) {
+      if (admin.meetings && admin.meetings.length > 0) {
+        const meetingIds = admin.meetings.map(m => m._id.toString());
+        const uniqueMeetingIds = [...new Set(meetingIds)];
+        
+        if (meetingIds.length !== uniqueMeetingIds.length) {
+          const uniqueMeetings = admin.meetings.filter((meeting, index, self) => 
+            index === self.findIndex(m => m._id.toString() === meeting._id.toString())
+          );
+          
+          const removed = meetingIds.length - uniqueMeetings.length;
+          admin.meetings = uniqueMeetings;
+          await admin.save();
+          totalRemovedFromAdmins += removed;
+        }
+      }
+    }
+
+    req.flash("success", `Cleaned up ${totalRemovedFromUsers} duplicate meetings from interns and ${totalRemovedFromAdmins} from admins`);
+    res.redirect("/superAdmin");
+  } catch (err) {
+    console.log(err);
+    req.flash("error", "Error while cleaning up duplicate meetings");
+    res.redirect("/superAdmin");
+  }
+});
 
 
 module.exports = router;
