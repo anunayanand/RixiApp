@@ -39,19 +39,29 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     const mentorName = mentor?.name ?? "No Mentor";
 
     // Sort notifications (newest first)
-    const notifications = intern.notifications.sort((a, b) => b.createdAt - a.createdAt);
+    const notifications = (intern.notifications || []).sort((a, b) => b.createdAt - a.createdAt);
 
     // Assigned quizzes with populated quiz
     const assignedQuizzes = (intern.quizAssignments || [])
-      .filter(a => a.assigned)
+      .filter(a => a.assigned && a.quizId)
       .map(a => ({
         quiz: a.quizId,
         score: a.score,
         attemptCount: a.attemptCount,
-        isClosed: a.quizId.isClosed
+        isClosed: a.quizId?.isClosed || false
       }));
 
     req.flash('success_msg', 'Welcome to Intern Dashboard');
+    
+    // Format starting date
+    const startingDate = intern.starting_date 
+      ? new Date(intern.starting_date).toLocaleDateString('en-IN', { 
+          day: '2-digit', 
+          month: 'long', 
+          year: 'numeric' 
+        }) 
+      : 'Not assigned';
+    
     res.render("intern", {
       intern,
       projects,
@@ -62,11 +72,14 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,
       assignedQuizzes,
-      notifications
+      notifications,
+      startingDate
     });
 
   } catch (err) {
-    res.status(500).send("Server Error");
+    console.error("🔥 Intern Route Error:", err);
+    req.flash("error", "Something went wrong loading the intern dashboard");
+    return res.redirect("/login");
   }
 });
 

@@ -37,10 +37,14 @@ router.post("/login", loginLimiter, async (req, res) => {
 
         if (user.role === "admin" || user.role === "superAdmin") {
           return res.redirect("/admin-login");
+        } else if (user.role === "intern") {
+          req.flash("success", `Welcome, ${user.name.trim()}!`);
+          return res.redirect("/intern");
+        } else {
+          // Unknown role - redirect to login with error
+          req.flash("error", "Invalid user role. Please contact administrator.");
+          return res.redirect("/login");
         }
-
-        req.flash("success", `Welcome, ${user.name.trim()}!`);
-        return res.redirect("/intern");
       }
     }
 

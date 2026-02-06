@@ -39,6 +39,15 @@ function authRole(roles) {
         ? roles.map((r) => r.toLowerCase())
         : [roles.toLowerCase()];
 
+      // Safe check for session role
+      if (!req.session.role) {
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+          return res.status(401).json({ success: false, message: "Session expired. Please log in again." });
+        }
+        req.flash("error", "Session expired. Please log in again.");
+        return res.redirect("/login");
+      }
+
       const sessionRole = req.session.role.toLowerCase();
 
       if (!allowedRoles.includes(sessionRole)) {
@@ -53,6 +62,7 @@ function authRole(roles) {
     } catch (err) {
       console.error("Auth middleware error:", err);
       if (req.headers.accept && req.headers.accept.includes('application/json')) {
+         console.log(err)
         return res.status(500).json({ success: false, message: "Server error." });
       }
       req.flash("error", "Something went wrong. Please log in again.");
