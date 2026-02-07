@@ -80,15 +80,23 @@ function applyInternFilters() {
   let batchFilter = document.getElementById("batchFilter").value.toLowerCase();
   let internSearch = document.getElementById("internSearch").value.toLowerCase();
   let rows = document.querySelectorAll("#viewInterns .intern-row");
+  let visibleIndex = 0;
 
   rows.forEach(row => {
     let rowBatch = row.getAttribute("data-batch").toLowerCase();
     let internId = row.querySelector(".intern-id")?.textContent.toLowerCase() || "";
+    let name = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
 
     let matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
-    let matchesIntern = (internSearch === "" || internId.includes(internSearch));
+    let matchesIntern = (internSearch === "" || internId.includes(internSearch) || name.includes(internSearch));
 
-    row.style.display = (matchesBatch && matchesIntern) ? "" : "none";
+    const isVisible = matchesBatch && matchesIntern;
+    row.style.display = isVisible ? "" : "none";
+
+    if (isVisible) {
+      visibleIndex++;
+      row.querySelector('.serial-no').textContent = visibleIndex;
+    }
   });
 }
 

@@ -55,14 +55,14 @@ router.get("/", authRole("admin"), async (req, res) => {
     for (const intern of interns) {
       const assignedProjects = intern.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(
-        (p) => p.status === "accepted"
+        (p) => p.status === "accepted",
       ).length;
       const duration = intern.duration || 1;
       const progress = Math.round((arr[acceptedCount] / duration) * 100);
 
       if (progress === 100) {
         const alreadyNotified = admin.notifiedInterns.includes(
-          intern._id.toString()
+          intern._id.toString(),
         );
 
         if (!alreadyNotified) {
@@ -96,24 +96,24 @@ router.get("/", authRole("admin"), async (req, res) => {
     ];
     const projects = await Project.find({ domain: admin.domain });
     const certifiedInternsCount = interns.filter(
-      (i) => i.certificate_link && i.certificate_link.trim() !== ""
+      (i) => i.certificate_link && i.certificate_link.trim() !== "",
     ).length;
 
     // Meetings
     let upcomingMeetings = (admin.meetings || []).filter(
-      (m) => m.status === "upcoming"
+      (m) => m.status === "upcoming",
     );
     const getObjectIdTime = (id) =>
       new Date(parseInt(id.toString().substring(0, 8), 16) * 1000);
     upcomingMeetings = upcomingMeetings.sort(
-      (a, b) => getObjectIdTime(b._id) - getObjectIdTime(a._id)
+      (a, b) => getObjectIdTime(b._id) - getObjectIdTime(a._id),
     );
 
     const quizzes = await Quiz.find({ domain: admin.domain }).sort({
       createdAt: -1,
     });
     const notifications = admin.notifications.sort(
-      (a, b) => b.createdAt - a.createdAt
+      (a, b) => b.createdAt - a.createdAt,
     );
     const registrations = await NewRegistration.find({
       status: "approved",
@@ -192,6 +192,8 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       course: registration.course,
       branch: registration.branch,
       year_sem: registration.year_sem,
+      img_url: registration.profile_image_url,
+      img_public_id: registration.profile_image_public_id,
       intern_id,
       batch_no,
       starting_date: startDate,
@@ -199,35 +201,6 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     });
 
     await newUser.save();
-
-    // ===========================================
-    // 📅 Sync existing meetings from admin to new intern
-    // ===========================================
-    const adminMeetings = admin.meetings || [];
-    if (adminMeetings.length > 0) {
-      const existingMeetingIds = newUser.meetings?.map(m => m._id.toString()) || [];
-      
-      for (const meeting of adminMeetings) {
-        // Only add meeting if intern doesn't already have it
-        if (!existingMeetingIds.includes(meeting._id.toString())) {
-          newUser.meetings = newUser.meetings || [];
-          newUser.meetings.push({
-            _id: meeting._id,
-            link: meeting.link,
-            title: meeting.title,
-            scheduledTime: meeting.scheduledTime,
-            week: meeting.week,
-            status: meeting.status,
-            attendance: "pending"
-          });
-        }
-      }
-      
-      if (newUser.meetings?.length > 0) {
-        await newUser.save();
-        console.log(`✅ Synced ${newUser.meetings.length} meetings to new intern ${newUser.name}`);
-      }
-    }
 
     function getOrdinal(day) {
       if (day > 3 && day < 21) return "th"; // 11–13
@@ -276,7 +249,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
     } catch (mailError) {
@@ -284,8 +257,6 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       // ❗ Do NOT fail intern creation if mail fails
     }
 
-    
-    
     // await NewRegistration.findByIdAndDelete(id);
 
     res.json({ success: true, message: "Intern created successfully" });
@@ -294,63 +265,4 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
-
-// ===========================================
-// 📅 SYNC MEETINGS FOR ALL INTERNS (Admin)
-// ===========================================
-router.post("/sync-meetings", authRole("admin"), async (req, res) => {
-  try {
-    const adminId = req.session.user;
-    const admin = await Admin.findById(adminId);
-
-    if (!admin) {
-      return res.status(404).json({ success: false, message: "Admin not found" });
-    }
-
-    const adminMeetings = admin.meetings || [];
-    
-    if (adminMeetings.length === 0) {
-      return res.json({ success: true, message: "No meetings to sync" });
-    }
-
-    // Get all interns in admin's domain
-    const interns = await User.find({ role: "intern", domain: admin.domain });
-    let syncedCount = 0;
-
-    for (let intern of interns) {
-      const existingMeetingIds = (intern.meetings || []).map(m => m._id.toString());
-      let meetingsAdded = 0;
-
-      for (const meeting of adminMeetings) {
-        if (!existingMeetingIds.includes(meeting._id.toString())) {
-          intern.meetings = intern.meetings || [];
-          intern.meetings.push({
-            _id: meeting._id,
-            link: meeting.link,
-            title: meeting.title,
-            scheduledTime: meeting.scheduledTime,
-            week: meeting.week,
-            status: meeting.status,
-            attendance: "pending"
-          });
-          meetingsAdded++;
-        }
-      }
-
-      if (meetingsAdded > 0) {
-        await intern.save();
-        syncedCount += meetingsAdded;
-      }
-    }
-
-    res.json({ 
-      success: true, 
-      message: `Synced ${syncedCount} meetings to ${interns.length} interns` 
-    });
-  } catch (err) {
-    console.error("Sync meetings error:", err);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
-});
-
 module.exports = router;

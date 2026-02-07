@@ -859,28 +859,34 @@
       <!-- Intern Table -->
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
         <table class="table table-striped table-bordered align-middle text-center mb-0">
-          <thead class="table-light" style="position: sticky; top: 0; z-index: 2;background-color: #fff">
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Domain</th>
-              <th>Intern ID</th>
-              <th>Batch</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          <thead class="table-light" style="position: sticky; top: 0; z-index: 2;">
+             <tr class="text-center">
+               <th style="width: 60px;">S.No</th>
+               <th style="width: 5rem;">Profile</th>
+               <th>Name</th>
+               <th>Email</th>
+               <th>Duration</th>
+               <th>Intern ID</th>
+               <th>Batch</th>
+               <th style="min-width: 7.5rem !important;">Actions</th>
+             </tr>
+           </thead>
           <tbody>
-            <% interns.forEach(i => { %>
+            <% interns.forEach((i, index) => { %>
               <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>">
-                <td><%= i.name %></td>
-                <td><%= i.email %></td>
-                <td><%= i.domain %></td>
-                <td class="intern-id"><%= i.intern_id %></td>
-                <td><%= i.batch_no %></td>
-                <td class="d-flex justify-content-evenly">
-                  <a href="/admin/intern/<%= i._id %>" class="btn btn-outline-primary btn-sm px-3 rounded-pill shadow-sm" target="_blank">View</a>
+                <td class="serial-no" style="padding:0 !important;"><%= index + 1 %></td>
+                 <td style="padding:0 !important;">
+                   <img src="<%= i.img_url %>" alt="<%= i.name %>" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover; padding:0 !important;">
+                 </td>
+                 <td style="text-align: left !important; padding-left: 1rem;"><%= i.name %></td>
+                 <td style="text-align: left !important; padding-left: 1rem;"><%= i.email %></td>
+                 <td style="padding:0 !important;"><%= i.duration %> Weeks</td>
+                 <td class="intern-id"><%= i.intern_id %></td>
+                 <td ><%= i.batch_no %></td>
+                <td class="d-flex justify-content-evenly gap-2">
+                  <a href="/admin/intern/<%= i._id %>" class="btn btn-outline-primary btn-sm px-3 rounded-pill shadow-sm" target="_blank"><i class="bi bi-eye"></i></a>
                   <!-- <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#updateModal<%= i._id %>">Update</button> -->
-                  <button class="btn btn-outline-danger btn-sm px-3 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i._id %>">Delete</button>
+                  <button class="btn btn-outline-danger btn-sm px-3 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i._id %>"><i class="bi bi-trash"></i></button>
                 </td>
               </tr>
 
@@ -1281,6 +1287,7 @@
         <table class="table table-striped table-bordered align-middle text-center mb-0">
           <thead class="table-light" style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
             <tr>
+              <th>S.No.</th>
               <th>Name</th>
               <th>Domain</th>
               <th>Batch</th>
@@ -1294,9 +1301,11 @@
           </thead>
 
           <tbody id="completedInternTable">
+            <% let completedSerial = 0; %>
             <% interns
               .filter(i => i.intern_progress === 100 && i.quizAssignments.length != 0)
               .forEach(i => { %>
+              <% completedSerial++; %>
 
               <tr class="completed-intern-row"
                   data-batch="<%= i.batch_no %>"
@@ -1304,7 +1313,8 @@
                   data-duration="<%= i.duration %>"
                   data-id="<%= i._id %>">
 
-                <td><%= i.name %></td>
+                <td class="serial-no"><%= completedSerial %></td>
+                <td style="text-align: left !important; padding-left: 1rem;"><%= i.name %></td>
                 <td><%= i.domain %></td>
                 <td><%= i.batch_no %></td>
                 <td><%= i.duration %> Weeks</td>
@@ -1492,7 +1502,7 @@
                 <td><%= reg.email %></td>
                 <td><%= reg.domain %></td>
                 <td><%= reg.duration %> Weeks</td>
-                <td><%= reg.payID %></td>
+                <td><%= reg.payID || 'N/A' %></td>
                 <td><% if (reg.payment_status === 'SUCCESS') { %>
                       <span class="badge bg-success">Success</span>
                     <% } else if (reg.payment_status === 'FAILED') { %>
@@ -1502,10 +1512,248 @@
                     <% } %>
                 </td>
                 <td>
+                  <button class="btn btn-outline-primary btn-sm px-3 py-0 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewRegModal<%= reg._id %>">
+                    <i class="bi bi-eye"></i>
+                  </button>
                   <button class="btn btn-outline-success btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'approve', this)"><i class="bi bi-check-lg" style="font-size: large;"></i></button>
                   <button class="btn btn-outline-danger btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'reject', this)"><i class="bi bi-x-lg" style="font-size: large;"></i></button>
                 </td>
               </tr>
+
+              <!-- View Registration Modal -->
+              <div class="modal fade" id="viewRegModal<%= reg._id %>" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0 text-white position-relative"
+           style="background: linear-gradient(135deg, #1f2937, #0f172a); padding:32px 36px;">
+
+        <!-- Close Button -->
+        <button type="button"
+                class="btn-close btn-close-white position-absolute"
+                style="top:18px; right:20px;"
+                data-bs-dismiss="modal"></button>
+
+        <div class="d-flex align-items-center gap-3">
+
+          <img src="<%= reg.profile_image_url %>"
+               class="rounded-circle border border-3 border-white shadow"
+               style="width:80px;height:80px;object-fit:cover;">
+
+          <div>
+            <h4 class="mb-1 fw-semibold"><%= reg.name %></h4>
+
+
+            <small class="opacity-75 d-block mt-1"><%= reg.email %></small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- STATUS BAR -->
+      <div class="px-4 py-3 border-bottom bg-light d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+        <div class="d-flex flex-wrap gap-2">
+
+          <span class="badge rounded-pill px-3 py-2 bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning' %>">
+            <i class="bi bi-credit-card me-1"></i><%= reg.payment_status %>
+          </span>
+
+          <span class="badge rounded-pill px-3 py-2 bg-info">
+            <i class="bi bi-briefcase me-1"></i><%= reg.domain %>
+          </span>
+
+          <span class="badge rounded-pill px-3 py-2 bg-<%= reg.status === 'approved' ? 'success' : reg.status === 'rejected' ? 'danger' : 'warning' %>">
+            <i class="bi bi-check-circle me-1"></i><%= reg.status %>
+          </span>
+
+        </div>
+
+        <small class="text-muted">
+          <i class="bi bi-calendar me-1"></i>
+          Registered: <%= new Date(reg.createdAt).toLocaleDateString('en-GB') %>
+        </small>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body bg-white p-4">
+        <div class="row g-4">
+
+          <!-- PERSONAL -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-header bg-white border-bottom fw-semibold text-primary">
+                <i class="bi bi-person-fill me-2"></i>Personal Information
+              </div>
+              <div class="card-body small">
+                <p class="mb-2"><span class="text-muted">Phone:</span> <strong><%= reg.phone %></strong></p>
+                <p class="mb-2"><span class="text-muted">Course:</span> <strong><%= reg.course %></strong></p>
+                <p class="mb-2"><span class="text-muted">Branch:</span> <strong><%= reg.branch %></strong></p>
+                <p class="mb-0"><span class="text-muted">Year/Sem:</span> <strong><%= reg.year_sem %></strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-header bg-white border-bottom fw-semibold text-primary">
+                <i class="bi bi-mortarboard-fill me-2"></i>Education
+              </div>
+              <div class="card-body small">
+                <p class="mb-2"><span class="text-muted">College:</span> <strong><%= reg.college %></strong></p>
+                <p class="mb-0"><span class="text-muted">University:</span> <strong><%= reg.university %></strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERNSHIP -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-header bg-white border-bottom fw-semibold text-primary">
+                <i class="bi bi-briefcase-fill me-2"></i>Internship Details
+              </div>
+              <div class="card-body small">
+                <p class="mb-2"><span class="text-muted">Domain:</span> <strong><%= reg.domain %></strong></p>
+                <p class="mb-2"><span class="text-muted">Duration:</span> <strong><%= reg.duration %> Weeks</strong></p>
+                <p class="mb-2"><span class="text-muted">Referral Code:</span> <strong><%= reg.referral_code || 'N/A' %></strong></p>
+                <p class="mb-0"><span class="text-muted">Transaction ID:</span> <strong><%= reg.payID || 'N/A' %></strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAYMENT -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-header bg-white border-bottom fw-semibold text-primary">
+                <i class="bi bi-credit-card-fill me-2"></i>Payment Details
+              </div>
+              <div class="card-body small">
+                <p class="mb-2"><span class="text-muted">Order ID:</span> <strong><%= reg.order_id || 'N/A' %></strong></p>
+                <p class="mb-0">
+                  <span class="text-muted">Payment Status:</span>
+                  <span class="badge bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning' %>">
+                    <%= reg.payment_status %>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer border-0 bg-light">
+        <button class="btn  px-4" style="background-color: #ff6600;"
+                onclick="downloadRegistrationPDF('<%= reg._id %>', '<%= reg.name %>')">
+          <i class="bi bi-download me-1"></i>Download PDF
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+              <!-- PDF Template (Hidden) -->
+ <div id="pdfTemplate<%= reg._id %>" style="display:none;">
+  <div class="container" style="padding:40px; font-family:'Segoe UI',sans-serif;">
+
+    <!-- Header -->
+    <div class="text-center mb-4 pb-3" style="border-bottom:3px solid #667eea;">
+      <img src="/img/Rixi Lab New Logo PNG.png" style="width:60px;height:60px;margin-bottom:10px;">
+      <h2 style="color:#667eea;font-weight:600;margin:0;">Rixi Lab</h2>
+      <small style="color:#666;">Rethink Innovate eXecute Inspire</small>
+    </div>
+
+    <!-- Title -->
+    <h4 class="text-center mb-4" style="font-weight:600;color:#333;">Registration Details</h4>
+
+    <!-- Profile -->
+    <div class="text-center mb-4">
+      <img src="<%= reg.profile_image_url %>"
+           class="rounded-circle mb-2"
+           style="width:100px;height:100px;object-fit:cover;border:3px solid #667eea;">
+      <h5 class="mb-1"><%= reg.name %></h5>
+      <small class="text-muted"><%= reg.email %></small>
+
+      <div class="mt-2">
+
+        <span class="badge bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning' %> px-3 py-2">
+          <%= reg.payment_status %>
+        </span>
+
+        <span class="badge bg-primary px-3 py-2"><%= reg.domain %></span>
+
+        <span class="badge bg-<%= reg.status === 'approved' ? 'success' : reg.status === 'rejected' ? 'danger' : 'warning' %> px-3 py-2">
+          <%= reg.status %>
+        </span>
+
+      </div>
+    </div>
+
+    <!-- Information Cards -->
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <div class="card border-0" style="background:#f8f9fa;">
+          <div class="card-body">
+            <h6 style="color:#667eea;font-weight:600;">Personal Information</h6>
+            <p class="mb-1"><strong>Phone:</strong> <%= reg.phone %></p>
+            <p class="mb-1"><strong>Course:</strong> <%= reg.course %></p>
+            <p class="mb-1"><strong>Branch:</strong> <%= reg.branch %></p>
+            <p class="mb-0"><strong>Year/Sem:</strong> <%= reg.year_sem %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0" style="background:#f8f9fa;">
+          <div class="card-body">
+            <h6 style="color:#667eea;font-weight:600;">Educational Information</h6>
+            <p class="mb-1"><strong>College:</strong> <%= reg.college %></p>
+            <p class="mb-0"><strong>University:</strong> <%= reg.university %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0" style="background:#f8f9fa;">
+          <div class="card-body">
+            <h6 style="color:#667eea;font-weight:600;">Internship Details</h6>
+            <p class="mb-1"><strong>Domain:</strong> <%= reg.domain %></p>
+            <p class="mb-1"><strong>Duration:</strong> <%= reg.duration %> Weeks</p>
+            <p class="mb-1"><strong>Referral Code:</strong> <%= reg.referral_code || 'N/A' %></p>
+            <p class="mb-0"><strong>Transaction ID:</strong> <%= reg.payID || 'N/A' %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0" style="background:#f8f9fa;">
+          <div class="card-body">
+            <h6 style="color:#667eea;font-weight:600;">Payment Details</h6>
+            <p class="mb-1"><strong>Order ID:</strong> <%= reg.order_id || 'N/A' %></p>
+            <p class="mb-1"><strong>Payment Status:</strong> <%= reg.payment_status %></p>
+            <p class="mb-0"><strong>Registered On:</strong> <%= new Date(reg.createdAt).toLocaleDateString('en-GB') %></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-4 pt-3" style="border-top:1px solid #ddd;font-size:11px;color:#999;">
+      © 2025-26 Rixi Lab. All Rights Reserved.<br>
+      Generated on <%= new Date().toLocaleString() %>
+    </div>
+
+  </div>
+</div>
+
             <% }) %>
           </tbody>
         </table>
@@ -1558,38 +1806,6 @@ function updateIntern(id) {
     .catch(err => {
         console.error("Update Error:", err);
     });
-}
-</script>
-
-
-<script>
-function applyCompletedFilters() {
-  const batch = document.getElementById('batchFilterCompleted').value.toLowerCase();
-  const domain = document.getElementById('domainFilterCompleted').value.toLowerCase();
-  const duration = document.getElementById('durationFilterCompleted').value;
-  const search = document.getElementById('completedSearchInput').value.toLowerCase();
-
-  document.querySelectorAll('.completed-intern-row').forEach(row => {
-    const rowBatch = row.dataset.batch.toLowerCase();
-    const rowDomain = row.dataset.domain.toLowerCase();
-    const rowDuration = row.dataset.duration;
-    const internId = row.querySelector('.intern-id').innerText.toLowerCase();
-
-    const matchBatch = (batch === 'all' || rowBatch === batch);
-    const matchDomain = (domain === 'all' || rowDomain === domain);
-    const matchDuration = (duration === 'all' || rowDuration === duration);
-    const matchSearch = (internId.includes(search));
-
-    row.style.display = (matchBatch && matchDomain && matchDuration && matchSearch) ? '' : 'none';
-  });
-}
-
-function clearCompletedFilters() {
-  document.getElementById('batchFilterCompleted').value = 'all';
-  document.getElementById('domainFilterCompleted').value = 'all';
-  document.getElementById('durationFilterCompleted').value = 'all';
-  document.getElementById('completedSearchInput').value = '';
-  applyCompletedFilters();
 }
 </script>
 
@@ -1836,5 +2052,112 @@ function clearCompletedFilters() {
   <%- include("partials/toaster") %>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/superAdmin.js"></script>
+  
+  <!-- PDF Generation Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <script>
+  // PDF Download Function with Loader
+  async function downloadRegistrationPDF(regId, regName) {
+    // Create and show loader
+    const loader = document.createElement('div');
+    loader.id = 'pdfLoader';
+    loader.innerHTML = `
+      <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem 3rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+          <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <h5 class="mb-2">Generating PDF...</h5>
+          <p class="text-muted mb-0">Please wait while we prepare your document</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(loader);
+
+    try {
+      const element = document.getElementById('pdfTemplate' + regId);
+      
+      if (!element) {
+        throw new Error('PDF template not found');
+      }
+
+      // Make element visible temporarily for html2canvas
+      element.style.display = 'block';
+      element.style.position = 'absolute';
+      element.style.left = '-9999px';
+      element.style.top = '0';
+      
+      // Wait a bit for rendering
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Create canvas from HTML
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        windowWidth: 1200,
+        windowHeight: element.scrollHeight
+      });
+      
+      // Hide element again
+      element.style.display = 'none';
+      element.style.position = '';
+      element.style.left = '';
+      element.style.top = '';
+      
+      // Create PDF
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
+      // Download
+      const fileName = 'Registration_' + regName.replace(/\s+/g, '_') + '.pdf';
+      pdf.save(fileName);
+      
+      // Remove loader
+      document.body.removeChild(loader);
+      
+      // Show success message
+      if (typeof showToast === 'function') {
+        showToast('PDF downloaded successfully!', 'success');
+      }
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      
+      // Remove loader
+      if (document.body.contains(loader)) {
+        document.body.removeChild(loader);
+      }
+      
+      // Show error message
+      if (typeof showToast === 'function') {
+        showToast('Error generating PDF: ' + error.message, 'error');
+      } else {
+        alert('Error generating PDF. Please try again.');
+      }
+    }
+  }
+  </script>
 </body>
 </html>

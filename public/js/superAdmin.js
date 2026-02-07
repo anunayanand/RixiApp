@@ -87,22 +87,27 @@ function applyInternFilters() {
   const searchValue = document.getElementById("internSearchInput").value.toLowerCase().trim();
 
   const rows = document.querySelectorAll("#viewInterns table tbody .intern-row");
+  let visibleIndex = 0;
 
   rows.forEach(row => {
     const rowBatch = row.dataset.batch.toLowerCase();
     const rowDomain = row.dataset.domain.toLowerCase();
     const rowDuration = row.dataset.duration;
-    const name = row.cells[0].textContent.toLowerCase();
-    const internId = row.cells[3].textContent.toLowerCase();
+    const name = row.cells[2].textContent.toLowerCase();
+    const internId = row.cells[5].textContent.toLowerCase();
 
     const matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
     const matchesDomain = (domainFilter === "all" || rowDomain === domainFilter);
     const matchesDuration = (durationFilter === "all" || rowDuration === durationFilter);
     const matchesSearch = (name.includes(searchValue) || internId.includes(searchValue));
 
-    row.style.display = (matchesBatch && matchesDomain && matchesDuration && matchesSearch)
-      ? ""
-      : "none";
+    const isVisible = matchesBatch && matchesDomain && matchesDuration && matchesSearch;
+    row.style.display = isVisible ? "" : "none";
+
+    if (isVisible) {
+      visibleIndex++;
+      row.querySelector('.serial-no').textContent = visibleIndex;
+    }
   });
 }
 
@@ -363,6 +368,50 @@ function applyFilters(type) {
     type === "confirm" ? "selectAllConfirm" : type === "completion" ? "selectAllCompletion" : "selectAllOfferLetter"
   );
   if (master) master.checked = false;
+}
+
+// ==========================
+// Apply Filters for Completed/Certified Interns
+// ==========================
+function applyCompletedFilters() {
+  const batchFilter = document.getElementById("batchFilterCompleted").value;
+  const domainFilter = document.getElementById("domainFilterCompleted").value;
+  const durationFilter = document.getElementById("durationFilterCompleted").value;
+  const searchValue = document.getElementById("completedSearchInput").value.toLowerCase().trim();
+
+  const rows = document.querySelectorAll("#completedInternTable .completed-intern-row");
+  let visibleIndex = 0;
+
+  rows.forEach(row => {
+    const rowBatch = row.dataset.batch;
+    const rowDomain = row.dataset.domain;
+    const rowDuration = row.dataset.duration;
+    const internId = row.querySelector('.intern-id').textContent.toLowerCase();
+
+    const matchesBatch = batchFilter === "all" || rowBatch === batchFilter;
+    const matchesDomain = domainFilter === "all" || rowDomain === domainFilter;
+    const matchesDuration = durationFilter === "all" || rowDuration === durationFilter;
+    const matchesSearch = !searchValue || internId.includes(searchValue);
+
+    const isVisible = matchesBatch && matchesDomain && matchesDuration && matchesSearch;
+    row.style.display = isVisible ? "" : "none";
+
+    if (isVisible) {
+      visibleIndex++;
+      row.querySelector('.serial-no').textContent = visibleIndex;
+    }
+  });
+}
+
+// ==========================
+// Clear Filters for Completed Interns
+// ==========================
+function clearCompletedFilters() {
+  document.getElementById("batchFilterCompleted").value = "all";
+  document.getElementById("domainFilterCompleted").value = "all";
+  document.getElementById("durationFilterCompleted").value = "all";
+  document.getElementById("completedSearchInput").value = "";
+  applyCompletedFilters();
 }
 
 function clearFilters(type) {

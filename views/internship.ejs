@@ -94,9 +94,9 @@
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
               <div class="contact-form-wrapper">
-                <div class="form-header" style="margin-bottom: 1rem;">
+                <div class="form-header" style="margin-bottom: 1rem">
                   <h3>Internship Registration Form</h3>
-                  <p style=" text-align: justify;">
+                  <p style="text-align: justify">
                     At Rixi Lab an MSME registerd startup, internships and
                     training are designed to provide hands-on experience through
                     live projects, aimed at nurturing future-ready skills in
@@ -145,8 +145,8 @@
                   enctype="multipart/form-data"
                 >
                   <!-- <input type="hidden" name="access_key" value="db870915-874b-4d37-acd1-c71aa371eb7c"> -->
-                  
-                <!-- Profile Image Upload -->
+
+                  <!-- Profile Image Upload -->
 
                   <div class="mb-3">
                     <label for="contactName" class="form-label"
@@ -314,54 +314,94 @@
                   </div>
 
                   <div class="mb-3">
-  <label for="profileImage" class="form-label">Upload Your Photograph</label>
-  <div class="input-group">
-    <input
-  type="file"
-  class="form-control "
-  name="profileImage"
-  id="profileImage"
-  accept="image/*"
-  onchange="handleImageUpload(event)"
-  style=" cursor: pointer;"
+                    <label for="profileImage" class="form-label"
+                      >Upload Your Photograph</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="file"
+                        class="form-control"
+                        name="profileImage"
+                        id="profileImage"
+                        accept="image/*"
+                        onchange="handleImageUpload(event)"
+                        style="cursor: pointer"
+                        required
+                      />
 
->
+                      <!-- Preview thumbnail -->
+                      <div id="imagePreviewContainer" style="display: none">
+                        <img
+                          id="imagePreviewThumb"
+                          src=""
+                          alt="Preview"
+                          class="rounded ms-2"
+                          style="
+                            width: 50px;
+                            height: 50px;
+                            object-fit: cover;
+                            cursor: pointer;
+                            border-radius: 12px;
+                          "
+                          onclick="openImagePreviewModal()"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="text-sm form-text text-white"
+                      style="font-size: 0.75rem; font-style: italic"
+                    >
+                      Please upload a square image (1:1 aspect ratio, Max: 1000
+                      x 1000 px)
+                    </div>
+                  </div>
 
-    <!-- Preview thumbnail -->
-    <div id="imagePreviewContainer" style="display:none;">
-      <img 
-        id="imagePreviewThumb" 
-        src="" 
-        alt="Preview" 
-        class="rounded ms-2"
-        style="width:50px;height:50px;object-fit:cover;cursor:pointer;border-radius: 12px;"
-        onclick="openImagePreviewModal()"
-      >
-    </div>
-  </div>
-  <div class="text-sm form-text text-white" style="font-size: 0.75rem; font-style: italic;">Please upload a square image (1:1 aspect ratio, Max: 1000 x 1000 px)</div>
-</div>
-
-<!-- Image Preview Modal (View & Delete) -->
-<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Profile Picture</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img id="imagePreviewFull" src="" alt="Full Preview" class="img-fluid rounded" style="max-height:400px;">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" onclick="deleteImage()">
-          <i class="bi bi-trash"></i> Delete
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+                  <!-- Image Preview Modal (View & Delete) -->
+                  <div
+                    class="modal fade"
+                    id="imagePreviewModal"
+                    tabindex="-1"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Profile Picture</h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body text-center">
+                          <img
+                            id="imagePreviewFull"
+                            src=""
+                            alt="Full Preview"
+                            class="img-fluid rounded"
+                            style="max-height: 400px"
+                          />
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="deleteImage()"
+                          >
+                            <i class="bi bi-trash"></i> Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="mb-3">
                     <label for="contactReferral" class="form-label"
@@ -377,26 +417,50 @@
                   </div>
                   <!-- <br> -->
                   <!-- Billing Table -->
-                  <table class="billing-table" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                  <table
+                    class="billing-table"
+                    style="
+                      width: 100%;
+                      border-collapse: collapse;
+                      margin-bottom: 15px;
+                    "
+                  >
                     <tr>
                       <td>Registration Fee</td>
-                      <td style="text-align: right;">₹<span id="regFee">499</span></td>
+                      <td style="text-align: right">
+                        ₹<span id="regFee">499</span>
+                      </td>
                     </tr>
                     <tr>
                       <td>Discount (80%)</td>
-                      <td style=" text-align: right; color: #ffff;">- ₹399</td>
+                      <td style="text-align: right; color: #ffff">- ₹399</td>
                     </tr>
                     <tr>
                       <td>Service Charges (incl. GST)</td>
-                      <td style=" text-align: right;">₹1.95</td>
+                      <td style="text-align: right">₹1.95</td>
                     </tr>
                     <tr>
                       <td>Service Tax</td>
-                      <td style=" text-align: right;">₹0.45</td>
+                      <td style="text-align: right">₹0.45</td>
                     </tr>
-                    <tr style="border-top: 1px solid #ddd;">
-                      <td style="padding: 10px 0 0 0; font-weight: bold;">Total Registration Fee <span style="font-weight: 400;">(Only online Payment Accepted)</span></td>
-                      <td style="padding: 10px 0 0 0; text-align: right; font-weight: bold; color: #ffff; font-size: 1.1em;">₹102.4/-</td>
+                    <tr style="border-top: 1px solid #ddd">
+                      <td style="padding: 10px 0 0 0; font-weight: bold">
+                        Total Registration Fee
+                        <span style="font-weight: 400"
+                          >(Only online Payment Accepted)</span
+                        >
+                      </td>
+                      <td
+                        style="
+                          padding: 10px 0 0 0;
+                          text-align: right;
+                          font-weight: bold;
+                          color: #ffff;
+                          font-size: 1.1em;
+                        "
+                      >
+                        ₹102.4/-
+                      </td>
                     </tr>
                   </table>
 
@@ -460,14 +524,19 @@
           <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
               <a href="/" class="logo d-flex align-items-center">
-                <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo"  style="height: 2rem !important;"/>
+                <img
+                  src="/img/Rixi Lab New Logo PNG.png"
+                  alt="Rixi Lab Logo"
+                  style="height: 2rem !important"
+                />
                 <span class="sitename">Rixi Lab</span>
               </a>
               <div class="footer-contact pt-3">
                 <p>Bhatpar Rani, Deoria,</p>
                 <p>Uttar Pradesh, 274506 INDIA</p>
                 <p class="mt-3">
-                  <strong>Phone:</strong> <span>+91 7617803891 Whatsapp Only</span>
+                  <strong>Phone:</strong>
+                  <span>+91 7617803891 Whatsapp Only</span>
                 </p>
                 <p><strong>Email:</strong> <span>rixilab7@gmail.com</span></p>
               </div>
@@ -572,115 +641,121 @@
     <script>
       let uploadedImageUrl = null;
       let uploadedImagePublicId = null;
-      
+
       function handleImageUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
-        
+
         // Validate file type
-        if (!file.type.startsWith('image/')) {
-          showToast('Please select an image file', 'error');
-          event.target.value = '';
+        if (!file.type.startsWith("image/")) {
+          showToast("Please select an image file", "error");
+          event.target.value = "";
           return;
         }
-        
+
         // Validate file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
-          showToast('Image size should be less than 5MB', 'error');
-          event.target.value = '';
+          showToast("Image size should be less than 5MB", "error");
+          event.target.value = "";
           return;
         }
-        
+
         // Create image to check dimensions
         const img = new Image();
         const reader = new FileReader();
-        
-        reader.onload = function(e) {
+
+        reader.onload = function (e) {
           img.src = e.target.result;
         };
-        
-        img.onload = function() {
+
+        img.onload = function () {
           // Check if image is square (1:1 aspect ratio)
           if (img.width !== img.height) {
-            showToast(`Please upload a square image. Your image is ${img.width}x${img.height}. Square images work best for profile pictures.`, 'error');
-            event.target.value = '';
+            showToast(
+              `Please upload a square image. Your image is ${img.width}x${img.height}. Square images work best for profile pictures.`,
+              "error",
+            );
+            event.target.value = "";
             return;
           }
-          
+
           // Image is valid square, upload it
           uploadImage(file);
         };
-        
-        img.onerror = function() {
-          showToast('Invalid image file', 'error');
-          event.target.value = '';
+
+        img.onerror = function () {
+          showToast("Invalid image file", "error");
+          event.target.value = "";
         };
-        
+
         reader.readAsDataURL(file);
       }
-      
+
       async function uploadImage(file) {
         try {
           const formData = new FormData();
-          formData.append('profileImage', file);
-          
+          formData.append("profileImage", file);
+
           showLoader();
-          const response = await fetch('/internship/upload-profile-image', {
-            method: 'POST',
-            body: formData
+          const response = await fetch("/internship/upload-profile-image", {
+            method: "POST",
+            body: formData,
           });
-          
+
           const data = await response.json();
           hideLoader();
-          
+
           if (data.success) {
             uploadedImageUrl = data.imageUrl;
             uploadedImagePublicId = data.publicId;
-            
+
             // Show preview thumbnail
-            document.getElementById('imagePreviewThumb').src = uploadedImageUrl;
-            document.getElementById('imagePreviewContainer').style.display = 'block';
-            
-            showToast('Profile picture uploaded successfully', 'success');
+            document.getElementById("imagePreviewThumb").src = uploadedImageUrl;
+            document.getElementById("imagePreviewContainer").style.display =
+              "block";
+
+            showToast("Profile picture uploaded successfully", "success");
           } else {
-            showToast(data.message || 'Failed to upload image', 'error');
-            event.target.value = '';
+            showToast(data.message || "Failed to upload image", "error");
+            event.target.value = "";
           }
         } catch (error) {
           hideLoader();
-          console.error('Error uploading image:', error);
-          showToast('Error uploading image', 'error');
-          event.target.value = '';
+          console.error("Error uploading image:", error);
+          showToast("Error uploading image", "error");
+          event.target.value = "";
         }
       }
-      
+
       function openImagePreviewModal() {
         if (uploadedImageUrl) {
-          document.getElementById('imagePreviewFull').src = uploadedImageUrl;
-          const modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+          document.getElementById("imagePreviewFull").src = uploadedImageUrl;
+          const modal = new bootstrap.Modal(
+            document.getElementById("imagePreviewModal"),
+          );
           modal.show();
         }
       }
-      
+
       function deleteImage() {
         // Clear the image
         uploadedImageUrl = null;
         uploadedImagePublicId = null;
-        
+
         // Clear file input
-        document.getElementById('profileImage').value = '';
-        
+        document.getElementById("profileImage").value = "";
+
         // Hide preview
-        document.getElementById('imagePreviewContainer').style.display = 'none';
-        
+        document.getElementById("imagePreviewContainer").style.display = "none";
+
         // Close modal
-        const modalEl = document.getElementById('imagePreviewModal');
+        const modalEl = document.getElementById("imagePreviewModal");
         const modal = bootstrap.Modal.getInstance(modalEl);
         if (modal) {
           modal.hide();
         }
-        
-        showToast('Profile picture removed', 'success');
+
+        showToast("Profile picture removed", "success");
       }
     </script>
 
@@ -696,17 +771,20 @@
         "Python Programming": 102.4,
         "Java Programming": 102.4,
         "Data Analytics": 102.4,
-        "DSA": 102.4,
+        DSA: 102.4,
         "Graphics Design": 102.4,
-        "Full Stack Development": 102.4
+        "Full Stack Development": 102.4,
       };
 
       // Update price when domain changes
-      document.getElementById("contactDomain").addEventListener("change", function() {
-        const selectedDomain = this.value;
-        const price = domainPrices[selectedDomain] || 102.4;
-        document.getElementById("registrationFee").textContent = `Rs ${price}/-`;
-      });
+      document
+        .getElementById("contactDomain")
+        .addEventListener("change", function () {
+          const selectedDomain = this.value;
+          const price = domainPrices[selectedDomain] || 102.4;
+          document.getElementById("registrationFee").textContent =
+            `Rs ${price}/-`;
+        });
 
       function showToast(message, type) {
         const toastContainer =
@@ -755,11 +833,13 @@
         for (let [key, value] of formData.entries()) {
           data[key] = value;
         }
-        
+
         // Add profile image data
-        data["data[ProfileImageUrl]"] = uploadedImageUrl || "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+        data["data[ProfileImageUrl]"] =
+          uploadedImageUrl ||
+          "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
         data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
-        
+
         fetch(form.action, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -812,9 +892,11 @@
           for (let [key, value] of formData.entries()) {
             data[key] = value;
           }
-          
+
           // Add profile image data
-          data["data[ProfileImageUrl]"] = uploadedImageUrl || "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+          data["data[ProfileImageUrl]"] =
+            uploadedImageUrl ||
+            "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
           data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
 
           // Validate required fields except PayID
@@ -845,7 +927,10 @@
 
           // Store form data in localStorage
           localStorage.setItem("internshipFormData", JSON.stringify(data));
-          localStorage.setItem("userName", data["data[Name]"]?.trim() || "User");
+          localStorage.setItem(
+            "userName",
+            data["data[Name]"]?.trim() || "User",
+          );
 
           // Create Cashfree order
           const email = document.getElementById("contactEmail").value;
@@ -864,7 +949,7 @@
               if (!window.Cashfree || !cashfree.checkout) {
                 showToast(
                   "Payment system not loaded. Please refresh and try again.",
-                  "error"
+                  "error",
                 );
                 payBtn.disabled = false;
                 payBtn.textContent = "Continue to Payment & Submit";
@@ -880,7 +965,7 @@
                 console.error("Cashfree checkout error:", error);
                 showToast(
                   "Failed to start payment. Please try again.",
-                  "error"
+                  "error",
                 );
                 payBtn.disabled = false;
                 payBtn.textContent = "Continue to Payment & Submit";
@@ -888,7 +973,7 @@
             } else {
               showToast(
                 result.message || "Failed to create payment order",
-                "error"
+                "error",
               );
               payBtn.disabled = false;
               payBtn.textContent = "Continue to Payment & Submit";
@@ -918,7 +1003,7 @@
       function showPopup(message, invoiceUrl = null) {
         const popup = document.getElementById("popup");
         const msgEl = document.getElementById("popupMsg");
-        msgEl.innerHTML = message
+        msgEl.innerHTML = message;
         popup.style.display = "flex";
       }
       function closePopup() {
@@ -957,7 +1042,7 @@
         } else if (paymentSuccess === "false") {
           showToast(
             "Payment failed or was cancelled. Please try again.",
-            "error"
+            "error",
           );
         }
       });
