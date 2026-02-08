@@ -72,11 +72,11 @@ router.post("/assign", async (req, res) => {
       return res.redirect("/admin");
     }
 
-    // 🔹 Get interns in the same domain and batch whose duration >= quiz.week
+    // 🔹 Get interns in the same domain and batch whose duration matches quiz.week exactly
     const interns = await User.find({
       batch_no: batch,
       domain: quiz.domain,
-      duration: { $gte: quiz.week },
+      duration: quiz.week,  // Exact match: only interns with matching duration
       role: "intern",
     });
 

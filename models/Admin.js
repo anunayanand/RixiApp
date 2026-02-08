@@ -16,6 +16,7 @@ const adminSchema = new mongoose.Schema({
   img_public_id: { type: String },
   isFirstLogin: { type: Boolean, default: true },
   lastLogin: { type: Date },
+  joining_date: { type: Date,default: Date.now },
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

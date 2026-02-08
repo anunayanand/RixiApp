@@ -25,7 +25,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       const mentorName = mentor?.name ?? "No Mentor";
       const assignedMeetings = meetings;
       const assignedQuizzes = (intern.quizAssignments || [])
-      .filter(a => a.assigned)
+      .filter(a => a.assigned && a.batch === intern.batch_no)
       .map(a => ({
         quiz: a.quizId,
         score: a.score,

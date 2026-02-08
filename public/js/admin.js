@@ -80,22 +80,32 @@ function applyInternFilters() {
   let batchFilter = document.getElementById("batchFilter").value.toLowerCase();
   let internSearch = document.getElementById("internSearch").value.toLowerCase();
   let rows = document.querySelectorAll("#viewInterns .intern-row");
-  let visibleIndex = 0;
 
   rows.forEach(row => {
     let rowBatch = row.getAttribute("data-batch").toLowerCase();
     let internId = row.querySelector(".intern-id")?.textContent.toLowerCase() || "";
-    let name = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
 
     let matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
-    let matchesIntern = (internSearch === "" || internId.includes(internSearch) || name.includes(internSearch));
+    let matchesIntern = (internSearch === "" || internId.includes(internSearch));
 
-    const isVisible = matchesBatch && matchesIntern;
-    row.style.display = isVisible ? "" : "none";
+    row.style.display = (matchesBatch && matchesIntern) ? "" : "none";
+  });
+  
+  // Update serial numbers dynamically for visible rows
+  updateSerialNumbers();
+}
 
-    if (isVisible) {
-      visibleIndex++;
-      row.querySelector('.serial-no').textContent = visibleIndex;
+// Function to update serial numbers based on visible rows
+function updateSerialNumbers() {
+  const visibleRows = document.querySelectorAll("#viewInterns .intern-row");
+  let serialCount = 1;
+  visibleRows.forEach(row => {
+    if (row.style.display !== "none") {
+      const serialCell = row.querySelector(".serial-no");
+      if (serialCell) {
+        serialCell.textContent = serialCount;
+      }
+      serialCount++;
     }
   });
 }
