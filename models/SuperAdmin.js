@@ -13,6 +13,7 @@ const superAdminSchema = new mongoose.Schema({
   img_public_id: { type: String },
   isFirstLogin: { type: Boolean, default: true },
   lastLogin: { type: Date },
+  isOnline: { type: Boolean, default: false },
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

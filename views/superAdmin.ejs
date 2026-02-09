@@ -470,10 +470,21 @@
 
           <!-- Top: Profile Image + Name + Badge -->
           <div class="d-flex align-items-center mb-3">
-            <img src="<%= ambassador.img_url %>" 
-                 alt="<%= ambassador.name %>" 
-                 class="rounded-circle me-3 profile-img"
-                 style="width:80px; height:80px; object-fit:cover;">
+             <div class="position-relative me-3">
+
+    <img src="<%= ambassador.img_url %>" 
+         alt="<%= ambassador.name %>" 
+         class="rounded-circle profile-img"
+         style="width:80px; height:80px; object-fit:cover;">
+
+    <% if(ambassador.isOnline){ %>
+      <span class="position-absolute bottom-0 end-0 
+                   translate-middle p-2 bg-success 
+                   border border-white rounded-circle">
+      </span>
+    <% } %>
+
+  </div>
             <div>
               <h4 class="mb-1 ambassador-name"><%= ambassador.name %></h4>
               <span class="badge bg-info"><%= ambassador.badge %></span>
@@ -694,10 +705,21 @@
 
           <!-- Top: Profile Image + Name + Badge -->
           <div class="d-flex align-items-center mb-3">
-            <img src="<%= admin.img_url %>" 
-                 alt="<%= admin.name %>" 
-                 class="rounded-circle me-3 profile-img"
-                 style="width:80px; height:80px; object-fit:cover;">
+             <div class="position-relative me-3">
+
+    <img src="<%= admin.img_url %>" 
+         alt="<%= admin.name %>" 
+         class="rounded-circle profile-img"
+         style="width:80px; height:80px; object-fit:cover;">
+
+    <% if(admin.isOnline){ %>
+      <span class="position-absolute bottom-0 end-0 
+                   translate-middle p-1 bg-success 
+                   border border-white rounded-circle">
+      </span>
+    <% } %>
+
+  </div>
             <div>
               <h4 class="mb-1"><%= admin.name %></h4>
               <span class="badge bg-success"><%= admin.designation %></span>
@@ -875,9 +897,24 @@
             <% interns.forEach((i, index) => { %>
               <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>">
                 <td class="serial-no" style="padding:0 !important;"><%= index + 1 %></td>
-                 <td style="padding:0 !important;">
-                   <img src="<%= i.img_url %>" alt="<%= i.name %>" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover; padding:0 !important;">
-                 </td>
+                 <td style="padding:0 !important;" class="position-relative">
+                    <div class="position-relative d-inline-block">
+                  
+                      <img src="<%= i.img_url %>" 
+                           alt="<%= i.name %>" 
+                           class="rounded-circle"
+                           style="width:40px; height:40px; object-fit:cover;">
+                  
+                      
+                  
+                    </div>
+                    <% if(i.isOnline){ %>
+                        <span class="position-absolute top-5 end-1  
+                                     p-1 bg-success border border-light rounded-circle">
+                        </span>
+                      <% } %>
+                  </td>
+
                  <td style="text-align: left !important; padding-left: 1rem;"><%= i.name %></td>
                  <td style="text-align: left !important; padding-left: 1rem;"><%= i.email %></td>
                  <td style="padding:0 !important;"><%= i.duration %> Weeks</td>

@@ -8,6 +8,7 @@ const ambassadorSchema = new mongoose.Schema({
   phone: { type: String, required: true,  },
   password: { type: String, required: true },
   isFirstLogin: { type: Boolean, default: true },
+  isOnline: { type: Boolean, default: false },
   college: { type: String },
   university: { type: String },
   designation: { type: String },

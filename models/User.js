@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   intern_id: { type: String, unique: true, sparse: true },
   phone: { type: String, required: true },
   batch_no: { type: String },
+  isOnline: { type: Boolean, default: false },
   certificate_id: {
     type: String,
     unique: true,

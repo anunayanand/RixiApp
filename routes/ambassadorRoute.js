@@ -17,7 +17,8 @@ router.get("/ambassador", authRole("ambassador"), async (req, res) => {
 
     // 2️⃣ Update badge automatically
     ambassador.updateBadge();
-  
+    ambassador.isOnline = true;
+    await ambassador.save();
     
 
     // 3️⃣ Fetch interns referred by this ambassador

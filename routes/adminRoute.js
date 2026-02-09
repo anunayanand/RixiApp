@@ -29,6 +29,8 @@ router.get("/", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
     const admin = await Admin.findById(adminId);
+    admin.isOnline = true;
+    await admin.save();
 
     if (!admin) {
       req.flash("error", "Admin not found");

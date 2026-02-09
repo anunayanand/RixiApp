@@ -14,7 +14,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
       req.flash("error", "Intern not found");
       return res.redirect("/login");
     }
-
+    intern.isOnline = true;
+    await intern.save();
     // Fetch projects for intern’s domain + batch
     const projects = await Project.find({ 
       domain: intern.domain, 

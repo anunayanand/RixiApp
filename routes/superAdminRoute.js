@@ -19,7 +19,8 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
       req.flash("error", "SuperAdmin not found");
       return res.redirect("/login");
     }
-
+    superAdmin.isOnline = true;
+    await superAdmin.save();
     // ==============================
     // 🔔 Notification Logic
     // ==============================
