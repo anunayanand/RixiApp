@@ -22,6 +22,7 @@ const ambassadorSchema = new mongoose.Schema({
   },
   gender: { type: String, enum: ["Male", "Female", "Other"] },
   joining_date: { type: Date, default: Date.now, immutable: true },
+  lastHeartbeat: { type: Date, default: null },
   linkedin_profile_url: { type: String },
   insta_profile_url: { type: String },
   internCount: { type: Number, default: 0 },

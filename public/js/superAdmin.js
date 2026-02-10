@@ -626,3 +626,35 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+// Heartbeat mechanism to detect disconnections
+const HEARTBEAT_INTERVAL = 30000; // Send heartbeat every 30 seconds
+
+// Send heartbeat to server
+async function sendHeartbeat() {
+  try {
+    const response = await fetch('/heartbeat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) {
+      console.error('Heartbeat failed:', response.status);
+    }
+  } catch (err) {
+    console.error('Heartbeat error:', err);
+  }
+}
+
+// Start heartbeat when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Send initial heartbeat
+  sendHeartbeat();
+  
+  // Set up periodic heartbeat
+  setInterval(sendHeartbeat, HEARTBEAT_INTERVAL);
+  
+  // Send heartbeat before page unload
+  window.addEventListener('beforeunload', () => {
+    navigator.sendBeacon('/heartbeat', JSON.stringify({}));
+  });
+});

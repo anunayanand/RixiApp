@@ -14,6 +14,7 @@ const superAdminSchema = new mongoose.Schema({
   isFirstLogin: { type: Boolean, default: true },
   lastLogin: { type: Date },
   isOnline: { type: Boolean, default: false },
+  lastHeartbeat: { type: Date, default: null },
   designation:{type:String, default:"Super Admin"},
   meetings: [
     {

@@ -18,6 +18,7 @@ const adminSchema = new mongoose.Schema({
   lastLogin: { type: Date },
   joining_date: { type: Date,default: Date.now },
   isOnline: { type: Boolean, default: false },
+  lastHeartbeat: { type: Date, default: null },
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

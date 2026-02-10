@@ -45,6 +45,7 @@ const userSchema = new mongoose.Schema({
   isPassed: { type: Boolean, default: false },
   screenshot_img: { type: String, default: "" },
   screenshot_public_id: { type: String },
+  lastHeartbeat: { type: Date, default: null },
 
   projectAssigned: [
     {

@@ -27,6 +27,9 @@ require('dotenv').config();
 const flash = require('connect-flash');
 require("./db"); // Mongoose connection
 const User = require("./models/User");
+const Admin = require("./models/Admin");
+const Ambassador = require("./models/Ambassador");
+const SuperAdmin = require("./models/SuperAdmin");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -317,4 +320,44 @@ app.post('/project/toggle-visibility/:id',toggleUpdateButton);
 
 const updateInternQuizRouter = require('./routes/updateInternQuizRoute');
 app.use('/', updateInternQuizRouter);
+
+// Heartbeat route for detecting disconnections
+const heartbeatRouter = require('./routes/heartbeatRoute');
+app.use('/', heartbeatRouter);
+
+// Cleanup mechanism: Mark users as offline if no heartbeat received in 2 minutes
+const HEARTBEAT_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+const CLEANUP_INTERVAL = 30000; // Check every 30 seconds
+
+setInterval(async () => {
+  try {
+    const cutoff = new Date(Date.now() - HEARTBEAT_TIMEOUT);
+    
+    // Update all users with lastHeartbeat older than cutoff to isOnline: false
+    await User.updateMany(
+      { isOnline: true, lastHeartbeat: { $lt: cutoff } },
+      { $set: { isOnline: false } }
+    );
+    
+    await Admin.updateMany(
+      { isOnline: true, lastHeartbeat: { $lt: cutoff } },
+      { $set: { isOnline: false } }
+    );
+    
+    await Ambassador.updateMany(
+      { isOnline: true, lastHeartbeat: { $lt: cutoff } },
+      { $set: { isOnline: false } }
+    );
+    
+    await SuperAdmin.updateMany(
+      { isOnline: true, lastHeartbeat: { $lt: cutoff } },
+      { $set: { isOnline: false } }
+    );
+    
+    // console.log("isOnline cleanup completed");
+  } catch (err) {
+    console.error("Error during isOnline cleanup:", err);
+  }
+}, CLEANUP_INTERVAL);
+
 app.listen(8080, () => console.log("Server running at http://localhost:8080"));
