@@ -44,7 +44,7 @@ router.get("/intern", authRole("intern"), async (req, res) => {
 
     // Assigned quizzes with populated quiz (only for intern's current batch and matching duration)
     const assignedQuizzes = (intern.quizAssignments || [])
-      .filter(a => a.assigned && a.quizId && a.batch === intern.batch_no && a.quizId.week <= intern.duration)
+      .filter(a => a && a.assigned && a.quizId && a.batch === intern.batch_no && a.quizId.week <= intern.duration)
       .map(a => ({
         quiz: a.quizId,
         score: a.score,

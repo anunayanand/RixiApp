@@ -11,7 +11,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
   if (!intern || intern.role !== "intern"){
     req.flash("error", "Intern not found");
     return res.redirect("/admin")
-  } ;
+  };
       const assignedProjects = intern.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
       const totalProjects = intern.projectAssigned.length;
@@ -25,12 +25,12 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       const mentorName = mentor?.name ?? "No Mentor";
       const assignedMeetings = meetings;
       const assignedQuizzes = (intern.quizAssignments || [])
-      .filter(a => a.assigned && a.batch === intern.batch_no)
+      .filter(a => a && a.assigned && a.batch === intern.batch_no)
       .map(a => ({
         quiz: a.quizId,
         score: a.score,
         attemptCount: a.attemptCount,
-        isClosed: a.quizId.isClosed
+        isClosed: a.quizId?.isClosed
       }));
   // Sort notifications (newest first)
   const notifications = (intern.notifications || []).sort((a, b) => {
