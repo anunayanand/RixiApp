@@ -54,6 +54,33 @@ if (offerLetterButton) {
     }
   });
 }
+
+// Completion Mail Button to open completionMail section
+const completionMailButton = document.getElementById('completionMailButton');
+if (completionMailButton) {
+  completionMailButton.addEventListener('click', e => {
+    e.preventDefault();
+
+    // Hide all sections, including dashboard
+    sections.forEach(sec => sec.style.display = 'none');
+
+    // Show only the completionMail section
+    const targetSection = document.getElementById('completionMail');
+    if (targetSection) {
+      targetSection.style.display = 'block';
+      // Hide all rows and show the "add filter to see data" message
+      const rows = document.getElementById('completionTable').querySelectorAll("tr[data-batch]");
+      rows.forEach(row => row.style.display = 'none');
+      const addFiltersMessage = document.getElementById('addFiltersMessage');
+      const noDataMessage = document.getElementById('noDataMessage');
+      if (addFiltersMessage) addFiltersMessage.style.display = 'table-row';
+      if (noDataMessage) noDataMessage.style.display = 'none';
+      // Reset filters
+      document.getElementById('batchCompletion').value = 'all';
+      document.getElementById('searchCompletion').value = '';
+    }
+  });
+}
     function filterByBatch() {
     const selectedBatch = document.getElementById("batchFilter").value;
     const cards = document.querySelectorAll(".intern-card");
@@ -297,6 +324,78 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Completion Mail Functions
+async function sendCompletionMails() {
+  const checkboxes = document.querySelectorAll(".completionCheckbox:checked");
+  const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+
+  if (selectedIds.length === 0) {
+    showToast("Please select at least one intern", "warning");
+    return;
+  }
+
+  // Show loader
+  const loaderWrapper = document.getElementById("pageLoaderWrapper");
+  if (loaderWrapper) {
+    loaderWrapper.style.display = 'flex';
+    loaderWrapper.classList.remove("hidden");
+  }
+
+  try {
+    const response = await fetch("/send-completion-mail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ interns: selectedIds }),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      showToast(`${data.sent} mails sent. ${data.failed} failed.`, data.failed > 0 ? "warning" : "success");
+
+      // Update the table rows
+      checkboxes.forEach(cb => {
+        cb.disabled = true;
+        cb.checked = false;
+        const row = cb.closest('tr');
+        row.dataset.status = 'sent';
+        row.style.backgroundColor = '#d4edda';
+      });
+
+      updateMasterCheckbox('completion');
+      applyFilters('completion'); // Reapply filters to hide sent rows if filter is notSent
+
+      // Hide dot if no more pending checkboxes
+      const remainingCheckboxes = document.querySelectorAll('.completionCheckbox:not([disabled])');
+      if (remainingCheckboxes.length === 0) {
+        const dot = document.getElementById('completionMailDot');
+        if (dot) dot.style.display = 'none';
+      }
+    } else {
+      showToast(`Error: ${data.message}`, "error");
+    }
+  } catch (err) {
+    console.error("Unexpected error while sending completion mails:", err);
+    showToast("Unexpected error while sending completion mails. Check console.", "error");
+  } finally {
+    // Hide loader
+    if (loaderWrapper) {
+      loaderWrapper.classList.add("hidden");
+      setTimeout(() => (loaderWrapper.style.display = "none"), 600);
+    }
+  }
+}
+
+// Add event listener for completionForm
+document.addEventListener('DOMContentLoaded', () => {
+  const completionForm = document.getElementById('completionForm');
+  if (completionForm) {
+    completionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await sendCompletionMails();
+    });
+  }
+});
+
 function updateRowColor(checkbox, type) {
   const row = checkbox.closest("tr");
   if (checkbox.checked) {
@@ -344,10 +443,55 @@ function updateMasterCheckbox(type) {
 }
 
 function applyFilters(type) {
+  if (type === 'completion') {
+    const batch = document.getElementById("batchCompletion").value;
+    const search = document.getElementById("searchCompletion").value.toLowerCase();
+    const rows = document.getElementById("completionTable").querySelectorAll("tr[data-batch]");
+    const addFiltersMessage = document.getElementById("addFiltersMessage");
+    const noDataMessage = document.getElementById("noDataMessage");
+
+    let visibleIndex = 0;
+    let hasVisibleRows = false;
+
+    // Check if any filter is active (batch or search)
+    const hasFilters = batch !== "all" || search !== "";
+
+    rows.forEach(row => {
+      const rowBatch = row.getAttribute("data-batch");
+      const name = row.getAttribute("data-name");
+      const email = row.getAttribute("data-email");
+
+      const matchBatch = batch === "all" || rowBatch === batch;
+      const matchSearch = !search || name.includes(search) || email.includes(search);
+
+      const isVisible = matchBatch && matchSearch;
+      row.style.display = isVisible ? "" : "none";
+
+      if (isVisible) {
+        visibleIndex++;
+        row.querySelector('.serial-no').textContent = visibleIndex;
+        hasVisibleRows = true;
+      }
+    });
+
+    // Show/hide messages based on filter state
+    if (addFiltersMessage) addFiltersMessage.style.display = hasFilters ? "none" : "table-row";
+    if (noDataMessage) noDataMessage.style.display = (hasFilters && !hasVisibleRows) ? "table-row" : "none";
+
+    // Reset master checkbox
+    const master = document.getElementById("selectAllCompletion");
+    if (master) master.checked = false;
+
+    return;
+  }
+
+  // Original logic for other types (confirm, offerLetter)
   const filter = document.getElementById("filter" + capitalize(type)).value;
   const batch = document.getElementById("batch" + capitalize(type)).value;
   const search = document.getElementById("search" + capitalize(type)).value.toLowerCase();
   const rows = document.getElementById(type + "Table").querySelectorAll("tr");
+
+  let visibleIndex = 0;
 
   rows.forEach(row => {
     const status = row.getAttribute("data-status");
@@ -361,6 +505,15 @@ function applyFilters(type) {
     if (search && !name.includes(search) && !email.includes(search)) visible = false;
 
     row.style.display = visible ? "" : "none";
+
+    // Update serial number for visible rows
+    if (visible) {
+      visibleIndex++;
+      const serialCell = row.querySelector('.serial-no');
+      if (serialCell) {
+        serialCell.textContent = visibleIndex;
+      }
+    }
   });
 
   // reset master checkbox whenever filters or batch changes
@@ -415,6 +568,13 @@ function clearCompletedFilters() {
 }
 
 function clearFilters(type) {
+  if (type === "completion") {
+    document.getElementById("batchCompletion").value = "all";
+    document.getElementById("searchCompletion").value = "";
+    applyFilters("completion");
+    return;
+  }
+  
   if (type === "offerLetter") {
     document.getElementById("filter" + capitalize(type)).value = "notSent";
   } else {

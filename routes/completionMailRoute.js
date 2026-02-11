@@ -1,26 +1,54 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
 const User = require("../models/User");
+const { google } = require("googleapis");
 
 // ==============================
 // CONFIGURATION
 // ==============================
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
-  },
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URI
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
 });
+
+const gmail = google.gmail({
+  version: "v1",
+  auth: oAuth2Client
+});
+
+// ==============================
+// HELPER: Encode Email for Gmail API
+// ==============================
+function makeBody(to, from, subject, message) {
+  const str = [
+    "Content-Type: text/html; charset=\"UTF-8\"\n",
+    "MIME-Version: 1.0\n",
+    "Content-Transfer-Encoding: 7bit\n",
+    "to: ", to, "\n",
+    "from: ", from, "\n",
+    "subject: ", subject, "\n\n",
+    message
+  ].join('');
+
+  const encodedMail = Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+  return encodedMail;
+}
 
 // ==============================
 // HELPER: Send Bulk Completion Emails
 // ==============================
 async function sendBulkCompletionMails(interns) {
+  // console.log("🔍 [DEBUG] sendBulkCompletionMails called with", interns.length, "interns");
+  
   const sendPromises = interns.map(async (intern) => {
     try {
       const { intern_id, name, email, domain } = intern;
+      // console.log("🔍 [DEBUG] Processing intern:", { intern_id, email, name });
 
       const subject = `Congratulations on Completing Your Internship at Rixi Lab`;
       const body = `
@@ -117,23 +145,23 @@ async function sendBulkCompletionMails(interns) {
     </div>
   </body>
 </html>
-       
       `;
 
-      await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: email,
-        subject,
-        html: body,
+      const encodedMail = makeBody(email, process.env.EMAIL, subject, body);
+      await gmail.users.messages.send({
+        userId: 'me',
+        resource: {
+          raw: encodedMail
+        }
       });
 
       await User.findOneAndUpdate({ intern_id }, { completionSent: true });
 
       // console.log(`✅ Completion mail sent to ${email}`);
-      return { status: "fulfilled", email };
+      return { status: "fulfilled", email, intern_id };
     } catch (err) {
       // console.error(`❌ Completion mail failed for ${intern.email}:`, err.message);
-      return { status: "rejected", email: intern.email, reason: err.message };
+      return { status: "rejected", email: intern.email, intern_id: intern.intern_id, reason: err.message };
     }
   });
 
@@ -145,30 +173,56 @@ async function sendBulkCompletionMails(interns) {
 // ==============================
 router.post("/send-completion-mail", async (req, res) => {
   try {
-    const interns = req.body.interns; // array of intern_id
+    console.log("🔍 [DEBUG] Completion mail route called");
+    console.log("🔍 [DEBUG] Request body:", req.body);
+    
+    const { interns } = req.body; // array of intern_id
+    console.log("🔍 [DEBUG] Interns to send completion mail:", interns);
 
-    if (!interns || interns.length === 0) {
-      req.flash("error", "No interns selected for completion mail.");
-      return res.redirect("/superAdmin");
+    // Normalize interns to array
+    const internIds = interns
+      ? Array.isArray(interns)
+        ? interns
+        : [interns]
+      : [];
+
+    // Validation: interns must be selected
+    if (!internIds.length) {
+      return res.status(400).json({ success: false, message: "No interns selected for completion mail." });
     }
 
-    const internDocs = await User.find({ intern_id: { $in: interns } });
-    const results = await sendBulkCompletionMails(internDocs);
+    // Fetch selected interns from DB
+    const matchedInterns = await User.find({ intern_id: { $in: internIds } });
 
-    const success = results.filter(r => r.status === "fulfilled").length;
-    const failed = results.filter(r => r.status === "rejected").length;
-
-    if (failed === 0) {
-      req.flash("success", `✅ ${success} completion mails sent successfully.`);
-    } else {
-      req.flash("error", `⚠️ ${success} sent, ${failed} failed. Check logs.`);
+    if (!matchedInterns.length) {
+      return res.status(404).json({ success: false, message: "No matching interns found in the database." });
     }
 
-    res.redirect("/superAdmin");
+    // Send emails
+    const results = await sendBulkCompletionMails(matchedInterns);
+
+    // Update DB for all successful sends
+    const successfulInternIds = results
+      .filter(r => r.status === "fulfilled")
+      .map(r => r.intern_id);
+
+    if (successfulInternIds.length > 0) {
+      const updateResult = await User.updateMany(
+        { intern_id: { $in: successfulInternIds } },
+        { $set: { completionSent: true } }
+      );
+      console.log("🔍 [DEBUG] DB update result:", updateResult);
+    }
+
+    // Flash messages
+    const successCount = results.filter(r => r.status === "fulfilled").length;
+    const failedCount = results.filter(r => r.status === "rejected").length;
+    console.log("🔍 [DEBUG] Email send results:", { successCount, failedCount, results });
+    
+    res.json({ success: true, sent: successCount, failed: failedCount });
   } catch (err) {
-    // console.error("Error in completion route:", err);
-    req.flash("error", "Server error while sending completion mails.");
-    res.redirect("/superAdmin");
+    console.error("🔍 [DEBUG] Error in completion route:", err);
+    res.status(500).json({ success: false, message: "Server error while sending completion mails." });
   }
 });
 

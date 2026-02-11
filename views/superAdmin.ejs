@@ -115,6 +115,26 @@
      </span>
    <% } %>
  </button>
+ <!-- 📄 Completion Mail Bell -->
+<button
+  class="btn btn-light position-relative"
+  id="completionMailButton"
+  style="border: 1px solid #000;"
+  title="Completion Mail"
+>
+  <i class="bi bi-envelope-check fs-4"></i>
+
+  <% const pendingCompletionCount = interns.filter(i => i.isPassed && !i.completionSent).length; %>
+  <% if (pendingCompletionCount > 0) { %>
+    <!-- 🟠 Dot -->
+    <span
+      id="completionMailDot"
+      class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle">
+      <span class="visually-hidden">Pending completion mails</span>
+    </span>
+  <% } %>
+</button>
+
  <!-- 🔔 Right Side: Notification Bell -->
  <div class="dropdown position-relative">
   <button
@@ -881,7 +901,7 @@
       <!-- Intern Table -->
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
         <table class="table table-striped table-bordered align-middle text-center mb-0">
-          <thead class="table-light" style="position: sticky; top: 0; z-index: 2;">
+          <thead class="table-light" style="position: sticky; top: 0; z-index: 2; background-color: #f8f9fa;">
              <tr class="text-center">
                <th style="width: 60px;">S.No</th>
                <th style="width: 5rem;">Profile</th>
@@ -1550,7 +1570,7 @@
                 </td>
                 <td>
                   <button class="btn btn-outline-primary btn-sm px-3 py-0 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewRegModal<%= reg._id %>">
-                    <i class="bi bi-eye"></i>
+                    <i class="bi bi-eye" style="font-size: large;"></i>
                   </button>
                   <button class="btn btn-outline-success btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'approve', this)"><i class="bi bi-check-lg" style="font-size: large;"></i></button>
                   <button class="btn btn-outline-danger btn-sm px-3 py-0 rounded-pill" onclick="approveReject('<%= reg._id %>', 'reject', this)"><i class="bi bi-x-lg" style="font-size: large;"></i></button>
@@ -1848,20 +1868,12 @@ function updateIntern(id) {
 
 
 <!-- ================= COMPLETION MAIL ================= -->
-<section id="completionMail" style="display:none; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);  border: 1px solid #ff6600 !important;">
+<section id="completionMail" style="display:none; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #ff6600 !important;">
   <h4 class="text-center mb-4">Send Internship Completion Mail</h4>
 
   <form action="/send-completion-mail" method="POST" id="completionForm">
     <!-- Filters + Button Row -->
-    <div class=" mb-3 bg-white rounded d-flex flex-wrap align-items-center gap-2">
-      <div class="flex-grow-0">
-        <select id="filterCompletion" class="form-select" onchange="applyFilters('completion')">
-          <option value="all">Show All</option>
-          <option value="sent">Sent</option>
-          <option value="notSent">Pending</option>
-        </select>
-      </div>
-
+    <div class="mb-3 bg-white rounded d-flex flex-wrap align-items-center gap-2">
       <div class="flex-grow-0">
         <select id="batchCompletion" class="form-select" onchange="applyFilters('completion')">
           <option value="all" selected>All Batches</option>
@@ -1884,40 +1896,57 @@ function updateIntern(id) {
       </div>
     </div>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Batch</th>
-          <th>Status</th>
-          <th class="text-center">
-            <input type="checkbox" id="selectAllCompletion" onclick="toggleSelectAll('completion')" class="form-check-input">
-          </th>
-        </tr>
-      </thead>
-      <tbody id="completionTable">
-        <% interns.forEach(i => { %>
-          <tr data-status="<%= i.completionSent ? 'sent' : 'notSent' %>" 
-              data-batch="<%= i.batch_no %>" 
-              data-name="<%= i.name.toLowerCase() %>" 
-              data-email="<%= i.email.toLowerCase() %>"
-              class="<%= i.completionSent ? 'row-sent' : 'row-notSent' %>">
-            <td><%= i.name %></td>
-            <td><%= i.email %></td>
-            <td><%= i.batch_no %></td>
-            <td><%= i.completionSent ? 'Sent' : 'Not Sent' %></td>
-            <td class="text-center">
-              <% if (i.completionSent) { %>
-                <input type="checkbox" disabled>
-              <% } else { %>
+    <div style="max-height: 500px; overflow-y: auto;">
+      <table class="table table-striped table-bordered">
+        <thead style="position: sticky; top: 0; background: #f8f9fa; z-index: 1;">
+          <tr>
+            <th style="width: 60px;">S.No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Week</th>
+            <th>Batch</th>
+            <th class="text-center">
+              <input type="checkbox" id="selectAllCompletion" onclick="toggleSelectAll('completion')" class="form-check-input">
+            </th>
+          </tr>
+        </thead>
+        <tbody id="completionTable">
+          <% 
+          let serialNo = 1;
+          interns.filter(i => i.isPassed && !i.completionSent).forEach(i => { 
+          %>
+            <tr data-status="<%= i.completionSent ? 'sent' : 'notSent' %>"
+                data-batch="<%= i.batch_no %>" 
+                data-name="<%= i.name.toLowerCase() %>" 
+                data-email="<%= i.email.toLowerCase() %>"
+                style="display: none;">
+              <td class="serial-no"><%= serialNo++ %></td>
+              <td><%= i.name %></td>
+              <td><%= i.email %></td>
+              <td><%= i.duration %> Weeks</td>
+              <td><%= i.batch_no %></td>
+              <td class="text-center">
                 <input type="checkbox" name="interns[]" value="<%= i.intern_id %>" class="completionCheckbox form-check-input">
-              <% } %>
+              </td>
+            </tr>
+          <% }) %>
+          <!-- Initial state message -->
+          <tr id="addFiltersMessage" style="display: none;">
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-funnel fs-3 d-block mb-2"></i>
+              Add filters to see data
             </td>
           </tr>
-        <% }) %>
-      </tbody>
-    </table>
+          <!-- No data available message -->
+          <tr id="noDataMessage" style="display: none;">
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
+              No data available
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </form>
 </section>
 
