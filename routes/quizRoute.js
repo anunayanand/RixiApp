@@ -79,7 +79,7 @@ router.post("/assign", async (req, res) => {
       duration: quiz.week,  // Exact match: only interns with matching duration
       role: "intern",
     });
-
+    // console.log(`Found ${interns.length} interns for batch ${batch}, domain ${quiz.domain}, week ${quiz.week}`);
     if (!interns.length) {
       req.flash("warning", "No eligible interns found for this quiz.");
       return res.redirect("/admin");
@@ -96,6 +96,14 @@ router.post("/assign", async (req, res) => {
 
     // 🔹 Assign quiz and push notification for each intern
     for (let intern of interns) {
+      // 🛡️ Defensive: Initialize arrays if they don't exist (for old database records)
+      if (!intern.quizAssignments) {
+        intern.quizAssignments = [];
+      }
+      if (!intern.notifications) {
+        intern.notifications = [];
+      }
+
       const alreadyAssigned = intern.quizAssignments.some(
         (q) => q.quizId.toString() === quiz._id.toString()
       );
@@ -134,6 +142,7 @@ router.post("/assign", async (req, res) => {
     req.flash("success", "Quiz assigned successfully. Notifications sent.");
     res.redirect("/admin");
   } catch (error) {
+    // console.error("Error assigning quiz:", error);
     req.flash("error", "Failed to assign quiz");
     res.redirect("/admin");
   }

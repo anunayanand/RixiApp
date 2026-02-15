@@ -204,3 +204,10 @@ th {
   width: 0px;
   display: none;
 }
+
+/* Active state for header buttons */
+.main-content .btn-light.active {
+  background-color: #ff6600 !important;
+  border-color: black !important;
+  color:black !important;
+}

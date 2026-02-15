@@ -72,6 +72,16 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
+  notifications: [
+    {
+      title: { type: String, required: true },
+      message: { type: String, required: true },
+      type: { type: String },
+      createdAt: { type: Date, default: Date.now },
+      isRead: { type: Boolean, default: false },
+    },
+  ],
+
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

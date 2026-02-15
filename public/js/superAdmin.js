@@ -34,6 +34,65 @@ function showSection(id) {
     document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
     sidebarLink.classList.add('active');
   }
+  
+  // Clear active button state when showing dashboard
+  if (id === 'dashboard') {
+    clearActiveButton();
+  }
+  
+  // Set active button state for registration section
+  if (id === 'registration') {
+    setActiveButton('registrationButton');
+  }
+}
+
+// Registration Button to open registration section
+const registrationButton = document.getElementById('registrationButton');
+if (registrationButton) {
+  registrationButton.addEventListener('click', e => {
+    e.preventDefault();
+    showSection('registration');
+    setActiveButton('registrationButton');
+  });
+}
+
+// Notification Button
+const notificationButton = document.getElementById('notificationButton');
+if (notificationButton) {
+  notificationButton.addEventListener('click', e => {
+    // Notification doesn't navigate to a section, just clear active state from other buttons
+    // or you can add specific behavior if needed
+    clearActiveButton();
+  });
+}
+
+// Function to set active button state
+function setActiveButton(activeButtonId) {
+  // Remove active class from all header buttons
+  document.querySelectorAll('.main-content .btn-light').forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.backgroundColor = '';
+    btn.style.borderColor = '#000';
+  });
+  
+  // Add active class to the clicked button
+  const activeButton = document.getElementById(activeButtonId);
+  if (activeButton) {
+    activeButton.classList.add('active');
+    activeButton.style.backgroundColor = '#ff6600';
+    activeButton.style.borderColor = '#000000';
+    activeButton.style.color = '#000000';
+  }
+}
+
+// Function to clear active button state
+function clearActiveButton() {
+  document.querySelectorAll('.main-content .btn-light').forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.backgroundColor = '';
+    btn.style.borderColor = '#000';
+    btn.style.color = '';
+  });
 }
 
 // Offer Letter Button to open offerLetterMail section
@@ -52,6 +111,9 @@ if (offerLetterButton) {
       // Apply default filter
       applyFilters('offerLetter');
     }
+    
+    // Set active button state
+    setActiveButton('offerLetterButton');
   });
 }
 
@@ -79,6 +141,9 @@ if (completionMailButton) {
       document.getElementById('batchCompletion').value = 'all';
       document.getElementById('searchCompletion').value = '';
     }
+    
+    // Set active button state
+    setActiveButton('completionMailButton');
   });
 }
     function filterByBatch() {
@@ -352,17 +417,23 @@ async function sendCompletionMails() {
     if (data.success) {
       showToast(`${data.sent} mails sent. ${data.failed} failed.`, data.failed > 0 ? "warning" : "success");
 
-      // Update the table rows
+      // Remove rows instantly with fade-out effect
       checkboxes.forEach(cb => {
-        cb.disabled = true;
-        cb.checked = false;
         const row = cb.closest('tr');
-        row.dataset.status = 'sent';
-        row.style.backgroundColor = '#d4edda';
+        row.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(20px)';
+        
+        // Remove from DOM after animation
+        setTimeout(() => {
+          row.remove();
+          // Update serial numbers for remaining rows
+          updateSerialNumbers('completionTable');
+        }, 300);
       });
 
       updateMasterCheckbox('completion');
-      applyFilters('completion'); // Reapply filters to hide sent rows if filter is notSent
+      applyFilters('completion'); // Reapply filters if needed
 
       // Hide dot if no more pending checkboxes
       const remainingCheckboxes = document.querySelectorAll('.completionCheckbox:not([disabled])');
@@ -383,6 +454,21 @@ async function sendCompletionMails() {
       setTimeout(() => (loaderWrapper.style.display = "none"), 600);
     }
   }
+}
+
+// Function to update serial numbers in a table
+function updateSerialNumbers(tableId) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  
+  const rows = table.querySelectorAll('tr[data-batch]');
+  let serialNo = 1;
+  rows.forEach(row => {
+    const serialCell = row.querySelector('.serial-no');
+    if (serialCell) {
+      serialCell.textContent = serialNo++;
+    }
+  });
 }
 
 // Add event listener for completionForm

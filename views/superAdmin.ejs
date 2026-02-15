@@ -81,6 +81,7 @@
   <div class="d-flex gap-2">
  <button
      class="btn btn-light position-relative"
+     id="registrationButton"
      onclick="showSection('registration')"
      title="View Registrations"
      style="border: 1px solid #000;"
@@ -127,11 +128,11 @@
   <% const pendingCompletionCount = interns.filter(i => i.isPassed && !i.completionSent).length; %>
   <% if (pendingCompletionCount > 0) { %>
     <!-- 🟠 Dot -->
-    <span
+    <!-- <span
       id="completionMailDot"
       class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle">
       <span class="visually-hidden">Pending completion mails</span>
-    </span>
+    </span> -->
   <% } %>
 </button>
 
