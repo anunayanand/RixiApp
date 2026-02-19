@@ -1380,7 +1380,7 @@
                 <td class="quiz-score"><%= i.quiz_score %></td>
 
                 <td class="status-badge">
-                  <% if (i.quizAssignments && i.quizAssignments.some(q => q.attemptCount >= 1)) { %>
+                  <% if (i.quizAssignments && i.quizAssignments.some(q => q && q.attemptCount >= 1)) { %>
                     <% if (i.isPassed) { %>
                       <span class="badge bg-success">Pass</span>
                     <% } else { %>
