@@ -1,39 +1,137 @@
-<div class="toast-container position-fixed top-0 end-0 p-3">
-  <% if (success && success.length > 0) { %>
-    <% success.forEach(msg => { %>
-      <div class="toast text-bg-success show" role="alert">
-        <div class="d-flex">
-          <div class="toast-body"><%= msg %></div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" 
-            data-bs-dismiss="toast"></button>
-        </div>
-      </div>
-    <% }) %>
-  <% } %>
-
-  <% if (error && error.length > 0) { %>
-    <% error.forEach(msg => { %>
-      <div class="toast text-bg-danger show" role="alert">
-        <div class="d-flex">
-          <div class="toast-body"><%= msg %></div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" 
-            data-bs-dismiss="toast"></button>
-        </div>
-      </div>
-    <% }) %>
-  <% } %>
-
-  <% if (info && info.length > 0) { %>
-    <% info.forEach(msg => { %>
-      <div class="toast align-items-center text-bg-success border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
-        <div class="d-flex">
-          <div class="toast-body"><%= msg %></div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-      </div>
-    <% }) %>
-  <% } %>
+<!-- Toast Container -->
+<div id="rixiToastContainer"
+     class="position-fixed top-0 end-0 p-3"
+     style="z-index: 99998; pointer-events: none;">
 </div>
 
+<%
+  const flashSuccess = typeof success !== 'undefined' ? success : [];
+  const flashError   = typeof error   !== 'undefined' ? error   : [];
+  const flashInfo    = typeof info    !== 'undefined' ? info    : [];
+%>
 
-<script src="/js/toaster.js"></script>
+<script>
+  const flashMessages = {
+    success: <%- JSON.stringify(flashSuccess) %>,
+    error: <%- JSON.stringify(flashError) %>,
+    info: <%- JSON.stringify(flashInfo) %>
+  };
+</script>
+
+<style>
+  .minimal-toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    color: #111827;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 10px;
+    min-width: 250px;
+    max-width: 350px;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease;
+  }
+
+  .minimal-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .minimal-toast.hide {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  .toast-icon {
+    font-size: 1.25rem;
+  }
+
+  .text-success-custom { color: #10b981; }
+  .text-error-custom   { color: #ef4444; }
+  .text-info-custom    { color: #3b82f6; }
+  .text-warning-custom { color: #f59e0b; }
+
+  .toast-message {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    flex-grow: 1;
+    word-break: break-word;
+  }
+
+  .toast-close-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .toast-close-btn:hover {
+    color: #4b5563;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    Object.keys(flashMessages).forEach(type => {
+      flashMessages[type].forEach(message => {
+        showToast(message, type);
+      });
+    });
+
+  });
+
+  function showToast(message, type = 'info', duration = 3000) {
+    const container = document.getElementById('rixiToastContainer');
+    if (!container) return;
+
+    const icons = {
+      success: '<i class="bi bi-check-circle-fill text-success-custom"></i>',
+      error: '<i class="bi bi-x-circle-fill text-error-custom"></i>',
+      info: '<i class="bi bi-info-circle-fill text-info-custom"></i>',
+      warning: '<i class="bi bi-exclamation-triangle-fill text-warning-custom"></i>'
+    };
+
+    const toast = document.createElement('div');
+    toast.className = 'minimal-toast';
+
+    toast.innerHTML = `
+      <div class="toast-icon">${icons[type] || icons.info}</div>
+      <div class="toast-message"></div>
+      <button class="toast-close-btn">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    `;
+
+    toast.querySelector('.toast-message').textContent = message;
+
+    toast.querySelector('.toast-close-btn')
+         .addEventListener('click', () => dismissToast(toast));
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    toast._timer = setTimeout(() => dismissToast(toast), duration);
+  }
+
+  function dismissToast(toast) {
+    clearTimeout(toast._timer);
+    toast.classList.remove('show');
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 300);
+  }
+</script>

@@ -96,6 +96,7 @@ router.post(
           offer_letter,
           certificate_link,
           duration,
+          starting_date,
           password,
         } = req.body;
 
@@ -115,6 +116,7 @@ router.post(
           offer_letter,
           certificate_link,
           duration,
+          starting_date,
         };
 
         // only handle password if a new one is typed

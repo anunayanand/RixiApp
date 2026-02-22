@@ -1,192 +1,38 @@
-* {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-body {
-  overflow-x: hidden;
-  background-color: #fffaf5;
-}
-.sidebar {
-  width: 250px;
-}
-.sidebar {
-  min-height: 100vh;
-  background: #343a40;
-  color: white;
-  padding-top: 20px;
-}
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-  border-radius: 6px;
-  margin-bottom: 5px;
-}
-.sidebar a:hover {
-  background: #495057;
-  border-radius: 30px;
-}
-.sidebar i {
-  margin-right: 10px;
-}
-.main-content {
-  margin-left: 250px;
-  padding: 30px;
-}
-/* .card:hover { transform: scale(1.03); transition: 0.3s; } */
-.badge-pending {
-  background-color: #ffc107;
-  color: black;
-}
-.badge-approved {
-  background-color: #28a745;
-}
-.badge-rejected {
-  background-color: #dc3545;
-}
-.table td,
-.table th {
-  vertical-align: middle;
-}
-.section-title {
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-.modal-header {
-  background-color: #343a40;
-  color: white;
-}
-.sidebar a.active {
-  background-color: #ff6600; /* Bootstrap primary */
-  color: #fff;
-  font-weight: bold;
-  border-radius: 30px;
-}
 /* Sent mail rows */
 table tr.row-sent {
-  background-color: #d1fae5 !important; /* light green */
+  background-color: #d1fae5 !important;
+  /* light green */
 }
 
 /* Not sent mail rows */
 table tr.row-notSent {
-  background-color: #fee2e2 !important; /* light red */
+  background-color: #fee2e2 !important;
+  /* light red */
 }
 
 /* Selected row (always overrides others) */
 table tr.row-selected {
-  background-color: #facc15 !important; /* yellow */
+  background-color: #facc15 !important;
+  /* yellow */
 }
+
 .admin-tabel td,
 th {
   background: none !important;
 }
 
-#dashboard .card {
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border-left: 6px solid #ff6600;
-}
-
-#dashboard .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
-/* Stats Cards */
-#dashboard .stat-card h6 {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-#dashboard .stat-card p {
-  font-size: 2rem;
-}
-
-/* Profile Card */
-#dashboard .profile-card .profile-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-#dashboard .profile-card h4 {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-#dashboard .profile-card .badge {
-  font-size: 0.85rem;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-
-
-
-
-#viewAdmin::-webkit-scrollbar {
-  width: 0px;
-  visibility: hidden;
-}
-
-#viewAdmin .card {
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border-left: 6px solid #ff6600;
-}
-
-#viewAdmin .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
-/* Stats Cards */
-#viewAdmin .stat-card h6 {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-#viewAdmin .stat-card p {
-  font-size: 2rem;
-}
-
-/* Profile Card */
-#viewAdmin .profile-card .profile-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-#viewAdmin .profile-card h4 {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-#viewAdmin .profile-card .badge {
-  font-size: 0.85rem;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-
 /* Fixed height for profile */
 .fixed-profile {
-  height: 20rem !important; /* or any fixed height you want */
+  height: 20rem !important;
+  /* or any fixed height you want */
 }
 
 /* Scrollable right card */
 .scrollable-notice {
-  max-height: 460px; /* same as left card for symmetry */
-  overflow-y: auto;  /* vertical scroll if content exceeds height */
+  max-height: 460px;
+  /* same as left card for symmetry */
+  overflow-y: auto;
+  /* vertical scroll if content exceeds height */
 }
 
 /* Optional: nice scrollbar for right card */
@@ -196,7 +42,7 @@ th {
 }
 
 .scrollable-notice::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
 
@@ -209,5 +55,212 @@ th {
 .main-content .btn-light.active {
   background-color: #ff6600 !important;
   border-color: black !important;
-  color:black !important;
+  color: black !important;
+}
+
+/* ========================================= */
+/* Modern Admin Cards Styling */
+.admin-card-modern {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 102, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card-modern:hover {
+  box-shadow: 0 15px 35px rgba(255, 102, 0, 0.15);
+  border-color: rgba(255, 102, 0, 0.3);
+}
+
+.admin-card-header {
+  padding: 24px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.admin-card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(255, 102, 0, 0.1) 0%, rgba(255, 102, 0, 0) 100%);
+  z-index: -1;
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+}
+
+.admin-avatar-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #ff6600, #ff9d00);
+  flex-shrink: 0;
+}
+
+.admin-avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+}
+
+.admin-status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #fff;
+}
+
+.admin-info-primary {
+  overflow: hidden;
+}
+
+.admin-info-primary h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-designation-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 102, 0, 0.1);
+  color: #ff6600;
+  letter-spacing: 0.5px;
+}
+
+.admin-card-body {
+  padding: 0 20px 20px;
+  flex: 1;
+}
+
+.admin-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.admin-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+  border: 1px solid transparent;
+}
+
+.admin-detail-item:hover {
+  background: rgba(255, 102, 0, 0.03);
+  border-color: rgba(255, 102, 0, 0.1);
+}
+
+.admin-detail-icon {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+.admin-detail-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-detail-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.admin-detail-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-card-footer {
+  padding: 16px 20px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.admin-action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-action-view:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.admin-action-edit:hover {
+  border-color: #10b981;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.admin-action-delete:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Ensure icons inherit color properly within buttons */
+.admin-action-btn i {
+  color: inherit;
 }

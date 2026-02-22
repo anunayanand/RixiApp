@@ -17,6 +17,14 @@ sidebarLinks.forEach(link => {
     // Show only the clicked section
     const targetSection = document.getElementById(targetId);
     if (targetSection) targetSection.style.display = 'block';
+
+    // Auto-close sidebar on mobile devices
+    if (window.innerWidth <= 991) {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar) sidebar.classList.remove('open');
+      if (overlay) overlay.classList.remove('active');
+    }
   });
 });
 
@@ -28,11 +36,10 @@ function showSection(id) {
   const targetSection = document.getElementById(id);
   if (targetSection) targetSection.style.display = 'block';
 
-  // Also trigger the sidebar link click to add active class
+  // Set active sidebar link if it exists
   const sidebarLink = document.querySelector(`.sidebar a[href="#${id}"]`);
   if (sidebarLink) {
-    document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
-    sidebarLink.classList.add('active');
+    setActive(sidebarLink);
   }
   
   // Clear active button state when showing dashboard
@@ -44,6 +51,21 @@ function showSection(id) {
   if (id === 'registration') {
     setActiveButton('registrationButton');
   }
+
+  // Auto-close sidebar on mobile devices
+  if (window.innerWidth <= 991) {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('active');
+  }
+}
+
+// Global function to set active sidebar link
+function setActive(element) {
+  if (!element) return;
+  document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+  element.classList.add('active');
 }
 
 // Registration Button to open registration section
@@ -97,55 +119,41 @@ function clearActiveButton() {
 
 // Offer Letter Button to open offerLetterMail section
 const offerLetterButton = document.getElementById('offerLetterButton');
-if (offerLetterButton) {
-  offerLetterButton.addEventListener('click', e => {
-    e.preventDefault();
+const offerLetterSidebarBtn = document.getElementById('offerLetterSidebarBtn');
 
-    // Hide all sections, including dashboard
-    sections.forEach(sec => sec.style.display = 'none');
-
-    // Show only the offerLetterMail section
-    const targetSection = document.getElementById('offerLetterMail');
-    if (targetSection) {
-      targetSection.style.display = 'block';
-      // Apply default filter
-      applyFilters('offerLetter');
-    }
-    
-    // Set active button state
-    setActiveButton('offerLetterButton');
-  });
+function handleOfferLetterClick(e) {
+  if(e) e.preventDefault();
+  showSection('offerLetterMail');
 }
+
+if (offerLetterButton) offerLetterButton.addEventListener('click', handleOfferLetterClick);
+if (offerLetterSidebarBtn) offerLetterSidebarBtn.addEventListener('click', handleOfferLetterClick);
 
 // Completion Mail Button to open completionMail section
 const completionMailButton = document.getElementById('completionMailButton');
-if (completionMailButton) {
-  completionMailButton.addEventListener('click', e => {
-    e.preventDefault();
+const completionMailSidebarBtn = document.getElementById('completionMailSidebarBtn');
 
-    // Hide all sections, including dashboard
-    sections.forEach(sec => sec.style.display = 'none');
+function handleCompletionMailClick(e) {
+  if(e) e.preventDefault();
+  showSection('completionMail');
+  
+  // Specific resetting for completion section
+  const rows = document.getElementById('completionTable')?.querySelectorAll("tr[data-batch]");
+  if (rows) rows.forEach(row => row.style.display = 'none');
+  
+  const addFiltersMessage = document.getElementById('addFiltersMessage');
+  const noDataMessage = document.getElementById('noDataMessage');
+  if (addFiltersMessage) addFiltersMessage.style.display = 'table-row';
+  if (noDataMessage) noDataMessage.style.display = 'none';
 
-    // Show only the completionMail section
-    const targetSection = document.getElementById('completionMail');
-    if (targetSection) {
-      targetSection.style.display = 'block';
-      // Hide all rows and show the "add filter to see data" message
-      const rows = document.getElementById('completionTable').querySelectorAll("tr[data-batch]");
-      rows.forEach(row => row.style.display = 'none');
-      const addFiltersMessage = document.getElementById('addFiltersMessage');
-      const noDataMessage = document.getElementById('noDataMessage');
-      if (addFiltersMessage) addFiltersMessage.style.display = 'table-row';
-      if (noDataMessage) noDataMessage.style.display = 'none';
-      // Reset filters
-      document.getElementById('batchCompletion').value = 'all';
-      document.getElementById('searchCompletion').value = '';
-    }
-    
-    // Set active button state
-    setActiveButton('completionMailButton');
-  });
+  const batchFilter = document.getElementById('batchCompletion');
+  const searchInput = document.getElementById('searchCompletion');
+  if (batchFilter) batchFilter.value = 'all';
+  if (searchInput) searchInput.value = '';
 }
+
+if (completionMailButton) completionMailButton.addEventListener('click', handleCompletionMailClick);
+if (completionMailSidebarBtn) completionMailSidebarBtn.addEventListener('click', handleCompletionMailClick);
     function filterByBatch() {
     const selectedBatch = document.getElementById("batchFilter").value;
     const cards = document.querySelectorAll(".intern-card");
@@ -176,17 +184,22 @@ function applyInternFilters() {
   const batchFilter = document.getElementById("batchFilter").value.toLowerCase();
   const domainFilter = document.getElementById("domainFilter").value.toLowerCase();
   const durationFilter = document.getElementById("durationFilter").value;
-  const searchValue = document.getElementById("internSearchInput").value.toLowerCase().trim();
+  
+  // Try both IDs because it might be internSearchInput or internSearch
+  const searchInput = document.getElementById("internSearch") || document.getElementById("internSearchInput");
+  const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-  const rows = document.querySelectorAll("#viewInterns table tbody .intern-row");
-  let visibleIndex = 0;
+  const items = document.querySelectorAll("#viewInterns .intern-row");
+  let visibleCountDesktop = 0;
+  let visibleCountMobile = 0;
 
-  rows.forEach(row => {
-    const rowBatch = row.dataset.batch.toLowerCase();
-    const rowDomain = row.dataset.domain.toLowerCase();
-    const rowDuration = row.dataset.duration;
-    const name = row.cells[2].textContent.toLowerCase();
-    const internId = row.cells[5].textContent.toLowerCase();
+  items.forEach(item => {
+    const rowBatch = item.dataset.batch ? item.dataset.batch.toLowerCase() : "";
+    const rowDomain = item.dataset.domain ? item.dataset.domain.toLowerCase() : "";
+    const rowDuration = item.dataset.duration || "";
+    // Use data attributes for name/id if present, else fallback
+    const name = item.dataset.name ? item.dataset.name.toLowerCase() : "";
+    const internId = item.dataset.id ? item.dataset.id.toLowerCase() : "";
 
     const matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
     const matchesDomain = (domainFilter === "all" || rowDomain === domainFilter);
@@ -194,26 +207,33 @@ function applyInternFilters() {
     const matchesSearch = (name.includes(searchValue) || internId.includes(searchValue));
 
     const isVisible = matchesBatch && matchesDomain && matchesDuration && matchesSearch;
-    row.style.display = isVisible ? "" : "none";
+    item.style.display = isVisible ? "" : "none";
 
     if (isVisible) {
-      visibleIndex++;
-      row.querySelector('.serial-no').textContent = visibleIndex;
+      if (item.tagName === 'TR') {
+        visibleCountDesktop++;
+        const serialNoEl = item.querySelector('.serial-no');
+        if (serialNoEl) serialNoEl.textContent = visibleCountDesktop;
+      } else {
+        visibleCountMobile++;
+      }
     }
   });
+
+  const noResultDesktop = document.getElementById('noInternResult');
+  const noResultMobile = document.getElementById('noInternResultMobile');
+  if (noResultDesktop) noResultDesktop.style.display = visibleCountDesktop === 0 ? "flex" : "none";
+  if (noResultMobile) noResultMobile.style.display = visibleCountMobile === 0 ? "flex" : "none";
 }
 
 function clearInternFilters() {
   document.getElementById("batchFilter").value = "all";
   document.getElementById("domainFilter").value = "all";
   document.getElementById("durationFilter").value = "all";
-  document.getElementById("internSearchInput").value = "";
+  const searchInput = document.getElementById("internSearch") || document.getElementById("internSearchInput");
+  if (searchInput) searchInput.value = "";
   applyInternFilters();
 }
-
-
-
-
   // Function to send mails
 
   // ✅ Toggle Select All
@@ -223,10 +243,22 @@ function clearInternFilters() {
 
 // Toggle Sidebar for Mobile
 const sidebarToggle = document.getElementById("sidebarToggle");
-const sidebar = document.querySelector(".sidebar");
-sidebarToggle.addEventListener("click", () => {
-  sidebar.classList.toggle("d-none");
-});
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("sidebarOverlay");
+
+if (sidebarToggle && sidebar) {
+  sidebarToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    if (overlay) overlay.classList.toggle("active");
+  });
+}
+
+if (overlay) {
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("active");
+  });
+}
 
 // ==========================
 // Select All Checkbox
@@ -700,8 +732,10 @@ function capitalize(str) {
   flatpickr("#meeting_datetime", {
     enableTime: true,        // enable time selection
     dateFormat: "Y-m-d H:i", // format for backend (YYYY-MM-DD HH:MM)
+    altInput: true,          // show an alternative user-friendly input
+    altFormat: "F j, Y at h:i K", // e.g. "October 14, 2026 at 2:30 PM"
     minDate: "today",        // optional: don't allow past dates
-    time_24hr: true          // 24-hour format
+    time_24hr: false          // 12-hour format with AM/PM for user-friendly display
   });
 
   // Meeting Batch Filter

@@ -267,4 +267,30 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+// Update Admin Profile Settings
+router.post("/update-admin-profile", authRole("admin"), async (req, res) => {
+  try {
+    const adminId = req.session.user;
+    const { name, phone } = req.body;
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      req.flash("error", "Admin not found.");
+      return res.redirect("/login");
+    }
+
+    if (name) admin.name = name.trim();
+    if (phone) admin.phone = phone.trim();
+
+    await admin.save();
+    
+    req.flash("success", "Profile settings updated successfully!");
+    res.redirect("/admin#settings");
+  } catch (err) {
+    console.error("Error updating admin profile:", err);
+    req.flash("error", "Server Error while updating profile.");
+    res.redirect("/admin#settings");
+  }
+});
+
 module.exports = router;

@@ -1,4 +1,21 @@
 
+// Loader helper functions
+function showLoader() {
+  const loader = document.getElementById('rixiLoaderOverlay');
+  if (loader) {
+    loader.style.display = 'flex';
+    loader.classList.remove('hidden');
+  }
+}
+
+function hideLoader() {
+  const loader = document.getElementById('rixiLoaderOverlay');
+  if (loader) {
+    loader.classList.add('hidden');
+    setTimeout(() => { loader.style.display = 'none'; }, 300);
+  }
+}
+
 const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
 const sections = document.querySelectorAll('.main-content section');
 
@@ -203,6 +220,7 @@ function applyAttendanceFilters() {
   const week = document.getElementById('attendanceWeekFilter').value.toLowerCase();
   const search = document.getElementById('attendanceSearch').value.toLowerCase().trim();
 
+  // Filter Table Rows
   document.querySelectorAll('#attendanceTable tbody .attendance-row').forEach(row => {
     const rowBatch = row.dataset.batch.toLowerCase();
     const rowWeek = row.dataset.week.toLowerCase();
@@ -214,7 +232,65 @@ function applyAttendanceFilters() {
       (week==='all' || week===rowWeek) &&
       (search==='' || rowIntern.includes(search) || rowName.includes(search));
 
-    row.style.display = matches ? 'table-row' : 'none';
+    if (matches) {
+       row.classList.remove('d-none-filter');
+    } else {
+       row.classList.add('d-none-filter');
+    }
+  });
+
+  // Filter Mobile Cards
+  document.querySelectorAll('#attendanceCardGrid .attendance-card').forEach(card => {
+    const cardBatch = card.dataset.batch.toLowerCase();
+    const cardWeek = card.dataset.week.toLowerCase();
+    const cardIntern = card.dataset.intern.toLowerCase();
+
+    const matches = 
+      (batch==='all' || batch===cardBatch) &&
+      (week==='all' || week===cardWeek) &&
+      (search==='' || cardIntern.includes(search));
+
+    if (matches) {
+       card.classList.remove('d-none-filter');
+    } else {
+       card.classList.add('d-none-filter');
+    }
+  });
+}
+
+function filterQuizzes() {
+  const search = (document.getElementById('searchQuiz')?.value || '').toLowerCase().trim();
+  const week = document.getElementById('filterWeek')?.value || '';
+
+  // Filter Table Rows
+  document.querySelectorAll('#quizTableBody tr').forEach(row => {
+    if(!row.children || row.children.length < 2) return; // Skip modals
+    const rowTitle = row.children[0].textContent.toLowerCase();
+    const rowWeekText = row.children[1].textContent.toLowerCase(); // "Week 4"
+
+    const matchesSearch = !search || rowTitle.includes(search);
+    const matchesWeek = !week || rowWeekText.includes(`week ${week}`);
+
+    if (matchesSearch && matchesWeek) {
+       row.classList.remove('d-none-filter');
+    } else {
+       row.classList.add('d-none-filter');
+    }
+  });
+
+  // Filter Mobile Cards
+  document.querySelectorAll('#quizCardGrid .quiz-card').forEach(card => {
+    const cardTitle = card.dataset.title.toLowerCase();
+    const cardWeek = card.dataset.week.toString();
+
+    const matchesSearch = !search || cardTitle.includes(search);
+    const matchesWeek = !week || cardWeek === week;
+
+    if (matchesSearch && matchesWeek) {
+       card.classList.remove('d-none-filter');
+    } else {
+       card.classList.add('d-none-filter');
+    }
   });
 }
 
@@ -284,12 +360,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = e.target.closest("li");
       const notificationId = li.getAttribute("data-id");
 
-      const res = await fetch(`/notification/read/${notificationId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      showLoader();
+      const res = await axios.post(`/notification/read/${notificationId}`, {}, {
+        headers: { "Content-Type": "application/json" }
       });
-
-      const data = await res.json();
+      hideLoader();
+      const data = res.data;
       if (data.success) {
         li.remove();
         if (list.querySelectorAll("li[data-id]").length === 0) {
@@ -303,12 +379,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ Mark all as read
   if (markAllBtn) {
     markAllBtn.addEventListener("click", async () => {
-      const res = await fetch("/notification/clear", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      showLoader();
+      const res = await axios.post("/notification/clear", {}, {
+        headers: { "Content-Type": "application/json" }
       });
-
-      const data = await res.json();
+      hideLoader();
+      const data = res.data;
       if (data.success) {
         list.innerHTML = '<li class="p-3 text-center text-muted">No new notifications 🎉</li>';
         if (dot) dot.style.display = "none";
@@ -338,13 +414,16 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       try {
-        const res = await fetch("/admin/projects/update-status", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, projectId, status })
-        });
-
-        const data = await res.json();
+      showLoader();
+      const res = await axios.post("/admin/projects/update-status", {
+        userId,
+        projectId,
+        status
+      }, {
+        headers: { "Content-Type": "application/json" }
+      });
+      hideLoader();
+      const data = res.data;
 
         // Restore button
         btn.disabled = false;
@@ -470,12 +549,15 @@ async function acceptRegistration(id, btn) {
   btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
 
   try {
-    const response = await fetch(`/admin/accept-registration/${id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ intern_id: internId, batch_no: batchNo })
+    showLoader();
+    const response = await axios.post(`/admin/accept-registration/${id}`, {
+      intern_id: internId,
+      batch_no: batchNo
+    }, {
+      headers: { 'Content-Type': 'application/json' }
     });
-    const data = await response.json();
+    hideLoader();
+    const data = response.data;
     // console.log('Response data:', data);
     if (data.success) {
       showAcceptToast(data.message, "success");
@@ -513,13 +595,9 @@ const HEARTBEAT_INTERVAL = 30000; // Send heartbeat every 30 seconds
 // Send heartbeat to server
 async function sendHeartbeat() {
   try {
-    const response = await fetch('/heartbeat', {
-      method: 'POST',
+    await axios.post('/heartbeat', {}, {
       headers: { 'Content-Type': 'application/json' }
     });
-    if (!response.ok) {
-      console.error('Heartbeat failed:', response.status);
-    }
   } catch (err) {
     console.error('Heartbeat error:', err);
   }
