@@ -89,7 +89,7 @@
       <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
       <div class="sidebar-brand-text">
         <h2>Rixi Lab</h2>
-        <span class="sidebar-badge">ADMIN PANNEL</span>
+        <span class="sidebar-badge">ADMIN</span>
       </div>
     </div>
 
@@ -103,10 +103,10 @@
         <i class="bi bi-people-fill"></i> 
         <span>Interns</span>
       </a>
-      <!-- <a href="#approvedRegistrations" class="nav-link" onclick="setActive(this)">
+      <a href="#approvedRegistrations" class="nav-link d-lg-none" onclick="setActive(this)">
         <i class="bi bi-clipboard-check-fill"></i> 
         <span>Registrations</span>
-      </a> -->
+      </a>
       <a href="#createUser" class="nav-link" onclick="setActive(this)">
         <i class="bi bi-person-plus-fill"></i> 
         <span>Create Intern</span>
@@ -152,9 +152,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      © 2026 Rixi Lab<br>
-      All rights reserved. <br>
-      Developed by Anunay Anand
+      © 2025 Rixi Lab<br>
     </div>
   </aside>
 
@@ -1477,11 +1475,277 @@
       </div>
       </section>
 
+      <!-- REGISTRATIONS SECTION -->
+      <section id="approvedRegistrations" class="content-section" style="display:none;">
+        <div class="page-header d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h4>Approved Registrations</h4>
+            <p class="mb-0">Manage all <%= registrations ? registrations.length : 0 %> approved intern registrations.</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <div class="table-responsive" style="max-height: 75vh; overflow-y:auto;">
+            <table class="table table-striped align-middle mb-0">
+              <thead class="table-light sticky-top">
+                <tr>
+                  <th>Profile</th>
+                  <th>Name & Contact</th>
+                  <th>Duration</th>
+                  <th>Batch No</th>
+                  <th>Intern ID</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(typeof registrations !== 'undefined' && registrations && registrations.length > 0) { %>
+                  <% registrations.forEach(reg => { %>
+                    <tr>
+                      <td>
+                        <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="rounded-circle" width="40" height="40" style="object-fit:cover;">
+                      </td>
+                      <td>
+                        <strong><%= reg.name %></strong><br>
+                        <small class="text-muted"><%= reg.email %></small>
+                      </td>
+                      <td><%= reg.duration %> Weeks</td>
+                      <td>
+                        <input type="number" id="batch_no_<%= reg._id %>" class="form-control form-control-sm" placeholder="Batch" style="width: 80px;">
+                      </td>
+                      <td>
+                        <input type="text" id="intern_id_<%= reg._id %>" class="form-control form-control-sm" placeholder="Intern ID" style="width: 110px;">
+                      </td>
+                      <td class="text-center">
+                        <div class="d-flex align-items-center justify-content-center">
+                          <button id="approveBtn_<%= reg._id %>" class="btn btn-sm btn-success shadow-sm rounded-pill px-3" onclick="approveRegistration('<%= reg._id %>')">
+                            <span class="btn-text">Approve</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- View Registration Modal -->
+                    <div class="modal fade" id="viewRegModal<%= reg._id %>" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                          <div class="modal-header border-0 text-white position-relative" style="background: linear-gradient(135deg, #1f2937, #0f172a); padding:32px 36px;">
+                            <button type="button" class="btn-close btn-close-white position-absolute" style="top:18px; right:20px;" data-bs-dismiss="modal"></button>
+                            <div class="d-flex align-items-center gap-3">
+                              <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" class="rounded-circle border border-3 border-white shadow" style="width:80px;height:80px;object-fit:cover;" crossorigin="anonymous">
+                              <div>
+                                <h4 class="mb-1 fw-semibold"><%= reg.name %></h4>
+                                <small class="opacity-75 d-block mt-1"><%= reg.email %></small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="px-4 py-3 border-bottom bg-light d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <div class="d-flex flex-wrap gap-2">
+                              <span class="badge rounded-pill px-3 py-2 bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning text-dark' %>">
+                                <i class="bi bi-credit-card me-1"></i><%= reg.payment_status || 'PENDING' %>
+                              </span>
+                              <span class="badge rounded-pill px-3 py-2 bg-info text-dark"><i class="bi bi-briefcase me-1"></i><%= reg.domain %></span>
+                              <span class="badge rounded-pill px-3 py-2 bg-<%= reg.status === 'approved' ? 'success' : reg.status === 'rejected' ? 'danger' : 'warning text-dark' %>">
+                                <i class="bi bi-check-circle me-1"></i><%= reg.status || 'Pending' %>
+                              </span>
+                            </div>
+                            <small class="text-muted"><i class="bi bi-calendar me-1"></i>Registered: <%= new Date(reg.createdAt).toLocaleDateString('en-GB') %></small>
+                          </div>
+                          <div class="modal-body bg-white p-4">
+                            <div class="row g-4">
+                              <div class="col-md-6">
+                                <div class="card border-0 shadow-sm rounded-3 h-100">
+                                  <div class="card-header bg-white border-bottom fw-semibold text-primary"><i class="bi bi-person-fill me-2"></i>Personal Information</div>
+                                  <div class="card-body small">
+                                    <p class="mb-2"><span class="text-muted">Phone:</span> <strong><%= reg.phone %></strong></p>
+                                    <p class="mb-2"><span class="text-muted">Course:</span> <strong><%= reg.course %></strong></p>
+                                    <p class="mb-2"><span class="text-muted">Branch:</span> <strong><%= reg.branch %></strong></p>
+                                    <p class="mb-0"><span class="text-muted">Year/Sem:</span> <strong><%= reg.year_sem %></strong></p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card border-0 shadow-sm rounded-3 h-100">
+                                  <div class="card-header bg-white border-bottom fw-semibold text-primary"><i class="bi bi-mortarboard-fill me-2"></i>Education</div>
+                                  <div class="card-body small">
+                                    <p class="mb-2"><span class="text-muted">College:</span> <strong><%= reg.college %></strong></p>
+                                    <p class="mb-0"><span class="text-muted">University:</span> <strong><%= reg.university %></strong></p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card border-0 shadow-sm rounded-3 h-100">
+                                  <div class="card-header bg-white border-bottom fw-semibold text-primary"><i class="bi bi-briefcase-fill me-2"></i>Internship Details</div>
+                                  <div class="card-body small">
+                                    <p class="mb-2"><span class="text-muted">Domain:</span> <strong><%= reg.domain %></strong></p>
+                                    <p class="mb-2"><span class="text-muted">Duration:</span> <strong><%= reg.duration %> Weeks</strong></p>
+                                    <p class="mb-2"><span class="text-muted">Referral Code:</span> <strong><%= reg.referral_code || 'N/A' %></strong></p>
+                                    <p class="mb-0"><span class="text-muted">Transaction ID:</span> <strong><%= reg.payID || 'N/A' %></strong></p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card border-0 shadow-sm rounded-3 h-100">
+                                  <div class="card-header bg-white border-bottom fw-semibold text-primary"><i class="bi bi-credit-card-fill me-2"></i>Payment Details</div>
+                                  <div class="card-body small">
+                                    <p class="mb-2"><span class="text-muted">Order ID:</span> <strong><%= reg.order_id || 'N/A' %></strong></p>
+                                    <p class="mb-0"><span class="text-muted">Payment Status:</span> <span class="badge bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning text-dark' %>"><%= reg.payment_status || 'PENDING' %></span></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer border-0 bg-light">
+                            <button class="btn px-4 text-white" style="background-color: #ff6600;" onclick="downloadRegistrationPDF('<%= reg._id %>', '<%= reg.name %>')">
+                              <i class="bi bi-download me-1"></i>Download PDF
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Hidden Professional PDF Template for generation -->
+                    <div id="pdfTemplate<%= reg._id %>" style="display: none; width: 1000px; padding: 60px; background: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333;">
+                      
+                      <!-- Header Section -->
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #ff6600; padding-bottom: 25px; margin-bottom: 40px;">
+                        <div>
+                          <h1 style="color: #1f2937; margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -1px; text-transform: uppercase;">Internship Application</h1>
+                          <p style="color: #6b7280; font-size: 16px; margin: 8px 0 0 0; font-weight: 500;">Approved Registration Details</p>
+                        </div>
+                        <div style="text-align: right;">
+                          <div style="font-size: 28px; font-weight: 900; color: #ff6600; letter-spacing: -1px; line-height: 1;">RIXI<span style="color: #1f2937;">LAB</span></div>
+                          <p style="margin: 5px 0 0 0; font-size: 13px; color: #6b7280;">rixilab.com • info@rixilab.com</p>
+                          <p style="margin: 3px 0 0 0; font-size: 13px; color: #6b7280;">Ref: <%= reg._id.toString().substring(0, 8).toUpperCase() %></p>
+                        </div>
+                      </div>
+
+                      <!-- Profile & Core Information Row -->
+                      <div style="display: flex; gap: 30px; margin-bottom: 40px;">
+                        <div style="flex-shrink: 0;">
+                          <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" style="width: 140px; height: 140px; border-radius: 8px; object-fit: cover; border: 4px solid #f3f4f6; box-shadow: 0 4px 6px rgba(0,0,0,0.05);" crossorigin="anonymous" />
+                        </div>
+                        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                          <h2 style="margin: 0 0 10px 0; font-size: 28px; color: #111827;"><%= reg.name %></h2>
+                          <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                            <div>
+                              <p style="margin: 0; font-size: 13px; color: #6b7280; text-transform: uppercase; font-weight: 700;">Email</p>
+                              <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 500;"><%= reg.email %></p>
+                            </div>
+                            <div>
+                              <p style="margin: 0; font-size: 13px; color: #6b7280; text-transform: uppercase; font-weight: 700;">Phone</p>
+                              <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 500;"><%= reg.phone %></p>
+                            </div>
+                            <div>
+                              <p style="margin: 0; font-size: 13px; color: #6b7280; text-transform: uppercase; font-weight: 700;">Date Applied</p>
+                              <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 500;"><%= new Date(reg.createdAt).toLocaleDateString('en-GB') %></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="flex-shrink: 0; text-align: right; display: flex; flex-direction: column; justify-content: center;">
+                          <div style="background: <%= reg.status === 'approved' ? '#dcfce7' : (reg.status === 'rejected' ? '#fee2e2' : '#fef9c3') %>; color: <%= reg.status === 'approved' ? '#166534' : (reg.status === 'rejected' ? '#991b1b' : '#854d0e') %>; padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; display: inline-block; text-transform: uppercase; border: 1px solid <%= reg.status === 'approved' ? '#bbf7d0' : (reg.status === 'rejected' ? '#fecaca' : '#fef08a') %>;">
+                            Status: <%= reg.status || 'Pending' %>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Details Sections Grid -->
+                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        
+                        <!-- Academic Information -->
+                        <div style="background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                          <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #ff6600; text-transform: uppercase; font-weight: 800; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Academic Details</h3>
+                          
+                          <div style="margin-bottom: 15px;">
+                            <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">University</p>
+                            <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.university %></p>
+                          </div>
+                          
+                          <div style="margin-bottom: 15px;">
+                            <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">College</p>
+                            <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.college %></p>
+                          </div>
+                          
+                          <div style="display: flex; gap: 20px;">
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Course</p>
+                              <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.course %></p>
+                            </div>
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Branch</p>
+                              <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.branch %></p>
+                            </div>
+                          </div>
+                          
+                          <div style="margin-top: 15px;">
+                            <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Current Year / Semester</p>
+                            <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.year_sem %></p>
+                          </div>
+                        </div>
+
+                        <!-- Internship Details -->
+                        <div style="background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                          <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #ff6600; text-transform: uppercase; font-weight: 800; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Internship Particulars</h3>
+                          
+                          <div style="margin-bottom: 15px;">
+                            <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Selected Domain</p>
+                            <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 700; color: #0f172a;"><%= reg.domain %></p>
+                          </div>
+                          
+                          <div style="display: flex; gap: 20px; margin-bottom: 15px;">
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Duration</p>
+                              <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.duration %> Weeks</p>
+                            </div>
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Referral Code</p>
+                              <p style="margin: 4px 0 0 0; font-size: 15px; font-weight: 500; color: #334155;"><%= reg.referral_code || 'None' %></p>
+                            </div>
+                          </div>
+                          
+                          <div style="margin-top: 25px;">
+                            <p style="margin: 0 0 8px 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Payment Status Information</p>
+                            <div style="background: white; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                              <div>
+                                <span style="font-size: 13px; color: #64748b;">Order ID:</span>
+                                <strong style="margin-left: 5px; font-size: 13px; font-family: monospace;"><%= reg.order_id || 'N/A' %></strong>
+                              </div>
+                              <div style="font-weight: 700; font-size: 13px; color: <%= reg.payment_status === 'SUCCESS' ? '#166534' : '#991b1b' %>;">
+                                <%= reg.payment_status || 'PENDING' %>
+                              </div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 12px; color: #64748b;">
+                              Transaction Ref: <span style="font-family: monospace; color: #334155;"><%= reg.payID || 'N/A' %></span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <!-- Footer -->
+                      <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 12px;">
+                        <p style="margin: 0 0 5px 0;">This document is electronically generated and requires no physical signature.</p>
+                        <p style="margin: 0;">© <%= new Date().getFullYear() %> Rixi Lab. All rights reserved.</p>
+                      </div>
+
+                    </div>
+                  <% }) %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="6" class="text-center text-muted py-4">No approved registrations found.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </div> <!-- End Content Body -->
 
     <!-- SETTINGS SECTION -->
-    <section id="settings" class="content-section" style="display:none; padding: 28px;">
-      <div class="page-header mb-2">
+    <section id="settings" class="content-section" style="display:none;">
+      <div class="page-header mb-3">
         <h4>Account Settings</h4>
         <p>Manage your admin profile details and system preferences.</p>
       </div>
@@ -1489,58 +1753,62 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <div class="stat-card" style="box-shadow: var(--shadow-sm) !important; border: 1px solid var(--border) !important; background: var(--surface);">
-            <div class="d-flex align-items-center mb-4 pb-3 border-bottom border-light">
+            <div class="d-flex align-items-center mb-4 pb-4 border-bottom border-light">
               <div class="position-relative me-4">
-                <img src="<%= admin.img_url %>" alt="Profile" class="rounded-circle border shadow-sm" width="80" height="80" style="object-fit:cover;">
-                <button class="btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0 shadow" data-bs-toggle="modal" data-bs-target="#updateProfileModal" style="width:28px; height:28px; padding:0; display:flex; align-items:center; justify-content:center;">
-                  <i class="bi bi-camera-fill" style="font-size: 0.75rem;"></i>
+                <img src="<%= admin.img_url %>" alt="Profile" class="rounded-circle border border-3 border-white shadow" width="90" height="90" style="object-fit:cover;">
+                <button class="btn btn-sm btn-primary rounded-circle position-absolute shadow-sm" data-bs-toggle="modal" data-bs-target="#updateProfileModal" style="bottom: 0px; right: 0px; width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
+                  <i class="bi bi-camera-fill" style="font-size: 0.85rem;"></i>
                 </button>
               </div>
               <div>
-                <h5 class="mb-1 text-dark fw-bold"><%= admin.name %></h5>
-                <div class="text-muted small mb-0"><i class="bi bi-envelope me-1"></i><%= admin.email %></div>
+                <h4 class="mb-1 text-dark fw-bold"><%= admin.name %></h4>
+                <div class="text-muted small mb-0 d-flex align-items-center"><i class="bi bi-envelope me-2 text-primary"></i><%= admin.email %></div>
               </div>
             </div>
 
             <form action="/update-admin-profile" method="POST">
-              <h6 class="text-muted fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.5px;">Personal Information</h6>
+              <h6 class="text-muted fw-bold mb-4 small text-uppercase" style="letter-spacing: 0.8px;">Personal Information</h6>
               
-              <div class="row g-3">
+              <div class="row g-4">
                 <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="settingsName" name="name" value="<%= admin.name %>" placeholder="Full Name" required>
-                    <label for="settingsName">Full Name</label>
+                  <div class="form-group">
+                    <label class="form-label small text-muted fw-semibold mb-1">Full Name</label>
+                    <input type="text" class="form-control form-control-lg bg-light border-0 px-3 shadow-none custom-input" id="settingsName" name="name" value="<%= admin.name %>" placeholder="Enter Full Name" required style="border-radius: 10px; font-size: 0.95rem;">
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input type="tel" class="form-control" id="settingsPhone" name="phone" value="<%= admin.phone || '' %>" placeholder="Phone Number">
-                    <label for="settingsPhone">Phone Number</label>
+                  <div class="form-group">
+                    <label class="form-label small text-muted fw-semibold mb-1">Phone Number</label>
+                    <input type="tel" class="form-control form-control-lg bg-light border-0 px-3 shadow-none custom-input" id="settingsPhone" name="phone" value="<%= admin.phone || '' %>" placeholder="Enter Phone Number" style="border-radius: 10px; font-size: 0.95rem;">
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="settingsEmail" value="<%= admin.email %>" placeholder="Email Address" disabled readonly>
-                    <label for="settingsEmail">Email Address <span class="text-muted fw-normal">(Cannot edit)</span></label>
+                  <div class="form-group">
+                    <label class="form-label small text-muted fw-semibold mb-1">Email Address <span class="fw-normal opacity-75">(Cannot edit)</span></label>
+                    <input type="email" class="form-control form-control-lg border-0 px-3 shadow-none text-muted" id="settingsEmail" value="<%= admin.email %>" disabled readonly style="background-color: #e9ecef; border-radius: 10px; font-size: 0.95rem; cursor: not-allowed;">
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="settingsDesignation" value="<%= admin.designation %>" placeholder="Designation" disabled readonly>
-                    <label for="settingsDesignation">Designation <span class="text-muted fw-normal">(Cannot edit)</span></label>
+                  <div class="form-group">
+                    <label class="form-label small text-muted fw-semibold mb-1">Designation <span class="fw-normal opacity-75">(Cannot edit)</span></label>
+                    <input type="text" class="form-control form-control-lg border-0 px-3 shadow-none text-muted" id="settingsDesignation" value="<%= admin.designation %>" disabled readonly style="background-color: #e9ecef; border-radius: 10px; font-size: 0.95rem; cursor: not-allowed;">
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="settingsDomain" value="<%= admin.domain %>" placeholder="Domain" disabled readonly>
-                    <label for="settingsDomain">Domain / Stack <span class="text-muted fw-normal">(Cannot edit)</span></label>
+                  <div class="form-group">
+                    <label class="form-label small text-muted fw-semibold mb-1">Domain / Stack <span class="fw-normal opacity-75">(Cannot edit)</span></label>
+                    <input type="text" class="form-control form-control-lg border-0 px-3 shadow-none text-muted" id="settingsDomain" value="<%= admin.domain %>" disabled readonly style="background-color: #e9ecef; border-radius: 10px; font-size: 0.95rem; cursor: not-allowed;">
                   </div>
                 </div>
               </div>
 
-              <div class="d-flex justify-content-end mt-4 pt-3 border-top border-light gap-2">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#passwordModal">Change Password</button>
-                <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-2"></i>Save Changes</button>
+              <div class="d-flex flex-column flex-sm-row justify-content-end mt-5 pt-4 border-top border-light gap-3 align-items-center">
+                <button type="button" class="btn btn-light rounded-pill px-4 py-2 text-dark border fw-medium" data-bs-toggle="modal" data-bs-target="#passwordModal" style="font-size: 0.9rem;">
+                  Change Password
+                </button>
+                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm" style="font-size: 0.9rem;">
+                  <i class="bi bi-arrow-down-square me-2"></i>Save Changes
+                </button>
               </div>
             </form>
           </div>
@@ -1637,6 +1905,11 @@
 
   <!-- Add Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- PDF Generation Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQmJbSlZiqCc6QA5S20NURidjH4202lrt0/27A59w20kQ/+LgqQhD+XvBw1S3jM4W6r+iN64rFp++Wz7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-1ceRxoqK//Eknz1A21e1hT1D2c1I/aO2XarFm/eHox5w2n8rS1q8rYhKkAWfK61YFk/e5I2I+5i3mNbg5Q1s1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
   <!-- Inline UI Scripts -->
   <script>
@@ -1948,6 +2221,110 @@
           });
        }
     });
+
+    // 7. PDF Download Logic
+    async function downloadRegistrationPDF(regId, regName) {
+      try {
+        const { jsPDF } = window.jspdf;
+        const templateId = 'pdfTemplate' + regId;
+        const templateElement = document.getElementById(templateId);
+
+        if (!templateElement) {
+          alert('Template not found for registration!');
+          return;
+        }
+
+        // We temporarily display it block to render it, then hide it again.
+        // It's vital that it renders outside of the scrollable modal container boundary to avoid cutoff.
+        const originalParent = templateElement.parentElement;
+        const originalDisplay = templateElement.style.display;
+        
+        // Move to body specifically so it can render fully without hidden overflows
+        document.body.appendChild(templateElement);
+        templateElement.style.display = 'block';
+
+        // Add a small loading indicator or button disable logic here if desired
+
+        const canvas = await html2canvas(templateElement, {
+          scale: 2, 
+          useCORS: true, 
+          allowTaint: true,
+          logging: false
+        });
+
+        // Restore original position and hidden state immediately after capturing
+        originalParent.appendChild(templateElement);
+        templateElement.style.display = originalDisplay;
+
+        const imgData = canvas.toDataURL('image/png');
+        
+        // A4 Paper Dimensions (in mm)
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        
+        const fileName = `RixiLab_Registration_${regName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+        pdf.save(fileName);
+        
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('An error occurred while generating the document. Please try again.');
+      }
+    }
+
+    // 8. Global Modal Fix: Append all modals to body to prevent them from being trapped inside overflow containers
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.modal').forEach(modal => {
+        document.body.appendChild(modal);
+      });
+    });
+    // 9. Approve Registration
+    async function approveRegistration(regId) {
+      const intern_id = document.getElementById(`intern_id_${regId}`).value;
+      const batch_no = document.getElementById(`batch_no_${regId}`).value;
+      const btn = document.getElementById(`approveBtn_${regId}`);
+      const btnText = btn.querySelector('.btn-text');
+      const spinner = btn.querySelector('.spinner-border');
+
+      if (!intern_id || !batch_no) {
+        showToast("Please provide both Intern ID and Batch No", "error");
+        return;
+      }
+      
+      // Disable button and show spinner
+      btn.disabled = true;
+      btnText.classList.add('d-none');
+      spinner.classList.remove('d-none');
+
+      try {
+        const response = await fetch(`/admin/accept-registration/${regId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ intern_id, batch_no })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          showToast("Registration approved successfully!", "success");
+          setTimeout(() => window.location.reload(), 1500);
+        } else {
+          showToast(data.message || "Failed to approve registration", "error");
+          btn.disabled = false;
+          btnText.classList.remove('d-none');
+          spinner.classList.add('d-none');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Server error while approving registration", "error");
+        btn.disabled = false;
+        btnText.classList.remove('d-none');
+        spinner.classList.add('d-none');
+      }
+    }
   </script>
 </body>
 </html>

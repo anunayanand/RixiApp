@@ -86,8 +86,8 @@ body {
 }
 
 .sidebar-brand img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   object-fit: contain;
   background: rgba(255, 102, 0, 0.15);
@@ -95,12 +95,11 @@ body {
 }
 
 .sidebar-brand-text h2 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1.2;
   letter-spacing: 0.3px;
-  margin-bottom: 0 !important;
 }
 
 .sidebar-brand-text p {

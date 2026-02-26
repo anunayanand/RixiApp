@@ -128,9 +128,47 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
     // Sort notifications newest first
     const notifications = superAdmin.notifications.sort((a, b) => b.createdAt - a.createdAt);
 
+    // ==============================
+    // 🏆 Top 5 Ambassadors
+    // ==============================
+    // Count successful referrals for each ambassador
+    const referralMap = new Map();
+    ambassadors.forEach(amb => referralMap.set(amb.ambassador_id, 0));
+    
+    // We count interns who have a referral code matching an ambassador
+    interns.forEach(intern => {
+      let rCode = intern.referal_code ? intern.referal_code.trim() : "";
+      if (rCode && referralMap.has(rCode)) {
+        referralMap.set(rCode, referralMap.get(rCode) + 1);
+      }
+    });
+
+    const topAmbassadors = ambassadors
+      .map(amb => {
+        // Fallback: If calculated referrals is 0, use the ambassador's internCount
+        let calculatedRfs = referralMap.get(amb.ambassador_id) || 0;
+        let finalRfs = Math.max(calculatedRfs, amb.internCount || 0);
+
+        return {
+          name: amb.name,
+          referrals: finalRfs
+        };
+      })
+      .sort((a, b) => b.referrals - a.referrals)
+      .slice(0, 5);
+
+    const topAmbassadorLabels = topAmbassadors.map(a => a.name);
+    const topAmbassadorData = topAmbassadors.map(a => a.referrals);
+    const internsNotSent = interns.filter(i => !i.offer_letter_sent);
+
+    
+    // Debugging (optional, checking values)
+    // console.log("topAmbassadorLabels:", topAmbassadorLabels, "topAmbassadorData:", topAmbassadorData);
+
     // Render Dashboard (no flash for normal)
     res.render("superAdmin", {
       interns,
+      internsNotSent,
       admins,
       superAdmin,
       ambassadors,
@@ -141,7 +179,9 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
       meetings,
       notifications,
       showPasswordPopup: superAdmin.isFirstLogin,
-      registrations
+      registrations,
+      topAmbassadorLabels,
+      topAmbassadorData
     });
   } catch (err) {
     req.flash("error", "Failed to load Super Admin Dashboard");

@@ -52,8 +52,6 @@ router.get("/intern", authRole("intern"), async (req, res) => {
         isClosed: a.quizId?.isClosed || false
       }));
 
-    req.flash('success_msg', 'Welcome to Intern Dashboard');
-    
     // Format starting date
     const startingDate = intern.starting_date 
       ? new Date(intern.starting_date).toLocaleDateString('en-IN', { 
