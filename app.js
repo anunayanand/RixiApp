@@ -1,4 +1,6 @@
 const express = require("express");
+const cron = require("node-cron");
+const { exportData } = require("./utilities/downloadData");
 const axios = require('axios');
 const url = "https://rixilab.tech";
 
@@ -203,8 +205,12 @@ app.get('/admin/intern/:internId', viewInternRouter);
 
 // Approve/Reject Submission
 const projectStatusRouter = require('./routes/projectStatusRoute');
-app.use('/admin', projectStatusRouter);
+app.use("/admin", projectStatusRouter);
   
+// Chat routes
+const chatRoute = require("./routes/chatRoute");
+app.use("/chat", chatRoute);
+
 app.use("/", require("./routes/notificationRoute"));
 
 // Email placeholders
@@ -356,8 +362,24 @@ setInterval(async () => {
     
     // console.log("isOnline cleanup completed");
   } catch (err) {
-    console.error("Error during isOnline cleanup:", err);
+    // console.error("Error during isOnline cleanup:", err);
   }
 }, CLEANUP_INTERVAL);
+
+// ==============================
+// MONTHLY DATABASE BACKUP (Last day of every month at 23:59)
+// ==============================
+// Cron runs at 21:59 on days 28-31 — we check inside if it's truly the last day
+cron.schedule("59 21 28-31 * *", async () => {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(now.getDate() + 1);
+  // If tomorrow is the 1st, today is the last day of the month
+  if (tomorrow.getDate() === 1) {
+    // console.log("[Monthly Backup] Running end-of-month DB backup...");
+    await exportData();
+    // console.log("[Monthly Backup] Done.");
+  }
+});
 
 app.listen(8080, () => console.log("Server running at http://localhost:8080"));

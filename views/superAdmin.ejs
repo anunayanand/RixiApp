@@ -162,7 +162,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      © 2025 Rixi Lab<br>
+      <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
     </div>
   </aside>
 
@@ -948,7 +948,7 @@
            </thead>
           <tbody>
             <% interns.forEach((i, index) => { %>
-              <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>">
+              <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>" data-name="<%= i.name.toLowerCase() %>" data-id="<%= i.intern_id.toLowerCase() %>">
                 <td class="serial-no" style="padding:0 !important;"><%= index + 1 %></td>
                  <td style="padding:0 !important;" class="position-relative">
                     <div class="position-relative d-inline-block">

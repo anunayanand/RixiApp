@@ -139,12 +139,18 @@
         <i class="bi bi-calendar-check-fill"></i> 
         <span>Attendance</span>
       </a>
+      
+      <a href="#supportChat" class="nav-link" onclick="setActive(this)">
+        <i class="bi bi-chat-dots-fill"></i> 
+        <span>Support Chat</span>
+        <span id="adminChatBadge" class="chat-nav-badge d-none">0</span>
+      </a>
 
       <div class="sidebar-nav-label">Account</div>
-      <a href="#settings" class="nav-link" onclick="setActive(this)">
+      <!-- <a href="#settings" class="nav-link" onclick="setActive(this)">
         <i class="bi bi-gear-fill"></i> 
         <span>Settings</span>
-      </a>
+      </a> -->
       <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="bi bi-box-arrow-right"></i> 
         <span>Logout</span>
@@ -152,7 +158,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      © 2025 Rixi Lab<br>
+     <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
     </div>
   </aside>
 
@@ -455,6 +461,73 @@
         </div> <!-- end row 3 -->
       </section>
 
+      </section>
+
+      <!-- SUPPORT CHAT SECTION -->
+      <section id="supportChat" class="content-section" style="display:none;">
+        <div class="page-header">
+          <h4>Intern Support</h4>
+          <p>Manage and respond to intern queries here.</p>
+        </div>
+
+        <div class="chat-layout">
+          <!-- Left: Ticket List -->
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">Support Tickets</div>
+            <div class="chat-ticket-list" id="adminTicketList">
+              <div class="text-center text-muted p-4 small">Loading tickets...</div>
+            </div>
+          </div>
+
+          <!-- Right: Chat Window / Empty State -->
+          <div class="chat-main-area">
+             <!-- Empty state -->
+             <div id="adminChatEmpty" class="chat-main-empty">
+                 <i class="bi bi-chat-square-dots"></i>
+                 <h5>Select a ticket to view conversation</h5>
+             </div>
+
+             <!-- Active Chat view -->
+             <div id="adminChatActive" class="d-none h-100 d-flex flex-column">
+                 <div class="chat-header">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="position-relative">
+                        <img id="adminChatInternImg" src="" alt="Intern" width="40" height="40" class="rounded-circle" style="object-fit: cover; border: 2px solid var(--border);">
+                        <span id="adminChatInternStatus" class="position-absolute bottom-0 end-0 border border-2 border-dark rounded-circle bg-secondary" style="width: 10px; height: 10px;"></span>
+                      </div>
+                      <div>
+                        <h6 class="mb-0 fw-bold text-white mb-1" id="adminChatInternName">...</h6>
+                        <div class="text-secondary" style="font-size: 0.75rem;"><span id="adminChatInternStatusText" class="text-secondary">Offline</span> • <span id="adminChatSubject">...</span> • ID: <span id="adminChatInternId">...</span></div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="d-flex align-items-center" style="font-size: 0.85rem; font-weight: 500;">
+                        <div class="spinner-grow spinner-grow-sm text-secondary me-2" role="status" id="pingStatusDotAdmin"></div>
+                        <span id="pingStatusTextAdmin" class="text-secondary">Status</span>
+                      </div>
+                      <div class="d-flex gap-2" id="adminChatActions">
+                          <!-- Action buttons will be injected here -->
+                      </div>
+                    </div>
+                 </div>
+
+                 <div class="chat-messages" id="adminChatMessagesBox">
+                    <!-- Messages inserted here -->
+                 </div>
+
+                 <div class="chat-input-bar">
+                    <!-- Emoji Panel -->
+                    <div id="adminEmojiPanel" class="emoji-panel"></div>
+
+                    <button type="button" class="chat-emoji-btn" id="adminToggleEmojiBtn" title="Emojis"><i class="bi bi-emoji-smile"></i></button>
+                    <textarea class="chat-input" id="adminChatInputMessage" placeholder="Type your message..." rows="1"></textarea>
+                    <button type="button" class="chat-send-btn" id="adminChatSendBtn" title="Send"><i class="bi bi-send-fill"></i></button>
+                 </div>
+             </div>
+          </div>
+        </div>
+      </section>
+
       <!-- VIEW INTERNS SECTION -->
       <section id="viewInterns" class="content-section" style="display:none;">
 
@@ -474,6 +547,12 @@
               <i class="bi bi-search search-icon"></i>
               <input type="text" id="internSearch" class="intern-search-input" placeholder="Search by name or intern ID…" oninput="applyInternFilters()">
             </div>
+            <select id="durationFilter" class="intern-filter-select" onchange="applyInternFilters()" style="margin-left: 10px;">
+              <option value="all">All Durations</option>
+              <% [...new Set(interns.map(i => i.duration))].sort((a,b)=>a-b).forEach(d => { %>
+                <option value="<%= d %>"><%= d %> Weeks</option>
+              <% }) %>
+            </select>
             <select id="batchFilter" class="intern-filter-select" onchange="applyInternFilters()">
               <option value="all">All Batches</option>
               <% batches.forEach(batch => { %>
@@ -507,6 +586,7 @@
               <% interns.forEach((i, index) => { %>
                 <tr class="intern-row"
                     data-batch="<%= i.batch_no %>"
+                    data-duration="<%= i.duration %>"
                     data-name="<%= i.name.toLowerCase() %>"
                     data-id="<%= i.intern_id.toLowerCase() %>"
                     data-status="<%= i.isPassed ? 'certified' : 'active' %>"
@@ -552,6 +632,7 @@
           <% interns.forEach((i) => { %>
             <div class="intern-card"
                  data-batch="<%= i.batch_no %>"
+                 data-duration="<%= i.duration %>"
                  data-name="<%= i.name.toLowerCase() %>"
                  data-id="<%= i.intern_id.toLowerCase() %>"
                  data-status="<%= i.isPassed ? 'certified' : 'active' %>"
@@ -1079,22 +1160,17 @@
                                      <span class="badge badge-sub-<%= sub.status || 'pending' %>"><%= sub.status || 'pending' %></span>
                                   </td>
                                   <td class="text-end pe-4">
-                                     <form method="POST" action="/admin/projects/update-status" class="d-flex gap-2 justify-content-end">
-                                        <input type="hidden" name="userId" value="<%= intern._id %>">
-                                        <input type="hidden" name="projectId" value="<%= sub.projectId ? sub.projectId._id : sub.projectId %>">
+                                     <div class="d-flex gap-2 justify-content-end project-review-actions">
+                                        <button type="button" class="btn btn-sm btn-outline-success align-items-center gap-1 <%= sub.status === 'accepted' ? 'd-none' : 'd-flex' %>" title="Approve" onclick="updateProjectStatus('<%= intern._id %>', '<%= sub.projectId ? sub.projectId._id : sub.projectId %>', 'accepted', this)">
+                                          <i class="bi bi-check-lg btn-icon"></i>
+                                          <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        </button>
                                         
-                                        <% if (sub.status !== 'accepted') { %>
-                                          <button type="submit" name="status" value="accepted" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1" title="Approve">
-                                            <i class="bi bi-check-lg"></i>
-                                          </button>
-                                        <% } %>
-                                        
-                                        <% if (sub.status !== 'rejected') { %>
-                                          <button type="submit" name="status" value="rejected" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" title="Reject">
-                                            <i class="bi bi-x-lg"></i>
-                                          </button>
-                                        <% } %>
-                                     </form>
+                                        <button type="button" class="btn btn-sm btn-outline-danger align-items-center gap-1 <%= sub.status === 'rejected' ? 'd-none' : 'd-flex' %>" title="Reject" onclick="updateProjectStatus('<%= intern._id %>', '<%= sub.projectId ? sub.projectId._id : sub.projectId %>', 'rejected', this)">
+                                          <i class="bi bi-x-lg btn-icon"></i>
+                                          <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        </button>
+                                     </div>
                                   </td>
                                </tr>
                              <% }) %>
@@ -1898,6 +1974,25 @@
     </div>
   <% } %>
 
+  <!-- Close Ticket Modal -->
+  <div class="modal fade" id="closeTicketModal" tabindex="-1" aria-labelledby="closeTicketModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content shadow-lg" style="background-color: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);">
+        <div class="modal-body text-center p-4">
+          <div class="mb-3">
+             <i class="bi bi-x-circle text-danger" style="font-size: 3rem;"></i>
+          </div>
+          <h5 class="fw-bold text-white mb-2">Close Ticket?</h5>
+          <p class="text-secondary small mb-4">Are you sure you want to close this ticket? It will be removed from the active list.</p>
+          <div class="d-flex gap-2 justify-content-center">
+             <button type="button" class="btn btn-outline-secondary w-50" data-bs-dismiss="modal" style="border-color: var(--border); color: var(--text-secondary);">Cancel</button>
+             <button type="button" class="btn btn-danger w-50 fw-bold" id="confirmCloseTicketBtn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- External JS -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -2075,10 +2170,12 @@
     <% } %>
 
     // 5. Intern Section Filters
+    // 5. Intern Section Filters
     function applyInternFilters() {
-      const search = (document.getElementById('internSearch')?.value || '').toLowerCase().trim();
-      const batch  = document.getElementById('batchFilter')?.value || 'all';
-      const status = document.getElementById('statusFilter')?.value || 'all';
+      const search   = (document.getElementById('internSearch')?.value || '').toLowerCase().trim();
+      const batch    = document.getElementById('batchFilter')?.value || 'all';
+      const duration = document.getElementById('durationFilter')?.value || 'all';
+      const status   = document.getElementById('statusFilter')?.value || 'all';
 
       // Target both desktop rows and mobile cards
       const rows  = document.querySelectorAll('.intern-row');
@@ -2086,20 +2183,23 @@
       let visibleCount = 0;
 
       function matchesFilters(el) {
-        const elBatch  = el.dataset.batch;
-        const elName   = el.dataset.name  || '';
-        const elId     = el.dataset.id    || '';
-        const elStatus = el.dataset.status || '';
-        const elOnline = el.dataset.online || '';
+        const elBatch    = el.dataset.batch;
+        const elDuration = el.dataset.duration;
+        const elName     = el.dataset.name  || '';
+        const elId       = el.dataset.id    || '';
+        const elStatus   = el.dataset.status || '';
+        const elOnline   = el.dataset.online || '';
 
-        const batchOk  = batch  === 'all' || elBatch  === batch;
-        const searchOk = !search || elName.includes(search) || elId.includes(search);
-        let   statusOk = true;
+        const batchOk    = batch  === 'all' || String(elBatch) === String(batch);
+        const durationOk = duration === 'all' || String(elDuration) === String(duration);
+        const searchOk   = !search || elName.includes(search) || elId.includes(search);
+        
+        let statusOk = true;
         if (status === 'certified') statusOk = elStatus === 'certified';
         else if (status === 'active')    statusOk = elStatus === 'active';
         else if (status === 'online')    statusOk = elOnline === 'online';
 
-        return batchOk && searchOk && statusOk;
+        return batchOk && durationOk && searchOk && statusOk;
       }
 
       rows.forEach(row => {
@@ -2124,13 +2224,16 @@
     }
 
     function clearInternFilters() {
-      const searchEl = document.getElementById('internSearch');
-      const batchEl  = document.getElementById('batchFilter');
-      const statusEl = document.getElementById('statusFilter');
-      if (searchEl) searchEl.value = 'all';
-      if (batchEl)  batchEl.value  = 'all';
-      if (statusEl) statusEl.value = 'all';
-      if (searchEl) searchEl.value = '';
+      const searchEl   = document.getElementById('internSearch');
+      const batchEl    = document.getElementById('batchFilter');
+      const durationEl = document.getElementById('durationFilter');
+      const statusEl   = document.getElementById('statusFilter');
+      
+      if (searchEl)   searchEl.value   = '';
+      if (batchEl)    batchEl.value    = 'all';
+      if (durationEl) durationEl.value = 'all';
+      if (statusEl)   statusEl.value   = 'all';
+      
       applyInternFilters();
     }
 
@@ -2323,6 +2426,465 @@
         btn.disabled = false;
         btnText.classList.remove('d-none');
         spinner.classList.add('d-none');
+      }
+    }
+
+    // ==========================================
+    // ADMIN DASHBOARD & CHAT LOGIC
+    // ==========================================
+    let activeTicketId = null;
+    let lastAdminMessageId = null;
+    let adminChatPollInterval = null;
+    let currentInternObjectId = null;
+    let isAdminChatOpen = false;
+
+    // Check initial badge & start ticket polling
+    window.addEventListener("DOMContentLoaded", () => {
+       fetchAdminUnreadCount();
+       setInterval(fetchAdminUnreadCount, 5000);
+       fetchTicketList();
+       ticketListPollInterval = setInterval(fetchTicketList, 10000); // Check for new tickets every 10s
+    });
+
+    const origShowSection = showSection;
+    showSection = function(sectionId) {
+       origShowSection(sectionId);
+       isAdminChatOpen = (sectionId === 'supportChat');
+       if (isAdminChatOpen) {
+          fetchTicketList();
+          if (activeTicketId) markAdminMessagesAsRead(activeTicketId);
+       }
+    };
+
+    function fetchTicketList() {
+       fetch('/chat/tickets')
+         .then(res => res.json())
+         .then(data => {
+            if (!data.success) return;
+            renderTicketList(data.tickets);
+         }).catch(console.error);
+    }
+
+    function renderTicketList(tickets) {
+       const listEl = document.getElementById('adminTicketList');
+       if (!tickets || tickets.length === 0) {
+          listEl.innerHTML = '<div class="text-center text-muted p-4 small">No active support tickets.</div>';
+          return;
+       }
+
+       let html = '';
+       tickets.forEach(ticket => {
+          let internName = ticket.internId ? ticket.internId.name : 'Unknown Intern';
+          let time = new Date(ticket.createdAt).toLocaleDateString() + ' ' + new Date(ticket.createdAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+          let statusClass = ticket.status === 'pending' ? 'ticket-status-pending' : 'ticket-status-accepted';
+          let statusText = ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1);
+          let isActive = ticket._id === activeTicketId ? 'active' : '';
+
+          let unreadDot = '';
+          if (ticket.status === 'accepted' && ticket.internId) { /* Add unread visual check if possible, currently rely on global unread badge */ }
+
+          html += `
+             <div class="chat-ticket-item ${isActive}" onclick="openChatTicket('${ticket._id}', '${ticket.status}', '${escapeHtml(ticket.subject)}', '${escapeHtml(internName)}', '${ticket.internId ? ticket.internId.intern_id : ''}', '${ticket.internId ? ticket.internId.img_url : ''}', '${ticket.internId ? ticket.internId._id : ''}')">
+                <div class="ticket-item-top">
+                   <div class="ticket-name">${escapeHtml(internName)}</div>
+                   <div class="ticket-time">${time}</div>
+                </div>
+                <div class="ticket-subject">${escapeHtml(ticket.subject)}</div>
+                <div class="ticket-status ${statusClass}">${statusText}</div>
+             </div>
+          `;
+       });
+       listEl.innerHTML = html;
+    }
+
+
+    function openChatTicket(ticketId, status, subject, internName, internIdStr, internImg, internObjId) {
+       activeTicketId = ticketId;
+       lastAdminMessageId = null;
+       currentInternObjectId = internObjId;
+       
+       document.getElementById('adminChatEmpty').classList.add('d-none');
+       document.getElementById('adminChatActive').classList.remove('d-none');
+       
+       document.getElementById('adminChatInternName').innerText = internName;
+       document.getElementById('adminChatInternId').innerText = internIdStr;
+       document.getElementById('adminChatSubject').innerText = subject;
+       if (internImg) document.getElementById('adminChatInternImg').src = internImg;
+
+       document.getElementById('adminChatMessagesBox').innerHTML = ''; // clear messages
+       
+       const dot = document.getElementById('pingStatusDotAdmin');
+       const txt = document.getElementById('pingStatusTextAdmin');
+       if(dot && txt) {
+           dot.className = 'spinner-grow spinner-grow-sm text-secondary me-2';
+           txt.className = 'text-secondary';
+           txt.innerText = 'Checking...';
+       }
+
+       // Setup Buttons
+       const actionsDiv = document.getElementById('adminChatActions');
+       if (status === 'pending') {
+           actionsDiv.innerHTML = `<button class="btn btn-sm btn-success" onclick="acceptTicket('${ticketId}')"><i class="bi bi-check-circle me-1"></i>Accept</button>`;
+           document.getElementById('adminChatInputMessage').disabled = true;
+           document.getElementById('adminChatSendBtn').disabled = true;
+       } else {
+           actionsDiv.innerHTML = `<button class="btn btn-sm btn-outline-danger" onclick="closeTicket('${ticketId}')"><i class="bi bi-x-circle me-1"></i></button>`;
+           document.getElementById('adminChatInputMessage').disabled = false;
+           document.getElementById('adminChatSendBtn').disabled = false;
+           
+           if (adminChatPollInterval) clearInterval(adminChatPollInterval);
+           pollAdminMessages();
+           adminChatPollInterval = setInterval(pollAdminMessages, 3000);
+           
+           if (isAdminChatOpen) markAdminMessagesAsRead(ticketId);
+       }
+       
+       // Update visual active state
+       document.querySelectorAll('.chat-ticket-item').forEach(el => el.classList.remove('active'));
+       event.currentTarget.classList.add('active');
+       
+       pingInternOnlineStatus();
+    }
+    
+    function pingInternOnlineStatus() {
+       if(!currentInternObjectId || !activeTicketId) return;
+       fetch('/chat/ping-intern/' + currentInternObjectId, { cache: 'no-store' })
+         .then(res => res.json())
+         .then(data => {
+            const dot = document.getElementById('pingStatusDotAdmin');
+            const txt = document.getElementById('pingStatusTextAdmin');
+            if(dot && txt) {
+               dot.classList.remove('spinner-grow', 'spinner-grow-sm', 'bg-success', 'bg-secondary');
+               dot.classList.add('rounded-circle');
+               dot.style.width = '10px';
+               dot.style.height = '10px';
+               if(data.success && data.isOnline) {
+                  dot.classList.add('bg-success');
+                  txt.innerText = 'Online';
+                  txt.classList.remove('text-secondary');
+                  txt.classList.add('text-success');
+               } else {
+                  dot.classList.add('bg-secondary');
+                  txt.innerText = 'Offline';
+                  txt.classList.remove('text-success');
+                  txt.classList.add('text-secondary');
+               }
+            }
+         }).catch(console.error);
+    }
+    
+    setInterval(() => {
+        if(isAdminChatOpen) pingInternOnlineStatus();
+    }, 10000);
+
+    function acceptTicket(ticketId) {
+        fetch(`/chat/ticket/${ticketId}/accept`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+             if(data.success) {
+                 fetchTicketList();
+                 // Immediately simulate reopening this ticket
+                 const name = document.getElementById('adminChatInternName').innerText;
+                 const subject = document.getElementById('adminChatSubject').innerText;
+                 const iId = document.getElementById('adminChatInternId').innerText;
+                 const img = document.getElementById('adminChatInternImg').src;
+                 openChatTicket(ticketId, 'accepted', subject, name, iId, img, currentInternObjectId);
+             }
+        }).catch(console.error);
+    }
+
+    let ticketToClose = null;
+
+    function closeTicket(ticketId) {
+        ticketToClose = ticketId;
+        const modal = new bootstrap.Modal(document.getElementById('closeTicketModal'));
+        modal.show();
+    }
+
+    document.getElementById('confirmCloseTicketBtn')?.addEventListener('click', () => {
+        if(!ticketToClose) return;
+        const btn = document.getElementById('confirmCloseTicketBtn');
+        const originalText = btn.innerText;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        btn.disabled = true;
+
+        fetch(`/chat/ticket/${ticketToClose}/close`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+             btn.innerText = originalText;
+             btn.disabled = false;
+             bootstrap.Modal.getInstance(document.getElementById('closeTicketModal')).hide();
+
+             if(data.success) {
+                 activeTicketId = null;
+                 isAdminChatOpen = false;
+                 if (adminChatPollInterval) clearInterval(adminChatPollInterval);
+                 document.getElementById('adminChatEmpty').classList.remove('d-none');
+                 document.getElementById('adminChatActive').classList.add('d-none');
+                 fetchTicketList();
+                 if (typeof showToast !== 'undefined') showToast('Ticket closed successfully', 'success');
+             }
+        }).catch(err => {
+             console.error(err);
+             btn.innerText = originalText;
+             btn.disabled = false;
+             if (typeof showToast !== 'undefined') showToast('Error closing ticket', 'error');
+        });
+    });
+
+    function pollAdminMessages() {
+       if (!activeTicketId) return;
+
+       let url = `/chat/messages/${activeTicketId}`;
+       if (lastAdminMessageId) url += `?lastMessageId=${lastAdminMessageId}`;
+
+       fetch(url, { cache: 'no-store' })
+         .then(res => res.json())
+         .then(data => {
+            if (!data.success) return;
+
+            // Check if ticket status changed on the backend
+            if (data.status === 'closed') {
+                closeTicket(activeTicketId); // clean close
+                return;
+            }
+
+            // Update intern online status
+            const statusDot = document.getElementById('adminChatInternStatus');
+            const statusText = document.getElementById('adminChatInternStatusText');
+            const pingDot = document.getElementById('pingStatusDotAdmin');
+            const pingTxt = document.getElementById('pingStatusTextAdmin');
+
+            if (data.opponentIsOnline) {
+               if(statusDot) { statusDot.classList.remove('bg-secondary'); statusDot.classList.add('bg-success'); }
+               if(statusText) { statusText.innerText = 'Online'; statusText.classList.remove('text-secondary'); statusText.classList.add('text-success'); }
+               if(pingDot) { pingDot.classList.remove('bg-secondary', 'spinner-grow', 'spinner-grow-sm'); pingDot.classList.add('rounded-circle', 'bg-success'); }
+               if(pingTxt) { pingTxt.innerText = 'Online'; pingTxt.classList.remove('text-secondary'); pingTxt.classList.add('text-success'); }
+            } else {
+               if(statusDot) { statusDot.classList.remove('bg-success'); statusDot.classList.add('bg-secondary'); }
+               if(statusText) { statusText.innerText = 'Offline'; statusText.classList.remove('text-success'); statusText.classList.add('text-secondary'); }
+               if(pingDot) { pingDot.classList.remove('bg-success', 'spinner-grow', 'spinner-grow-sm'); pingDot.classList.add('rounded-circle', 'bg-secondary'); }
+               if(pingTxt) { pingTxt.innerText = 'Offline'; pingTxt.classList.remove('text-success'); pingTxt.classList.add('text-secondary'); }
+            }
+
+            // Render new messages
+            if (data.messages && data.messages.length > 0 && data.status === 'accepted') {
+               const box = document.getElementById('adminChatMessagesBox');
+               data.messages.forEach(msg => {
+                  renderAdminMessage(msg, box);
+                  lastAdminMessageId = msg._id;
+               });
+               box.scrollTop = box.scrollHeight;
+               
+               if (isAdminChatOpen) markAdminMessagesAsRead(activeTicketId);
+            }
+         }).catch(console.error);
+    }
+
+    function renderAdminMessage(msg, box) {
+        const isAdmin = msg.senderRole === 'admin';
+        const time = new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        const bubbleWrap = document.createElement('div');
+        // Admin's own messages are bubble-admin (which aligns to right in this context since THEY are the user), interns are bubble-intern (align left)
+        bubbleWrap.className = `chat-bubble ${isAdmin ? 'chat-bubble-admin' : 'chat-bubble-intern'}`;
+        
+        bubbleWrap.innerHTML = `
+           <div>${escapeHtml(msg.text)}</div>
+           <span class="chat-time">${time}</span>
+        `;
+        box.appendChild(bubbleWrap);
+    }
+
+    // Send Message
+    document.getElementById('adminChatSendBtn')?.addEventListener('click', sendAdminMessage);
+    document.getElementById('adminChatInputMessage')?.addEventListener('keypress', (e) => {
+       if (e.key === 'Enter' && !e.shiftKey) {
+           e.preventDefault();
+           sendAdminMessage();
+       }
+    });
+
+    function sendAdminMessage() {
+       const input = document.getElementById('adminChatInputMessage');
+       const text = input.value.trim();
+       if (!text || !activeTicketId) return;
+
+       input.value = '';
+       document.getElementById('adminEmojiPanel').classList.remove('show');
+
+       fetch('/chat/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ticketId: activeTicketId, text })
+       })
+       .then(res => res.json())
+       .then(data => {
+          if (data.success) {
+             renderAdminMessage(data.message, document.getElementById('adminChatMessagesBox'));
+             lastAdminMessageId = data.message._id;
+             document.getElementById('adminChatMessagesBox').scrollTop = document.getElementById('adminChatMessagesBox').scrollHeight;
+          }
+       }).catch(console.error);
+    }
+
+    function markAdminMessagesAsRead(ticketId) {
+        fetch(`/chat/mark-read/${ticketId}`, { method: 'POST' });
+        const badge = document.getElementById('adminChatBadge');
+        if (badge && badge.innerText !== '0') {
+           setTimeout(fetchAdminUnreadCount, 1000); // re-fetch badge right after
+        }
+    }
+
+    function fetchAdminUnreadCount() {
+        if (isAdminChatOpen && activeTicketId) {
+           // don't completely ignore, just rely on the read update
+        }
+        fetch('/chat/unread-badge')
+           .then(res => res.json())
+           .then(data => {
+               const badge = document.getElementById('adminChatBadge');
+               if (data.success && data.count > 0) {
+                   badge.innerText = data.count > 99 ? '99+' : data.count;
+                   badge.classList.remove('d-none');
+               } else {
+                   badge.classList.add('d-none');
+               }
+           }).catch(console.error);
+    }
+
+    // EMOJI PANEL
+    const ADMIN_EMOJIS = ["👍","👎","😊","😂","🙌","👏","✅","❌","❓","👀","💡","🚀","💻","😅","😎","🔥","💼","⭐","🎉","👍🏻"];
+    const aEmojiPanel = document.getElementById('adminEmojiPanel');
+    const aToggleEmojiBtn = document.getElementById('adminToggleEmojiBtn');
+    
+    if (aEmojiPanel && aToggleEmojiBtn) {
+        ADMIN_EMOJIS.forEach(emoji => {
+           const btn = document.createElement('button');
+           btn.type = 'button';
+           btn.className = 'emoji-btn';
+           btn.innerText = emoji;
+           btn.onclick = () => {
+              const input = document.getElementById('adminChatInputMessage');
+              input.value += emoji;
+              input.focus();
+           };
+           aEmojiPanel.appendChild(btn);
+        });
+
+        aToggleEmojiBtn.addEventListener('click', (e) => {
+           e.stopPropagation();
+           aEmojiPanel.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+           if (!aEmojiPanel.contains(e.target) && e.target !== aToggleEmojiBtn) {
+              aEmojiPanel.classList.remove('show');
+           }
+        });
+    }
+
+    function escapeHtml(unsafe) {
+        if (!unsafe) return '';
+        return unsafe.toString()
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    }
+
+    async function toggleVisibility(projectId, isVisible) {
+      try {
+        const res = await fetch(`/project/toggle-visibility/${projectId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isHidden: !isVisible })
+        });
+        const data = await res.json().catch(() => ({}));
+      } catch(err) {
+        console.error('Toggle error:', err);
+      }
+    }
+    async function updateProjectStatus(userId, projectId, status, btn) {
+      const icon = btn.querySelector('.btn-icon');
+      const spinner = btn.querySelector('.spinner-border');
+      
+      // Disable all action buttons in the same row
+      const actionContainer = btn.closest('.project-review-actions');
+      const buttons = actionContainer.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+      
+      if (icon) icon.classList.add('d-none');
+      if (spinner) spinner.classList.remove('d-none');
+
+      try {
+        const response = await fetch('/admin/projects/update-status', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId, projectId, status })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          if (typeof showToast !== 'undefined') showToast(data.message || "Project " + status + " successfully!", "success");
+          
+          // Update the status badge
+          const row = btn.closest('tr');
+          const badge = row.querySelector('.badge');
+          if (badge) {
+             badge.className = 'badge badge-sub-' + status;
+             badge.textContent = status;
+          }
+          
+          // Re-enable and reset buttons
+          buttons.forEach(b => b.disabled = false);
+          if (icon) icon.classList.remove('d-none');
+          if (spinner) spinner.classList.add('d-none');
+          
+          // Hide the clicked button and show the other one
+          buttons.forEach(b => {
+             const titleLabel = b.getAttribute('title').toLowerCase();
+             if (titleLabel === 'approve') {
+                if (status === 'accepted') {
+                   b.classList.remove('d-flex');
+                   b.classList.add('d-none');
+                } else {
+                   b.classList.remove('d-none');
+                   b.classList.add('d-flex');
+                }
+             } else if (titleLabel === 'reject') {
+                if (status === 'rejected') {
+                   b.classList.remove('d-flex');
+                   b.classList.add('d-none');
+                } else {
+                   b.classList.remove('d-none');
+                   b.classList.add('d-flex');
+                }
+             }
+          });
+          
+        } else {
+          if (typeof showToast !== 'undefined') showToast(data.message || "Failed to update project", "error");
+          buttons.forEach(b => b.disabled = false);
+          if (icon) icon.classList.remove('d-none');
+          if (spinner) spinner.classList.add('d-none');
+        }
+      } catch (err) {
+        console.error(err);
+        if (typeof showToast !== 'undefined') showToast("Server error while updating project", "error");
+        buttons.forEach(b => b.disabled = false);
+        if (icon) icon.classList.remove('d-none');
+        if (spinner) spinner.classList.add('d-none');
       }
     }
   </script>

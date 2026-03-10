@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const User = require("../models/User");
 const Admin = require("../models/Admin");
 const Project = require("../models/Project");
@@ -52,6 +53,8 @@ router.get("/intern", authRole("intern"), async (req, res) => {
         isClosed: a.quizId?.isClosed || false
       }));
 
+    req.flash('success_msg', 'Welcome to Intern Dashboard');
+    
     // Format starting date
     const startingDate = intern.starting_date 
       ? new Date(intern.starting_date).toLocaleDateString('en-IN', { 
@@ -79,6 +82,49 @@ router.get("/intern", authRole("intern"), async (req, res) => {
     console.error("🔥 Intern Route Error:", err);
     req.flash("error", "Something went wrong loading the intern dashboard");
     return res.redirect("/login");
+  }
+});
+
+router.post('/intern/change-password', authRole('intern'), async (req, res) => {
+  try {
+    const { newPassword, confirmPassword } = req.body;
+
+    // Validate: fields must be present
+    if (!newPassword || !confirmPassword) {
+      req.flash('error', 'Please fill in all fields.');
+      return res.redirect('/intern');
+    }
+
+    // Validate: passwords must match
+    if (newPassword !== confirmPassword) {
+      req.flash('error', 'Passwords do not match.');
+      return res.redirect('/intern');
+    }
+
+    // Validate: minimum 6 characters
+    if (newPassword.length < 6) {
+      req.flash('error', 'Password must be at least 6 characters long.');
+      return res.redirect('/intern');
+    }
+
+    const intern = await User.findById(req.session.user);
+    if (!intern) {
+      req.flash('error', 'Intern not found.');
+      return res.redirect('/login');
+    }
+
+    // Hash the new password and save
+    intern.password = await bcrypt.hash(newPassword, 10);
+    intern.isFirstLogin = false;
+    await intern.save();
+
+    req.flash('success_msg', 'Password changed successfully!');
+    return res.redirect('/intern');
+
+  } catch (error) {
+    console.error('Change Password Error:', error);
+    req.flash('error', 'Something went wrong. Please try again.');
+    return res.redirect('/intern');
   }
 });
 

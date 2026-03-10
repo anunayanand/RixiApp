@@ -1,1070 +1,1044 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Intern Dashboard</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Intern Dashboard | Rixi Lab</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 
-    <!-- Favicons -->
-    <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
+  <!-- Favicons -->
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <!-- Fonts -->
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <!-- Vendor CSS Files -->
-    <link href="/js//vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="/js//vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="/js//vendor/aos/aos.css" rel="stylesheet" />
-    <link href="/js//vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
-    <link href="/js//vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <!-- Main Dashboard CSS -->
+  <link href="/css/intern.css" rel="stylesheet" />
+</head>
 
-    <!-- Main CSS File -->
-    <link href="/css/main.css" rel="stylesheet" />
+<body>
+  <%- include('partials/loader') %>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- <link href="intern.css" rel="stylesheet"> -->
+  <!-- Mobile Sidebar Overlay -->
+  <div class="id-sidebar-overlay" id="sidebarOverlay"></div>
 
-    <style>
-      * {
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-      }
-      body {
-        background-color: #121212;
-        color: #fff;
-      }
-      body::-webkit-scrollbar {
-        display: none;
-      }
+  <!-- SIDEBAR -->
+  <aside class="id-sidebar" id="sidebar">
+    <!-- Brand -->
+    <div class="id-sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
+      <div class="id-sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="id-sidebar-badge">INTERN</span>
+      </div>
+    </div>
 
-      .card-custom,
-      .doc-card {
-        background-color: #121212;
-        border-radius: 1rem;
-        border: none;
-        color: #fff;
-      }
-      .card-custom h1 {
-        color: #ff6600;
-      }
-      .sidebar {
-        background-color: #1e1e1e;
-        border-radius: 1rem;
-        padding: 1rem 1rem;
-        height: 93vh;
-        overflow-y: auto;
-      }
-      section {
-        background-color: #1e1e1e;
-      }
+    <!-- Profile -->
+    <div class="id-sidebar-profile">
+      <div class="id-profile-img-wrap" data-bs-toggle="modal" data-bs-target="#updateProfileModal" title="Update Profile Picture">
+        <img src="<%= intern.img_url %>" alt="Profile" />
+      </div>
+      <% const formattedName = intern.name.trim().split(" ").slice(0, 2).join(" "); %>
+      <h4><%= formattedName %></h4>
+      <p><%= intern.intern_id %></p>
+      
+      <div class="id-sidebar-profile-stats" >
+        <div>
+          <span>Batch No</span>
+          <strong><%= intern.batch_no %></strong>
+        </div>
+        <div>
+          <span>Duration</span>
+          <strong><%= intern.duration %> Weeks</strong>
+        </div>
+      </div>
+    </div>
 
-      .sidebar::-webkit-scrollbar {
-        display: none;
-      }
-      .sidebar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
+    <!-- Navigation -->
+    <nav class="id-sidebar-nav">
+      <div class="id-sidebar-nav-label">Main Menu</div>
+      <a href="#dashboard" class="nav-link active" onclick="switchSection('dashboard', this)">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="#projects" class="nav-link" onclick="switchSection('projects', this)">
+        <i class="bi bi-kanban-fill"></i>
+        <span>Projects Timeline</span>
+      </a>
+      <a href="#quiz" class="nav-link d-none d-md-flex" onclick="switchSection('quiz', this)">
+        <i class="bi bi-patch-question-fill"></i>
+        <span>Quiz Assessment</span>
+      </a>
+      <a href="#meetings" class="nav-link" onclick="switchSection('meetings', this)">
+        <i class="bi bi-camera-video-fill"></i>
+        <span>Meetings</span>
+      </a>
+      <a href="#documents" class="nav-link" onclick="switchSection('documents', this)">
+        <i class="bi bi-file-earmark-text-fill"></i>
+        <span>Documents</span>
+      </a>
+      
+      <a href="#chat" class="nav-link" onclick="switchSection('chat', this)" id="navChatLink">
+        <i class="bi bi-chat-dots-fill"></i>
+        <span>Support Chat</span>
+        <span id="chatUnreadBadge" class="chat-nav-badge d-none">0</span>
+      </a>
+      
+      <!-- Logout for Mobile -->
+      <a href="#dashboard" class="nav-link d-xl-none text-danger mt-4" data-bs-toggle="modal" data-bs-target="#logoutModal" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </a>
+    </nav>
 
-      main {
-        height: 93vh;
-        overflow-y: auto;
-        padding: 2rem;
-        background-color: #1e1e1e;
-        border-radius: 1rem;
-        padding: 2rem;
-      }
-      .onMobile {
-        display: none;
-      }
+    <div class="id-sidebar-footer">
+      Technical Support:<br>
+      <strong style="color: var(--primary);">support@rixilab.tech</strong><br>
+      <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
+    </div>
+  </aside>
 
-      main::-webkit-scrollbar {
-        display: none;
-      }
-      main {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
+  <!-- MAIN CONTENT -->
+  <main class="id-main-content">
+    
+    <!-- TOPBAR -->
+    <header class="id-topbar">
+      <div class="id-topbar-left">
+        <button class="id-sidebar-toggle" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <div>
+          <h4 id="topbarTitle">Dashboard</h4>
+          <p class="d-none d-sm-block mt-2">Welcome to Rixi Lab, <%= intern.name %></p>
+        </div>
+      </div>
 
-      .nav-pills .nav-link.active {
-        background-color: #ff6600;
-        color: #fff;
-      }
-
-      .nav-pills .nav-link {
-        color: #fff;
-      }
-
-      main section {
-        display: none;
-      }
-      main section.active {
-        display: block;
-      }
-      #showDetails {
-        display: none;
-        background: none;
-        border: none;
-        color: #ff6600;
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-      progress::-webkit-progress-bar {
-        background-color: #ddd;
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      progress::-webkit-progress-value {
-        background-color: #ff6600;
-        border-radius: 10px;
-      }
-
-      /* For Firefox */
-      progress::-moz-progress-bar {
-        background-color: #ff6600;
-        border-radius: 10px;
-      }
-
-      @media (max-width: 768px) {
-        .sidebar {
-          height: auto;
-          margin-top: 0px !important;
-        }
-        main {
-          padding: 1rem;
-        }
-        .nav-pills {
-          justify-content: start !important;
-          flex-wrap: wrap;
-          font-size: smaller;
-          gap: 1rem !important;
-        }
-        .details {
-          display: none;
-        }
-        .card-custom h1 {
-          color: #ff6600;
-          font-weight: 700;
-        }
-        #showDetails {
-          display: block;
-        }
-        .showOnPhone {
-          display: none;
-        }
-        .card-custom {
-          flex-direction: column !important;
-          align-items: start !important;
-        }
-        .onMobile {
-          display: inline-block;
-        }
-        .onBigScreen {
-          display: none;
-        }
-        .phone {
-          margin-top: 8px;
-        }
-        .doc-card {
-          background-color: #121212;
-          border-radius: 1rem;
-          border: none;
-          color: #fff;
-        }
-      }
-      @media (max-width: 460px) {
-        .nav-pills {
-          justify-content: start !important;
-          flex-wrap: nowrap;
-          font-size: 0.6rem !important;
-          gap: 0.1rem !important;
-        }
-        #showDetails {
-          display: block;
-        }
-        .showOnPhone {
-          display: none;
-        }
-        .onBigScreen {
-          display: none;
-        }
-        .phone {
-          margin-top: 8px;
-        }
-        .card-custom {
-          flex-direction: column !important;
-          align-items: start !important;
-        }
-        .doc-card {
-          background-color: #121212;
-          border-radius: 1rem;
-          border: none;
-          color: #fff;
-        }
-      }
-    </style>
-  </head>
-
-  <body class="index-page">
-     <%- include('partials/loader') %>
-    <header id="header" class="header d-flex align-items-center fixed-top">
-      <div
-        class="container position-relative d-flex align-items-center justify-content-between"
-      >
-        <a
-          style="text-decoration: none"
-          href="/"
-          class="logo d-flex align-items-center me-auto me-xl-0"
-        >
-          <img src="/img/Rixi Lab New Logo PNG.png" alt="" />
-          <h1 class="sitename">Rixi Lab</h1>
-        </a>
-
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li>
-              <a style="text-decoration: none" href="/" class="active">Home</a>
+      <div class="id-topbar-right">
+        
+        <!-- Notifications -->
+        <div class="dropdown">
+          <button class="id-topbar-btn" data-bs-toggle="dropdown" aria-expanded="false" id="notificationButton">
+            <i class="bi bi-bell"></i>
+            <% const unreadCount = notifications ? notifications.length : 0; %>
+            <% if (unreadCount > 0) { %>
+              <span class="position-absolute top-0 start-100 translate-middle p-1 rounded-circle" style="background-color: var(--primary);">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            <% } %>
+          </button>
+          
+          <ul class="dropdown-menu dropdown-menu-end notif-dropdown" id="notificationList">
+            <li class="notif-header">
+              <span>Notifications (<%= unreadCount %>)</span>
+              <% if (notifications && notifications.length > 0) { %>
+                <button type="button" id="markAllBtn" class="btn btn-sm btn-outline-light py-0 px-2" style="font-size: 0.7rem; color: #fff; border-color: rgba(255,255,255,0.3);">Mark All</button>
+              <% } %>
             </li>
-            <li><a style="text-decoration: none" href="/#about">About</a></li>
-            <li>
-              <a style="text-decoration: none" href="/#services">Services</a>
-            </li>
-            <li>
-              <a style="text-decoration: none" href="/#contact">Contact</a>
-            </li>
+            <div style="max-height: 300px; overflow-y: auto;">
+              <% if (notifications && notifications.length > 0) { %>
+                <% notifications.forEach(n => { %>
+                  <li class="notif-item" data-id="<%= n._id %>">
+                    <div>
+                      <strong><%= n.title %></strong>
+                      <small class="d-block"><%= n.message %></small>
+                    </div>
+                    <button type="button" class="btn btn-sm text-success mark-as-read border-0"><i class="bi bi-check2-circle fs-5"></i></button>
+                  </li>
+                <% }) %>
+              <% } else { %>
+                <li class="p-3 text-center text-muted small">No new notifications 🎉</li>
+              <% } %>
+            </div>
           </ul>
-          <!-- <i class="mobile-nav-toggle d-xl-none bi bi-list"></i> -->
-        </nav>
+        </div>
 
-        <a class="btn-getstarted" style="text-decoration: none" href="/logout"
-          >Logout</a
-        >
+        <!-- User Dropdown (Replaces Header logout) -->
+        <div class="dropdown ms-2">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" style="color: var(--text-primary); font-weight: 500;">
+            <img src="<%= intern.img_url %>" alt="Profile" class="rounded-circle border border-2 shadow-sm" width="42" height="42" style="object-fit: cover; border-color: white !important;">
+            <span class="ms-2 d-none d-md-inline" style="font-size: 0.9rem;"><%= intern.name.trim().split(" ")[0] %></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end profile-dropdown-menu">
+            <li><h6 class="dropdown-header">Signed in as <br><strong><%= intern.email %></strong></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"><i class="bi bi-person me-2"></i> Update Photo</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#passwordModal"><i class="bi bi-shield-lock me-2"></i> Change Password</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#dashboard" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+          </ul>
+        </div>
+
       </div>
     </header>
 
-    <div
-      class="row g-4 justify-content-center m-2"
-      style="margin-top: 4rem !important"
-    >
-      <!-- Sidebar -->
-      <nav
-        class="col-md-3 d-md-block collapse show sidebar position-relative"
-        id="sidebarMenu"
-        style="border: 1px solid #ff6600"
-      >
-   <div 
-  class="dropdown position-absolute" 
-  style="top: 10px; right: 10px; z-index: 2000;"
->
-  <button 
-    class="btn  position-relative rounded-circle"
-    id="notificationButton"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-    style="color: #ff6600; background-color: #1e1e1e; border: none !important;"
-    >
-
-    <i class="bi bi-bell fs-4"></i>
-
-    <% const unreadCount = notifications ? notifications.length : 0; %>
-    <% if (unreadCount > 0) { %>
-      <span 
-        id="notificationDot"
-        class="position-absolute top-5 start-90 translate-middle p-1 rounded-circle" style="background-color: #ff6600;">
-        <span class="visually-hidden">New alerts</span>
-      </span>
-    <% } %>
-  </button>
-
-  <ul 
-    class="dropdown-menu dropdown-menu-end shadow p-2"
-    style="width: 320px; max-height: 400px; overflow-y: auto;"
-    id="notificationList">
-
-    <li class="dropdown-header fw-bold d-flex justify-content-between align-items-center" style="padding-left: 0.25rem; padding-right: 0.25rem;">
-      <span>Notifications</span>
-      <% if (notifications && notifications.length > 0) { %>
-        <button type="button" id="markAllBtn" class="btn btn-sm btn-danger">Mark All</button>
-      <% } %>
-    </li>
-    <hr class="my-1">
-
-    <% if (notifications && notifications.length > 0) { %>
-      <% notifications.forEach(n => { %>
-        <li class="p-2 border-bottom d-flex justify-content-between align-items-start" data-id="<%= n._id %>">
-          <div style="white-space: normal;">
-            <small><strong><%= n.title %></strong></small><br>
-            <small><%= n.message %></small><br>
-            <!-- <small class="text-muted"><%= n.createdAt ? new Date(n.createdAt).toLocaleString() : 'Date not available' %></small> -->
+    <!-- CONTENT BODY -->
+    <div class="id-content-body">
+      
+      <!-- 1. DASHBOARD SECTION -->
+      <section id="dashboard" class="id-section active">
+        
+        <!-- Claymorphism Stat Cards Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-md-4">
+            <div class="id-stat-card h-100">
+              <div class="id-stat-icon"><i class="bi bi-kanban"></i></div>
+              <div class="id-stat-title">Projects Assigned</div>
+              <div class="id-stat-value"><%= totalProjects %></div>
+            </div>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-success mark-as-read">✔</button>
-        </li>
-      <% }) %>
-    <% } else { %>
-      <li class="p-3 text-center text-muted">No new notifications</li>
-    <% } %>
-  </ul>
-</div>
-
-
-        <div class="text-center mb-4">
-          
-          <!-- Circular Profile Image -->
-          <div
-            class="rounded-circle overflow-hidden mx-auto mb-2"
-            style="width: 120px; height: 120px; cursor: pointer"
-            data-bs-toggle="modal"
-            data-bs-target="#updateProfileModal"
-          > 
-            <img
-              src="<%= intern.img_url %>"
-              alt="Profile"
-              class="img-fluid"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
+          <div class="col-12 col-md-4">
+            <div class="id-stat-card h-100">
+              <div class="id-stat-icon"><i class="bi bi-calendar-check" style="color: #ff6600;"></i></div>
+              <div class="id-stat-title">Attendance</div>
+              <div class="id-stat-value"><%= attendanceRate %>%</div>
+            </div>
           </div>
-
-          <!-- Name & Intern ID -->
-          <h3 class="fw-bold"><%= intern.name %></h3>
-          <h5 style="color: #ff6600"><%= intern.intern_id %></h5>
+          <div class="col-12 col-md-4">
+            <div class="id-stat-card h-100">
+              <div class="id-stat-icon"><i class="bi bi-graph-up-arrow " style="color: #ff6600;"></i></div>
+              <div class="id-stat-title">Overall Progress</div>
+              <div class="id-stat-value"><%= progress %>%</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Update Profile Image Modal -->
-        <div
-          class="modal fade"
-          id="updateProfileModal"
-          tabindex="-1"
-          aria-labelledby="updateProfileLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div
-              class="modal-content"
-              style="background-color: #1e1e1e; border: 1px solid #ff6600"
-            >
-              <div class="modal-header">
-                <h5 class="modal-title text-white" id="updateProfileLabel">
-                  Update Profile Picture
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body text-center">
-                <!-- Image Preview -->
-                <div class="mb-3">
-                  <img
-                    id="previewImage"
-                    src="<%= intern.img_url %>"
-                    style="
-                      width: 120px;
-                      height: 120px;
-                      border-radius: 50%;
-                      object-fit: cover;
-                    "
-                    alt="Preview"
-                  />
+        <!-- Glassmorphism Details Panels -->
+        <div class="row g-4">
+          <div class="col-12 col-lg-6">
+            <div class="id-glass-panel h-100">
+              <h3 class="id-panel-title"><i class="bi bi-building"></i> College Details</h3>
+              <ul class="id-info-list">
+                <li><span class="id-info-label">University</span><span class="id-info-value"><%= intern.university %></span></li>
+                <li><span class="id-info-label">College</span><span class="id-info-value"><%= intern.college %></span></li>
+                <li><span class="id-info-label">Course</span><span class="id-info-value"><%= intern.course %></span></li>
+                <li><span class="id-info-label">Branch</span><span class="id-info-value"><%= intern.branch %></span></li>
+                <li><span class="id-info-label">Year/Sem</span><span class="id-info-value"><%= intern.year_sem %></span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="id-glass-panel h-100">
+              <h3 class="id-panel-title"><i class="bi bi-briefcase"></i> Internship Details</h3>
+              <ul class="id-info-list">
+                <li><span class="id-info-label">Intern ID</span><span class="id-info-value" style="color: var(--primary);"><%= intern.intern_id %></span></li>
+                <li><span class="id-info-label">Domain</span><span class="id-info-value"><%= intern.domain %></span></li>
+                <li><span class="id-info-label">Duration</span><span class="id-info-value"><%= intern.duration %> Weeks</span></li>
+                <li><span class="id-info-label">Start Date</span><span class="id-info-value"><%= startingDate %></span></li>
+                <li><span class="id-info-label">Mentor</span><span class="id-info-value"><%= mentorName %></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. PROJECTS SECTION -->
+      <section id="projects" class="id-section">
+        
+        <!-- Timeline Progress -->
+        <div class="id-progress-wrapper">
+          <div class="id-progress-header">
+            <h3>Your Project Timeline</h3>
+            <span class="id-progress-pct"><%= progress %>%</span>
+          </div>
+          <div class="id-progress-bar-container">
+            <div class="id-progress-bar-fill" style="width: <%= progress %>%;"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <% if (intern.projectAssigned && intern.projectAssigned.length > 0) { %> 
+            <% intern.projectAssigned.forEach(sub => { 
+                const proj = projects.find(p => p._id.toString() === sub.projectId.toString()); 
+            %>
+              <div class="col-12">
+                <div class="id-project-card">
+                  <!-- Project Info -->
+                  <div class="id-project-info">
+                    <h5><%= proj ? proj.title : 'N/A' %></h5>
+                    <p><%= proj ? proj.description : '' %></p>
+                  </div>
+                  
+                  <!-- Actions -->
+                  <div class="id-project-actions mt-3 mt-md-0">
+                    <% if (sub.status === 'accepted') { %>
+                      <span class="id-status-badge id-status-accepted"><i class="bi bi-check-circle-fill me-1"></i> Accepted</span>
+                    <% } else if (sub.status === 'rejected') { %>
+                      <span class="id-status-badge id-status-rejected"><i class="bi bi-x-circle-fill me-1"></i> Rejected</span>
+                    <% } %>
+
+                    <a href="<%= proj ? proj.downloadLink : '#' %>" target="_blank" class="btn btn-outline-primary-custom">
+                      <i class="bi bi-download me-1"></i> Download
+                    </a>
+
+                    <% if (sub.status !== 'accepted' && proj && !proj.isHidden) { %>
+                      <a href="<%= proj.uploadLink %>" target="_blank" class="btn btn-primary-custom">
+                        <i class="bi bi-upload me-1"></i> Upload
+                      </a>
+                    <% } else if (sub.status !== 'accepted' && proj && proj.isHidden) { %>
+                      <button class="btn btn-secondary px-4 disabled">Closed</button>
+                    <% } else { %>
+                      <button class="btn btn-outline-success  disabled">Uploaded</button>
+                    <% } %>
+                  </div>
                 </div>
-
-                <!-- Upload Form -->
-                <form
-                  action="/update-image"
-                  method="POST"
-                  enctype="multipart/form-data"
-                  id="updateImageForm"
-                >
-                  <input
-                    type="file"
-                    name="image"
-                    id="imageInput"
-                    class="form-control mb-3"
-                    accept="image/*"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    class="btn w-100 text-white"
-                    style="background-color: #ff6600"
-                  >
-                    Update Picture
-                  </button>
-                </form>
               </div>
+            <% }) %> 
+          <% } else { %>
+            <div class="col-12 text-center py-5">
+              <i class="bi bi-folder-x fs-1 text-light opacity-50 mb-3 d-block"></i>
+              <p class="text-light">No projects assigned yet.</p>
             </div>
-          </div>
+          <% } %>
         </div>
+      </section>
 
-        <hr />
-        <div style="display: flex; justify-content: space-between">
-          <h3 class="mb-3">Personal Details</h3>
-          <button id="showDetails">
-            <i class="bi bi-arrow-down-square-fill"></i>
-          </button>
-        </div>
-        <!-- <hr class="onBigScreen mt-0"> -->
-        <div class="text-start small row row-cols-1 g-2 details">
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-envelope-at-fill" style="color: #ff6600"></i
-                >&nbsp; Email: <%= intern.email %></strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong>
-                <i class="bi bi-telephone-fill" style="color: #ff6600"></i
-                >&nbsp; Mobile No: +91 <%= intern.phone%></strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-briefcase-fill" style="color: #ff6600"></i
-                >&nbsp; Domain: <%= intern.domain %></strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-clock-fill" style="color: #ff6600"></i>&nbsp;
-                Duration: <%= intern.duration %> Weeks</strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-bookmark-check-fill" style="color: #ff6600"></i
-                >&nbsp; Batch No: <%= intern.batch_no %></strong
-              >
-            </div>
-          </div>
-          <div class="col showOnPhone" style="visibility: hidden">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-bookmark-check-fill" style="color: #ff6600"></i
-                >&nbsp; Batch No: <%= intern.batch_no %></strong
-              >
-            </div>
-          </div>
-          <div class="col showOnPhone" style="visibility: hidden">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-bookmark-check-fill" style="color: #ff6600"></i
-                >&nbsp; Batch No: <%= intern.batch_no %></strong
-              >
-            </div>
-          </div>
-
-          <div class="col showOnPhone mb-3" style="visibility: hidden">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-bookmark-check-fill" style="color: #ff6600"></i
-                >&nbsp; Batch No: 2503</strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="px-3 text-center" style="line-height: 1.5rem">
-              <span
-                >For Technical Support:
-                <strong style="color: #ff6600"
-                  >support@rixilab.tech</strong
-                ></span
-              ><br />
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <!-- Main Content -->
-      <main
-        class="col-md-8 m-4 p-3"
-        style="border: 1px solid #ff6600; background-color: #1e1e1e"
-      >
-        <!-- Navigation Tabs -->
-        <ul class="nav nav-pills flex-nowrap mb-1 gap-2 justify-content-end">
-          <li class="nav-item">
-            <a class="nav-link active" href="#dashboard">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#projects">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#meetings">Meetings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#documents">Documents</a>
-          </li>
-          <!-- <li class="nav-item"><a class="nav-link" href="#setting">Setting</a></li> -->
-        </ul>
-
-        <!-- Sections -->
-        <section id="dashboard" class="active p-1">
-          <h2 class="fw-bold mt-2">
-            Welcome, <%= intern.name.trim().split(" ")[0] %>
-          </h2>
-          <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Project Assigned</h5>
-                <h1><%=totalProjects%></h1>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Attendance</h5>
-                <h1><%=attendanceRate %>%</h1>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Progress</h5>
-                <h1><%= progress%>%</h1>
-              </div>
-            </div>
-          </div>
-          <hr />
-          <h3>College Details</h3>
-          <hr />
-          <h5>College : <%= intern.college %></h5>
-          <h5>University :<%= intern.university %></h5>
-          <h5>Course : <%= intern.course %></h5>
-          <h5>Branch : <%= intern.branch %></h5>
-          <h5>Year/Sem : <%= intern.year_sem %></h5>
-          <hr />
-          <h3>Internship Details</h3>
-          <hr />
-          <h5>Intern ID : <%= intern.intern_id %></h5>
-          <h5>Internship Domain : <%= intern.domain %></h5>
-          <h5>Internship Duration : <%= intern.duration %> Weeks</h5>
-          <h5>Starting Date : <%= startingDate %></h5>
-          <h5>Mentor : <%= mentorName %></h5>
-        </section>
-
-        <section id="projects" class="p-1">
-          <h2 class="fw-bold mt-2">
-            Your Projects Timeline
-            <span style="color: #ff6600"><%= progress %>%</span>
-          </h2>
-          <p>You can upload and download your assigned project here!</p>
-          <hr />
-
-          <progress
-            value="<%= progress %>"
-            max="100"
-            style="
-              height: 10px;
-              width: 100%;
-              background-color: #ff6600 !important;
-              border-radius: 10px;
-              overflow: hidden;
-              margin-bottom: 8px;
-            "
-          ></progress>
-
-          <div class="row g-3">
-            <div class="col-12">
-              <div class="row">
-                <% if (intern.projectAssigned && intern.projectAssigned.length >
-                0) { %> <% intern.projectAssigned.forEach(sub => { const proj =
-                projects.find(p => p._id.toString() ===
-                sub.projectId.toString()); %>
-
-                <div class="col-12 mb-3">
-                  <div
-                    class="card card-custom d-flex flex-row align-items-center justify-content-between p-3"
-                    style="border: 1px solid #ff6600"
-                  >
-                    <!-- Project Info -->
-                    <div>
-                      <h5 class="fw-bold mb-1 text-white">
-                        <%= proj ? proj.title : 'N/A' %>
-                      </h5>
-                      <p class="mb-0 text-white">
-                        <%= proj ? proj.description : '' %> <% if (sub.status
-                        === 'accepted') { %>
-                        <span
-                          style="color: #00ff66; margin-left: 8px"
-                          class="onBigScreen"
-                          >(<%= sub.status.toUpperCase() %>)</span
-                        >
-                        <% } else if (sub.status === 'rejected') { %>
-                        <span
-                          style="color: #ff3300; margin-left: 8px"
-                          class="onBigScreen"
-                          >(<%= sub.status.toUpperCase() %>)</span
-                        >
+      <!-- 2.5 QUIZ SECTION -->
+      <section id="quiz" class="id-section">
+        <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-patch-question-fill me-2" style="color: #ff6600;"></i> Assigned Quizzes</h3>
+        
+        <div class="row g-3">
+          <% if (assignedQuizzes && assignedQuizzes.length > 0) { %> 
+            <% assignedQuizzes.forEach(q => { %>
+              <div class="col-12 mt-4">
+                <div class="id-project-card id-quiz-card">
+                  <div class="d-flex align-items-center gap-4 w-100">
+                    <div class="id-quiz-icon">
+                      <i class="bi bi-patch-question-fill"></i>
+                    </div>
+                    
+                    <div class="id-project-info flex-grow-1">
+                      <h5><%= q.quiz.title %></h5>
+                      <p class="mb-1">
+                        Score: <strong><%= intern.quiz_score %></strong> &nbsp;•&nbsp; Attempts: <%= q.attemptCount %> / 2
+                        <% if (q.attemptCount >= 1) { %>
+                          <% if (intern.isPassed) { %>
+                            <span class="badge bg-success ms-2">Pass</span>
+                          <% } else { %>
+                            <span class="badge bg-danger ms-2">Fail</span>
+                          <% } %>
                         <% } %>
                       </p>
                     </div>
 
-                    <!-- Actions -->
-                    <div class="d-flex gap-2 phone">
-                      <a
-                        href="<%= proj ? proj.downloadLink : '#' %>"
-                        target="_blank"
-                        class="btn btn-sm"
-                        style="border: 1px solid #ff6600; color: #ff6600"
-                        >Download</a
-                      >
-                      <% if (sub.status === 'accepted') { %>
-                      <button
-                        style="color: #00ff66"
-                        class="btn btn-sm onMobile"
-                        disabled
-                      >
-                        (<%= sub.status.toUpperCase() %>)
-                      </button>
-                      <% } else if (sub.status === 'rejected') { %>
-                      <button
-                        style="color: #ff3300"
-                        class="btn btn-sm onMobile"
-                        disabled
-                      >
-                        (<%= sub.status.toUpperCase() %>)
-                      </button>
-                      <% } %> <% if (sub.status !== 'accepted' && proj.isHidden != true) { %>
-                      <a
-                        href="<%= proj ? proj.uploadLink : '#' %>"
-                        target="_blank"
-                        class="btn btn-outline-primary btn-sm px-3"
-                        >Upload</a
-                      >
+                    <div class="id-project-actions flex-shrink-0">
+                      <% if (q.isClosed) { %>
+                        <button class="btn btn-danger px-4" disabled>Closed</button>
+                      <% } else if (q.attemptCount >= 2) { %>
+                        <button class="btn btn-secondary px-4" disabled>No Attempts Left</button>
                       <% } else { %>
-                        <% if (sub.status !== 'accepted' && proj.isHidden == true) { %>
-                      <button class="btn btn-sm btn-outline-danger px-3" disabled>
-                        Closed
-                      </button>
-                      <% } else { %>
-                        <button class="btn btn-sm btn-outline-success" disabled>
-                        Uploaded
-                      </button>
-                      <% } %>
+                        <a href="/intern/quiz/<%= q.quiz._id %>" class="btn btn-success px-4" style="font-weight: 600;" id="startQuizBtn">
+                          <i class="bi bi-play-circle-fill me-1"></i> Start Quiz
+                        </a>
                       <% } %>
                     </div>
                   </div>
                 </div>
-
-                <% }) %> <% } else { %>
-                <p>No projects assigned yet.</p>
-                <% } %> 
-                 <% if (assignedQuizzes.length > 0 && progress == 100) {
-                %> <% assignedQuizzes.forEach(q => { %>
-                <div class="col-12 mb-3">
-                  <div
-                    class="card shadow-sm  rounded-4 p-3 d-flex flex-row align-items-center justify-content-between"
-                    style="
-                      background: linear-gradient(135deg, #1f1f1f, #2c2c2c); border: 1px solid #ff6600;
-                    "
-                  >
-                    <div class="d-flex align-items-center gap-3">
-                      <div
-                        class="icon  text-dark rounded-circle d-flex align-items-center justify-content-center"
-                        style="width: 50px; height: 50px; background-color: #ff6600;"
-                      >
-                        <i class="bi bi-question-circle-fill fs-4"></i>
-                      </div>
-
-                      <div class="info-content">
-                        <h5 class="fw-bold mb-1 text-white">
-                          <%= q.quiz.title %>
-                        </h5>
-                        <p class="mb-1 text-white small">
-                          Score: <strong><%= intern.quiz_score %></strong>
-                          <% if (q.attemptCount >= 1) { %>
-                            <% if (intern.isPassed) { %>
-                              <span class="badge bg-success ms-2  ">Pass</span>
-                            <% } else { %>
-                              <span class="badge bg-danger ms-2">Fail</span>
-                            <% } %>
-                          <% } %>
-                           &nbsp;Attempts: <%= q.attemptCount %> / 2
-                        </p>
-                        <p class="mb-0 text-white small">
-                         
-                        </p>
-                      </div>
-                    </div>
-
-                    <% if (q.isClosed) { %>
-  <button class="btn btn-danger rounded-3 px-3" disabled>
-    Closed
-  </button>
-<% } else if (q.attemptCount >= 2) { %>
-  <button class="btn btn-secondary rounded-3 px-3" disabled>
-    No Attempts Left
-  </button>
-<% } else { %>
-  <a
-    href="/intern/quiz/<%= q.quiz._id %>"
-    class="btn btn-outline-success rounded-3 px-3"
-    id="startQuizBtn"
-  >
-    Start Quiz
-  </a>
-<% } %>
-
-                  </div>
-                </div>
-                <% }) %> <% } %>
               </div>
+            <% }) %> 
+          <% } else { %>
+            <div class="col-12 text-center py-5">
+              <i class="bi bi-patch-question-fill fs-1 text-light opacity-50 mb-3 d-block"></i>
+              <p class="text-light">Your quiz will be assigned once your project submission is accepted.</p>
             </div>
-          </div>
-        </section>
+          <% } %>
+        </div>
+      </section>
 
-        <section id="meetings" class="p-1">
-          <h2 class="fw-bold mt-2">Meetings</h2>
-          <p class="text-white">Meetings here...</p>
-          <div class="row g-3">
-            <div class="col-12">
-              <div class="row">
-                <% if (assignedMeetings && assignedMeetings.length > 0) { %> <%
-                assignedMeetings.forEach(meeting => { %>
-                <div class="col-12 mb-3">
-                  <div
-                    class="card card-custom d-flex flex-row align-items-center justify-content-between p-3"
-                    style="border: 1px solid #ff6600"
-                  >
-                    <!-- Meeting Info -->
+      <!-- 3. MEETINGS SECTION -->
+      <section id="meetings" class="id-section">
+        <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-camera-video me-2" style="color: #ff6600;"></i> Scheduled Meetings</h3>
+        
+        <div class="row g-3">
+          <% if (assignedMeetings && assignedMeetings.length > 0) { %> 
+            <% assignedMeetings.forEach(meeting => { %>
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="id-meeting-card">
+                  <div class="d-flex">
+                    <div class="me-3 mt-1">
+                      <i class="bi bi-calendar-event fs-3" style="color: var(--text-primary);"></i>
+                    </div>
                     <div>
-                      <h5 class="fw-bold mb-1 text-white">
-                        <%= meeting.title || 'Untitled Meeting' %>
-                      </h5>
-                      <p class="mb-0 text-secondary">
-                        <small>Week <%= meeting.week || 'N/A' %></small> | 
-                        <small class="meeting-time" data-time="<%= meeting.scheduledTime %>">
+                      <h5 class="fw-bold mb-1" style="color: var(--text-primary);"><%= meeting.title || 'Untitled Meeting' %></h5>
+                      <p class="mb-0 text-secondary" style="font-size: 0.85rem;">
+                        <span class="badge bg-light text-dark border me-2">Week <%= meeting.week || 'N/A' %></span>
+                        <i class="bi bi-clock me-1"></i> 
+                        <span class="meeting-time" data-time="<%= meeting.scheduledTime %>">
                           <%= meeting.scheduledTime ? new Date(meeting.scheduledTime).toLocaleString() : 'Time not set' %>
-                        </small>
+                        </span>
                       </p>
                     </div>
+                  </div>
 
-                    <!-- Actions -->
-                    <div class="d-flex gap-2 align-items-center phone">
-                      <a
-                        href="<%= meeting.link || '#' %>"
-                        target="_blank"
-                        class="btn btn-outline-primary px-3 btn-sm"
-                        >Join</a
-                      >
+                  <div class="id-project-actions mt-3 mt-lg-0">
+                    <a href="<%= meeting.link || '#' %>" target="_blank" class="btn btn-outline-primary-custom">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> Join Meeting
+                    </a>
 
-                      <span
-                        class="badge <% if (meeting.attendance === 'present') { %> bg-success <% } else if (meeting.attendance === 'absent') { %> bg-danger <% } else { %> bg-secondary <% } %>"
-                        style="
-                          height: 1.9rem;
-                          text-align: center;
-                          padding-top: 0.6rem;
-                        "
-                      >
-                        <%= meeting.attendance ?
-                        meeting.attendance.toUpperCase() : 'N/A' %>
-                      </span>
-                    </div>
+                    <span class="id-status-badge <% if (meeting.attendance === 'present') { %> id-status-accepted <% } else if (meeting.attendance === 'absent') { %> id-status-rejected <% } else { %> bg-secondary text-white <% } %>">
+                      <%= meeting.attendance ? meeting.attendance.toUpperCase() : 'N/A' %>
+                    </span>
                   </div>
                 </div>
-                <% }) %> <% } else { %>
-                <p>No meetings assigned yet.</p>
-                <% } %>
               </div>
+            <% }) %> 
+          <% } else { %>
+            <div class="col-12 text-center py-5">
+              <i class="bi bi-camera-video-off fs-1 text-light opacity-50 mb-3 d-block"></i>
+              <p class="text-light">No upcoming meetings scheduled.</p>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- 4. DOCUMENTS SECTION -->
+     <section id="documents" class="id-section">
+        <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-folder2-open me-2" style="color: #ff6600;"></i> Internship Documents</h3>
+        
+        <div class="row g-4">
+          <!-- Offer Letter -->
+          <div class="col-12 col-xl-6">
+            <div class="id-doc-card">
+              <div class="d-flex align-items-center gap-3">
+                <div class="id-doc-icon"><i class="bi bi-envelope-paper"></i></div>
+                <div>
+                  <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Offer Letter</h5>
+                  <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Official internship offer document.</p>
+                </div>
+              </div>
+              <a href="<%= intern.offer_letter || `/download-offer-letter/${intern._id}` %>" target="_blank" class="btn btn-outline-primary-custom rounded-circle ">
+                <i class="bi bi-download"></i>
+              </a>
             </div>
           </div>
-        </section>
 
-        <section id="documents" class="p-1">
-          <h2 class="fw-bold mt-2">Internship Documents</h2>
-          <p class="text-white">
-            Your can download your internship documents here...
-          </p>
-          <div class="row g-3">
-            <!-- Offer Letter -->
-            <div class="col-12">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600"
-              >
+          <!-- Feedback Form -->
+          <% if (progress === 100) { %>
+            <div class="col-12 col-xl-6">
+              <div class="id-doc-card" style="border-color: #10b981;">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-file-earmark-text-fill fs-3"
-                      style="color: #ff6600"
-                    ></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      Internship Offer Letter
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Download your offer letter from here
-                    </p>
+                  <div class="id-doc-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="bi bi-chat-square-text"></i></div>
+                  <div>
+                    <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Internship Feedback</h5>
+                    <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Submit your program feedback.</p>
                   </div>
                 </div>
-                <a
-                  href="<%= intern.offer_letter || `/download-offer-letter/${intern._id}` %>"
-                  target="_blank"
-                  class="btn btn-outline-success"
-                >
-                  <i class="bi bi-download"></i>
+                <a href="https://forms.gle/EVts4YfhRZCnp6aj8" target="_blank" class="btn btn-outline-success rounded-circle ">
+                  <i class="bi bi-arrow-right"></i>
                 </a>
               </div>
             </div>
-            <% if (progress === 100) { %>
-                <div class="col-12">
-                  <div
-                    class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                    style="border: 1px solid #ff6600"
-                  >
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="info-icon text-warning">
-                        <i
-                          class="bi bi-file-text fs-3"
-                          style="color: #ff6600"
-                        ></i>
-                      </div>
-                      <div class="info-content">
-                        <h5 class="fw-bold mb-1 text-white">
-                          Internship Feedback
-                        </h5>
-                        <p class="mb-0 text-white">
-                          Internship Feedback Submission
-                        </p>
-                      </div>
-                    </div>
-                    <a
-                      href="https://forms.gle/EVts4YfhRZCnp6aj8"
-                      target="_blank"
-                      class="btn btn-outline-success"
-                    >
-                      <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
+          <% } %>
+
+          <!-- Certificate -->
+          <div class="col-12 col-xl-6">
+            <div class="id-doc-card">
+              <div class="d-flex align-items-center gap-3">
+                <div class="id-doc-icon"><i class="bi bi-award"></i></div>
+                <div>
+                  <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Completion Certificate</h5>
+                  <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Unlocked upon program completion.</p>
                 </div>
-                <% } %>
+              </div>
+              <% if (intern.certificate_link) { %>
+                <a href="<%= intern.certificate_link %>" download class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i class="bi bi-download"></i></a>
+              <% } else if (intern.completion_date) { %>
+                <a href="/download-certificate/<%= intern._id %>" target="_blank" class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
+              <% } else { %>
+                <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50" disabled><i class="bi bi-lock-fill"></i></button>
+              <% } %>
+            </div>
+          </div>
 
-            <!-- Certificate -->
-            <div class="col-12">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-file-earmark-medical-fill fs-3"
-                      style="color: #ff6600"
-                    ></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      Internship Certificate
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Available when your internship is completed
-                    </p>
-                  </div>
-                </div>
-                <% if (intern.certificate_link) { %>
-  <a
-    href="<%= intern.certificate_link %>"
-    download
-    class="btn btn-outline-success"
-  >
-    <i class="bi bi-download"></i>
-  </a>
+        </div>
+      </section>
 
-<% } else if (intern.completion_date) { %>
-  <a
-    href="/download-certificate/<%= intern._id %>"
-    target="_blank"
-    class="btn btn-outline-success"
-  >
-    <i class="bi bi-download"></i>
-  </a>
+      <!-- 5. CHAT SECTION -->
+      <section id="chat" class="id-section">
+        <h3 class="mb-4 d-flex align-items-center" style="font-weight: 700; color: var(--text-primary);">
+          <span><i class="bi bi-chat-dots me-2" style="color: #ff6600;"></i> Chat with Mentor</span>
+          <div class="ms-auto d-flex align-items-center" style="font-size: 0.85rem; font-weight: 500;">
+            <div class="spinner-grow spinner-grow-sm text-secondary me-2" role="status" id="pingStatusDot"></div>
+            <span id="pingStatusText" class="text-secondary">Checking Status...</span>
+          </div>
+        </h3>
+        
+        <!-- State 1: Raise Ticket Form -->
+        <div id="chatStateNoTicket" class="chat-ticket-card d-none">
+          <div class="mb-4">
+            <i class="bi bi-chat-square-text " style="font-size: 3rem; color: #ff6600;"></i>
+          </div>
+          <h4 class="text-white fw-bold mb-2">Need Help?</h4>
+          <p class="text-secondary small mb-4">Raise a support ticket to start a one-to-one chat with your assigned mentor.</p>
+          <form id="raiseTicketForm">
+            <div class="mb-3 text-start">
+              <label class="form-label text-white small fw-semibold">Subject</label>
+              <select class="form-select form-control" id="ticketSubject" style="background: var(--surface-alt); border-color: var(--border); color: var(--text-primary);" required>
+                <option value="" disabled selected>Select a topic...</option>
+                <option value="Project Guidance">Project Guidance</option>
+                <option value="Meeting Request">Meeting Request</option>
+                <option value="General Query">General Query</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100"><i class="bi bi-send-plus me-2"></i> Raise Ticket</button>
+          </form>
+        </div>
 
-<% } else { %>
-  <button
-    class="btn btn-outline-success disabled"
-    disabled
-    aria-disabled="true"
-    tabindex="-1"
-  >
-    <i class="bi bi-download"></i>
-  </button>
-<% } %>
+        <!-- State 2: Ticket Pending -->
+        <div id="chatStatePending" class="chat-ticket-card d-none">
+          <div class="spinner-grow mb-4" role="status" style="width: 3rem; height: 3rem; color:#ff6600"></div>
+          <h4 class="text-white fw-bold mb-2">Ticket Raised</h4>
+          <p class="text-secondary small mb-2">Subject: <strong id="pendingSubject" class="text-white">...</strong></p>
+          <p class="text-secondary small mb-0">Waiting for your mentor to accept the request. Please check back soon.</p>
+        </div>
 
-
+        <!-- State 3: Active Chat -->
+        <div id="chatStateActive" class="chat-window d-none">
+          <div class="chat-header">
+            <div class="d-flex align-items-center gap-3">
+              <div class="position-relative">
+                <img id="chatAdminImg" src="" alt="Mentor" width="40" height="40" class="rounded-circle" style="object-fit: cover; border: 2px solid var(--border);">
+                <span id="chatAdminStatus" class="position-absolute bottom-0 end-0 border border-2 border-dark rounded-circle bg-secondary" style="width: 10px; height: 10px;"></span>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold text-white mb-1" id="chatAdminName">Mentor Name</h6>
+                <div class="text-secondary" style="font-size: 0.75rem;"><span id="chatAdminStatusText" class="text-secondary">Offline</span> • <span id="activeSubject" class="opacity-75"></span></div>
               </div>
             </div>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill"><i class="bi bi-shield-check me-1"></i> Active</span>
           </div>
-        </section>
-      </main>
-    </div>
-
-    <footer id="footer" class="footer light-background">
-      <div class="copyright text-center">
-        <div
-          class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center"
-        >
-          <div
-            class="d-flex flex-column align-items-center align-items-lg-start"
-          >
-            <div>
-              © Copyright 2025-26 <strong><span>Rixi Lab</span></strong
-              >. All Rights Reserved
-            </div>
-            <div class="credits">
-              Designed by
-              <a
-                style="text-decoration: none; color: #ff6600"
-                href="https://www.rixilab.tech"
-                ><b>Rixi Lab</b></a
-              >
-            </div>
+          
+          <div class="chat-messages" id="chatMessagesBox">
+            <!-- Messages inserted here via JS -->
           </div>
 
-          <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-            <a href="https://www.linkedin.com/company/rixilab"
-              ><i class="bi bi-linkedin"></i
-            ></a>
-            <a href="https://www.facebook.com/rixilab"
-              ><i class="bi bi-facebook"></i
-            ></a>
-            <a href="https://www.instagram.com/rixilab.in"
-              ><i class="bi bi-instagram"></i
-            ></a>
-            <a href=""><i class="bi bi-twitter-x"></i></a>
+          <div class="chat-input-bar">
+            <!-- Emoji Panel -->
+            <div id="emojiPanel" class="emoji-panel"></div>
+
+            <button type="button" class="chat-emoji-btn" id="toggleEmojiBtn" title="Emojis"><i class="bi bi-emoji-smile"></i></button>
+            <textarea class="chat-input" id="chatInputMessage" placeholder="Type your message..." rows="1"></textarea>
+            <button type="button" class="chat-send-btn" id="chatSendBtn" title="Send"><i class="bi bi-send-fill"></i></button>
           </div>
         </div>
-      </div>
-    </footer>
 
-    <% if (showPasswordPopup) { %>
-    <div
-      class="modal fade"
-      id="passwordModal"
-      tabindex="-1"
-      aria-labelledby="passwordModalLabel"
-      aria-hidden="true"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div
-          class="modal-content shadow-lg"
-          style="background-color: #1e1e1e; border: 1px solid #ff6600"
-        >
-          <div class="modal-header">
-            <h5 class="modal-title text-white" id="passwordModalLabel">
-              Change Your Password
-            </h5>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS -->
+
+  <!-- Update Profile Picture Modal -->
+  <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg" style="background-color: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold" id="updateProfileLabel">Update Profile Picture</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center pt-2">
+          <div class="mb-4 mt-2 position-relative d-inline-block">
+            <img id="previewImage" src="<%= intern.img_url %>" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-glow); padding: 4px;" alt="Preview" />
           </div>
-          <div class="modal-body">
-            <form
-              action="/intern/change-password"
-              method="POST"
-              id="passwordForm"
-              novalidate
-            >
-              <div class="mb-3">
-                <label class="form-label text-white">New Password</label>
-                <input
-                  type="password"
-                  name="newPassword"
-                  class="form-control"
-                  placeholder="Enter new Password"
-                  minlength="6"
-                />
+          <form action="/update-image" method="POST" enctype="multipart/form-data" id="updateImageForm">
+            <input type="file" name="image" id="imageInput" class="form-control mb-3 p-2 text-white" style="background: var(--surface-alt); border-color: var(--border);" accept="image/*" required />
+            <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6">Upload New Picture</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <% if (showPasswordPopup) { %>
+  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg" style="background-color: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);">
+        <div class="modal-header border-bottom-0 rounded-top" style="background: var(--surface-alt); border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+          <h5 class="modal-title fw-bold text-white" id="passwordModalLabel"><i class="bi bi-shield-lock-fill text-primary me-2"></i>Change Your Password</h5>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-secondary small mb-4">For security reasons, please update your initial password before accessing your dashboard.</p>
+          <form action="/intern/change-password" method="POST" id="passwordForm" novalidate>
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-white small">New Password</label>
+              <div class="input-group">
+                <input type="password" id="newPassFirst" name="newPassword" class="form-control p-2 text-white shadow-sm" style="background: var(--surface-alt); border: 1px solid var(--border); border-right: none;" placeholder="Enter new password (min. 6 chars)" minlength="6" required />
+                <button type="button" class="btn" style="background: var(--surface-alt); border: 1px solid var(--border); border-left: none; color: var(--text-secondary);" onclick="togglePwd('newPassFirst', this)"><i class="bi bi-eye-slash"></i></button>
               </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  required
-                  minlength="6"
-                />
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-white small">Confirm Password</label>
+              <div class="input-group">
+                <input type="password" id="confPassFirst" name="confirmPassword" class="form-control p-2 text-white shadow-sm" style="background: var(--surface-alt); border: 1px solid var(--border); border-right: none;" placeholder="Confirm password" required minlength="6" />
+                <button type="button" class="btn" style="background: var(--surface-alt); border: 1px solid var(--border); border-left: none; color: var(--text-secondary);" onclick="togglePwd('confPassFirst', this)"><i class="bi bi-eye-slash"></i></button>
               </div>
-              <button
-                type="submit"
-                class="btn w-100 text-white"
-                style="background-color: #ff6600; font-weight: 500"
-              >
-                Update Password
-              </button>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+  <!-- General UI Password Modal (used from dropdown) -->
+  <% if (!showPasswordPopup) { %>
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="optionalPasswordModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg" style="background-color: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);">
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title fw-bold text-white" id="optionalPasswordModalLabel"><i class="bi bi-shield-lock-fill text-primary me-2"></i>Change Password</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4 pt-2">
+            <form action="/intern/change-password" method="POST" id="passwordFormGeneral" novalidate>
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-white small">New Password</label>
+                <div class="input-group">
+                  <input type="password" id="newPassGen" name="newPassword" class="form-control p-2 text-white shadow-sm" style="background: var(--surface-alt); border: 1px solid var(--border); border-right: none;" placeholder="Enter new password" minlength="6" required />
+                  <button type="button" class="btn" style="background: var(--surface-alt); border: 1px solid var(--border); border-left: none; color: var(--text-secondary);" onclick="togglePwd('newPassGen', this)"><i class="bi bi-eye-slash"></i></button>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label fw-semibold text-white small">Confirm Password</label>
+                <div class="input-group">
+                  <input type="password" id="confPassGen" name="confirmPassword" class="form-control p-2 text-white shadow-sm" style="background: var(--surface-alt); border: 1px solid var(--border); border-right: none;" placeholder="Confirm password" required minlength="6" />
+                  <button type="button" class="btn" style="background: var(--surface-alt); border: 1px solid var(--border); border-left: none; color: var(--text-secondary);" onclick="togglePwd('confPassGen', this)"><i class="bi bi-eye-slash"></i></button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6">Update Password</button>
             </form>
           </div>
         </div>
       </div>
     </div>
+  <% } %>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      const passwordModalEl = document.getElementById("passwordModal");
-      const passwordModal = new bootstrap.Modal(passwordModalEl, {
-        backdrop: "static",
-        keyboard: false,
-      });
-      passwordModal.show();
-    </script>
-    <% } %> <%- include("partials/toaster") %>
+  <!-- Logout Confirmation Modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content shadow-lg" style="background-color: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);">
+        <div class="modal-body text-center p-4">
+          <div class="mb-3">
+            <i class="bi bi-box-arrow-right text-danger" style="font-size: 3rem;"></i>
+          </div>
+          <h5 class="fw-bold text-white mb-2">Ready to Leave?</h5>
+          <p class="text-secondary small mb-4">Are you sure you want to log out of your dashboard?</p>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn btn-outline-secondary w-50" data-bs-dismiss="modal" style="border-color: var(--border); color: var(--text-secondary);">Cancel</button>
+            <a href="/logout" class="btn btn-danger w-50 fw-bold">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Scroll Top -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+  <%- include("partials/toaster") %>
 
-    <!-- Vendor JS Files -->
-    <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/vendor/aos/aos.js"></script>
-    <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="/js/vendor/typed.js/typed.umd.js"></script>
-    <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
+  <!-- Vendor JS Files -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Main JS Logics from existing view -->
+  <script src="/js/intern.js"></script>
 
-    <!-- Main JS File -->
-    <script src="/js/main.js"></script>
-    <script type="module" src="/js/login.js"></script>
-    <script src="/js/intern.js"></script>
-   <script>
-     window.addEventListener("resize", function () {
-      if (window.innerWidth < 1024) {
-        document.querySelector('startQuizBtn').addEventListener("click",()=>{
-        window.location.href = "/mobile-blocked";
-        })
+  <!-- UI Interactions Script -->
+  <script>
+    // Tab Switching Logic
+    function switchSection(sectionId, element) {
+      // Prevent default anchor behavior if handled by script (we use hashes so it's fine)
+      
+      // Remove active class from all nav links and hide all sections
+      document.querySelectorAll('.id-sidebar-nav .nav-link').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.id-section').forEach(sec => sec.classList.remove('active'));
+      
+      // Add active to clicked link and show target section
+      element.classList.add('active');
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.classList.add('active');
       }
-  });
+
+      // Update Topbar Title
+      const titleSpan = element.querySelector('span');
+      if (titleSpan) {
+        document.getElementById('topbarTitle').innerText = titleSpan.innerText;
+      }
+
+      // Hide sidebar on mobile after click
+      if (window.innerWidth < 1200) {
+        document.getElementById('sidebar').classList.remove('show');
+        document.getElementById('sidebarOverlay').classList.remove('show');
+      }
+    }
+
+    // Sidebar Toggle Logic
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if(toggleBtn && sidebar && overlay) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.add('show');
+        overlay.classList.add('show');
+      });
+
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('show');
+        overlay.classList.remove('show');
+      });
+    }
+
+    // Handle Required Password Modal
+    <% if (showPasswordPopup) { %>
+      document.addEventListener("DOMContentLoaded", function() {
+        const passwordModalEl = document.getElementById("passwordModal");
+        if (passwordModalEl) {
+          const passwordModal = new bootstrap.Modal(passwordModalEl, {
+            backdrop: "static",
+            keyboard: false,
+          });
+          passwordModal.show();
+        }
+      });
+    <% } %>
+
+    // Password visibility toggle
+    function togglePwd(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('bi-eye-slash', 'bi-eye');
+        btn.style.color = 'var(--primary)';
+      } else {
+        input.type = 'password';
+        icon.classList.replace('bi-eye', 'bi-eye-slash');
+        btn.style.color = 'var(--text-secondary)';
+      }
+    }
+
+    // Mobile Quiz blocking logic
+    window.addEventListener("resize", function () {
+      if (window.innerWidth < 1024) {
+        const startBtn = document.getElementById('startQuizBtn');
+        if (startBtn) {
+          // Replace link behavior for mobile
+          startBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "/mobile-blocked";
+          });
+        }
+      }
+    });
+    // Trigger resize check on load
+    window.dispatchEvent(new Event('resize'));
+
+    // ==========================================
+    // CHAT SYSTEM LOGIC
+    // ==========================================
+    let currentTicketId = null;
+    let lastMessageId = null;
+    let chatPollInterval = null;
+    let isChatOpen = false;
+
+    const chatStateNoTicket = document.getElementById('chatStateNoTicket');
+    const chatStatePending = document.getElementById('chatStatePending');
+    const chatStateActive = document.getElementById('chatStateActive');
+    const chatMessagesBox = document.getElementById('chatMessagesBox');
+    
+    // Check initial chat status on load
+    window.addEventListener("DOMContentLoaded", () => {
+       fetchTicketStatus();
+       fetchUnreadCount();
+       pingAdminOnlineStatus();
+       setInterval(fetchUnreadCount, 5000); // Check unread count every 5s
+       setInterval(pingAdminOnlineStatus, 10000); // Ping-pong mentor status every 10s
+    });
+
+    function pingAdminOnlineStatus() {
+       fetch('/chat/ping-admin', { cache: 'no-store' })
+         .then(res => res.json())
+         .then(data => {
+            const dot = document.getElementById('pingStatusDot');
+            const txt = document.getElementById('pingStatusText');
+            if(dot && txt) {
+               dot.classList.remove('spinner-grow', 'spinner-grow-sm', 'bg-success', 'bg-secondary');
+               dot.classList.add('rounded-circle');
+               dot.style.width = '10px';
+               dot.style.height = '10px';
+               if(data.success && data.isOnline) {
+                  dot.classList.add('bg-success');
+                  txt.innerText = 'Mentor Online';
+                  txt.classList.remove('text-secondary');
+                  txt.classList.add('text-success');
+               } else {
+                  dot.classList.add('bg-secondary');
+                  txt.innerText = 'Mentor Offline';
+                  txt.classList.remove('text-success');
+                  txt.classList.add('text-secondary');
+               }
+            }
+         }).catch(console.error);
+    }
+
+    // Handle section switch to handle chat read receipts
+    const originalSwitchSection = switchSection;
+    switchSection = function(sectionId, element) {
+       originalSwitchSection(sectionId, element);
+       isChatOpen = (sectionId === 'chat');
+       
+       if (isChatOpen && currentTicketId) {
+           markMessagesAsRead(currentTicketId);
+       }
+    };
+
+    function fetchTicketStatus() {
+       fetch('/chat/ticket/status')
+         .then(res => res.json())
+         .then(data => {
+            if (!data.success || !data.ticket) {
+               showChatState('noticket');
+               return;
+            }
+            const ticket = data.ticket;
+            currentTicketId = ticket._id;
+            
+            if (ticket.status === 'pending') {
+               document.getElementById('pendingSubject').innerText = ticket.subject;
+               showChatState('pending');
+               // Start polling to check if it gets accepted
+               startChatPolling();
+            } else if (ticket.status === 'accepted') {
+               setupActiveChat(ticket);
+               showChatState('active');
+               startChatPolling();
+               if(isChatOpen) markMessagesAsRead(currentTicketId);
+            }
+         }).catch(console.error);
+    }
+
+    function showChatState(state) {
+       chatStateNoTicket.classList.add('d-none');
+       chatStatePending.classList.add('d-none');
+       chatStateActive.classList.add('d-none');
+
+       if (state === 'noticket') chatStateNoTicket.classList.remove('d-none');
+       else if (state === 'pending') chatStatePending.classList.remove('d-none');
+       else if (state === 'active') chatStateActive.classList.remove('d-none');
+    }
+
+    function setupActiveChat(ticket) {
+       document.getElementById('activeSubject').innerText = ticket.subject;
+       if (ticket.adminId) {
+          document.getElementById('chatAdminName').innerText = ticket.adminId.name || 'Mentor';
+          if (ticket.adminId.img_url) {
+             document.getElementById('chatAdminImg').src = ticket.adminId.img_url;
+          }
+       }
+    }
+
+    // Raise Ticket
+    document.getElementById('raiseTicketForm')?.addEventListener('submit', (e) => {
+       e.preventDefault();
+       const subject = document.getElementById('ticketSubject').value;
+       const btn = e.target.querySelector('button');
+       btn.disabled = true;
+       btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Raising...';
+
+       fetch('/chat/ticket', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject })
+       })
+       .then(res => res.json())
+       .then(data => {
+          if (data.success) {
+             currentTicketId = data.ticket._id;
+             document.getElementById('pendingSubject').innerText = data.ticket.subject;
+             showChatState('pending');
+             startChatPolling();
+          } else {
+             alert(data.message || 'Error raising ticket');
+             btn.disabled = false;
+             btn.innerHTML = '<i class="bi bi-send-plus me-2"></i> Raise Ticket';
+          }
+       }).catch(console.error);
+    });
+
+    // Polling logic
+    function startChatPolling() {
+       if (chatPollInterval) clearInterval(chatPollInterval);
+       pollMessages(); // initial fetch
+       chatPollInterval = setInterval(pollMessages, 3000);
+    }
+
+    function pollMessages() {
+       if (!currentTicketId) return;
+
+       let url = `/chat/messages/${currentTicketId}`;
+       if (lastMessageId) url += `?lastMessageId=${lastMessageId}`;
+
+       fetch(url, { cache: 'no-store' })
+         .then(res => res.json())
+         .then(data => {
+            if (!data.success) return;
+            
+            // Check if ticket closed or accepted while pending
+            if (data.status === 'closed') {
+               clearInterval(chatPollInterval);
+               showToast('Chat session ended by mentor.', 'info');
+               setTimeout(() => location.reload(), 2000);
+               return;
+            }
+            if (!chatStateActive.classList.contains('d-none') === false && data.status === 'accepted') {
+                // Transitioned from pending to accepted
+                fetchTicketStatus(); 
+                return;
+            }
+
+            // Update mentor online status
+            const statusDot = document.getElementById('chatAdminStatus');
+            const statusText = document.getElementById('chatAdminStatusText');
+            const pingDot = document.getElementById('pingStatusDot');
+            const pingTxt = document.getElementById('pingStatusText');
+
+            if (data.opponentIsOnline) {
+               if(statusDot) { statusDot.classList.remove('bg-secondary'); statusDot.classList.add('bg-success'); }
+               if(statusText) { statusText.innerText = 'Online'; statusText.classList.remove('text-secondary'); statusText.classList.add('text-success'); }
+               if(pingDot) { pingDot.classList.remove('bg-secondary', 'spinner-grow', 'spinner-grow-sm'); pingDot.classList.add('rounded-circle', 'bg-success'); }
+               if(pingTxt) { pingTxt.innerText = 'Mentor Online'; pingTxt.classList.remove('text-secondary'); pingTxt.classList.add('text-success'); }
+            } else {
+               if(statusDot) { statusDot.classList.remove('bg-success'); statusDot.classList.add('bg-secondary'); }
+               if(statusText) { statusText.innerText = 'Offline'; statusText.classList.remove('text-success'); statusText.classList.add('text-secondary'); }
+               if(pingDot) { pingDot.classList.remove('bg-success', 'spinner-grow', 'spinner-grow-sm'); pingDot.classList.add('rounded-circle', 'bg-secondary'); }
+               if(pingTxt) { pingTxt.innerText = 'Mentor Offline'; pingTxt.classList.remove('text-success'); pingTxt.classList.add('text-secondary'); }
+            }
+
+            // Render new messages
+            if (data.messages && data.messages.length > 0 && data.status === 'accepted') {
+               data.messages.forEach(msg => {
+                  renderMessage(msg);
+                  lastMessageId = msg._id;
+               });
+               chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
+               
+               if (isChatOpen) markMessagesAsRead(currentTicketId);
+            }
+         }).catch(console.error);
+    }
+
+    function renderMessage(msg) {
+        const isIntern = msg.senderRole === 'intern';
+        const time = new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        const bubbleWrap = document.createElement('div');
+        bubbleWrap.className = `chat-bubble ${isIntern ? 'chat-bubble-intern' : 'chat-bubble-admin'}`;
+        
+        bubbleWrap.innerHTML = `
+           <div>${escapeHtml(msg.text)}</div>
+           <span class="chat-time">${time}</span>
+        `;
+        chatMessagesBox.appendChild(bubbleWrap);
+    }
+
+    // Send Message
+    document.getElementById('chatSendBtn')?.addEventListener('click', sendMessage);
+    document.getElementById('chatInputMessage')?.addEventListener('keypress', (e) => {
+       if (e.key === 'Enter' && !e.shiftKey) {
+           e.preventDefault();
+           sendMessage();
+       }
+    });
+
+    function sendMessage() {
+       const input = document.getElementById('chatInputMessage');
+       const text = input.value.trim();
+       if (!text || !currentTicketId) return;
+
+       input.value = '';
+       document.getElementById('emojiPanel').classList.remove('show');
+
+       fetch('/chat/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ticketId: currentTicketId, text })
+       })
+       .then(res => res.json())
+       .then(data => {
+          if (data.success) {
+             renderMessage(data.message);
+             lastMessageId = data.message._id;
+             chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
+          }
+       }).catch(console.error);
+    }
+
+    function markMessagesAsRead(ticketId) {
+        fetch(`/chat/mark-read/${ticketId}`, { method: 'POST' });
+        const badge = document.getElementById('chatUnreadBadge');
+        if (badge) badge.classList.add('d-none');
+    }
+
+    function fetchUnreadCount() {
+        if (isChatOpen) return; // don't show badge if we are already reading
+        fetch('/chat/unread-badge')
+           .then(res => res.json())
+           .then(data => {
+               const badge = document.getElementById('chatUnreadBadge');
+               if (data.success && data.count > 0) {
+                   badge.innerText = data.count > 99 ? '99+' : data.count;
+                   badge.classList.remove('d-none');
+               } else {
+                   badge.classList.add('d-none');
+               }
+           }).catch(console.error);
+    }
+
+    const EMOJIS = ["👍","👎","😊","😂","🤣","😍","🙏","🔥","🎉","💡","✅","❌","❓","👀","🙌","👏","🚀","💻","😅","😎","🥺","😢","😡","🤔"];
+    const emojiPanel = document.getElementById('emojiPanel');
+    const toggleEmojiBtn = document.getElementById('toggleEmojiBtn');
+    
+    if (emojiPanel && toggleEmojiBtn) {
+        EMOJIS.forEach(emoji => {
+           const btn = document.createElement('button');
+           btn.type = 'button';
+           btn.className = 'emoji-btn';
+           btn.innerText = emoji;
+           btn.onclick = () => {
+              const input = document.getElementById('chatInputMessage');
+              input.value += emoji;
+              input.focus();
+           };
+           emojiPanel.appendChild(btn);
+        });
+
+        toggleEmojiBtn.addEventListener('click', (e) => {
+           e.stopPropagation();
+           emojiPanel.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+           if (!emojiPanel.contains(e.target) && e.target !== toggleEmojiBtn) {
+              emojiPanel.classList.remove('show');
+           }
+        });
+    }
+
+    function escapeHtml(unsafe) {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    }
+
   </script>
-  </body>
+</body>
 </html>

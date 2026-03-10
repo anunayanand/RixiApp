@@ -3,70 +3,449 @@
 <head>
   <meta charset="UTF-8">
   <title><%= quiz.title %> | Quiz</title>
+  
+  <!-- Add Google Fonts to match intern-dashboard -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-    /* --- Your existing styles (unchanged layout) --- */
- body {
-  background-color: #121212;
-  color: #fff;
+    /* --- CSS Variables mapped from intern-dashboard.css --- */
+    :root {
+      --primary: #ff6600;
+      --primary-light: #ff8533;
+      --primary-glow: rgba(255, 102, 0, 0.25);
+      --body-bg: #121212;
+      --surface: #1e1e1e;
+      --surface-alt: #2a2a2a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0aabf;
+      --border: rgba(255, 255, 255, 0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --glass-bg: rgba(30, 30, 30, 0.85);
+    }
 
-  /* hide scrollbar visually but keep scrolling allowed */
-  scrollbar-width: none;    /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
+    body {
+      background-color: var(--body-bg);
+      color: var(--text-primary);
+      font-family: 'Inter', 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
 
-body::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;  /* Chrome, Safari, Edge */
-}
+      /* hide scrollbar visually but keep scrolling allowed */
+      scrollbar-width: none;    /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+    }
 
-/* fix modal scrollbar issue */
-body.modal-open {
-  overflow: hidden !important;  /* prevent main page scroll when modal is open */
-}
-    .card { background-color: #1f1f1f; border-radius: 12px; border: none; }
-    .question-card { transition: all 0.3s ease; }
-    .option label { cursor: pointer; }
+    body::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;  /* Chrome, Safari, Edge */
+    }
+
+    /* fix modal scrollbar issue */
+    body.modal-open {
+      overflow: hidden !important;  /* prevent main page scroll when modal is open */
+    }
+
+    /* --- Header Bar --- */
+    .quiz-header-bar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .quiz-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0;
+      padding-left: 10px;
+      border-left: 4px solid var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .timer-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .attempt-pill {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .instruction-trigger {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .instruction-trigger:hover {
+      color: var(--primary);
+      background: var(--primary-glow);
+      border-color: var(--primary);
+    }
+
+    .intern-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 12px 6px 6px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+    .intern-info img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    }
+    .intern-details {
+      line-height: 1.2;
+    }
+    .intern-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .intern-id-text {
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    .attempt-chip {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 102, 0, 0.1);
+      border: 1px solid rgba(255, 102, 0, 0.3);
+      color: var(--primary-light);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    /* --- Main Quiz Cards --- */
+    .question-card {
+      background-color: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 102, 0, 0.2) !important;
+      padding: 2rem !important;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      animation: slideIn 0.3s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .question-number {
+      color: var(--primary);
+      font-weight: 800;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
     .question-image {
       width: 100%;
       max-width: 400px;
       height: 225px;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: var(--radius-sm);
       margin-top: 10px;
+      margin-bottom: 1.5rem;
       display: block;
+      border: 1px solid var(--border);
     }
-    .btn-custom { color: #fff !important;  }
-    .btn-custom:hover { background-color: #ff6600; color: #fff !important; }
-    .btn-submit { background-color: #28a745; border-color: #28a745; color: #fff; }
-    .btn-submit:hover { background-color: #218838; }
-    .timer { font-size: 1.2rem; font-weight: bold; }
-    .question-nav {
-      max-height: 70vh;
-      overflow-y: auto;
-      padding: 10px;
-      background-color: #1a1a1a;
-      border-radius: 10px;
+
+    /* --- Options Styling --- */
+    .option-wrapper {
+      margin-bottom: 12px;
     }
-    .question-nav .btn {
-      width: 100%;
-      margin-bottom: 5px;
-      color: #fff;
-    }
-    .question-nav .not-visited { background-color: #6c757d; }
-    .question-nav .visited { background-color: #ffc107; color: #000; }
-    .question-nav .answered { background-color: #28a745; }
-    .intern-info {
+    .option-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      cursor: pointer;
+       transition: var(--transition);
       display: flex;
       align-items: center;
-      gap: 10px;
     }
-    .intern-info img {
-      width: 40px;
+    .option-card:hover {
+      background: rgba(255, 102, 0, 0.08);
+      border-color: rgba(255, 102, 0, 0.4);
+    }
+    .form-check-input {
+      margin-top: 0;
+      margin-right: 12px;
+      cursor: pointer;
+      border-color: rgba(255,255,255,0.4);
+      background-color: transparent;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    .form-check-input:checked {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+    /* Style the label wrapper when its inner radio is checked */
+    .form-check-input:checked + .form-check-label {
+      color: #fff;
+      font-weight: 500;
+    }
+    /* Highlight the parent card when active (done via js or sibling selector hack) */
+    .option-card:has(input:checked) {
+      background: rgba(255, 102, 0, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(255, 102, 0, 0.3);
+    }
+    input:checked + label { pointer-events: none; }
+    
+    .form-check-label {
+      cursor: pointer;
+      width: 100%;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    /* --- Buttons --- */
+    .btn-quiz-nav {
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 10px 24px;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    
+    .btn-prev {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-prev:hover:not(:disabled) {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      border-color: rgba(255,255,255,0.2);
+    }
+    
+    .btn-next {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 14px rgba(255, 102, 0, 0.2);
+    }
+    .btn-next:hover {
+      box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    }
+    .btn-submit:hover {
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* --- Question Navigation Sidebar --- */
+    .question-nav-container {
+      background-color: var(--surface);
+      border: 1px solid rgba(255, 102, 0, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-heading {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 8px;
+    }
+    .question-nav {
+      max-height: 45vh;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    .question-nav::-webkit-scrollbar { width: 4px; }
+    .question-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    
+    .question-nav .btn {
+      width: 100%;
       height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .question-nav .not-visited { 
+      background-color: rgba(255, 255, 255, 0.05); 
+      color: rgba(255, 255, 255, 0.5); 
+    }
+    .question-nav .visited { 
+      background-color: rgba(255, 193, 7, 0.15); 
+      color: #ffc107; 
+      border-color: rgba(255, 193, 7, 0.4);
+    }
+    .question-nav .answered { 
+      background-color: rgba(16, 185, 129, 0.15); 
+      color: #10b981; 
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .question-nav .btn[style*="outline"] { /* Target JS applied outline */
+      outline: none !important;
+      box-shadow: 0 0 0 2px var(--primary) !important;
+      transform: scale(1.05);
+    }
+
+    /* --- Camera Preview Box --- */
+    .camera-container {
+      background-color: var(--surface-alt);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      border: 1px solid rgba(255, 102, 0, 0.3);
+      margin-top: 1rem;
+    }
+    #videoContainer { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      width: 100%;
+    }
+    #userVideo { 
+      width: 100%; 
+      height: 140px; 
+      border-radius: 8px; 
+      object-fit: cover; 
+      background: #000; 
+      border: 1.5px solid rgba(255, 102, 0, 0.5);
+    }
+    .surveillance-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      background: rgba(252, 0, 0, 0.1);
+      border: 1px solid rgba(252, 0, 0, 0.3);
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: #fc0000;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* --- Modals Styling --- */
+    .modal-content {
+      background-color: #1a1a1a !important;
+      border: 1px solid rgba(255, 102, 0, 0.4) !important;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .modal-header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+    }
+    .modal-title {
+      font-weight: 800;
+      color: #fff;
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .modal-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+    }
+    .modal-body h5 {
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin-top: 1rem;
+    }
+    .modal-body h5:first-child { margin-top: 0; }
+    .modal-body ul li {
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+    .modal-body strong {
+      color: var(--text-primary);
+    }
+    .status-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: inline-block;
+      flex-shrink: 0;
     }
 
     /* make content non-copyable/selectable globally, but allow interactive controls */
@@ -77,128 +456,138 @@ body.modal-open {
       user-select: none;
     }
     /* Allow selection on interactive elements so they remain usable */
-    button, input, textarea, select, label, .question-card * {
+    button, input, textarea, select, label, .question-card *, .instruction-trigger {
       -webkit-user-select: auto !important;
       -moz-user-select: auto !important;
       -ms-user-select: auto !important;
       user-select: auto !important;
     }
 
-    /* video container styling */
-    #videoContainer { display:inline-block; vertical-align: middle; }
-    #userVideo { width: 160px; height: 120px; border-radius: 6px; object-fit: cover; background:#000; }
-
     /* Responsive */
     @media (max-width: 991px) {
       #quizContent { flex-direction: column; }
-      #questionsContainer { margin-right: 0 !important; }
-      .question-nav { max-height: none; margin-top: 20px; }
+      .question-nav-container { margin-top: 20px; }
+      .quiz-header-bar { flex-direction: column; align-items: stretch !important; gap: 15px; }
+      .quiz-header-bar > div { flex-wrap: wrap; justify-content: space-between; gap: 10px !important;}
     }
    
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
     }
-
     .blink {
       animation: blink 1.5s infinite;
     }
-    .status-box {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
   </style>
 </head>
 <body class="container py-4">
  <%- include('partials/loader') %>
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h2 class=" mb-0" style="color: #ff6600 !important;"><%= quiz.title %></h2>
-    <div class="d-flex align-items-center gap-4">
-     
-      <!-- Instruction trigger left (we will also auto-open it) -->
-      <div data-bs-toggle="modal" data-bs-target="#instructionModal2" style="cursor: pointer;">
-        Instruction
+ 
+  <!-- Stylish Header Bar -->
+  <div class="quiz-header-bar d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <h2 class="quiz-title"><%= quiz.title %></h2>
+    <div class="d-flex align-items-center gap-3">
+        <div class="attempt-pill">
+         <i class="bi bi-shield-check "></i> Attempt: <%= assignment.attemptCount + 1 %> / 2
+       </div>
+      <!-- Instruction trigger -->
+      <div class="instruction-trigger" data-bs-toggle="modal" data-bs-target="#instructionModal2">
+        <i class="bi bi-info-circle"></i> Instructions
       </div>
 
-
-      <div class="timer text-light" id="timer">Time Remaining: 00:00</div>
-      <div class="intern-info d-flex align-items-center">
-        <img src="<%= intern.img_url %>" alt="Intern Image" class="me-2">
-        <div>
-          <span class="d-block fw-bold "><%= intern.name.trim().split(" ")[0] %></span>
-          <span  style="color: #ff6600; font-size: 0.8em;"><%= intern.intern_id %></span>
+      <div class="timer-pill timer" id="timer">
+        <i class="bi bi-stopwatch"></i> Time: 00:00
+      </div>
+      
+      <div class="intern-info">
+        <img src="<%= intern.img_url %>" alt="Intern Image">
+        <div class="intern-details">
+          <div class="intern-name"><%= intern.name.trim().split(" ")[0] %></div>
+          <div class="intern-id-text"><%= intern.intern_id %></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="mb-3">
-    <p>Attempt: <%= assignment.attemptCount + 1 %> / 2</p>
-    <!-- <p>Score: <%= intern.quiz_score %></p> -->
-  </div>
+
 
   <% if (assignment.attemptCount >= 2) { %>
-    <div class="alert alert-warning">
-      You have reached the maximum attempts for this quiz.
+    <div class="alert alert-warning" style="background: rgba(255, 193, 7, 0.1); border-color: rgba(255, 193, 7, 0.4); color: #ffc107; border-radius: var(--radius-md);">
+      <i class="bi bi-exclamation-triangle me-2"></i> You have reached the maximum attempts for this quiz.
     </div>
   <% } else { %>
 
     <div class="row" id="quizContent">
 
-  <!-- MAIN QUIZ AREA (takes most space) -->
-  <div class="col-12 col-md-9">
+  <!-- MAIN QUIZ AREA -->
+  <div class="col-12 col-md-8 col-lg-9">
     <form id="quizForm" method="POST" action="/intern/quiz/<%= quiz._id %>/submit" autocomplete="off">
-      <div id="questionsContainer" >
+      <div id="questionsContainer">
         <% quiz.questions.forEach((q, index) => { %>
-          <div class="card mb-4 question-card p-3" style="border: 1px solid #ff6600;" data-index="<%= index %>" <%= index === 0 ? '' : 'style="display:none;"' %> >
-            <h5 class="mb-3 text-white">Q<%= index + 1 %>. <%= q.questionText %></h5>
+          <div class="question-card" data-index="<%= index %>" <%= index === 0 ? '' : 'style="display:none;"' %> >
+            <h5 class="question-text"><span class="question-number">Q<%= index + 1 %>.</span> <%= q.questionText %></h5>
+            
             <% if (q.image) { %>
-              <img src="<%= q.image %>" alt="Question Image" class="question-image mb-3">
+              <img src="<%= q.image %>" alt="Question Image" class="question-image">
             <% } %>
-            <% q.options.forEach((opt, i) => { %>
-              <div class="form-check mb-2">
-                <input class="form-check-input text-white" type="radio" name="answers[<%= index %>]" value="<%= i %>" id="q<%= index %>o<%= i %>">
-                <label class="form-check-label text-white" for="q<%= index %>o<%= i %>"><%= opt %></label>
-              </div>
-            <% }) %>
+            
+            <div class="options-container">
+              <% q.options.forEach((opt, i) => { %>
+                <div class="option-wrapper">
+                  <div class="option-card">
+                    <input class="form-check-input" type="radio" name="answers[<%= index %>]" value="<%= i %>" id="q<%= index %>o<%= i %>">
+                    <label class="form-check-label stretched-link" for="q<%= index %>o<%= i %>"><%= opt %></label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
           </div>
         <% }) %>
       </div>
 
-      <div class="d-flex justify-content-end mt-4 gap-2 flex-wrap">
-        <button type="button" class="btn btn-outline-warning btn-custom ms-auto" id="prevBtn" disabled>
+      <div class="d-flex justify-content-end mt-4 gap-3 flex-wrap">
+        <button type="button" class="btn btn-quiz-nav btn-prev ms-auto" id="prevBtn" disabled>
           <i class="bi bi-arrow-left"></i> Previous
         </button>
-        <button type="button" class="btn btn-outline-warning btn-custom" id="nextBtn">
+        <button type="button" class="btn btn-quiz-nav btn-next" id="nextBtn">
           Next <i class="bi bi-arrow-right"></i>
         </button>
-        <button type="button" class="btn btn-submit" id="submitBtn">Submit Quiz</button>
+        <button type="button" class="btn btn-submit" id="submitBtn">
+          <i class="bi bi-check2-circle"></i> Submit Quiz
+        </button>
       </div>
     </form>
   </div>
 
-  <!-- SIDEBAR (small area) -->
-  <div class="col-12 col-md-3" >
-    <div class="question-nav" style="border: 1px solid #ff6600;">
-      <div class="row g-2">
-        <% quiz.questions.forEach((q, index) => { %>
-          <div class="col-4 col-md-3">
-            <button type="button" class="btn btn-sm not-visited w-100" data-index="<%= index %>">
-              Q<%= index + 1 %>
-            </button>
-          </div>
-        <% }) %>
+  <!-- SIDEBAR (Question Nav & Camera) -->
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="question-nav-container">
+      <div class="nav-heading">Question Palette</div>
+      <div class="question-nav">
+        <div class="row g-2">
+          <% quiz.questions.forEach((q, index) => { %>
+            <div class="col-3 col-sm-2 col-md-4 col-lg-3">
+              <button type="button" class="btn not-visited w-100 p-0" data-index="<%= index %>">
+                <%= index + 1 %>
+              </button>
+            </div>
+          <% }) %>
+        </div>
       </div>
-    </div> <audio id="warningSound" src="/sound/alert.mp3" preload="auto"></audio>
+    </div>
+    
+    <audio id="warningSound" src="/sound/alert.mp3" preload="auto"></audio>
 
-      <!-- live-user-camera preview (will be filled after permission) -->
-      <div id="videoContainer " title="Camera preview (required)" style="display: flex; align-items: center; justify-content: center;"  class="mt-2">
-        <video id="userVideo" autoplay playsinline muted class="w-100 " style="border: 1px solid #ff6600; height: 20vh;"></video>
+      <!-- live-user-camera preview -->
+      <div class="camera-container">
+        <div id="videoContainer" title="Camera preview (required)">
+          <video id="userVideo" autoplay playsinline muted></video>
+        </div>
+        <div class="surveillance-badge blink">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="m6.03 12.03l2 3.47l-2.53 3.18L2 12.62zM17 18v-2.71c.88-.39 1.5-1.26 1.5-2.29c0-.57-.2-1.1-.53-1.5l1.97-1.15c1.01-.59 1.36-1.88.77-2.89l-1.38-2.4a2.125 2.125 0 0 0-2.89-.78L8.31 9c-.95.53-1.28 1.75-.73 2.71l1.5 2.6c.55.95 1.78 1.28 2.73.73l1.88-1.08c.25.59.72 1.07 1.31 1.33V18c0 1.1.9 2 2 2h5v-2z"/></svg>
+          Under Surveillance
+        </div>
       </div>
-      <span class="text-danger text-center blink" style="margin-left: 2rem; margin-top: 1rem !important"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fc0000" d="m6.03 12.03l2 3.47l-2.53 3.18L2 12.62zM17 18v-2.71c.88-.39 1.5-1.26 1.5-2.29c0-.57-.2-1.1-.53-1.5l1.97-1.15c1.01-.59 1.36-1.88.77-2.89l-1.38-2.4a2.125 2.125 0 0 0-2.89-.78L8.31 9c-.95.53-1.28 1.75-.73 2.71l1.5 2.6c.55.95 1.78 1.28 2.73.73l1.88-1.08c.25.59.72 1.07 1.31 1.33V18c0 1.1.9 2 2 2h5v-2z"/></svg> <b>You are under Surveillance</b></span>
   </div>
 
 </div>
@@ -209,14 +598,13 @@ body.modal-open {
   <!-- Instruction Modal (auto-open on page load). Contains Start Quiz button. -->
   <div class="modal fade" id="instructionModal" tabindex="-1" aria-labelledby="instructionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg  " style="margin-top: 1vh;">
-      <div class="modal-content text-white bg-dark" style="border:1px solid #ff6600;">
-        <div class="modal-header">
-          <h5 class="modal-title" id="instructionModalLabel">Instructions</h5>
-          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      <div class="modal-content text-white">
+        <div class="modal-header border-bottom border-secondary">
+          <h5 class="modal-title" id="instructionModalLabel"><i class="bi bi-info-square text-warning me-2"></i> Quiz Instructions</h5>
         </div>
         <div class="modal-body">
   <h5 class="fw-bold">General Instructions</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li>You will get <strong>2 attempts</strong> for each quiz.</li>
     <li>Only the <strong>highest score</strong> among the attempts will be saved.</li>
     <li>Your <strong>camera will be under constant surveillance</strong> during the quiz.</li>
@@ -225,57 +613,58 @@ body.modal-open {
   </ul>
 
   <h5 class="fw-bold">Quiz Structure</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 14/20 (70%)</li>
     <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 21/30 (70%)</li>
     <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 28/40 (70%)</li>
   </ul>
 
   <h5 class="fw-bold">Additional Rules</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li><strong>No negative marking.</strong></li>
     <li>After you <strong>submit the quiz</strong>, your attempt count will increase.</li>
     <li>If time runs out, the quiz will be <strong>auto-submitted.</strong></li>
   </ul>
 
   <h5 class="fw-bold">Question Navigation Color Guide</h5>
-  <ul class="list-unstyled">
+  <ul class="list-unstyled mt-3">
   <li class="d-flex align-items-center mb-2">
-    <span class="status-box me-2" style="background-color: #6c757d;"></span>
-    <span>Not Visited - You have not opened this question.</span>
+    <span class="status-box me-3" style="background-color: rgba(255, 255, 255, 0.1);"></span>
+    <span><strong>Not Visited</strong> - You have not opened this question.</span>
   </li>
   <li class="d-flex align-items-center mb-2">
-    <span class="status-box me-2" style="background-color: #ffc107; border: 1px solid #000;"></span>
-    <span>Visited - You viewed the question but did not answer.</span>
+    <span class="status-box me-3" style="background-color: rgba(255, 193, 7, 0.2); border: 1px solid #ffc107;"></span>
+    <span><strong class="text-warning">Visited</strong> - You viewed the question but did not answer.</span>
   </li>
   <li class="d-flex align-items-center">
-    <span class="status-box me-2" style="background-color: #28a745;"></span>
-    <span>Answered - You have selected an answer.</span>
+    <span class="status-box me-3" style="background-color: rgba(16, 185, 129, 0.2); border: 1px solid #10b981;"></span>
+    <span><strong class="text-success">Answered</strong> - You have selected an answer.</span>
   </li>
 </ul>
 
 
-  <p class="mt-3 mb-0"><strong>Note:</strong> Camera access is required. The quiz will start only after you allow camera access and click <em>Start Quiz</em>.</p>
+  <div class="mt-4 p-3 rounded" style="background: rgba(255,102,0,0.1); border-left: 4px solid var(--primary);">
+    <p class="mb-0 text-white-50"><strong class="text-white">Note:</strong> Camera access is required. The quiz will start only after you allow camera access and click <em>Start Quiz</em>.</p>
+  </div>
 </div>
 
-        <div class="modal-footer">
-          <button type="button" id="startQuizBtn" class="btn btn-success">Start Quiz</button>
+        <div class="modal-footer border-top border-secondary">
+          <button type="button" id="startQuizBtn" class="btn btn-primary-orange w-100 py-3" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border-radius: 10px; font-weight: 700; border: none;">Start Quiz</button>
         </div>
       </div>
     </div>
   </div>
-   <!-- Instruction Modal (auto-open on page load). Contains Start Quiz button. -->
+   <!-- Instruction Modal 2 (manual trigger) -->
   <div class="modal fade" id="instructionModal2" tabindex="-1" aria-labelledby="instructionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered ">
-      <div class="modal-content text-white bg-dark" style="border:1px solid #ff6600;">
-        <div class="modal-header">
-          <h5 class="modal-title" id="instructionModalLabel">Instructions</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content text-white">
+        <div class="modal-header border-bottom border-secondary">
+          <h5 class="modal-title" id="instructionModalLabel"><i class="bi bi-info-square text-warning me-2"></i> Instructions</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-       <div class="modal-body">
-  <!-- General Instructions -->
+        <div class="modal-body">
   <h5 class="fw-bold">General Instructions</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li>You will get <strong>2 attempts</strong> for each quiz.</li>
     <li>Only the <strong>highest score</strong> among your attempts will be saved.</li>
     <li>Your <strong>camera will be under constant surveillance</strong> during the quiz.</li>
@@ -283,43 +672,39 @@ body.modal-open {
     <li>Any type of <strong>unfair means or malpractice</strong> will result in immediate <strong>disqualification.</strong></li>
   </ul>
 
-  <!-- Quiz Structure -->
   <h5 class="fw-bold">Quiz Structure</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li><strong>4 Week Quiz:</strong> 20 Questions | 30 Minutes | Each Question = 1 Mark | Passing = 14/20 (70%)</li>
     <li><strong>6 Week Quiz:</strong> 30 Questions | 45 Minutes | Each Question = 1 Mark | Passing = 21/30 (70%)</li>
     <li><strong>8 Week Quiz:</strong> 40 Questions | 60 Minutes | Each Question = 1 Mark | Passing = 28/40 (70%)</li>
   </ul>
 
-  <!-- Rules -->
   <h5 class="fw-bold">Additional Rules</h5>
-  <ul class="mb-3">
+  <ul class="mb-4">
     <li><strong>No negative marking.</strong></li>
     <li>After you <strong>submit the quiz</strong>, your attempt count will increase.</li>
     <li>If the time ends, the quiz will be <strong>automatically submitted.</strong></li>
   </ul>
 
-  <!-- Color Scheme / Navigation -->
   <h5 class="fw-bold">Question Navigation Color Guide</h5>
-  <ul class="list-unstyled">
+  <ul class="list-unstyled mt-3">
     <li class="d-flex align-items-center mb-2">
-      <span class="status-box me-2" style="background-color: #6c757d;"></span>
-      <span>Not Visited - You have not opened this question.</span>
+      <span class="status-box me-3" style="background-color: rgba(255, 255, 255, 0.1);"></span>
+      <span><strong>Not Visited</strong> - You have not opened this question.</span>
     </li>
     <li class="d-flex align-items-center mb-2">
-      <span class="status-box me-2" style="background-color: #ffc107; border: 1px solid #000;"></span>
-      <span>Visited - You viewed the question but did not answer.</span>
+      <span class="status-box me-3" style="background-color: rgba(255, 193, 7, 0.2); border: 1px solid #ffc107;"></span>
+      <span><strong class="text-warning">Visited</strong> - You viewed the question but did not answer.</span>
     </li>
     <li class="d-flex align-items-center">
-      <span class="status-box me-2" style="background-color: #28a745;"></span>
-      <span>Answered - You have selected an answer.</span>
+      <span class="status-box me-3" style="background-color: rgba(16, 185, 129, 0.2); border: 1px solid #10b981;"></span>
+      <span><strong class="text-success">Answered</strong> - You have selected an answer.</span>
     </li>
   </ul>
 
-  <!-- <p class="mt-3"><strong>Note:</strong> Camera access is required. The quiz will start only after you allow camera access.</p> -->
 </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer border-top border-secondary">
           <button type="button" data-bs-dismiss="modal" class="btn btn-outline-warning">Close</button>
         </div>
       </div>
@@ -329,48 +714,52 @@ body.modal-open {
   <!-- Camera permission denied modal -->
   <div class="modal fade" id="cameraDeniedModal" tabindex="-1" aria-labelledby="cameraDeniedLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-dark">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cameraDeniedLabel">Camera Permission Required</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content text-white" style="border-color: #dc3545 !important;">
+        <div class="modal-header border-bottom border-secondary">
+          <h5 class="modal-title text-danger" id="cameraDeniedLabel"><i class="bi bi-camera-video-off me-2"></i> Camera Permission Required</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-  <h5 class="fw-bold">Camera Access Required</h5>
-  <p>We are unable to access your camera. To continue, please allow camera permission in your browser settings.</p>
-  <p><strong>Important:</strong> The quiz cannot start without camera access.</p>
-  <p>After granting permission, please refresh the page and click <em>Start Quiz</em> again, or allow the camera when prompted.</p>
+  <p class="text-white-50">We are unable to access your camera. To continue, please allow camera permission in your browser settings.</p>
+  <div class="p-3 rounded mb-3" style="background: rgba(220, 53, 69, 0.1); border-left: 4px solid #dc3545;">
+    <strong class="text-white">Important:</strong> The quiz cannot start without camera access.
+  </div>
+  <p class="mb-0 text-white-50">After granting permission, please refresh the page and click <em>Start Quiz</em> again, or allow the camera when prompted.</p>
 </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer border-top border-secondary">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Submit confirmation modal (custom popup) -->
+  <!-- Submit confirmation modal -->
   <div class="modal fade" id="submitConfirmModal" tabindex="-1" aria-labelledby="submitConfirmLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-md" style="margin-top: 5vh;"> <!-- wider & top -->
-    <div class="modal-content bg-dark text-white" style="border: 1px solid #ff6600;">
+  <div class="modal-dialog  modal-md" style="margin-top: 5vh;"> 
+    <div class="modal-content text-white" style="border-color: #10b981 !important;">
       <div class="modal-header border-bottom border-secondary">
         <h5 class="modal-title" id="submitConfirmLabel">
-          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Confirm Quiz Submission
+          <i class="bi bi-question-circle text-success me-2"></i> Confirm Quiz Submission
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body">
-        <p>Are you sure you want to submit the quiz? Once submitted, you will not be able to change your answers.</p>
+      <div class="modal-body text-center py-4">
+        <div class="mb-3">
+          <i class="bi bi-check2-circle text-success" style="font-size: 3rem;"></i>
+        </div>
+        <p class="fs-5 mb-1">Are you sure you want to submit?</p>
+        <p class="text-white-50 small">Once submitted, you will not be able to change your answers.</p>
       </div>
 
       <div class="modal-footer border-top border-secondary d-flex justify-content-between">
-        <button type="button" id="confirmSubmitBtn" class="btn btn-success flex-grow-1 me-2">Yes, Submit</button>
-        <button type="button" class="btn btn-secondary flex-grow-1 ms-2" data-bs-dismiss="modal">No, Keep Working</button>
+        <button type="button" id="confirmSubmitBtn" class="btn btn-success flex-grow-1 me-2" style="background: linear-gradient(135deg, #10b981, #059669); border:none; font-weight:700;">Yes, Submit</button>
+        <button type="button" class="btn btn-outline-secondary flex-grow-1 ms-2" data-bs-dismiss="modal">No, Keep Working</button>
       </div>
     </div>
   </div>
 </div>
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -382,6 +771,7 @@ body.modal-open {
     const submitBtn = document.getElementById('submitBtn');
     const quizForm = document.getElementById('quizForm');
     const navButtons = document.querySelectorAll('.question-nav .btn');
+
 
     const answers = Array(questions.length).fill(null);
     const visited = Array(questions.length).fill(false);
@@ -675,24 +1065,40 @@ document.addEventListener('fullscreenchange', () => {
   </script>
   <script>
     function isMobileDevice() {
-    if (/Mobi|Android|iPhone|iPad|Tablet/i.test(navigator.userAgent)) {
-      return true;
+      // Check User Agent
+      if (/Mobi|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true;
+      }
+      
+      // Check iPad specifically (some newer iPads report as MacIntel but have touch)
+      if (/iPad/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+        return true;
+      }
+
+      if (navigator.userAgentData && navigator.userAgentData.mobile) {
+        return true;
+      }
+
+      // Check screen width (tablets commonly up to 1024px, we want strictly desktop)
+      if (window.innerWidth <= 1024 || screen.width <= 1024) {
+        return true;
+      }
+
+      return false;
     }
 
-    if (navigator.userAgentData && navigator.userAgentData.mobile) {
-      return true;
+    // Immediately block if not desktop
+    if (isMobileDevice()) {
+      window.location.replace("/mobile-blocked"); // Use replace to prevent back navigation
     }
-
-    if (screen.width < 1024 || window.innerWidth < 1024) {
-      return true;
-    }
-
-    return false;
-  }
-
-  if (isMobileDevice()) {
-    window.location.href = "/mobile-blocked";
-  }
+    
+    // Also re-check on resize in case they resize DevTools or window
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 1024 && quizStarted) {
+        document.body.innerHTML = '<div style="background:var(--body-bg); height:100vh; display:flex; align-items:center; justify-content:center; color:white; font-family:Inter; font-size:1.5rem; text-align:center; padding:2rem;">Quiz is only accessible on Desktop in Fullscreen mode.</div>';
+        setTimeout(() => window.location.replace("/mobile-blocked"), 2000);
+      }
+    });
 
   </script>
 

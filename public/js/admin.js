@@ -94,19 +94,62 @@ function filterProjectsByBatch() {
 
 // Intern Filters for Table
 function applyInternFilters() {
-  let batchFilter = document.getElementById("batchFilter").value.toLowerCase();
-  let internSearch = document.getElementById("internSearch").value.toLowerCase();
+  let batchFilter = document.getElementById("batchFilter") ? document.getElementById("batchFilter").value.toLowerCase() : "all";
+  let durationFilter = document.getElementById("durationFilter") ? document.getElementById("durationFilter").value.toLowerCase() : "all";
+  let internSearch = document.getElementById("internSearch") ? document.getElementById("internSearch").value.toLowerCase().trim() : "";
+  
   let rows = document.querySelectorAll("#viewInterns .intern-row");
+  let mobileCards = document.querySelectorAll("#viewInterns .intern-card");
+  
+  let visibleCount = 0;
 
+  // Filter Desktop Rows
   rows.forEach(row => {
-    let rowBatch = row.getAttribute("data-batch").toLowerCase();
-    let internId = row.querySelector(".intern-id")?.textContent.toLowerCase() || "";
+    let rowBatch = (row.getAttribute("data-batch") || "").toLowerCase();
+    let rowDuration = (row.getAttribute("data-duration") || "").toLowerCase();
+    let rowName = (row.getAttribute("data-name") || "").toLowerCase();
+    let rowId = (row.getAttribute("data-id") || "").toLowerCase();
 
     let matchesBatch = (batchFilter === "all" || rowBatch === batchFilter);
-    let matchesIntern = (internSearch === "" || internId.includes(internSearch));
+    let matchesDuration = (durationFilter === "all" || rowDuration === durationFilter);
+    let matchesSearch = (internSearch === "" || rowName.includes(internSearch) || rowId.includes(internSearch));
 
-    row.style.display = (matchesBatch && matchesIntern) ? "" : "none";
+    if (matchesBatch && matchesDuration && matchesSearch) {
+        row.style.display = "";
+        visibleCount++;
+    } else {
+        row.style.display = "none";
+    }
   });
+
+  // Filter Mobile Cards
+  mobileCards.forEach(card => {
+    let cardBatch = (card.getAttribute("data-batch") || "").toLowerCase();
+    let cardDuration = (card.getAttribute("data-duration") || "").toLowerCase();
+    let cardName = (card.getAttribute("data-name") || "").toLowerCase();
+    let cardId = (card.getAttribute("data-id") || "").toLowerCase();
+
+    let matchesBatch = (batchFilter === "all" || cardBatch === batchFilter);
+    let matchesDuration = (durationFilter === "all" || cardDuration === durationFilter);
+    let matchesSearch = (internSearch === "" || cardName.includes(internSearch) || cardId.includes(internSearch));
+
+    if (matchesBatch && matchesDuration && matchesSearch) {
+        card.style.display = "";
+    } else {
+        card.style.display = "none";
+    }
+  });
+
+  // Show/Hide Empty States
+  const dEmpty = document.getElementById("noInternResult");
+  if (dEmpty) dEmpty.style.display = visibleCount === 0 ? "block" : "none";
+
+  const mEmpty = document.getElementById("noInternResultMobile");
+  if (mEmpty) mEmpty.style.display = visibleCount === 0 ? "block" : "none";
+
+  // Update Count Badge
+  const countBadge = document.getElementById("internResultCount");
+  if (countBadge) countBadge.textContent = `${visibleCount} intern${visibleCount !== 1 ? 's' : ''}`;
   
   // Update serial numbers dynamically for visible rows
   updateSerialNumbers();
@@ -128,8 +171,9 @@ function updateSerialNumbers() {
 }
 
 function clearInternFilters() {
-  document.getElementById("batchFilter").value = "all";
-  document.getElementById("internSearch").value = "";
+  if (document.getElementById("batchFilter")) document.getElementById("batchFilter").value = "all";
+  if (document.getElementById("durationFilter")) document.getElementById("durationFilter").value = "all";
+  if (document.getElementById("internSearch")) document.getElementById("internSearch").value = "";
   applyInternFilters();
 }
 
@@ -394,17 +438,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // Function to update project status with loader + flash-style toasts
 document.addEventListener("DOMContentLoaded", () => {
-  const forms = document.querySelectorAll('form[action="/admin/projects/update-status"]');
-
-  forms.forEach(form => {
-    form.addEventListener("submit", async (e) => {
+  document.body.addEventListener("submit", async (e) => {
+    const form = e.target;
+    if (form.tagName === 'FORM' && form.getAttribute('action') === '/admin/projects/update-status') {
       e.preventDefault();
 
-      const userId = form.querySelector('input[name="userId"]').value;
-      const projectId = form.querySelector('input[name="projectId"]').value;
-      const status = form.querySelector('select[name="status"]').value;
+      const userIdInput = form.querySelector('input[name="userId"]');
+      const projectIdInput = form.querySelector('input[name="projectId"]');
+      
+      if (!userIdInput || !projectIdInput) return;
 
-      const btn = form.querySelector('button[type="submit"]');
+      const userId = userIdInput.value;
+      const projectId = projectIdInput.value;
+      
+      // The status comes from the button that was clicked
+      const btn = e.submitter;
+      if (!btn) return;
+      const status = btn.value;
+
       const originalHTML = btn.innerHTML;
       btn.disabled = true;
 
@@ -414,43 +465,45 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       try {
-      showLoader();
-      const res = await axios.post("/admin/projects/update-status", {
-        userId,
-        projectId,
-        status
-      }, {
-        headers: { "Content-Type": "application/json" }
-      });
-      hideLoader();
-      const data = res.data;
+        showLoader();
+        const res = await axios.post("/admin/projects/update-status", {
+          userId,
+          projectId,
+          status
+        }, {
+          headers: { "Content-Type": "application/json" }
+        });
+        hideLoader();
+        const data = res.data;
 
         // Restore button
         btn.disabled = false;
         btn.innerHTML = originalHTML;
 
         const badge = form.closest("tr").querySelector(".badge");
+        if (badge) {
+          if (data.success) {
+            badge.textContent = status;
+            // Remove old classes
+            badge.classList.remove("badge-approved", "badge-rejected", "badge-pending", "badge-sub-accepted", "badge-sub-rejected", "badge-sub-pending");
 
-        if (data.success) {
-          badge.textContent = status;
-          badge.classList.remove("badge-approved", "badge-rejected", "badge-pending");
+            // Add new classes (matching admin.ejs CSS classes)
+            if (status === "accepted") badge.classList.add("badge-sub-accepted");
+            else if (status === "rejected") badge.classList.add("badge-sub-rejected");
+            else badge.classList.add("badge-sub-pending");
 
-          if (status === "accepted") badge.classList.add("badge-approved");
-          else if (status === "rejected") badge.classList.add("badge-rejected");
-          else badge.classList.add("badge-pending");
-
-          showFlashToast(data.message, "success");
-        } else {
-          showFlashToast(data.message, "error");
+            showFlashToast(data.message, "success");
+          } else {
+            showFlashToast(data.message || "Failed to update project status", "error");
+          }
         }
-
       } catch (err) {
         console.error("🔥 Error:", err);
         btn.disabled = false;
         btn.innerHTML = originalHTML;
         showFlashToast("Error updating project status", "error");
       }
-    });
+    }
   });
 
   // 👇 Flash-style toast (matches req.flash styling)

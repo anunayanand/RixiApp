@@ -16,16 +16,28 @@ router.post("/project/toggle-visibility/:id", async (req, res) => {
       { new: true }       // return updated doc
     );
 
-    if (!project) return res.flash("err","Project not found");
+    if (!project) {
+        if (req.headers['content-type'] === 'application/json') {
+            return res.json({ success: false, message: "Project not found" });
+        }
+        return res.flash("err", "Project not found");
+    }
 
-   req.flash(
-  "success",
-  `Project "${project.title}" is now ${project.isHidden ? "hidden 🔒" : "visible 🔓"}`
-   );
-res.redirect("/admin");
+    if (req.headers['content-type'] === 'application/json') {
+        return res.json({ success: true, isHidden: project.isHidden });
+    }
+
+    req.flash(
+      "success",
+      `Project "${project.title}" is now ${project.isHidden ? "hidden 🔒" : "visible 🔓"}`
+    );
+    res.redirect("/admin");
   } catch (err) {
     console.error(err);
-    res.flash("err",`Error in Closing Upload Button`);
+    if (req.headers['content-type'] === 'application/json') {
+        return res.json({ success: false, message: "Error in Closing Upload Button" });
+    }
+    res.flash("err", `Error in Closing Upload Button`);
   }
 });
 

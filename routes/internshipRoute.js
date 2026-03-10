@@ -53,9 +53,16 @@ const DOMAIN_PRICES = {
   "Full Stack Development": 102.4
 };
 
+// Helper function to convert text to Title Case
+const toTitleCase = (str) => {
+  if (!str) return str;
+  return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
 router.post("/create-order", async (req, res) => {
   try {
     const data = req.body.data;
+
 
     // Extract fields
     const name = data["data[Name]"];
@@ -76,16 +83,19 @@ router.post("/create-order", async (req, res) => {
     const profileImagePublicId = data["data[ProfileImagePublicId]"] || "";
 
     // ✅ sanitize inputs
+    const sanitizedName = name ? toTitleCase(name.trim()) : name;
+    const sanitizedUniversity = university ? toTitleCase(university.trim()) : university;
+    const sanitizedCollege = college ? toTitleCase(college.trim()) : college;
     const sanitizedEmail = email?.trim();
     const sanitizedPhone = phone?.toString().replace(/\D/g, "");
 
     // ✅ validate required fields
     if (
-      !name ||
+      !sanitizedName ||
       !sanitizedEmail ||
       !sanitizedPhone ||
-      !university ||
-      !college ||
+      !sanitizedUniversity ||
+      !sanitizedCollege ||
       !course ||
       !branch ||
       !year_sem ||
@@ -122,11 +132,11 @@ router.post("/create-order", async (req, res) => {
 
     // Create registration with profile image
     const newReg = new NewRegistration({
-      name: name.trim(),
+      name: sanitizedName,
       email: sanitizedEmail,
       phone: sanitizedPhone,
-      university: university.trim(),
-      college: college.trim(),
+      university: sanitizedUniversity,
+      college: sanitizedCollege,
       course: course.trim(),
       branch: branch.trim(),
       year_sem: year_sem.trim(),
@@ -149,7 +159,7 @@ router.post("/create-order", async (req, res) => {
 
       customer_details: {
         customer_id: `cust_${Date.now()}`, // ✅ REQUIRED
-        customer_name: name,
+        customer_name: sanitizedName,
         customer_email: sanitizedEmail, // ✅ recommended
         customer_phone: sanitizedPhone, // ✅ recommended
       },

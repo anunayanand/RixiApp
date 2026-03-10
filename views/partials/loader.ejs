@@ -1,121 +1,112 @@
-<!-- Minimal Toast Container -->
-<div id="rixiToastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 99998; pointer-events: none;"></div>
-
-<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
-  <% success.forEach(msg => { %>
-    <script>document.addEventListener('DOMContentLoaded', () => showToast('<%= msg.replace(/'/g, "\\'") %>', 'success'));</script>
-  <% }) %>
-<% } %>
-
-<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
-  <% error.forEach(msg => { %>
-    <script>document.addEventListener('DOMContentLoaded', () => showToast('<%= msg.replace(/'/g, "\\'") %>', 'error'));</script>
-  <% }) %>
-<% } %>
-
-<% if (typeof info !== 'undefined' && info && info.length > 0) { %>
-  <% info.forEach(msg => { %>
-    <script>document.addEventListener('DOMContentLoaded', () => showToast('<%= msg.replace(/'/g, "\\'") %>', 'info'));</script>
-  <% }) %>
-<% } %>
-
+<!-- 🌟 RixiLab — Minimal Glassmorphism Global Loader -->
 <style>
-  .minimal-toast {
-    pointer-events: auto;
+  #rixiLoaderOverlay {
+    position: fixed;
+    inset: 0;
+    /* Clean transparent backdrop */
+    background: rgba(255, 255, 255, 0.2);
+    /* Outer blur */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #ffffff;
-    color: #111827;
-    padding: 12px 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
-    margin-bottom: 10px;
-    min-width: 250px;
-    max-width: 350px;
-    transform: translateX(120%);
-    opacity: 0;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-  }
-
-  .minimal-toast.show {
-    transform: translateX(0);
+    justify-content: center;
+    z-index: 99999;
     opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
-  .minimal-toast.hide {
-    transform: translateY(-20px);
+  body.dark-mode #rixiLoaderOverlay {
+    background: rgba(15, 15, 20, 0.4);
+  }
+
+  /* Glassmorphism Container */
+  .rixi-glass-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  body.dark-mode .rixi-glass-loader {
+    background: rgba(30, 30, 40, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  #rixiLoaderOverlay.hidden {
     opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .toast-icon {
-    font-size: 1.25rem;
+  /* Modern Smooth Spinner */
+  .rixi-minimal-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255, 102, 0, 0.15);
+    border-top-color: #ff6600;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: minimalSpin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
   }
 
-  .text-success-custom { color: #10b981; }
-  .text-error-custom { color: #ef4444; }
-  .text-info-custom { color: #3b82f6; }
-  .text-warning-custom { color: #f59e0b; }
-
-  .toast-message {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    flex-grow: 1;
-    word-break: break-word;
-  }
-
-  .toast-close-btn {
-    background: none;
-    border: none;
-    color: #9ca3af;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 0;
-    transition: color 0.2s;
-  }
-
-  .toast-close-btn:hover {
-    color: #4b5563;
+  @keyframes minimalSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 </style>
 
+<div id="rixiLoaderOverlay">
+  <div class="rixi-glass-loader">
+    <div class="rixi-minimal-spinner"></div>
+  </div>
+</div>
+
 <script>
-  function showToast(message, type = 'info', duration = 3000) {
-    const container = document.getElementById('rixiToastContainer');
-    if (!container) return;
-
-    const icons = {
-      success: '<i class="bi bi-check-circle-fill text-success-custom"></i>',
-      error: '<i class="bi bi-x-circle-fill text-error-custom"></i>',
-      info: '<i class="bi bi-info-circle-fill text-info-custom"></i>',
-      warning: '<i class="bi bi-exclamation-triangle-fill text-warning-custom"></i>'
-    };
-
-    const toast = document.createElement('div');
-    toast.className = 'minimal-toast';
-    toast.innerHTML = `
-      <div class="toast-icon">${icons[type] || icons.info}</div>
-      <div class="toast-message">${message}</div>
-      <button class="toast-close-btn" onclick="dismissToast(this.closest('.minimal-toast'))"><i class="bi bi-x-lg"></i></button>
-    `;
-
-    container.appendChild(toast);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => { toast.classList.add('show'); });
+  document.addEventListener("DOMContentLoaded", () => {
+    const loaderOverlay = document.getElementById("rixiLoaderOverlay");
+    
+    // Hide loader on load
+    window.addEventListener("load", () => {
+      if (loaderOverlay) {
+        loaderOverlay.classList.add("hidden");
+        // Remove from flow after transition
+        setTimeout(() => { loaderOverlay.style.display = "none"; }, 300);
+      }
     });
 
-    const timer = setTimeout(() => dismissToast(toast), duration);
-    toast._timer = timer;
-  }
+    // Show loader when navigating away
+    window.addEventListener("beforeunload", () => {
+      if (loaderOverlay) {
+        loaderOverlay.style.display = "flex";
+        // Force reflow
+        void loaderOverlay.offsetWidth;
+        loaderOverlay.classList.remove("hidden");
+      }
+    });
 
-  function dismissToast(toast) {
-    if (!toast) return;
-    clearTimeout(toast._timer);
-    toast.classList.remove('show');
-    toast.classList.add('hide');
-    setTimeout(() => toast.remove(), 300);
-  }
+    // Attach click listeners to standard links to show loader immediately
+    document.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        // Only target normal navigation links
+        if (href && !href.startsWith("#") && !href.startsWith("javascript") && link.target !== "_blank" && !link.dataset.bsToggle && !link.dataset.bsTarget) {
+          if (loaderOverlay) {
+            loaderOverlay.style.display = "flex";
+            void loaderOverlay.offsetWidth;
+            loaderOverlay.classList.remove("hidden");
+          }
+        }
+      });
+    });
+  });
 </script>

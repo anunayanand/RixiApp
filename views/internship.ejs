@@ -95,7 +95,7 @@
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
               <div class="contact-form-wrapper">
                 <div class="form-header" style="margin-bottom: 1rem">
-                  <h3>Internship Registration Form</h3>
+                  <h3>Summer Internship Registration Form</h3>
                   <p style="text-align: justify">
                     At Rixi Lab an MSME registerd startup, internships and
                     training are designed to provide hands-on experience through
@@ -111,11 +111,11 @@
                 <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
                 <h5>Internship Important Dates:</h5>
                 <ul>
-                  <li>Last date to apply: 28 Feb 2026</li>
+                  <li>Last date to apply: 31 Mar 2026</li>
                   <!-- <li style="color: #00ff00;">Extended date to apply: 30 Sept 2025</li> -->
-                  <li>Offer Letter provide: 28 Feb 2026</li>
-                  <li>Internship Start Date: 1 Mar 2026</li>
-                  <li>Project Assign Date: 1 Mar 2026</li>
+                  <li>Offer Letter provide: 31 Mar 2026</li>
+                  <li>Internship Start Date: 1 Apr 2026</li>
+                  <li>Project Assign Date: 1 Apr 2026</li>
                 </ul>
 
                 <h5>Benefites for Students:</h5>
@@ -349,8 +349,7 @@
                       class="text-sm form-text text-white"
                       style="font-size: 0.75rem; font-style: italic"
                     >
-                      Please upload a square image (1:1 aspect ratio, Max: 1000
-                      x 1000 px)
+                      Please upload a clear profile picture (Max size: 5MB)
                     </div>
                   </div>
 
@@ -667,17 +666,7 @@
         };
 
         img.onload = function () {
-          // Check if image is square (1:1 aspect ratio)
-          if (img.width !== img.height) {
-            showToast(
-              `Please upload a square image. Your image is ${img.width}x${img.height}. Square images work best for profile pictures.`,
-              "error",
-            );
-            event.target.value = "";
-            return;
-          }
-
-          // Image is valid square, upload it
+          // Cloudinary will crop the image to a square automatically
           uploadImage(file);
         };
 

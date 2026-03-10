@@ -104,8 +104,18 @@ router.post("/assign", async (req, res) => {
         intern.notifications = [];
       }
 
+      // 🧹 Remove null entries from quizAssignments array
+      const originalLength = intern.quizAssignments.length;
+      intern.quizAssignments = intern.quizAssignments.filter(q => q !== null && q !== undefined);
+      const removedCount = originalLength - intern.quizAssignments.length;
+      
+      if (removedCount > 0) {
+        console.log(`🧹 Removed ${removedCount} null entries from quizAssignments for intern ${intern._id}`);
+        await intern.save(); // Save after cleaning null entries
+      }
+
       const alreadyAssigned = intern.quizAssignments.some(
-        (q) => q.quizId.toString() === quiz._id.toString()
+        (q) => q && q.quizId && q.quizId.toString() === quiz._id.toString()
       );
 
       if (!alreadyAssigned) {
@@ -140,9 +150,10 @@ router.post("/assign", async (req, res) => {
     }
 
     req.flash("success", "Quiz assigned successfully. Notifications sent.");
+    // console.log(`✅ Quiz "${quiz.title}" assigned successfully to batch "${batch}"`);
     res.redirect("/admin");
   } catch (error) {
-    // console.error("Error assigning quiz:", error);
+    console.error("Error assigning quiz:", error);
     req.flash("error", "Failed to assign quiz");
     res.redirect("/admin");
   }
