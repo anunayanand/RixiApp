@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>501 – Not Implemented | Rixi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
+  <style>
+    :root {
+      --bg:        #040000;
+      --surface:   #191919;
+      --text:      #f8f8f8;
+      --muted:     rgba(248,248,248,0.55);
+      --accent:    #ff6600;
+      --accent-glow: rgba(255,102,0,0.18);
+      --purple:    #8b5cf6;
+      --purple-glow: rgba(139,92,246,0.15);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -15%; right: -12%;
+      animation: drift 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: 5%; left: 2%;
+      animation: drift 5s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-22px); }
+    }
+    .grid-overlay {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(139,92,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      background: rgba(4,0,0,0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      z-index: 100;
+    }
+    .nav-brand {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-brand img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-brand span { color: var(--accent); }
+    nav a.nav-link {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    nav a.nav-link:hover { color: var(--accent); }
+    .nav-links { display: flex; gap: 36px; }
+
+    main {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .error-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.75rem;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 14px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--purple);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.7); }
+    }
+
+    .error-code {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(120px, 22vw, 260px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #ffffff 20%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      user-select: none;
+    }
+    .error-code::before, .error-code::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #ffffff 20%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .error-code::before {
+      animation: glitch1 4s infinite;
+      clip-path: polygon(0 22%, 100% 22%, 100% 38%, 0 38%);
+      transform: translateX(-3px);
+      opacity: 0.6;
+    }
+    .error-code::after {
+      animation: glitch2 5s infinite;
+      clip-path: polygon(0 62%, 100% 62%, 100% 76%, 0 76%);
+      transform: translateX(3px);
+      opacity: 0.5;
+    }
+    @keyframes glitch1 {
+      0%,93%,100% { transform:translateX(0); opacity:0; }
+      94% { transform:translateX(-4px); opacity:0.6; }
+      97% { transform:translateX(4px); opacity:0.5; }
+    }
+    @keyframes glitch2 {
+      0%,90%,100% { transform:translateX(0); opacity:0; }
+      91% { transform:translateX(5px); opacity:0.5; }
+      95% { transform:translateX(-3px); opacity:0.4; }
+    }
+
+    .error-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 24px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .error-divider::before, .error-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.5), transparent);
+    }
+    .error-icon { font-size: 1.6rem; }
+
+    .error-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .error-desc {
+      font-size: 0.97rem;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    /* Construction tag */
+    .construction-tag {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 12px;
+      padding: 20px 28px;
+      max-width: 420px;
+      width: 100%;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .construction-tag .tag-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .construction-tag .tag-row:last-child { border-bottom: none; }
+    .tag-label {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--purple);
+      min-width: 80px;
+    }
+
+    .btn-group { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px rgba(255,102,0,0.35);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 36px rgba(255,102,0,0.55);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      padding: 18px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Raleway', sans-serif;
+      letter-spacing: 0.8px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: rgba(4,0,0,0.5);
+    }
+
+    @media (max-width: 600px) { nav { padding: 18px 24px; } .nav-links { gap: 20px; } }
+    @media (max-width: 420px) {
+      .nav-links { display: none; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <nav>
+    <a href="/" class="nav-brand"><img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">Rixi <span>Lab</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="error-badge">
+      <span class="badge-dot"></span>
+      Not Implemented
+    </div>
+
+    <div class="error-code" data-text="501" aria-label="501">501</div>
+
+    <div class="error-divider">
+      <span class="error-icon">🚧</span>
+    </div>
+
+    <h1 class="error-title">Not Implemented</h1>
+    <p class="error-desc">
+      The server does not support the functionality required to fulfill this request. This feature may be coming soon!
+    </p>
+
+    <div class="construction-tag">
+      <div class="tag-row">
+        <span class="tag-label">Status</span>
+        <span>501 Not Implemented</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag-label">Reason</span>
+        <span>Method or endpoint not supported</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag-label">ETA</span>
+        <span>Coming in a future release</span>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <a href="/" class="btn btn-primary">Go Home</a>
+      <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Rixi Lab &nbsp;·&nbsp; HTTP 501 Not Implemented
+  </footer>
+</body>
+</html>

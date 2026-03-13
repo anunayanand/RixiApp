@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>403 – Forbidden | Rixi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
+  <style>
+    :root {
+      --bg:        #040000;
+      --surface:   #191919;
+      --text:      #f8f8f8;
+      --muted:     rgba(248,248,248,0.55);
+      --accent:    #ff6600;
+      --accent-glow: rgba(255,102,0,0.18);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed; width: 520px; height: 520px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%; top: -15%; right: -12%;
+      animation: drift 7s ease-in-out infinite; pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed; width: 280px; height: 280px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%; bottom: 5%; left: 2%;
+      animation: drift 5s ease-in-out infinite reverse; pointer-events: none;
+    }
+    @keyframes drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-22px); } }
+
+    .grid-overlay {
+      position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(255,102,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,102,0,0.03) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 48px;
+      background: rgba(4,0,0,0.6); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 100;
+    }
+    .nav-brand { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.4rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { height: 32px; width: auto; object-fit: contain; }
+    .nav-brand span { color: var(--accent); }
+    nav a.nav-link { font-family: 'Raleway', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.25s; }
+    nav a.nav-link:hover { color: var(--accent); }
+    .nav-links { display: flex; gap: 36px; }
+
+    main {
+      position: relative; z-index: 10;
+      text-align: center; padding: 0 20px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* Lock icon animation */
+    .lock-icon {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: shake 4s ease-in-out infinite;
+    }
+    @keyframes shake {
+      0%,90%,100% { transform: rotate(0deg); }
+      92% { transform: rotate(-5deg); }
+      94% { transform: rotate(5deg); }
+      96% { transform: rotate(-4deg); }
+      98% { transform: rotate(3deg); }
+    }
+
+    .error-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,102,0,0.1);
+      border: 1px solid rgba(255,102,0,0.35);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.75rem;
+      font-family: 'Raleway', sans-serif; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .badge-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity:1;transform:scale(1); } 50% { opacity:0.4;transform:scale(0.7); } }
+
+    .error-code {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(120px, 22vw, 260px);
+      font-weight: 900; line-height: 1; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      position: relative; user-select: none;
+    }
+    .error-code::before, .error-code::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .error-code::before { animation: glitch1 3.5s infinite; clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform:translateX(-3px); opacity:0.6; }
+    .error-code::after { animation: glitch2 4s infinite; clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); transform:translateX(3px); opacity:0.5; }
+    @keyframes glitch1 { 0%,94%,100% { transform:translateX(0);opacity:0; } 95% { transform:translateX(-4px);opacity:0.6; } 97% { transform:translateX(4px);opacity:0.5; } }
+    @keyframes glitch2 { 0%,91%,100% { transform:translateX(0);opacity:0; } 92% { transform:translateX(5px);opacity:0.5; } 95% { transform:translateX(-3px);opacity:0.4; } }
+
+    .error-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 8px 0 24px; width: 100%; max-width: 420px;
+    }
+    .error-divider::before, .error-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,102,0,0.5), transparent);
+    }
+    .error-icon { font-size: 1.6rem; }
+
+    .error-title { font-family: 'Raleway', sans-serif; font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 700; margin-bottom: 12px; }
+    .error-desc { font-size: 0.97rem; color: var(--muted); max-width: 420px; line-height: 1.65; margin-bottom: 28px; }
+
+    /* Access log */
+    .access-log {
+      background: var(--surface);
+      border: 1px solid rgba(255,102,0,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      max-width: 420px; width: 100%;
+      font-family: 'Courier New', monospace;
+      font-size: 0.77rem;
+      color: var(--muted);
+      text-align: left;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .log-line { display: flex; gap: 8px; padding: 3px 0; }
+    .log-ts { color: rgba(255,255,255,0.25); min-width: 60px; }
+    .log-type-deny { color: #ff6600; font-weight: bold; }
+    .log-type-block { color: #ff3333; font-weight: bold; }
+
+    .btn-group { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn { font-family: 'Raleway', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 13px 32px; border-radius: 50px; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 0 24px rgba(255,102,0,0.35); }
+    .btn-primary:hover { box-shadow: 0 0 36px rgba(255,102,0,0.55); transform: translateY(-2px); }
+    .btn-secondary { background: transparent; color: var(--text); border: 1.5px solid rgba(255,255,255,0.18); }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      display: flex; justify-content: center; padding: 18px;
+      font-size: 0.75rem; color: var(--muted);
+      font-family: 'Raleway', sans-serif; letter-spacing: 0.8px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: rgba(4,0,0,0.5);
+    }
+
+    @media (max-width: 600px) { nav { padding: 18px 24px; } .nav-links { gap: 20px; } }
+    @media (max-width: 420px) {
+      .nav-links { display: none; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <nav>
+    <a href="/" class="nav-brand"><img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">Rixi <span>Lab</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="error-badge">
+      <span class="badge-dot"></span>
+      Access Denied
+    </div>
+
+    <div class="error-code" data-text="403" aria-label="403">403</div>
+
+    <div class="error-divider">
+      <span class="error-icon">🔒</span>
+    </div>
+
+    <h1 class="error-title">Forbidden</h1>
+    <p class="error-desc">
+      You don't have permission to access this resource. Please make sure you're signed in with the right account, or contact support.
+    </p>
+
+    <div class="access-log" aria-label="Access log">
+      <div class="log-line"><span class="log-ts">22:26:59</span><span class="log-type-deny">DENY</span><span>Access attempt blocked</span></div>
+      <div class="log-line"><span class="log-ts">22:26:59</span><span class="log-type-block">AUTH</span><span>Insufficient privileges</span></div>
+      <div class="log-line"><span class="log-ts">22:27:00</span><span class="log-type-deny">403</span><span>Request terminated</span></div>
+    </div>
+
+    <div class="btn-group">
+      <a href="/" class="btn btn-primary">Go Home</a>
+      <a href="/login" class="btn btn-secondary">Sign In</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Rixi Lab &nbsp;·&nbsp; HTTP 403 Forbidden
+  </footer>
+</body>
+</html>

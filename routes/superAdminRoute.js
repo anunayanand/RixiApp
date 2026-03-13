@@ -7,7 +7,7 @@ const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 const NewRegistration = require("../models/NewRegistration");
 
-router.get("/", authRole("superAdmin"), async (req, res) => {
+router.get("/", authRole("superAdmin"), async (req, res, next) => {
   try {
     const interns = await User.find({ role: "intern" });
     const batches = [...new Set(interns.map(i => i.batch_no))];
@@ -184,8 +184,7 @@ router.get("/", authRole("superAdmin"), async (req, res) => {
       topAmbassadorData
     });
   } catch (err) {
-    req.flash("error", "Failed to load Super Admin Dashboard");
-    res.redirect("/login");
+    next(err);
   }
 });
 

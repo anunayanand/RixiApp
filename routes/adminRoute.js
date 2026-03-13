@@ -25,7 +25,7 @@ const startingDate = {
   2611: "2026-11-01T00:00:00.000+00:00",
   2612: "2026-12-01T00:00:00.000+00:00",
 };
-router.get("/", authRole("admin"), async (req, res) => {
+router.get("/", authRole("admin"), async (req, res, next) => {
   try {
     const adminId = req.session.user;
     const admin = await Admin.findById(adminId);
@@ -138,8 +138,7 @@ router.get("/", authRole("admin"), async (req, res) => {
       registrations,
     });
   } catch (err) {
-    req.flash("error", "Server Error");
-    res.redirect("/admin-login");
+    next(err);
   }
 });
 

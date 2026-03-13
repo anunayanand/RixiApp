@@ -382,4 +382,27 @@ cron.schedule("59 21 28-31 * *", async () => {
   }
 });
 
+// ==============================
+// ERROR HANDLING MIDDLEWARE
+// ==============================
+
+// 404 - Page Not Found (must come after all routes)
+app.use((req, res, next) => {
+  res.status(404).render("pages/404");
+});
+
+// Global error handler (4 arguments = Express error middleware)
+app.use((err, req, res, next) => {
+  console.error("App Error:", err);
+
+  const status = err.status || err.statusCode || 500;
+
+  if (status === 403) return res.status(403).render("pages/403");
+  if (status === 501) return res.status(501).render("pages/501");
+  if (status === 503) return res.status(503).render("pages/503");
+
+  // Default: 500 Internal Server Error
+  res.status(500).render("pages/500");
+});
+
 app.listen(8080, () => console.log("Server running at http://localhost:8080"));

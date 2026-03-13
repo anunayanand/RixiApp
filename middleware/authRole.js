@@ -54,8 +54,7 @@ function authRole(roles) {
         if (req.headers.accept && req.headers.accept.includes('application/json')) {
           return res.status(403).json({ success: false, message: "Access denied." });
         }
-        req.flash("error", "Access denied.");
-        return res.redirect("/");
+        return res.status(403).render("pages/403");
       }
 
       next();

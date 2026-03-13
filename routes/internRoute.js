@@ -6,7 +6,7 @@ const Admin = require("../models/Admin");
 const Project = require("../models/Project");
 const authRole = require('../middleware/authRole');
 
-router.get("/intern", authRole("intern"), async (req, res) => {
+router.get("/intern", authRole("intern"), async (req, res, next) => {
   try {
     const intern = await User.findById(req.session.user)
       .populate('quizAssignments.quizId');
@@ -80,8 +80,7 @@ router.get("/intern", authRole("intern"), async (req, res) => {
 
   } catch (err) {
     console.error("🔥 Intern Route Error:", err);
-    req.flash("error", "Something went wrong loading the intern dashboard");
-    return res.redirect("/login");
+    next(err);
   }
 });
 

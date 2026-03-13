@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 const authRole = require("../middleware/authRole");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
@@ -26,11 +27,20 @@ router.post(
   upload.single("img_url"),  // 👈 Multer will intercept image
   async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      // Try User model first, then Admin model (admins are in a separate collection)
+      let user = await User.findById(req.params.id);
+      let isAdminModel = false;
+
+      if (!user) {
+        // Could be an Admin document
+        user = await Admin.findById(req.params.id);
+        isAdminModel = true;
+      }
+
       if (!user) return res.status(404).send("User not found");
 
-      // ✅ SuperAdmin updating an Admin
-      if (user.role === "admin" && req.session.role === "superAdmin") {
+      // ✅ SuperAdmin updating an Admin (Admin model)
+      if (isAdminModel && req.session.role === "superAdmin") {
         const {
           name,
           email,
@@ -40,8 +50,6 @@ router.post(
           designation,
           password,
         } = req.body;
-
-        const existingUser = await User.findById(req.params.id);
 
         let updateData = {
           name,
@@ -53,22 +61,60 @@ router.post(
         };
 
         // If file uploaded, Cloudinary returns URL in req.file.path
-       if (req.file) {
-          // If user already has a picture, delete it from Cloudinary
+        if (req.file) {
+          // If admin already has a picture, delete it from Cloudinary
           if (user.img_public_id) {
             await cloudinary.uploader.destroy(user.img_public_id);
           }
-
-          updateData.img_url = req.file.path;       // Cloudinary URL
-          updateData.img_public_id = req.file.filename; // Cloudinary public_id
+          updateData.img_url = req.file.path;
+          updateData.img_public_id = req.file.filename;
         }
 
         // Only hash if superAdmin entered a new password
         if (password && password.trim() !== "") {
-          const isSamePassword = await bcrypt.compare(
-            password,
-            existingUser.password
-          );
+          const isSamePassword = await bcrypt.compare(password, user.password);
+          if (!isSamePassword) {
+            updateData.password = await bcrypt.hash(password, 10);
+            updateData.isFirstLogin = true;
+          }
+        }
+
+        await Admin.findByIdAndUpdate(req.params.id, updateData);
+        req.flash("success", "Admin Updated Successfully!");
+        return res.redirect("/superAdmin");
+      }
+
+      // ✅ SuperAdmin updating an Admin stored in User model (role === 'admin')
+      if (!isAdminModel && user.role === "admin" && req.session.role === "superAdmin") {
+        const {
+          name,
+          email,
+          domain,
+          emp_id,
+          phone,
+          designation,
+          password,
+        } = req.body;
+
+        let updateData = {
+          name,
+          email,
+          domain,
+          emp_id,
+          phone,
+          designation,
+        };
+
+        if (req.file) {
+          if (user.img_public_id) {
+            await cloudinary.uploader.destroy(user.img_public_id);
+          }
+          updateData.img_url = req.file.path;
+          updateData.img_public_id = req.file.filename;
+        }
+
+        if (password && password.trim() !== "") {
+          const isSamePassword = await bcrypt.compare(password, user.password);
           if (!isSamePassword) {
             updateData.password = await bcrypt.hash(password, 10);
             updateData.isFirstLogin = true;
