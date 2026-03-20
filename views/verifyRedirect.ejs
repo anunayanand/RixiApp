@@ -4,9 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Rixi Lab Certificate Verified</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>Certificate Verified — Rixi Lab</title>
+  <meta name="description" content="Your Rixi Lab internship certificate has been successfully verified.">
 
   <!-- Favicons -->
   <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
@@ -15,96 +14,511 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
+  <!-- Vendor CSS -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/js/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="/js/vendor/aos/aos.css" rel="stylesheet">
-  <link href="/js/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="/js/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
+  <!-- Main CSS -->
   <link href="/css/main.css" rel="stylesheet">
 
+  <style>
+    /* ─── Page Shell ─── */
+    .verify-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 16px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background ambient glow blobs */
+    .verify-page::before {
+      content: '';
+      position: fixed;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,0,0.12) 0%, transparent 70%);
+      top: -120px;
+      right: -100px;
+      pointer-events: none;
+      animation: blobFloat 8s ease-in-out infinite;
+    }
+    .verify-page::after {
+      content: '';
+      position: fixed;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,0,0.08) 0%, transparent 70%);
+      bottom: -80px;
+      left: -80px;
+      pointer-events: none;
+      animation: blobFloat 6s ease-in-out infinite reverse;
+    }
+    @keyframes blobFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-30px); }
+    }
+
+    /* ─── Main Card ─── */
+    .verify-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 660px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 102, 0, 0.18);
+      border-radius: 24px;
+      padding: 52px 48px 44px;
+      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+    @media (max-width: 768px) {
+      .verify-card { padding: 36px 24px 32px; border-radius: 18px; }
+    }
+    @media (max-width: 480px) {
+      .verify-card { padding: 28px 18px 24px; border-radius: 14px; }
+    }
+
+    /* ─── Verified Badge ─── */
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 102, 0, 0.12);
+      border: 1px solid rgba(255, 102, 0, 0.35);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ff6600;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .verified-badge::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    /* ─── Animated Check Icon ─── */
+    .check-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 32px;
+    }
+    .pulse-ring {
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 2px solid rgba(57, 255, 20, 0.35);
+      animation: pulseRing 2s ease-out infinite;
+    }
+    .pulse-ring-2 {
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(57, 255, 20, 0.18);
+      animation: pulseRing 2s ease-out 0.5s infinite;
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(0.85); opacity: 0.8; }
+      100% { transform: scale(1.15); opacity: 0; }
+    }
+    .check-svg {
+      width: 96px;
+      height: 96px;
+    }
+    .check-circle {
+      fill: none;
+      stroke: #39ff14;
+      stroke-width: 3;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 283;
+      animation: drawCircle 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+    }
+    .check-tick {
+      fill: none;
+      stroke: #39ff14;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: drawTick 0.5s ease-out 0.9s forwards;
+    }
+    @keyframes drawCircle {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes drawTick {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ─── Congratulations Headline ─── */
+    .verify-headline {
+      font-family: 'Raleway', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(248, 248, 248, 0.55);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .intern-name {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ff6600 0%, #ff9a44 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    /* ─── Details Block ─── */
+    .details-grid {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 480px) {
+      .details-grid { padding: 18px 16px; }
+    }
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-row:first-child { padding-top: 0; }
+    .detail-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 8px;
+      background: rgba(255, 102, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff6600;
+      font-size: 13px;
+    }
+    .detail-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(248, 248, 248, 0.35);
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(248, 248, 248, 0.9);
+      line-height: 1.3;
+    }
+    .detail-value.orange { color: #ff6600; }
+
+    /* ─── Action Buttons ─── */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 560px) {
+      .action-buttons { flex-direction: column; }
+      .action-buttons .btn { width: 100%; justify-content: center; }
+    }
+    .btn-linkedin {
+      flex: 1;
+      min-width: 160px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #ff6600, #e65c00);
+      color: #fff !important;
+      font-family: 'Raleway', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 13px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(255, 102, 0, 0.35);
+    }
+    .btn-linkedin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 102, 0, 0.5);
+      color: #fff !important;
+    }
+    .btn-linkedin:active { transform: translateY(0); }
+
+    .btn-outline-verify {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(248, 248, 248, 0.75) !important;
+      font-family: 'Raleway', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-outline-verify:hover {
+      border-color: rgba(255, 102, 0, 0.5);
+      color: #ff6600 !important;
+      background: rgba(255, 102, 0, 0.07);
+      transform: translateY(-1px);
+    }
+    .btn-outline-verify.copy-btn.copied {
+      border-color: #22c55e;
+      color: #22c55e !important;
+    }
+
+    /* ─── Trust Footer ─── */
+    .trust-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 28px;
+      font-size: 11px;
+      color: rgba(248, 248, 248, 0.28);
+      letter-spacing: 0.3px;
+    }
+    .trust-footer i {
+      color: rgba(255, 102, 0, 0.55);
+      font-size: 12px;
+    }
+
+    /* ─── Divider ─── */
+    .verify-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,102,0,0.3), transparent);
+      margin: 28px 0;
+    }
+  </style>
 </head>
 
 <body class="index-page">
- <%- include('partials/loader') %>
+  <%- include('partials/loader') %>
+
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
-
       <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="">
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
         <h1 class="sitename">Rixi Lab</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#services">Services</a></li>
           <li><a href="/certificate.html">Certificate</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
       <a class="btn-getstarted" href="internship">Internship</a>
-
     </div>
   </header>
 
-  <main class="main "><br><br>
-    <!-- Contact Section -->
-    <section id="contact" class="contact section ">
-      <!-- Section Title -->
-      <div class="container  section-title" data-aos="fade-up">
-        <h2>Verified</h2>
-        <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
-      </div><!-- End Section Title -->
+  <main>
+    <section class="verify-page">
+      <div class="verify-card" data-aos="fade-up" data-aos-duration="700">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row d-flex justify-content-center">
-          
+        <!-- Verified Badge -->
+        <div class="text-center">
+          <span class="verified-badge">
+            <i class="bi bi-patch-check-fill"></i>
+            Certificate Verified
+          </span>
+        </div>
 
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-            <div class="contact-form-wrapper">
-              <div class="form-header">
-                <div class="d-flex justify-content-center">
-                  <img src="/img/success.gif" alt="">
-                </div>
-                <h3>This is to certify that "<%= user.name.toUpperCase()%>" has successfully completed <%= user.duration%> week online project based “<%= user.domain%>” Internship at “Rixi Lab”, from <%= new Date(user.starting_date).toDateString().slice(4) %> to <%= new Date(user.completion_date).toDateString().slice(4) %>. </h3>
+        <!-- Animated Checkmark -->
+        <div class="text-center">
+          <div class="check-wrap">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring-2"></div>
+            <svg class="check-svg" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle class="check-circle" cx="48" cy="48" r="44" stroke-linecap="round"/>
+              <polyline class="check-tick" points="28,50 41,63 68,34"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="text-center">
+          <p class="verify-headline">Congratulations </p>
+          <h2 class="intern-name"><%= user.name.toUpperCase() %></h2>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div>
+              <div class="detail-label">Domain / Program</div>
+              <div class="detail-value orange"><%= user.domain %></div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-clock-history"></i></div>
+            <div>
+              <div class="detail-label">Duration</div>
+              <div class="detail-value"><%= user.duration %> Week<%= user.duration > 1 ? 's' : '' %> Online Internship</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-calendar3"></i></div>
+            <div>
+              <div class="detail-label">Period</div>
+              <div class="detail-value">
+                <%= new Date(user.starting_date).toDateString().slice(4) %> &rarr; <%= new Date(user.completion_date).toDateString().slice(4) %>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section><!-- /Contact Section -->
 
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-building"></i></div>
+            <div>
+              <div class="detail-label">Issued Date</div>
+              <div class="detail-value"><%= new Date(user.completion_date).toDateString().slice(4) %></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="verify-divider"></div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+
+          <!-- LinkedIn Share Button -->
+          <button
+            class="btn-linkedin"
+            id="linkedinShareBtn"
+            onclick="shareOnLinkedIn()"
+            data-name="<%= user.name %>"
+            data-domain="<%= user.domain %>"
+            data-duration="<%= user.duration %>"
+            data-start="<%= new Date(user.starting_date).toDateString().slice(4) %>"
+            data-end="<%= new Date(user.completion_date).toDateString().slice(4) %>"
+          >
+            <i class="bi bi-linkedin"></i>
+            Post on LinkedIn
+          </button>
+
+        </div>
+
+        <!-- Trust Footer -->
+        <div class="trust-footer">
+          <i class="bi bi-shield-fill-check"></i>
+          This certificate is digitally verified by Rixi Lab
+        </div>
+
+      </div>
+    </section>
   </main>
+
   <%- include('partials/footer') %>
-  
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
-  <!-- Vendor JS Files -->
+  <!-- Vendor JS -->
   <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/vendor/aos/aos.js"></script>
   <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="/js/vendor/typed.js/typed.umd.js"></script>
   <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
   <script src="/js/main.js"></script>
 
+  <script>
+    /* ── LinkedIn Share ── */
+    function shareOnLinkedIn() {
+      const btn = document.getElementById('linkedinShareBtn');
+      const name     = btn.dataset.name;
+      const domain   = btn.dataset.domain;
+      const duration = btn.dataset.duration;
+      const start    = btn.dataset.start;
+      const end      = btn.dataset.end;
 
-  
+      const domainTag = '#' + domain.replace(/\s+/g, '');
 
+      const postText =  
+        `Honored to share that I have successfully completed a ${duration}-week Online "${domain}" Internship at Rixi Lab!\n\n` +
+        `Duration: ${start} → ${end}\n` +
+        `Organization: Rixi Lab\n\n` +
+        `This experience has been an incredible journey of learning, growth, and real-world exposure.\n` +
+        `Grateful to the entire Rixi Lab team for the mentorship and opportunity!\n\n` +
+        `#RixiLab #Internship ${domainTag} #Learning #Growth #Opportunity`;
 
+      // LinkedIn feed intent URL — the only method that actually pre-fills post text
+      const fullText   = postText + '\n\n Verify: ' + window.location.href;
+      const linkedinUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(fullText);
+
+      window.open(linkedinUrl, '_blank', 'width=700,height=700,noopener,noreferrer');
+    }
+
+    /* ── Copy Verification Link ── */
+    function copyVerificationLink(btn) {
+      navigator.clipboard.writeText(window.location.href).then(function () {
+        const label = btn.querySelector('.copy-label');
+        const icon  = btn.querySelector('i');
+        label.textContent = 'Copied!';
+        icon.className = 'bi bi-check-lg';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          label.textContent = 'Copy Link';
+          icon.className = 'bi bi-link-45deg';
+          btn.classList.remove('copied');
+        }, 2500);
+      });
+    }
+  </script>
 
 </body>
-
 </html>
