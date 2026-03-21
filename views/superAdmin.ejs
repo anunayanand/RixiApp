@@ -863,6 +863,11 @@
             <a href="/superAdmin/admin/<%= admin._id %>" class="admin-action-btn admin-action-view" title="View Profile" target="_blank">
               <i class="bi bi-eye"></i>
             </a>
+            <% if (admin.emp_id) { %>
+              <button class="admin-action-btn admin-action-copy text-primary" title="Copy QR Link" onclick="copyQrLink('<%= admin.emp_id %>', '<%= generateSignature(admin.emp_id) %>')">
+                <i class="bi bi-link-45deg"></i>
+              </button>
+            <% } %>
             <button class="admin-action-btn admin-action-edit" title="Update Admin" data-bs-toggle="modal" data-bs-target="#updateAdminModal<%= admin._id %>">
               <i class="bi bi-pencil-square"></i>
             </button>
@@ -2592,6 +2597,20 @@ function updateIntern(id) {
   <% }) %>
 
   <script>
+    function copyQrLink(empId, signature) {
+      if (!empId) {
+        showToast("Employee ID is missing for this admin.", "error");
+        return;
+      }
+      const qrUrl = window.location.origin + "/profile/" + empId + "?sig=" + signature;
+      navigator.clipboard.writeText(qrUrl).then(() => {
+        showToast("QR Link copied to clipboard!", "success");
+      }).catch(err => {
+        console.error("Failed to copy link: ", err);
+        showToast("Failed to copy link. Check console for details.", "error");
+      });
+    }
+
     // Global Modal Fix: Append all modals to body to prevent them from being trapped inside overflow containers
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.modal').forEach(modal => {

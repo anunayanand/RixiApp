@@ -6,6 +6,8 @@ const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 const NewRegistration = require("../models/NewRegistration");
+const { generateSignature } = require("./profileRoute");
+
 
 router.get("/", authRole("superAdmin"), async (req, res, next) => {
   try {
@@ -181,7 +183,8 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
       showPasswordPopup: superAdmin.isFirstLogin,
       registrations,
       topAmbassadorLabels,
-      topAmbassadorData
+      topAmbassadorData,
+      generateSignature
     });
   } catch (err) {
     next(err);

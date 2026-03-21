@@ -161,6 +161,9 @@ app.use('/', downloadCertificateRoute);
 const downloadOfferLetterRoute = require('./routes/downloadOfferLetterRoute');
 app.use('/', downloadOfferLetterRoute);
 
+const { router: profileRoute } = require('./routes/profileRoute');
+app.use('/profile', profileRoute);
+
 app.get("/internship", (req, res) => {
   res.render("internship");
 });
