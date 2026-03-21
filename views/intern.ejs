@@ -270,7 +270,9 @@
                       <span class="id-status-badge id-status-accepted"><i class="bi bi-check-circle-fill me-1"></i> Accepted</span>
                     <% } else if (sub.status === 'rejected') { %>
                       <span class="id-status-badge id-status-rejected"><i class="bi bi-x-circle-fill me-1"></i> Rejected</span>
-                    <% } %>
+                    <% } else{ %>
+                      <span class="id-status-badge id-status-pending"><i class="bi bi-clock-fill me-1"></i> Pending</span>
+                    <% }  %>
 
                     <a href="<%= proj ? proj.downloadLink : '#' %>" target="_blank" class="btn btn-outline-primary-custom">
                       <i class="bi bi-download me-1"></i> Download
@@ -502,7 +504,7 @@
           <div class="chat-header">
             <div class="d-flex align-items-center gap-3">
               <div class="position-relative">
-                <img id="chatAdminImg" src="" alt="Mentor" width="40" height="40" class="rounded-circle" style="object-fit: cover; border: 2px solid var(--border);">
+                <img id="chatAdminImg" src="/img/chat-admin-profile.jpg" alt="Mentor" width="40" height="40" class="rounded-circle" style="object-fit: cover; border: 2px solid var(--border);">
                 <span id="chatAdminStatus" class="position-absolute bottom-0 end-0 border border-2 border-dark rounded-circle bg-secondary" style="width: 10px; height: 10px;"></span>
               </div>
               <div>
@@ -837,9 +839,7 @@
        document.getElementById('activeSubject').innerText = ticket.subject;
        if (ticket.adminId) {
           document.getElementById('chatAdminName').innerText = ticket.adminId.name || 'Mentor';
-          if (ticket.adminId.img_url) {
-             document.getElementById('chatAdminImg').src = ticket.adminId.img_url;
-          }
+
        }
     }
 

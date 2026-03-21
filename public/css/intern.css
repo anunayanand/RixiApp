@@ -734,7 +734,7 @@ body {
     display: flex;
     gap: 10px;
     align-items: stretch;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: flex-end;
 }
 
@@ -763,6 +763,10 @@ body {
 .id-status-rejected {
     background: rgba(239, 68, 68, 0.1);
     color: #ef4444;
+}
+.id-status-pending{
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
 }
 
 /* Quiz Card Variant */
@@ -872,7 +876,7 @@ body {
     /* padding: 8px 20px; */
     border-radius: var(--radius-sm);
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 0.75rem;
     transition: var(--transition);
 }
 
@@ -939,7 +943,7 @@ body {
 
     .id-project-actions {
         width: 100%;
-        flex-direction: column;
+        flex-direction: row;
         align-items: stretch;
     }
 
