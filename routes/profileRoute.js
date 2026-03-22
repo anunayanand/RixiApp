@@ -7,20 +7,26 @@ const SuperAdmin = require('../models/SuperAdmin');
 // Helper to generate the correct signature for a given emp_id
 // Uses SESSION_SECRET as the HMAC key (or a fallback if not defined)
 const generateSignature = (empId) => {
-  const secret = process.env.SESSION_SECRET || 'fallback_secret_key';
+  const secret = process.env.SESSION_SECRET || 'd91a7ad388c1415e247b327f4074b48e';
   return crypto.createHmac('sha256', secret).update(empId).digest('hex').substring(0, 16);
 };
 
 // GET /profile/:emp_id
 router.get('/:emp_id', async (req, res) => {
   try {
-    const empId = req.params.emp_id;
+    const originalEmpId = req.params.emp_id;
 
     // 1. Check for cryptographic signature. If missing or incorrect, deny access.
-    // This prevents brute-force guessing of emp_ids.
-    const expectedSig = generateSignature(empId);
+    // This prevents brute-force guessing of emp_ids using the ID provided in the URL.
+    const expectedSig = generateSignature(originalEmpId);
     if (!req.query.sig || req.query.sig !== expectedSig) {
       return res.status(403).render('pages/403');
+    }
+
+    // Alias: if the requested ID is RL240901, fetch data for RL250201 instead
+    let empId = originalEmpId;
+    if (empId === 'RL240901') {
+      empId = 'RL250201';
     }
     let employee = null;
     let role = '';
