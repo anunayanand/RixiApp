@@ -61,6 +61,8 @@ const superAdminSchema = new mongoose.Schema({
   resetToken: { type: String, default: null },
   otp: String,
   otpExpiry: Date,
+  qrLoginSecret: { type: String, default: null },
+  isQrLoginSetup: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("SuperAdmin", superAdminSchema);

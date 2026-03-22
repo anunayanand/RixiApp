@@ -130,7 +130,7 @@ app.get("/generate-captcha", (req, res) => {
 });
 
 app.get("/admin-login", (req, res) => { 
-  res.render("orgLogin");
+  res.render("orgLogin", { messages: req.flash() });
 });
 app.get('/terms-and-conditions', (req, res) => {
   res.render('termsAndConditions');
@@ -138,6 +138,9 @@ app.get('/terms-and-conditions', (req, res) => {
 
 const orgLoginRouter = require('./routes/orgLoginRoute');
 app.post('/org/login', orgLoginRouter);
+
+const qrLoginRouter = require('./routes/qrLoginRoute');
+app.use('/', qrLoginRouter);
 
 const loginRouter = require('./routes/loginRoute');
 app.post('/login', loginRouter);
