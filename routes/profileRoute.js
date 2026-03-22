@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 const crypto = require('crypto');
 const Admin = require('../models/Admin');
 const SuperAdmin = require('../models/SuperAdmin');
@@ -16,10 +17,15 @@ router.get('/:emp_id', async (req, res) => {
   try {
     const originalEmpId = req.params.emp_id;
 
-    // 1. Check for cryptographic signature. If missing or incorrect, deny access.
-    // This prevents brute-force guessing of emp_ids using the ID provided in the URL.
+    // 1. Check for cryptographic signature.
+    // Allow either the standard HMAC signature OR a special environment-defined DIRECTOR_QR_SIGN for RL240901.
     const expectedSig = generateSignature(originalEmpId);
-    if (!req.query.sig || req.query.sig !== expectedSig) {
+    const providedSig = req.query.sig;
+    
+    const isValid = (providedSig === expectedSig) || 
+                  (originalEmpId === 'RL240901' && providedSig === process.env.DIRECTOR_QR_SIGN);
+
+    if (!providedSig || !isValid) {
       return res.status(403).render('pages/403');
     }
 

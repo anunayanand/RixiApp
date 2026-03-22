@@ -11,7 +11,7 @@ if (!empId) {
 }
 
 const signature = generateSignature(empId);
-const qrUrl = `http://localhost:8080/profile/${empId}?sig=${signature}`;
+const qrUrl = `https://rixilab.tech/profile/${empId}?sig=${signature}`;
 
 console.log('\n✅ Secure QR URL Generated!\n');
 console.log('Employee ID:', empId);

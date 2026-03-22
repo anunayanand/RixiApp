@@ -318,6 +318,7 @@
     let html5QrcodeScanner;
     let scannedEmpId = null;
     let scannedSig = null;
+    let scannedHostname = null;
 
     function startQRScanner() {
       document.getElementById('scanner-wrapper').style.display = 'none';
@@ -350,12 +351,20 @@
       try {
         const url = new URL(decodedText);
         
-        // Extract emp_id from the URL path (e.g. /profile/RL250201)
+        // 1. Verify trusted domain
+        if (url.hostname !== 'rixilab.tech') {
+          alert("Invalid QR Code: This code is not from rixilab.tech.");
+          stopQRScanner();
+          return;
+        }
+
+        // 2. Extract emp_id from the URL path (e.g. /profile/RL250201)
         const pathParts = url.pathname.split('/').filter(p => p !== '');
         scannedEmpId = pathParts[pathParts.length - 1]; 
         
-        // Extract sig from query parameters
+        // 3. Extract sig from query parameters
         scannedSig = url.searchParams.get('sig');
+        scannedHostname = url.hostname;
 
         if (scannedEmpId && scannedSig) {
           // Stop camera immediately on clean scan
@@ -376,7 +385,11 @@
       fetch('/qr-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emp_id: scannedEmpId, sig: scannedSig })
+        body: JSON.stringify({ 
+          emp_id: scannedEmpId, 
+          sig: scannedSig,
+          hostname: scannedHostname
+        })
       })
       .then(res => res.json())
       .then(data => {

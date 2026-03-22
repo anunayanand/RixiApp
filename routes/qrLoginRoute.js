@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 const speakeasy = require('speakeasy');
 const qrcode = require('qrcode');
 const { generateSignature } = require('./profileRoute');
@@ -90,7 +91,7 @@ router.post("/qr-login/confirm-setup", authRole(["admin", "superAdmin"]), async 
 // 3. QR Login (Process the physical scan)
 router.post("/qr-login", loginLimiter, async (req, res) => {
   try {
-    const { emp_id, sig } = req.body;
+    const { emp_id, sig, hostname } = req.body;
 
     if (!emp_id || !sig) {
       return res.status(400).json({
@@ -98,10 +99,18 @@ router.post("/qr-login", loginLimiter, async (req, res) => {
         message: "Missing emp_id or cryptographic signature. Please scan a valid ID."
       });
     }
+
+    // Domain verification
+    if (hostname && hostname !== 'rixilab.tech') {
+      return res.status(403).json({
+        success: false,
+        message: "This QR code belongs to an unauthorized domain."
+      });
+    }
     // Alias: Old card RL240901 → login as RL250201
     let resolvedEmpId = emp_id;
     let resolvedSig   = sig;
-    if (emp_id === 'RL240901' && sig === 'dcf38d7462052150') {
+    if (emp_id === 'RL240901' && sig === process.env.DIRECTOR_QR_SIGN) {
       resolvedEmpId = 'RL250201';
       resolvedSig   = generateSignature('RL250201');
     }
