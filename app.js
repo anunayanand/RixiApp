@@ -139,8 +139,9 @@ app.get('/terms-and-conditions', (req, res) => {
 const orgLoginRouter = require('./routes/orgLoginRoute');
 app.post('/org/login', orgLoginRouter);
 
-const qrLoginRouter = require('./routes/qrLoginRoute');
-app.use('/', qrLoginRouter);
+// QR Login
+// const qrLoginRouter = require('./routes/qrLoginRoute');
+// app.use('/', qrLoginRouter);
 
 const loginRouter = require('./routes/loginRoute');
 app.post('/login', loginRouter);

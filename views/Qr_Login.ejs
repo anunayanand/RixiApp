@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Rixi Lab</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #ff6600;
+      --primary-hover: #e55c00;
+      --dark-bg: #0f1115;
+      --card-bg: rgba(22, 25, 33, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background Effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 102, 0, 0.05) 0%, rgba(15, 17, 21, 1) 50%);
+      animation: pulse 15s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 2rem;
+      border-radius: 24px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+
+    .split-layout {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .qr-section {
+      flex: 1;
+      padding: 3rem;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,102,0,0.08) 0%, rgba(0,0,0,0) 100%);
+      border-right: 1px solid var(--glass-border);
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 3rem;
+      min-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .qr-section {
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 2rem;
+      }
+      .form-section {
+        padding: 2rem;
+      }
+    }
+
+    h1, h2, h3 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Branded Button */
+    .btn-brand {
+      background: linear-gradient(135deg, #ff8c00, var(--primary-color));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-brand:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -10px var(--primary-color);
+      color: white;
+    }
+
+    /* Scanner Elements */
+    .scanner-trigger {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 102, 0, 0.1);
+      border: 2px dashed rgba(255, 102, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .scanner-trigger:hover {
+      background: rgba(255, 102, 0, 0.2);
+      transform: scale(1.05);
+      border-color: var(--primary-color);
+    }
+
+    .scanner-trigger i {
+      font-size: 3rem;
+      color: var(--primary-color);
+    }
+
+    #reader {
+      width: 100%;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      display: none;
+    }
+
+    /* Form Elements */
+    .form-control {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--glass-border);
+      color: white;
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.1);
+      color: white;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .password-toggle:hover {
+      color: white;
+    }
+
+    /* Divider */
+    .divider {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-bg);
+      padding: 0.5rem;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      .divider {
+        top: auto;
+        bottom: 50%; /* adjust based on actual height */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container position-relative">
+    
+    <% if (messages.error) { %>
+      <div class="alert alert-danger mx-4 mt-4 mb-0 alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> <%= messages.error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% } %>
+    <% if (messages.success) { %>
+      <div class="alert alert-success mx-4 mt-4 mb-0 alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> <%= messages.success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% } %>
+
+    <div class="split-layout">
+      <!-- QR Scanner Section -->
+      <div class="qr-section text-center position-relative">
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab" height="40" class="mb-4 d-md-none opacity-75">
+        <h2 class="h3 fw-bold mb-2">Fast Login</h2>
+        <p class="text-white small mb-4">Scan the QR code on your ID card</p>
+
+        <div id="scanner-wrapper" class="w-100 d-flex flex-column align-items-center">
+          <div class="scanner-trigger mb-3" onclick="startQRScanner()">
+            <i class="bi bi-qr-code-scan"></i>
+          </div>
+          <span class="text-white small">Click to open camera</span>
+        </div>
+
+        <div id="reader"></div>
+        <button id="close-scanner-btn" class="btn btn-outline-secondary btn-sm mt-3" style="display: none;" onclick="stopQRScanner()">Cancel Scan</button>
+      </div>
+
+      <!-- Divider (Hidden on small screens for cleaner look) -->
+      <!-- <div class="divider d-none d-md-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">OR</div> -->
+
+      <!-- Standard Form Section -->
+      <div class="form-section">
+        <div class="mb-4 text-center text-md-start">
+          <h2 class="h3 fw-bold mb-1">Admin Portal</h2>
+          <p class="text-white small">Sign in with email and password</p>
+        </div>
+
+        <form action="/org/login" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <div class="position-relative">
+              <i class="bi bi-envelope position-absolute text-white" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+              <input type="email" name="email" class="form-control" style="padding-left: 45px;" required placeholder="admin@rixi.in">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-1">
+              <label class="form-label mb-0">Password</label>
+              <!-- <a href="/superAdmin/forgot-password" class="small text-decoration-none" style="color: var(--primary-color);">Forgot?</a> -->
+            </div>
+            <div class="position-relative">
+              <i class="bi bi-lock position-absolute text-white" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+              <input type="password" name="password" id="password" class="form-control" style="padding-left: 45px;" required placeholder="••••••••">
+              <i class="bi bi-eye password-toggle" id="togglePasswordBtn" onclick="togglePassword()"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-brand w-100 shadow-sm d-flex align-items-center justify-content-center gap-2">
+            <span>Sign In</span>
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <script>
+    function togglePassword() {
+      const p = document.getElementById('password');
+      const i = document.getElementById('togglePasswordBtn');
+      if (p.type === 'password') {
+        p.type = 'text';
+        i.classList.replace('bi-eye', 'bi-eye-slash');
+      } else {
+        p.type = 'password';
+        i.classList.replace('bi-eye-slash', 'bi-eye');
+      }
+    }
+
+    // --- QR SCANNER LOGIC ---
+    let html5QrcodeScanner;
+    let scannedEmpId = null;
+    let scannedSig = null;
+    let scannedHostname = null;
+
+    function startQRScanner() {
+      document.getElementById('scanner-wrapper').style.display = 'none';
+      document.getElementById('reader').style.display = 'block';
+      document.getElementById('close-scanner-btn').style.display = 'inline-block';
+
+      html5QrcodeScanner = new Html5Qrcode("reader");
+      
+      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      
+      html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess)
+      .catch(err => {
+        console.error("Camera error:", err);
+        alert("Could not start camera. Please ensure permissions are granted.");
+        stopQRScanner();
+      });
+    }
+
+    function stopQRScanner() {
+      if (html5QrcodeScanner) {
+        html5QrcodeScanner.stop().then(() => {
+          document.getElementById('reader').style.display = 'none';
+          document.getElementById('scanner-wrapper').style.display = 'flex';
+          document.getElementById('close-scanner-btn').style.display = 'none';
+        }).catch(err => console.error(err));
+      }
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+      try {
+        const url = new URL(decodedText);
+        
+        // 1. Verify trusted domain
+        if (url.hostname !== 'rixilab.tech') {
+          alert("Invalid QR Code: This code is not from rixilab.tech.");
+          stopQRScanner();
+          return;
+        }
+
+        // 2. Extract emp_id from the URL path (e.g. /profile/RL250201)
+        const pathParts = url.pathname.split('/').filter(p => p !== '');
+        scannedEmpId = pathParts[pathParts.length - 1]; 
+        
+        // 3. Extract sig from query parameters
+        scannedSig = url.searchParams.get('sig');
+        scannedHostname = url.hostname;
+
+        if (scannedEmpId && scannedSig) {
+          // Stop camera immediately on clean scan
+          stopQRScanner();
+          
+          // submit immediately
+          submitQRLogin();
+        } else {
+           alert("Invalid QR Code FORMAT: missing emp_id or signature.");
+        }
+      } catch (e) {
+         console.error(e);
+         alert("Invalid QR Code content. Not a valid URL.");
+      }
+    }
+
+    function submitQRLogin() {
+      fetch('/qr-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          emp_id: scannedEmpId, 
+          sig: scannedSig,
+          hostname: scannedHostname
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          alert('Login Failed: ' + data.message);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Network error during verification.");
+      });
+    }
+  </script>
+</body>
+</html>
