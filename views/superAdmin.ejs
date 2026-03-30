@@ -638,7 +638,12 @@
       </div>
       <div class="col-md-6">
         <input type="text" name="referralId" class="form-control" placeholder="Reffral ID" required>
-      </div> <!-- Empty div to keep layout -->
+      </div>
+
+      <!-- Row 10: Discount -->
+      <div class="col-md-12">
+        <input type="number" name="discountPercent" class="form-control" placeholder="Discount Percent (0-100)" min="0" max="100" required>
+      </div>
 
       <!-- Row 10: Submit Button (centered) -->
       <div class="col-12 text-center mt-3">
@@ -2407,6 +2412,12 @@ function updateIntern(id) {
             <div class="col-md-6">
               <label class="form-label">Certificate Link</label>
               <input type="text" name="certificate_link" class="form-control" value="<%= ambassador.certificate_link %>" >
+            </div>
+
+            <!-- Row 6 -->
+            <div class="col-md-12">
+              <label class="form-label">Discount Percent (0-100)</label>
+              <input type="number" name="discountPercent" class="form-control" value="<%= ambassador.discountPercent || 0 %>" min="0" max="100">
             </div>
 
           </div>

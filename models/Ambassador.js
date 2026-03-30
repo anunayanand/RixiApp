@@ -39,6 +39,7 @@ const ambassadorSchema = new mongoose.Schema({
     default: "None" 
   },
   img_url: { type: String ,default: "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg" },
+  discountPercent: { type: Number, default: 0, min: 0, max: 100 },
 }, { timestamps: true });
 
 // 🏅 Badge updater method

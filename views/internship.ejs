@@ -111,11 +111,11 @@
                 <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
                 <h5>Internship Important Dates:</h5>
                 <ul>
-                  <li>Last date to apply: 31 Mar 2026</li>
+                  <li>Last date to apply: 30 Apr 2026</li>
                   <!-- <li style="color: #00ff00;">Extended date to apply: 30 Sept 2025</li> -->
-                  <li>Offer Letter provide: 31 Mar 2026</li>
-                  <li>Internship Start Date: 1 Apr 2026</li>
-                  <li>Project Assign Date: 1 Apr 2026</li>
+                  <li>Offer Letter provide: 30 Apr 2026</li>
+                  <li>Internship Start Date: 1 May 2026</li>
+                  <li>Project Assign Date: 1 May 2026</li>
                 </ul>
 
                 <h5>Benefites for Students:</h5>
@@ -411,52 +411,45 @@
                       id="contactReferral"
                       placeholder="Enter referral code (optional)"
                     />
+                    <div id="referralMessage" class="form-text" style="font-size: 0.85em; margin-top: 5px;"></div>
                   </div>
                   <!-- <br> -->
                   <!-- Billing Table -->
-                  <table
-                    class="billing-table"
-                    style="
-                      width: 100%;
-                      border-collapse: collapse;
-                      margin-bottom: 15px;
-                    "
-                  >
+                  <div id="billingPlaceholder" class="alert alert-secondary text-center" style="margin-bottom: 15px; border: 1px dashed #ff6600; color: white; background-color: transparent;">
+                    <i class="bi bi-info-circle me-1" style="color: #ff6600;"></i> Please select an internship domain to view the billing details.
+                  </div>
+                  <table id="billingTable" class="billing-table" style="display: none; width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                    <tr>
+                      <td>Base Amount</td>
+                      <td style="text-align: right">₹<span id="baseRegFee">499.00</span></td>
+                    </tr>
+                    <tr>
+                      <td>Discount (<span id="baseDiscountPercent">80</span>%)</td>
+                      <td style="text-align: right; color: #ffff">- ₹<span id="baseDiscount">399.00</span></td>
+                    </tr>
                     <tr>
                       <td>Registration Fee</td>
-                      <td style="text-align: right">
-                        ₹<span id="regFee">499</span>
-                      </td>
+                      <td style="text-align: right">₹<span id="baseAmount">100.00</span></td>
                     </tr>
-                    <tr>
-                      <td>Discount (80%)</td>
-                      <td style="text-align: right; color: #ffff">- ₹399</td>
+                    <tr id="referralDiscountRow" style="display: none;">
+                      <td>Referral Discount (<span id="referralPercentDisplay">0</span>%)</td>
+                      <td style="text-align: right; color: #4ade80">- ₹<span id="referralDiscountAmount">0.00</span></td>
                     </tr>
-                    <tr>
+                    <tr id="serviceChargeRow">
                       <td>Service Charges (incl. GST)</td>
-                      <td style="text-align: right">₹1.95</td>
+                      <td style="text-align: right">₹<span id="serviceChargeAmount">0.00</span></td>
                     </tr>
                     <tr>
-                      <td>Service Tax</td>
-                      <td style="text-align: right">₹0.45</td>
+                      <td>Service Change</td>
+                      <td style="text-align: right">₹<span id="serviceTaxDisplay">0.00</span></td>
                     </tr>
                     <tr style="border-top: 1px solid #ddd">
                       <td style="padding: 10px 0 0 0; font-weight: bold">
                         Total Registration Fee
-                        <span style="font-weight: 400"
-                          >(Only online Payment Accepted)</span
-                        >
+                        <span style="font-weight: 400">(Only online Payment Accepted)</span>
                       </td>
-                      <td
-                        style="
-                          padding: 10px 0 0 0;
-                          text-align: right;
-                          font-weight: bold;
-                          color: #ffff;
-                          font-size: 1.1em;
-                        "
-                      >
-                        ₹102.4/-
+                      <td style="padding: 10px 0 0 0; text-align: right; font-weight: bold; color: #ffff; font-size: 1.1em;">
+                        ₹<span id="totalFeeDisplay">102.40</span>/-
                       </td>
                     </tr>
                   </table>
@@ -754,24 +747,117 @@
 
       // Domain-wise prices (must match backend DOMAIN_PRICES)
       const domainPrices = {
-        "Web Development": 102.4,
-        "Python Programming": 102.4,
-        "Java Programming": 102.4,
-        "Data Analytics": 102.4,
-        DSA: 102.4,
-        "Graphics Design": 102.4,
-        "Full Stack Development": 102.4,
+        "Web Development": 100,
+        "Data Analytics": 150,
+        "DSA": 124,
+        "Graphics Design": 100,
+        "Python Programming": 149,
+        "Java Programming": 174,
+        "Full Stack Development": 124,
+        "Machine Learning": 200
       };
 
+      let currentDomainPrice = 100;
+      let currentReferralDiscountPercent = 0;
+
+      function updateBillingTable() {
+        let baseAmount = currentDomainPrice;
+        
+        let referralDiscountAmount = 0;
+        if (currentReferralDiscountPercent > 0) {
+           referralDiscountAmount = (baseAmount * currentReferralDiscountPercent) / 100;
+           document.getElementById("referralPercentDisplay").textContent = currentReferralDiscountPercent;
+           if (document.getElementById("referralDiscountAmount")) {
+              document.getElementById("referralDiscountAmount").textContent = referralDiscountAmount.toFixed(2);
+           }
+           document.getElementById("referralDiscountRow").style.display = "table-row";
+        } else {
+           document.getElementById("referralDiscountRow").style.display = "none";
+        }
+
+        let discountedBase = baseAmount - referralDiscountAmount;
+        let serviceCharge = discountedBase * 0.0195;
+        let gst = discountedBase * 0.0045; // Exact 0.45%
+        let totalFee = discountedBase + serviceCharge + gst;
+
+        let baseRegFee = 499; 
+        let baseDiscount = baseRegFee - baseAmount;
+        let discountPercentValue = Math.round((baseDiscount / baseRegFee) * 100);
+
+        document.getElementById("baseRegFee").textContent = baseRegFee.toFixed(2);
+        document.getElementById("baseDiscount").textContent = baseDiscount.toFixed(2);
+        if (document.getElementById("baseDiscountPercent")) {
+           document.getElementById("baseDiscountPercent").textContent = discountPercentValue;
+        }
+        document.getElementById("baseAmount").textContent = baseAmount.toFixed(2);
+        
+        if (document.getElementById("serviceChargeAmount")) {
+           document.getElementById("serviceChargeAmount").textContent = serviceCharge.toFixed(2);
+        }
+        document.getElementById("serviceTaxDisplay").textContent = gst.toFixed(2);
+
+        if(totalFee < 1) totalFee = 1; // Cashfree minimum
+        document.getElementById("totalFeeDisplay").textContent = totalFee.toFixed(2);
+      }
+
       // Update price when domain changes
-      document
-        .getElementById("contactDomain")
-        .addEventListener("change", function () {
-          const selectedDomain = this.value;
-          const price = domainPrices[selectedDomain] || 102.4;
-          document.getElementById("registrationFee").textContent =
-            `Rs ${price}/-`;
-        });
+      document.getElementById("contactDomain").addEventListener("change", function () {
+        const selectedDomain = this.value;
+        currentDomainPrice = domainPrices[selectedDomain] || 100;
+        document.getElementById("billingPlaceholder").style.display = "none";
+        document.getElementById("billingTable").style.display = "table";
+        updateBillingTable();
+      });
+
+      // Handle referral verification automatically via AJAX
+      let referralDebounceTimer;
+      async function verifyReferralCode(code) {
+        const msgEl = document.getElementById("referralMessage");
+        if (!code) {
+           currentReferralDiscountPercent = 0;
+           msgEl.textContent = "";
+           updateBillingTable();
+           return;
+        }
+
+        msgEl.textContent = "Verifying...";
+        msgEl.style.color = "white";
+
+        try {
+           const response = await fetch("/internship/validate-referral", {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify({ referralCode: code })
+           });
+           const data = await response.json();
+           if (data.valid) {
+             currentReferralDiscountPercent = data.discountPercent;
+             msgEl.textContent = `Valid! ${currentReferralDiscountPercent}% discount applied.`;
+             msgEl.style.color = "#4ade80"; // green
+             updateBillingTable();
+           } else {
+             currentReferralDiscountPercent = 0;
+             msgEl.textContent = data.message || "Invalid referral code.";
+             msgEl.style.color = "#ef4444"; // red
+             updateBillingTable();
+           }
+        } catch(e) {
+           currentReferralDiscountPercent = 0;
+           msgEl.textContent = "Error verifying code.";
+           msgEl.style.color = "#ef4444";
+           updateBillingTable();
+        }
+      }
+
+      document.getElementById("contactReferral").addEventListener("input", function() {
+        clearTimeout(referralDebounceTimer);
+        const code = this.value.trim();
+        referralDebounceTimer = setTimeout(() => {
+          verifyReferralCode(code);
+        }, 600); // 600ms debounce
+      });
+
+
 
       function showToast(message, type) {
         const toastContainer =
@@ -983,6 +1069,9 @@
           if (referralInput) {
             referralInput.value = referralCode;
             referralInput.readOnly = true;
+            if (typeof verifyReferralCode === "function") {
+              verifyReferralCode(referralCode);
+            }
           }
         }
       });

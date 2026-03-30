@@ -28,6 +28,7 @@ router.post(
         certificate_link,
         password,
         mail_sent,
+        discountPercent,
       } = req.body;
 
       const existingAmbassador = await Ambassador.findById(req.params.id);
@@ -42,6 +43,7 @@ router.post(
         designation,
         offer_letter_link,
         certificate_link,
+        discountPercent: discountPercent ? Math.min(100, Math.max(0, parseInt(discountPercent))) : 0,
       };
 
       // Only hash if a new password is provided

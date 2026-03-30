@@ -30,7 +30,10 @@ const newRegistrationSchema = new mongoose.Schema({
     type: String, 
     default: "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg" 
   },
-  profile_image_public_id: { type: String }
+  profile_image_public_id: { type: String },
+  discount_percent: { type: Number, default: 0 },
+  discount_amount: { type: Number, default: 0 },
+  final_amount: { type: Number }
 });
 
 module.exports = mongoose.model("NewRegistration", newRegistrationSchema);

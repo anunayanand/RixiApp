@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const NewRegistration = require("../models/NewRegistration");
 const User = require("../models/User");
+const Ambassador = require("../models/Ambassador");
 const axios = require("axios");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
@@ -44,13 +45,14 @@ router.post("/upload-profile-image", uploadProfile.single("profileImage"), async
 
 // Domain-wise registration charges
 const DOMAIN_PRICES = {
-  "Web Development": 102.4,
-  "Python Programming": 102.4,
-  "Java Programming": 102.4,
-  "Data Analytics": 102.4,
-  "DSA": 102.4,
-  "Graphics Design": 102.4,
-  "Full Stack Development": 102.4
+  "Web Development": 100,
+  "Data Analytics": 150,
+  "DSA": 124,
+  "Graphics Design": 100,
+  "Python Programming": 149,
+  "Java Programming": 174,
+  "Full Stack Development": 124,
+  "Machine Learning": 200
 };
 
 // Helper function to convert text to Title Case
@@ -58,6 +60,27 @@ const toTitleCase = (str) => {
   if (!str) return str;
   return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };
+
+router.get("/get-price-info", (req, res) => {
+  res.json({ success: true, domainPrices: DOMAIN_PRICES });
+});
+
+router.post("/validate-referral", async (req, res) => {
+  try {
+    const { referralCode } = req.body;
+    if (!referralCode) {
+       return res.json({ valid: false, message: "No referral code provided" });
+    }
+    const ambassador = await Ambassador.findOne({ referralId: referralCode.trim() });
+    if (ambassador) {
+      return res.json({ valid: true, discountPercent: ambassador.discountPercent || 0 });
+    }
+    return res.json({ valid: false, message: "Invalid referral code" });
+  } catch (err) {
+    console.error("Referral validation error:", err);
+    return res.status(500).json({ valid: false, message: "Server error" });
+  }
+});
 
 router.post("/create-order", async (req, res) => {
   try {
@@ -127,8 +150,31 @@ router.post("/create-order", async (req, res) => {
 
     const orderId = `order_${Date.now()}`;
 
-    // Get price based on domain
-    const domainPrice = DOMAIN_PRICES[domain.trim()] || 102.4;
+    // Get base amount from domain prices
+    const baseAmount = DOMAIN_PRICES[domain.trim()] || 100;
+
+    // Apply referral discount
+    let discountPercent = 0;
+    if (referral_code && referral_code.trim() !== "") {
+      const ambassador = await Ambassador.findOne({ referralId: referral_code.trim() });
+      if (ambassador && ambassador.discountPercent) {
+        discountPercent = ambassador.discountPercent;
+      }
+    }
+    
+    let discountAmount = Number(((baseAmount * discountPercent) / 100).toFixed(2));
+    let discountedBase = baseAmount - discountAmount;
+    
+    let serviceCharge = Number((discountedBase * 0.0195).toFixed(2));
+    let gst = Number((serviceCharge * 0.18).toFixed(2));
+    
+    let finalAmount = Number((discountedBase + serviceCharge + gst).toFixed(2));
+
+    // Ensure final amount is at least 1 INR for Cashfree
+    if (finalAmount < 1) {
+      finalAmount = 1;
+      discountAmount = domainPrice - 1;
+    }
 
     // Create registration with profile image
     const newReg = new NewRegistration({
@@ -147,14 +193,17 @@ router.post("/create-order", async (req, res) => {
       order_id: orderId,
       terms: terms === "on",
       profile_image_url: profileImageUrl,
-      profile_image_public_id: profileImagePublicId
+      profile_image_public_id: profileImagePublicId,
+      discount_percent: discountPercent,
+      discount_amount: discountAmount,
+      final_amount: finalAmount
     });
 
     await newReg.save();
 
     const request = {
       order_id: orderId,
-      order_amount: domainPrice, //domainPrice,
+      order_amount: finalAmount, //domainPrice,
       order_currency: "INR",
 
       customer_details: {
