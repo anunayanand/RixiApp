@@ -35,8 +35,8 @@ router.post("/ambassador/change-password",async (req, res) => {
     ambassador.isFirstLogin = false;
     await ambassador.save();
 
-    req.flash("success", "Password updated successfully. Please log in again.");
-    res.redirect("/logout");
+    req.flash("success", "Password Changed");
+    res.redirect("/ambassador");
 
   } catch (err) {
     // console.error("Error changing password:", err);
@@ -91,11 +91,10 @@ router.post("/intern/change-password", authRole(['admin','intern','superAdmin'])
     intern.isFirstLogin = false;
 
     // console.log("🔸 Saving intern...");
-    req.flash("success", "Password changed");
+    req.flash("success", "Password Changed");
     await intern.save();
    
-
-    res.redirect("/logout");
+    res.redirect(redirectUrl);
   } catch (err) {
     // console.error("❌ Error changing intern password:", err);
     req.flash("error", "Server error while changing password.");

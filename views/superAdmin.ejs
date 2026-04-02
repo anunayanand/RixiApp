@@ -1423,12 +1423,12 @@
                 <td class="quiz-score"><%= i.quiz_score %></td>
 
                 <td class="status-cell">
-                  <% if (i.quizAssignments && i.quizAssignments.some(q => q && q.attemptCount >= 1)) { %>
-                    <% if (i.isPassed) { %>
-                      <span class="badge bg-success">Pass</span>
-                    <% } else { %>
-                      <span class="badge bg-danger">Fail</span>
-                    <% } %>
+                  <% if (i.isPassed === true) { %>
+                    <span class="badge bg-success">Pass</span>
+                  <% } else if (i.isPassed === false) { %>
+                    <span class="badge bg-danger">Fail</span>
+                  <% } else { %>
+                    <span class="badge bg-secondary">Pending</span>
                   <% } %>
                 </td>
 

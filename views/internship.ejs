@@ -907,10 +907,15 @@
           data[key] = value;
         }
 
+        if (!uploadedImageUrl) {
+          hideLoader();
+          showToast("Please upload your profile picture", "error");
+          submitButton.disabled = false;
+          return;
+        }
+        
         // Add profile image data
-        data["data[ProfileImageUrl]"] =
-          uploadedImageUrl ||
-          "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+        data["data[ProfileImageUrl]"] = uploadedImageUrl;
         data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
 
         fetch(form.action, {
@@ -966,10 +971,15 @@
             data[key] = value;
           }
 
+          if (!uploadedImageUrl) {
+            showToast("Please upload your profile picture", "error");
+            payBtn.disabled = false;
+            payBtn.textContent = "Continue to Payment & Submit";
+            return;
+          }
+
           // Add profile image data
-          data["data[ProfileImageUrl]"] =
-            uploadedImageUrl ||
-            "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg";
+          data["data[ProfileImageUrl]"] = uploadedImageUrl;
           data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
 
           // Validate required fields except PayID

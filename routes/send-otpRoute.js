@@ -1,11 +1,26 @@
 // routes/send-otpRoute.js
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const axios = require('axios');            
 const User = require("../models/User");
 const SCRIPT_URL = process.env.OTP_SCRIPT_URL;
 
-router.post("/send-otp", async (req, res) => {
+const otpLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 3, // Limit each IP to 3 requests per windowMs
+  handler: (req, res, next, options) => {
+    req.flash('error', options.message.msg);
+    res.status(options.statusCode).json({
+      success: false,
+      msg: options.message.msg,
+      flash: req.flash('error')
+    });
+  },
+  message: { msg: "Too many OTP requests from this IP. Please try again after 5 minutes." }
+});
+
+router.post("/send-otp", otpLimiter, async (req, res) => {
   const { intern_id, email } = req.body;
   // console.log("POST /send-otp body:", req.body);
 

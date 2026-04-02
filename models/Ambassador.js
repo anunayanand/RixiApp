@@ -51,9 +51,8 @@ ambassadorSchema.methods.updateBadge = function () {
 };
 
 // 🔄 Pre-save hook to auto-update badge
-ambassadorSchema.pre("save", function(next) {
+ambassadorSchema.pre("save", function() {
   this.updateBadge();
-  next();
 });
 
 module.exports = mongoose.model("Ambassador", ambassadorSchema);

@@ -39,7 +39,7 @@ router.get("/quiz/:quizId", async (req, res) => {
       return res.redirect("/intern");
     }
 
-    if (assignment.attemptCount >= 2) {
+    if (assignment.attemptCount >= 3) {
       req.flash("error", "You have reached the maximum attempts for this quiz");
       return res.redirect("/intern");
     }
