@@ -371,7 +371,7 @@
                         <span class="badge bg-light text-dark border me-2">Week <%= meeting.week || 'N/A' %></span>
                         <i class="bi bi-clock me-1"></i> 
                         <span class="meeting-time" data-time="<%= meeting.scheduledTime %>">
-                          <%= meeting.scheduledTime ? new Date(meeting.scheduledTime).toLocaleString() : 'Time not set' %>
+                         <%= meeting.scheduledTime ? new Date(meeting.scheduledTime).toLocaleString() : 'Time not set' %>
                         </span>
                       </p>
                     </div>
