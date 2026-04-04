@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const date = new Date(rawTime);
     const formatted = date
-      .toLocaleString(undefined, {
+      .toLocaleString("en-IN", {
         weekday: "short",
         year: "numeric",
         month: "short",
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
-        timeZone: 'UTC'
+        timeZone: "Asia/Kolkata"
       })
       .replace("am", "AM")
       .replace("pm", "PM");

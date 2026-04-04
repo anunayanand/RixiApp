@@ -12,6 +12,10 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
   try {
     const { domain, week, batch_no, title, link, scheduledTime } = req.body;
 
+    // Convert the user-picked time (IST) to a proper Date with IST offset
+    // Flatpickr sends "YYYY-MM-DD HH:mm" — the admin picks IST time
+    const istScheduledTime = new Date(scheduledTime + ":00+05:30");
+
     const interns = await User.find({ role: "intern", domain, batch_no });
     const admins = await Admin.find({ domain });
 
@@ -27,7 +31,7 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
       _id: meetingId,
       link,
       title,
-      scheduledTime,
+      scheduledTime: istScheduledTime,
       week,
       status: "upcoming",
       attendance: "pending"
@@ -87,6 +91,9 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
     const { meetingId } = req.params;
     const { title, link, scheduledTime, week, status } = req.body;
 
+    // Convert the user-picked time (IST) to proper Date with IST offset
+    const istScheduledTime = scheduledTime ? new Date(scheduledTime + ":00+05:30") : undefined;
+
     // Find ALL interns who have this meeting (regardless of domain/batch)
     const interns = await User.find({ 
       role: "intern",
@@ -113,7 +120,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
         const meeting = intern.meetings[meetingIndex];
         if (title !== undefined) meeting.title = title;
         if (link !== undefined) meeting.link = link;
-        if (scheduledTime !== undefined) meeting.scheduledTime = scheduledTime;
+        if (istScheduledTime !== undefined) meeting.scheduledTime = istScheduledTime;
         if (week !== undefined) meeting.week = week;
         if (status !== undefined) meeting.status = status;
         await intern.save();
@@ -128,7 +135,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
         const meeting = admin.meetings[meetingIndex];
         if (title !== undefined) meeting.title = title;
         if (link !== undefined) meeting.link = link;
-        if (scheduledTime !== undefined) meeting.scheduledTime = scheduledTime;
+        if (istScheduledTime !== undefined) meeting.scheduledTime = istScheduledTime;
         if (week !== undefined) meeting.week = week;
         if (status !== undefined) meeting.status = status;
         await admin.save();

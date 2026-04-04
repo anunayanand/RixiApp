@@ -420,7 +420,7 @@
                         <div class="meeting-item">
                           <div class="text-start">
                             <strong><%= meeting.title %></strong>
-                            <span><%= new Date(meeting.scheduledTime).toLocaleDateString() %> • <%= new Date(meeting.scheduledTime).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) %></span>
+                            <span><%= new Date(meeting.scheduledTime).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' }) %> • <%= new Date(meeting.scheduledTime).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata' }) %></span>
                           </div>
                           <a href="<%= meeting.link %>" target="_blank" class="btn btn-sm btn-primary-custom py-1 px-2" style="font-size: 0.7rem;">Join</a>
                         </div>

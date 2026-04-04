@@ -1167,7 +1167,7 @@
           <td class="text-truncate" style="max-width: 150px;"><%= meeting.title %></td>
           <td><%= meeting.domain %></td>
           <td><%= meeting.week %></td>
-          <td><%= new Date(meeting.scheduledTime).toLocaleString() %></td>
+          <td><%= new Date(meeting.scheduledTime).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %></td>
           <td>
             <span class="badge <%= meeting.status === 'upcoming' ? 'bg-success' : (meeting.status==='completed' ? 'bg-secondary' : 'bg-danger') %>">
               <%= meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1) %>
