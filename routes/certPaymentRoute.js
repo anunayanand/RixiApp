@@ -7,7 +7,7 @@ const authRole = require('../middleware/authRole');
 const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
 const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
-const CERT_PRICE = 9;
+const CERT_PRICE = 99;
 
 router.post('/cert-payment/create-order', authRole('intern'), async (req, res) => {
     try {
@@ -75,11 +75,9 @@ router.get('/cert-payment/callback', async (req, res) => {
             if (intern) {
                 intern.certificatePurchased = true;
                 intern.certificatePaymentId = transactionId;
-                // Since they might not have a completion_date yet, let's just make sure they are passed 
-                intern.isPassed = true; 
                 if (!intern.completion_date) intern.completion_date = new Date();
                 await intern.save();
-                req.flash("success", "Certificate purchased successfully! You can now download it.");
+                req.flash("success", "Payment Successfull!");
             }
             res.redirect("/intern");
         } else {

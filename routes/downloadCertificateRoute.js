@@ -8,12 +8,17 @@ router.get("/download-certificate/:userId", authRole(['intern','admin','superAdm
   const user = await User.findById(req.params.userId);
   if (!user) return res.status(404).send("User not found");
 
-  if (!user.completion_date) {
-    return res.status(400).send("Certificate not available yet.");
-  }
-  
-  if (!user.isPassed && !user.certificatePurchased) {
-    return res.status(400).send("Certificate not available yet. Payment is required as you have not passed the quiz.");
+  if (user.isPassed) {
+    if (!user.completion_date) {
+      return res.status(400).send("Certificate not available yet.");
+    }
+  } else {
+    if (!user.certificatePurchased) {
+      return res.status(400).send("Certificate not available. Payment is required as you have not passed the quiz.");
+    }
+    if (!user.completion_date) {
+      return res.status(400).send("Certificate not available yet.");
+    }
   }
 
   function formatDate(date) {
