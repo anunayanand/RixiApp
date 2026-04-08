@@ -523,7 +523,7 @@
   <div class="col-12 col-md-8 col-lg-9">
     <form id="quizForm" method="POST" action="/intern/quiz/<%= quiz._id %>/submit" autocomplete="off">
       <div id="questionsContainer">
-        <% quiz.questions.forEach((q, index) => { %>
+        <% questions.forEach((q, index) => { %>
           <div class="question-card" data-index="<%= index %>" <%= index === 0 ? '' : 'style="display:none;"' %> >
             <h5 class="question-text"><span class="question-number">Q<%= index + 1 %>.</span> <%= q.questionText %></h5>
             
@@ -532,11 +532,12 @@
             <% } %>
             
             <div class="options-container">
+              <% const letters = ['A', 'B', 'C', 'D']; %>
               <% q.options.forEach((opt, i) => { %>
                 <div class="option-wrapper">
                   <div class="option-card">
-                    <input class="form-check-input" type="radio" name="answers[<%= index %>]" value="<%= i %>" id="q<%= index %>o<%= i %>">
-                    <label class="form-check-label stretched-link" for="q<%= index %>o<%= i %>"><%= opt %></label>
+                    <input class="form-check-input" type="radio" name="answers[<%= q.originalIndex %>]" value="<%= i %>" id="q<%= index %>o<%= i %>">
+                    <label class="form-check-label stretched-link" for="q<%= index %>o<%= i %>"><%= letters[i] %>. <%= opt %></label>
                   </div>
                 </div>
               <% }) %>
@@ -565,7 +566,7 @@
       <div class="nav-heading">Question Palette</div>
       <div class="question-nav">
         <div class="row g-2">
-          <% quiz.questions.forEach((q, index) => { %>
+          <% questions.forEach((q, index) => { %>
             <div class="col-3 col-sm-2 col-md-4 col-lg-3">
               <button type="button" class="btn not-visited w-100 p-0" data-index="<%= index %>">
                 <%= index + 1 %>

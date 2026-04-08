@@ -175,6 +175,9 @@ app.get("/internship", (req, res) => {
 const internshipRouter = require('./routes/internshipRoute');
 app.use('/internship', internshipRouter);
 
+const certPaymentRouter = require('./routes/certPaymentRoute');
+app.use('/', certPaymentRouter);
+
 app.get('/cap',(req,res) => res.render('cap'));
 // --- Admin Routes ---
 

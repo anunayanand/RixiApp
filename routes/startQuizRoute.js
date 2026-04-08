@@ -48,8 +48,16 @@ router.get("/quiz/:quizId", async (req, res) => {
     const numQuestions = quiz.questions.length;
     const quizDuration = numQuestions * 1.5;
 
+    // Shuffle questions dynamically
+    const questionsWithIndices = quiz.questions.map((q, i) => ({ ...q.toObject(), originalIndex: i }));
+    for (let i = questionsWithIndices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questionsWithIndices[i], questionsWithIndices[j]] = [questionsWithIndices[j], questionsWithIndices[i]];
+    }
+
     res.render("quiz", {
       quiz,
+      questions: questionsWithIndices,
       intern,
       assignment,
       messages: req.flash(),
@@ -94,7 +102,7 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
     const assignment = intern.quizAssignments[assignmentIndex];
 
     // 4️⃣ Check attempt limit
-    if (assignment.attemptCount >= 2) {
+    if (assignment.attemptCount >= 3) {
       req.flash("error", "You have reached the maximum attempts for this quiz");
       return res.redirect("/intern");
     }

@@ -82,6 +82,9 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
+  certificatePurchased: { type: Boolean, default: false },
+  certificatePaymentId: { type: String, default: "" },
+
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

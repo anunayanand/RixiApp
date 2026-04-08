@@ -7,7 +7,14 @@ const authRole = require("../middleware/authRole");
 router.get("/download-certificate/:userId", authRole(['intern','admin','superAdmin']),async (req, res) => {
   const user = await User.findById(req.params.userId);
   if (!user) return res.status(404).send("User not found");
-  if (!user.completion_date) return res.status(400).send("Certificate not available yet");
+
+  if (!user.completion_date) {
+    return res.status(400).send("Certificate not available yet.");
+  }
+  
+  if (!user.isPassed && !user.certificatePurchased) {
+    return res.status(400).send("Certificate not available yet. Payment is required as you have not passed the quiz.");
+  }
 
   function formatDate(date) {
     if (!date) return '';
