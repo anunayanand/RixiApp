@@ -26,6 +26,211 @@
 
   <!-- Cashfree JS SDK -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+  <style>
+    /* ── Feedback Section – Modern Minimal ── */
+    .fb-wrapper {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .fb-header {
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-alt);
+    }
+
+    .fb-back-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fb-back-btn:hover {
+      background: rgba(255, 102, 0, 0.1);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .fb-body {
+      padding: 32px;
+    }
+
+    @media(min-width:768px) {
+      .fb-body {
+        padding: 40px 48px;
+      }
+    }
+
+    .fb-rating-card {
+      background: var(--surface-alt);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fb-rating-card:hover {
+      border-color: rgba(255, 102, 0, 0.3);
+      background: rgba(255, 102, 0, 0.02);
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 1.6rem;
+      color: var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover~label,
+    .star-rating input:checked~label {
+      color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .fb-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .fb-label .required {
+      color: var(--primary);
+      margin-left: 2px;
+    }
+
+    .fb-label .optional {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-left: 4px;
+    }
+
+    .fb-input {
+      width: 100%;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      resize: none;
+    }
+
+    .fb-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+    }
+
+    .fb-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .fb-input-icon-wrap {
+      position: relative;
+    }
+
+    .fb-input-icon-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .fb-input-icon-wrap .fb-input {
+      padding-left: 46px;
+    }
+
+    .fb-section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 32px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .fb-section-title i {
+      color: var(--primary);
+    }
+
+    .fb-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .fb-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border);
+      transition: var(--transition);
+    }
+
+    .fb-consent:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .fb-consent input {
+      margin-top: 4px;
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .fb-consent label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
@@ -377,7 +582,7 @@
               class="bi bi-patch-question-fill me-2" style="color: #ff6600;"></i> Assigned Quizzes</h3>
 
           <div class="row g-3">
-            <% if (assignedQuizzes && assignedQuizzes.length> 0) { %>
+            <% if (progress===100 && assignedQuizzes && assignedQuizzes.length> 0) { %>
               <% assignedQuizzes.forEach(q=> { %>
                 <div class="col-12 mt-4">
                   <div class="id-project-card id-quiz-card" style="flex-direction: column; align-items: stretch;">
@@ -407,48 +612,57 @@
                       <div class="id-project-actions flex-shrink-0">
                         <% if (q.isClosed) { %>
                           <button class="btn btn-danger px-4" disabled>Closed</button>
-                        <% } else if (q.attemptCount>= 3) { %>
-                          <button class="btn btn-secondary px-4" disabled>No Attempts Left</button>
-                        <% } else { %>
-                          <a href="/intern/quiz/<%= q.quiz._id %>" class="btn btn-success px-4" style="font-weight: 600;" id="startQuizBtn">
-                             <i class="bi bi-play-circle-fill me-1"></i> Start Quiz
-                          </a>
-                        <% } %>
+                          <% } else if (q.attemptCount>= 3) { %>
+                            <button class="btn btn-secondary px-4" disabled>No Attempts Left</button>
+                            <% } else { %>
+                              <a href="/intern/quiz/<%= q.quiz._id %>" class="btn btn-success px-4"
+                                style="font-weight: 600;" id="startQuizBtn">
+                                <i class="bi bi-play-circle-fill me-1"></i> Start Quiz
+                              </a>
+                              <% } %>
                       </div>
                     </div>
                   </div> <!-- End of id-project-card id-quiz-card -->
 
                   <% if (q.attemptCount>= 3 && !intern.isPassed && !intern.certificatePurchased) { %>
-                    <div class="mt-3 p-4 d-flex flex-column flex-md-row align-items-center justify-content-between rounded shadow-sm" style="background: rgba(255, 102, 0, 0.05); border: 1px solid rgba(255, 102, 0, 0.3);">
+                    <div
+                      class="mt-3 p-4 d-flex flex-column flex-md-row align-items-center justify-content-between rounded shadow-sm"
+                      style="background: rgba(255, 102, 0, 0.05); border: 1px solid rgba(255, 102, 0, 0.3); border-radius: 16px !important;">
                       <div class="mb-3 mb-md-0">
-                        <h6 class="mb-1" style="color: #ff6600; font-size: 1.1rem;"><i class="bi bi-info-circle-fill me-1"></i> Need your certificate?</h6>
-                        <p class="text-secondary small mb-0">You have no attempts left for this quiz. However, you can still get your certificate via paid option.</p>
+                        <h6 class="mb-1" style="color: #ff6600; font-size: 1.1rem;"><i
+                            class="bi bi-info-circle-fill me-1"></i> Need your certificate?</h6>
+                        <p class="text-secondary small mb-0">You have no attempts left for this quiz. However, you can
+                          still get your certificate via paid option.</p>
                       </div>
-                      <button class="btn px-4 fw-bold" style="background: linear-gradient(135deg, #ff6600, #ff8533); color: #fff; white-space: nowrap; border: none; box-shadow: 0 4px 15px rgba(255,102,0,0.3);" onclick="initiateCertPayment(this)">
+                      <button class="btn px-4 fw-bold"
+                        style="background: linear-gradient(135deg, #ff6600, #ff8533); color: #fff; white-space: nowrap; border: none; box-shadow: 0 4px 15px rgba(255,102,0,0.3);"
+                        onclick="initiateCertPayment(this)">
                         <i class="bi bi-credit-card me-1"></i> Pay ₹99 for Certificate
                       </button>
                     </div>
-                  <% } else if (intern.certificatePurchased) { %>
-                    <div class="mt-3 p-4 rounded shadow-sm" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.5);">
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check-circle-fill text-success fs-3 me-3"></i>
-                        <div>
-                          <h6 class="mb-0 text-success fw-bold" style="font-size: 1.1rem;">Payment Successful</h6>
-                          <p class="text-light small mb-0 mt-1">You will get your certificate in the document section within 6 Hrs.</p>
+                    <% } else if (intern.certificatePurchased) { %>
+                      <div class="mt-3 p-4 rounded shadow-sm"
+                        style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.5); border-radius: 16px !important;">
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check-circle-fill text-success fs-3 me-3"></i>
+                          <div>
+                            <h6 class="mb-0 text-success fw-bold" style="font-size: 1.1rem;">Payment Successful</h6>
+                            <p class="text-light small mb-0 mt-1">You will get your certificate in the document section
+                              within 6 Hrs.</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  <% } %>
+                      <% } %>
                 </div> <!-- End of col-12 mt-4 -->
-                      <% }) %>
-                        <% } else { %>
-                          <div class="col-12 text-center py-5">
-                            <i class="bi bi-patch-question-fill fs-1 text-light opacity-50 mb-3 d-block"></i>
-                            <p class="text-light">Your quiz will be assigned once your project submission is accepted.
-                            </p>
-                          </div>
-                          <% } %>
+                <% }) %>
+                  <% } else { %>
+                    <div class="col-12 text-center py-5">
+                      <i class="bi bi-patch-question-fill fs-1 text-light opacity-50 mb-3 d-block"></i>
+                      <p class="text-light">Your quiz will be assigned once your project submission is accepted.
+                      </p>
                     </div>
+                    <% } %>
+          </div>
         </section>
 
         <!-- 3. MEETINGS SECTION -->
@@ -529,19 +743,27 @@
             <!-- Feedback Form -->
             <% if (progress===100) { %>
               <div class="col-12 col-xl-6">
-                <div class="id-doc-card" style="border-color: #10b981;">
+                <div class="id-doc-card"
+                  style="border-color: <%= intern.feedbackSubmitted ? '#10b981' : 'var(--border)' %>;">
                   <div class="d-flex align-items-center gap-3">
                     <div class="id-doc-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i
                         class="bi bi-chat-square-text"></i></div>
                     <div>
                       <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Internship Feedback</h5>
-                      <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Submit your program feedback.</p>
+                      <p class="mb-0 text-secondary" style="font-size: 0.85rem;">
+                        <%= intern.feedbackSubmitted ? 'Feedback submitted, thank you.'
+                          : 'Submit your program feedback.' %>
+                      </p>
                     </div>
                   </div>
-                  <a href="https://forms.gle/EVts4YfhRZCnp6aj8" target="_blank"
-                    class="btn btn-outline-success rounded-circle ">
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
+                  <% if (intern.feedbackSubmitted) { %>
+                    <span
+                      class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 p-2 px-3 rounded-pill"
+                      style="font-size: 0.9rem;">Submitted <i class="bi bi-check-circle-fill ms-1"></i></span>
+                    <% } else { %>
+                      <button type="button" onclick="openFeedbackSection()" title="Submit Feedback"
+                        class="btn btn-outline-success rounded-circle "><i class="bi bi-arrow-right"></i></button>
+                      <% } %>
                 </div>
               </div>
               <% } %>
@@ -561,15 +783,197 @@
                         class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i
                           class="bi bi-download"></i></a>
                       <% } else if (intern.completion_date) { %>
-                        <a href="/download-certificate/<%= intern._id %>" target="_blank"
-                          class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
-                        <% } else { %>
-                          <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50" disabled><i
-                              class="bi bi-lock-fill"></i></button>
-                          <% } %>
+                        <% if (!intern.feedbackSubmitted) { %>
+                          <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50"
+                            title="Submit feedback first" disabled><i class="bi bi-lock-fill"></i></button>
+                          <% } else { %>
+                            <a href="/download-certificate/<%= intern._id %>" target="_blank"
+                              class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
+                            <% } %>
+                              <% } else { %>
+                                <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50" disabled><i
+                                    class="bi bi-lock-fill"></i></button>
+                                <% } %>
                   </div>
                 </div>
 
+          </div>
+        </section>
+
+        <!-- 4.5. FEEDBACK SECTION -->
+        <section id="feedback_section" class="id-section">
+          <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+
+              <% if (intern.feedbackSubmitted) { %>
+                <!-- ── Submitted State ── -->
+                <div class="fb-wrapper">
+                  <div class="fb-header">
+                    <button type="button" class="fb-back-btn"
+                      onclick="switchSection('documents', document.querySelector('a[href=\'#documents\']'))">
+                      <i class="bi bi-arrow-left"></i> Back to Documents
+                    </button>
+                    <span
+                      class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill"><i
+                        class="bi bi-check-circle-fill me-1"></i> Completed</span>
+                  </div>
+                  <div class="fb-body text-center py-5">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle mb-4"
+                      style="width:100px;height:100px;background:rgba(16,185,129,0.1);color:#10b981;">
+                      <i class="bi bi-check2-circle" style="font-size:4rem;"></i>
+                    </div>
+                    <h3 class="text-white fw-bold mb-2">Feedback Submitted Successfully</h3>
+                    <p class="text-secondary mb-4 mx-auto" style="max-width: 400px;">Thank you for sharing your
+                      experience. We appreciate your valuable feedback. You can now download your completion
+                      certificate.</p>
+                    <button onclick="switchSection('documents', document.querySelector('a[href=\'#documents\']'))"
+                      class="btn btn-primary-custom px-4 py-2"><i class="bi bi-file-earmark-text me-2"></i> View
+                      Certificate</button>
+                  </div>
+                </div>
+
+                <% } else { %>
+                  <!-- ── Feedback Form ── -->
+                  <div class="fb-wrapper">
+                    <!-- Card Header with Back Button -->
+                    <div class="fb-header">
+                      <button type="button" class="fb-back-btn"
+                        onclick="switchSection('documents', document.querySelector('a[href=\'#documents\']'))">
+                        <i class="bi bi-arrow-left"></i> Documents
+                      </button>
+                      <span style="font-size:0.75rem;color:var(--text-muted);"><i class="bi bi-asterisk me-1"
+                          style="color:#ff6600;font-size:0.6rem;"></i> Required fields</span>
+                    </div>
+
+                    <div class="fb-body">
+                      <div class="mb-5 border-bottom border-secondary border-opacity-25 pb-4">
+                        <h3 class="text-white fw-bold mb-2">Internship Feedback</h3>
+                        <p class="text-secondary mb-0">Please share your honest experience to help us improve.</p>
+                      </div>
+
+                      <form id="feedbackForm" novalidate>
+
+                        <div class="fb-section-title"><i class="bi bi-star-fill"></i> Ratings</div>
+
+                        <div class="row g-4 mb-5">
+                          <div class="col-12 col-md-4">
+                            <div class="fb-rating-card h-100">
+                              <div class="text-secondary mb-2" style="font-size: 1.25rem;"><i
+                                  class="bi bi-building-check"></i></div>
+                              <div class="fb-label text-center mb-0">Overall Experience <span class="required">*</span>
+                              </div>
+                              <div class="star-rating">
+                                <input type="radio" id="star5_overall" name="overallRating" value="5" required />
+                                <label for="star5_overall" title="5 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star4_overall" name="overallRating" value="4" />
+                                <label for="star4_overall" title="4 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star3_overall" name="overallRating" value="3" />
+                                <label for="star3_overall" title="3 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star2_overall" name="overallRating" value="2" />
+                                <label for="star2_overall" title="2 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star1_overall" name="overallRating" value="1" />
+                                <label for="star1_overall" title="1 star"><i class="bi bi-star-fill"></i></label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-4">
+                            <div class="fb-rating-card h-100">
+                              <div class="text-secondary mb-2" style="font-size: 1.25rem;"><i
+                                  class="bi bi-patch-question-fill"></i></div>
+                              <div class="fb-label text-center mb-0">Quiz Assessment <span class="required">*</span>
+                              </div>
+                              <div class="star-rating">
+                                <input type="radio" id="star5_quiz" name="quizRating" value="5" required />
+                                <label for="star5_quiz" title="5 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star4_quiz" name="quizRating" value="4" />
+                                <label for="star4_quiz" title="4 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star3_quiz" name="quizRating" value="3" />
+                                <label for="star3_quiz" title="3 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star2_quiz" name="quizRating" value="2" />
+                                <label for="star2_quiz" title="2 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star1_quiz" name="quizRating" value="1" />
+                                <label for="star1_quiz" title="1 star"><i class="bi bi-star-fill"></i></label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-4">
+                            <div class="fb-rating-card h-100">
+                              <div class="text-secondary mb-2" style="font-size: 1.25rem;"><i class="bi bi-laptop"></i>
+                              </div>
+                              <div class="fb-label text-center mb-0">Project & Tasks <span class="required">*</span>
+                              </div>
+                              <div class="star-rating">
+                                <input type="radio" id="star5_project" name="projectRating" value="5" required />
+                                <label for="star5_project" title="5 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star4_project" name="projectRating" value="4" />
+                                <label for="star4_project" title="4 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star3_project" name="projectRating" value="3" />
+                                <label for="star3_project" title="3 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star2_project" name="projectRating" value="2" />
+                                <label for="star2_project" title="2 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star1_project" name="projectRating" value="1" />
+                                <label for="star1_project" title="1 star"><i class="bi bi-star-fill"></i></label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="fb-section-title"><i class="bi bi-chat-text-fill"></i> Detailed Feedback</div>
+
+                        <div class="mb-4">
+                          <label for="experienceText" class="fb-label">What did you like most about the internship?
+                            <span class="required">*</span></label>
+                          <textarea class="fb-input" id="experienceText" name="experienceText" rows="4"
+                            placeholder="Tell us about the positive aspects of your experience..." required></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                          <label for="suggestions" class="fb-label">Suggestions for improvement <span
+                              class="required">*</span></label>
+                          <textarea class="fb-input" id="suggestions" name="suggestions" rows="3"
+                            placeholder="How can we make this program better for future interns?" required></textarea>
+                        </div>
+
+                        <div class="fb-section-title"><i class="bi bi-link-45deg"></i> Professional Links</div>
+
+                        <div class="row g-4 mb-5">
+                          <div class="col-12 col-md-6">
+                            <label for="linkedinUrl" class="fb-label">LinkedIn URL <span
+                                class="required">*</span></label>
+                            <div class="fb-input-icon-wrap">
+                              <i class="bi bi-linkedin"></i>
+                              <input type="url" class="fb-input" id="linkedinUrl" name="linkedinUrl"
+                                placeholder="https://linkedin.com/in/username" required>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label for="githubUrl" class="fb-label">GitHub URL <span
+                                class="optional">(Optional)</span></label>
+                            <div class="fb-input-icon-wrap">
+                              <i class="bi bi-github"></i>
+                              <input type="url" class="fb-input" id="githubUrl" name="githubUrl"
+                                placeholder="https://github.com/username">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="fb-consent mb-4">
+                          <input type="checkbox" id="profilePictureConsent" name="profilePictureConsent">
+                          <label for="profilePictureConsent">I consent to Rixi Lab using my profile picture and feedback
+                            in future promotional materials. <span class="optional">(Optional)</span></label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-custom w-100 py-3 fw-bold mt-2"
+                          style="font-size:1rem; border-radius: var(--radius-md);" id="submitFeedbackBtn">
+                          Submit Feedback <i class="bi bi-send-fill ms-2"></i>
+                        </button>
+
+                      </form>
+                    </div>
+                  </div>
+                  <% } %>
+
+            </div>
           </div>
         </section>
 
@@ -679,7 +1083,7 @@
                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-glow); padding: 4px;"
                 alt="Preview" />
             </div>
-            <form action="/update-image" method="POST" enctype="multipart/form-data" id="updateImageForm">
+            <form id="updateImageForm" enctype="multipart/form-data">
               <input type="file" name="image" id="imageInput" class="form-control mb-3 p-2 text-white"
                 style="background: var(--surface-alt); border-color: var(--border);" accept="image/*" required />
               <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6">Upload New Picture</button>
@@ -704,7 +1108,7 @@
             <div class="modal-body p-4">
               <p class="text-secondary small mb-4">For security reasons, please update your initial password before
                 accessing your dashboard.</p>
-              <form action="/intern/change-password" method="POST" id="passwordForm" novalidate>
+              <form id="passwordForm" novalidate>
                 <div class="mb-3">
                   <label class="form-label fw-semibold text-white small">New Password</label>
                   <div class="input-group">
@@ -750,7 +1154,7 @@
                     aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4 pt-2">
-                  <form action="/intern/change-password" method="POST" id="passwordFormGeneral" novalidate>
+                  <form id="passwordFormGeneral" novalidate>
                     <div class="mb-3">
                       <label class="form-label fw-semibold text-white small">New Password</label>
                       <div class="input-group">
@@ -809,6 +1213,7 @@
 
               <!-- Vendor JS Files -->
               <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
               <!-- Main JS Logics from existing view -->
               <script src="/js/intern.js"></script>
@@ -841,6 +1246,14 @@
                     document.getElementById('sidebar').classList.remove('show');
                     document.getElementById('sidebarOverlay').classList.remove('show');
                   }
+                }
+
+                function openFeedbackSection() {
+                  document.querySelectorAll('.id-sidebar-nav .nav-link').forEach(el => el.classList.remove('active'));
+                  document.querySelectorAll('.id-section').forEach(sec => sec.classList.remove('active'));
+                  const target = document.getElementById('feedback_section');
+                  if (target) target.classList.add('active');
+                  document.getElementById('topbarTitle').innerText = 'Internship Feedback';
                 }
 
                 // Sidebar Toggle Logic
@@ -1236,6 +1649,234 @@
                       btn.disabled = false;
                       btn.innerHTML = originalHtml;
                     });
+                }
+
+                // ==========================================
+                // AXIOS FORM MIGRATIONS
+                // ==========================================
+
+                // Update Profile Picture via Axios
+                const updateImageForm = document.getElementById('updateImageForm');
+                if (updateImageForm) {
+                  updateImageForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const btn = updateImageForm.querySelector('button[type="submit"]');
+                    const originalText = btn.innerText;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Uploading...';
+
+                    const formData = new FormData(updateImageForm);
+
+                    try {
+                      const response = await axios.post('/update-image', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                      });
+
+                      if (response.data.success) {
+                        showToast(response.data.message, 'success');
+
+                        // Update UI images
+                        if (response.data.img_url) {
+                          document.querySelectorAll('img[alt="Profile"]').forEach(img => {
+                            img.src = response.data.img_url;
+                          });
+                          const previewImage = document.getElementById('previewImage');
+                          if (previewImage) previewImage.src = response.data.img_url;
+                        }
+
+                        // Close modal
+                        const modalEl = document.getElementById('updateProfileModal');
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                      } else {
+                        showToast(response.data.message || 'Error updating profile picture', 'error');
+                      }
+                    } catch (error) {
+                      const msg = error.response?.data?.message || 'Server error while updating image';
+                      showToast(msg, 'error');
+                    } finally {
+                      btn.disabled = false;
+                      btn.innerText = originalText;
+                    }
+                  });
+                }
+
+                // Change Password (First login modal) via Axios
+                const passwordForm = document.getElementById('passwordForm');
+                if (passwordForm) {
+                  passwordForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const newPassword = document.getElementById('newPassFirst').value;
+                    const confirmPassword = document.getElementById('confPassFirst').value;
+
+                    if (newPassword !== confirmPassword) {
+                      return showToast('Passwords do not match.', 'warning');
+                    }
+                    if (newPassword.length < 6) {
+                      return showToast('Password must be at least 6 characters.', 'warning');
+                    }
+
+                    const btn = passwordForm.querySelector('button[type="submit"]');
+                    const originalText = btn.innerText;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Updating...';
+
+                    try {
+                      const response = await axios.post('/intern/change-password', { newPassword, confirmPassword });
+
+                      if (response.data.success) {
+                        showToast(response.data.message, 'success');
+                        const modalEl = document.getElementById('passwordModal');
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) {
+                          modal.hide();
+                          setTimeout(() => window.location.reload(), 1500); // Reload to remove strict modal block
+                        }
+                      } else {
+                        showToast(response.data.message || 'Error updating password', 'error');
+                      }
+                    } catch (error) {
+                      const msg = error.response?.data?.message || 'Server error while updating password';
+                      showToast(msg, 'error');
+                    } finally {
+                      btn.disabled = false;
+                      btn.innerText = originalText;
+                    }
+                  });
+                }
+
+                // Change Password (General modal) via Axios
+                const passwordFormGeneral = document.getElementById('passwordFormGeneral');
+                if (passwordFormGeneral) {
+                  passwordFormGeneral.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const newPassword = document.getElementById('newPassGen').value;
+                    const confirmPassword = document.getElementById('confPassGen').value;
+
+                    if (newPassword !== confirmPassword) {
+                      return showToast('Passwords do not match.', 'warning');
+                    }
+                    if (newPassword.length < 6) {
+                      return showToast('Password must be at least 6 characters.', 'warning');
+                    }
+
+                    const btn = passwordFormGeneral.querySelector('button[type="submit"]');
+                    const originalText = btn.innerText;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Updating...';
+
+                    try {
+                      const response = await axios.post('/intern/change-password', { newPassword, confirmPassword });
+
+                      if (response.data.success) {
+                        showToast(response.data.message, 'success');
+                        passwordFormGeneral.reset();
+                        const modalEl = document.getElementById('passwordModal');
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                      } else {
+                        showToast(response.data.message || 'Error updating password', 'error');
+                      }
+                    } catch (error) {
+                      const msg = error.response?.data?.message || 'Server error while updating password';
+                      showToast(msg, 'error');
+                    } finally {
+                      btn.disabled = false;
+                      btn.innerText = originalText;
+                    }
+                  });
+                }
+
+                // Feedback Form Submission via Axios
+                const feedbackForm = document.getElementById('feedbackForm');
+                if (feedbackForm) {
+                  const submitBtn = document.getElementById('submitFeedbackBtn');
+                  feedbackForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    // Basic validation
+                    const overall = document.querySelector('input[name="overallRating"]:checked');
+                    const quiz = document.querySelector('input[name="quizRating"]:checked');
+                    const project = document.querySelector('input[name="projectRating"]:checked');
+                    const text = document.getElementById('experienceText').value.trim();
+                    const linkedin = document.getElementById('linkedinUrl').value.trim();
+                    const github = document.getElementById('githubUrl').value.trim();
+
+                    // Highlight unselected rating cards
+                    document.querySelectorAll('.fb-rating-card').forEach(c => c.style.borderColor = '');
+                    if (!overall || !quiz || !project) {
+                      if (!overall) document.querySelectorAll('.fb-rating-card')[0].style.borderColor = '#ff6600';
+                      if (!quiz) document.querySelectorAll('.fb-rating-card')[1].style.borderColor = '#ff6600';
+                      if (!project) document.querySelectorAll('.fb-rating-card')[2].style.borderColor = '#ff6600';
+                      showToast('Please select all star ratings before submitting.', 'warning');
+                      return;
+                    }
+
+                    if (!text) {
+                      showToast('Please describe your experience.', 'warning');
+                      document.getElementById('experienceText').style.borderColor = '#ff6600';
+                      document.getElementById('experienceText').focus();
+                      return;
+                    } else {
+                      document.getElementById('experienceText').style.borderColor = '';
+                    }
+
+                    if (!linkedin) {
+                      showToast('Please provide your LinkedIn profile URL.', 'warning');
+                      document.getElementById('linkedinUrl').style.borderColor = '#ff6600';
+                      document.getElementById('linkedinUrl').focus();
+                      return;
+                    } else {
+                      document.getElementById('linkedinUrl').style.borderColor = '';
+                    }
+
+                    if (!github) {
+                      showToast('Please provide your GitHub profile URL.', 'warning');
+                      document.getElementById('githubUrl').style.borderColor = '#ff6600';
+                      document.getElementById('githubUrl').focus();
+                      return;
+                    } else {
+                      document.getElementById('githubUrl').style.borderColor = '';
+                    }
+
+                    const payload = {
+                      overallRating: overall.value,
+                      quizRating: quiz.value,
+                      projectRating: project.value,
+                      experienceText: text,
+                      suggestions: document.getElementById('suggestions').value.trim(),
+                      linkedinUrl: document.getElementById('linkedinUrl').value.trim(),
+                      githubUrl: document.getElementById('githubUrl').value.trim(),
+                      profilePictureConsent: document.getElementById('profilePictureConsent').checked
+                    };
+
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Submitting...';
+
+                    try {
+                      const response = await axios.post('/intern/feedback', payload);
+                      if (response.data.success) {
+                        showToast(response.data.message, 'success');
+                        // Reload page to show success state after a short delay
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 1500);
+                      } else {
+                        showToast(response.data.message || 'Error submitting feedback', 'error');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Submit Feedback <i class="bi bi-send-fill ms-2"></i>';
+                      }
+                    } catch (error) {
+                      console.error("Submission Error:", error);
+                      const msg = error.response?.data?.message || 'Server error while submitting feedback';
+                      showToast(msg, 'error');
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = 'Submit Feedback <i class="bi bi-send-fill ms-2"></i>';
+                    }
+                  });
                 }
 
               </script>

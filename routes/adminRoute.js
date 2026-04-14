@@ -60,7 +60,7 @@ router.get("/", authRole("admin"), async (req, res, next) => {
         (p) => p.status === "accepted",
       ).length;
       const duration = intern.duration || 1;
-      const progress = Math.round((arr[acceptedCount] / duration) * 100);
+      const progress = intern.progress || 0;
 
       if (progress === 100) {
         const alreadyNotified = admin.notifiedInterns.includes(
@@ -146,8 +146,8 @@ router.get("/", authRole("admin"), async (req, res, next) => {
 router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
   try {
     const { id } = req.params;
-    const { intern_id, batch_no } = req.body;
-    // console.log('Parsed data:', { id, intern_id, batch_no });
+    const { intern_id, batch_no, internshipType } = req.body;
+    // console.log('Parsed data:', { id, intern_id, batch_no, internshipType });
     if (!intern_id || !batch_no) {
       return res
         .status(400)
@@ -188,6 +188,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       phone: registration.phone,
       domain: registration.domain,
       duration: registration.duration,
+      internshipType: internshipType || "Internship",
       university: registration.university,
       college: registration.college,
       course: registration.course,

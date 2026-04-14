@@ -30,6 +30,15 @@ router.post('/projects/update-status', async (req, res) => {
       { new: true }
     );
 
+    if (updatedUser) {
+      const assignedProjects = updatedUser.projectAssigned || [];
+      const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
+      const arr = [0, 1, 2, 3, 4, 6, 8];
+      const duration = updatedUser.duration || 1;
+      updatedUser.progress = Math.round((arr[acceptedCount] / duration) * 100);
+      await updatedUser.save();
+    }
+
     if (!updatedUser) {
       req.flash('error', 'User or project not found');
       const flashMessages = req.flash();

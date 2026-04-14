@@ -15,7 +15,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
       const assignedProjects = intern.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
       const totalProjects = intern.projectAssigned.length;
-      const progress = totalProjects > 0 ? Math.round((acceptedCount / totalProjects) * 100) : 0;
+      const progress = intern.progress || 0;
       // console.log("Progress:", progress);
       const meetings = intern.meetings || [];
       const totalMeetings = meetings.length;

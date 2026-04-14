@@ -15,7 +15,7 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
   try {
     const { 
       name, email, password, role, domain, college, university, 
-      phone, course, year_sem, branch, duration, intern_id, batch_no,referal_code, starting_date
+      phone, course, year_sem, branch, duration, intern_id, batch_no, referal_code, starting_date, internshipType
     } = req.body;
 
     // ✅ Validation
@@ -40,7 +40,7 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
     let userData = {
       name, email, password: hashedPassword, role, domain, college, university,
       phone, course, year_sem, branch, duration: Number(duration),
-      intern_id, batch_no, referal_code, starting_date
+      intern_id, batch_no, referal_code, starting_date, internshipType: internshipType || "Internship"
     };
 
     // ✅ Create the user

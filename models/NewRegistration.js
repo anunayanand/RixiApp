@@ -11,6 +11,11 @@ const newRegistrationSchema = new mongoose.Schema({
   year_sem: { type: String, required: true },
   domain: { type: String, required: true },
   duration: { type: Number, required: true },
+  internshipType: {
+    type: String,
+    enum: ['Internship', 'Summer Internship', 'Winter Internship'],
+    default: 'Internship'
+  },
   referral_code: { type: String, default: "" },
   payID: { type: String, default: "" },
   order_id: { type: String, default: "" },

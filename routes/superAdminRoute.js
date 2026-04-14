@@ -6,6 +6,7 @@ const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 const NewRegistration = require("../models/NewRegistration");
+const Feedback = require("../models/Feedback");
 const { generateSignature } = require("./profileRoute");
 
 
@@ -17,6 +18,8 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
     const ambassadors = await Ambassador.find({});
     const superAdmin = await SuperAdmin.findOne({});
     const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
+    const feedbacks = await Feedback.find({}).populate("userId", "name email domain batch_no duration img_url intern_id");
+    
     if (!superAdmin) {
       req.flash("error", "SuperAdmin not found");
       return res.redirect("/login");
@@ -33,8 +36,7 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
     for (const intern of interns) {
       const assignedProjects = intern.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === "accepted").length;
-      const duration = intern.duration || 1;
-      const progress = Math.round((arr[acceptedCount] / duration) * 100);
+      const progress = intern.progress || 0;
 
       intern.intern_progress = progress;
 
@@ -184,7 +186,9 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
       registrations,
       topAmbassadorLabels,
       topAmbassadorData,
-      generateSignature
+      generateSignature,
+      batches: batches,
+      feedbacks: feedbacks,
     });
   } catch (err) {
     next(err);

@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
   university: { type: String },
   year_sem: { type: String },
   intern_id: { type: String, unique: true, sparse: true },
+  internshipType: {
+    type: String,
+    enum: ['Internship', 'Summer Internship', 'Winter Internship'],
+    default: 'Internship'
+  },
   phone: { type: String, required: true },
   batch_no: { type: String },
   isOnline: { type: Boolean, default: false },
@@ -43,6 +48,7 @@ const userSchema = new mongoose.Schema({
   offer_letter_sent: { type: Boolean, default: false },
   quiz_score: { type: Number, default: 0 },
   isPassed: { type: Boolean, default: false },
+  progress: { type: Number, default: 0 },
   screenshot_img: { type: String, default: "" },
   screenshot_public_id: { type: String },
   lastHeartbeat: { type: Date, default: null },
@@ -84,6 +90,7 @@ const userSchema = new mongoose.Schema({
 
   certificatePurchased: { type: Boolean, default: false },
   certificatePaymentId: { type: String, default: "" },
+  feedbackSubmitted: { type: Boolean, default: false },
 
   meetings: [
     {

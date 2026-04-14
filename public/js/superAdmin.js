@@ -224,6 +224,11 @@ function applyInternFilters() {
   const noResultMobile = document.getElementById('noInternResultMobile');
   if (noResultDesktop) noResultDesktop.style.display = visibleCountDesktop === 0 ? "flex" : "none";
   if (noResultMobile) noResultMobile.style.display = visibleCountMobile === 0 ? "flex" : "none";
+  
+  const countBadge = document.getElementById('internResultCount');
+  if (countBadge) {
+    countBadge.textContent = `${visibleCountDesktop} interns`;
+  }
 }
 
 function clearInternFilters() {

@@ -36,6 +36,9 @@ router.post("/update-image", authRole(['intern','superAdmin','admin']), upload.s
     else if (intern.role === "superAdmin") redirectUrl = "/superAdmin";
 
     if (!req.file) {
+      if (req.xhr || req.headers.accept?.includes('application/json')) {
+        return res.json({ success: false, message: "Please upload an image" });
+      }
       req.flash("error", "Please upload an image");
        return res.redirect(redirectUrl);
     }
@@ -54,11 +57,18 @@ router.post("/update-image", authRole(['intern','superAdmin','admin']), upload.s
     intern.img_public_id = req.file.filename;
     await intern.save();
 
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.json({ success: true, message: "Profile picture updated successfully!", img_url: intern.img_url });
+    }
+
     req.flash("success", "Profile picture updated successfully!");
      return res.redirect(redirectUrl);
 
   } catch (err) {
     console.error("❌ Error updating intern image:", err);
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.status(500).json({ success: false, message: "Server error while updating image." });
+    }
     req.flash("error", "Server error while updating image.");
      return res.redirect(redirectUrl);
   }

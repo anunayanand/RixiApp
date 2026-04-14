@@ -122,6 +122,10 @@
         <i class="bi bi-award-fill"></i> 
         <span>Certified Interns</span>
       </a>
+      <a href="#feedbackSection" class="nav-link" onclick="setActive(this)">
+        <i class="bi bi-chat-square-text-fill"></i> 
+        <span>Feedback Analytics</span>
+      </a>
       
       <div class="sidebar-nav-label">Ambassador Program</div>
       <a href="#viewAmbassador" class="nav-link" onclick="setActive(this)">
@@ -888,135 +892,192 @@
 </section>
 
       <!-- View Interns -->
-     <section id="viewInterns" style="display:none;">
-  <div class="container px-0">
-    <div class="card shadow-sm border rounded p-3" style="border: 1px solid #ff6600 !important;">
+      <section id="viewInterns" class="content-section" style="display:none;">
 
-      <!-- Section Header -->
-      <h4 class="text-center mb-3">Total Interns</h4>
-
-      <!-- Filters Row -->
-      <div class="row mb-3 g-2 justify-content-center flex-grow-1">
-        <div class="col-md-2">
-          <select id="batchFilter" class="form-select" onchange="applyInternFilters()">
-            <option value="all" selected>All Batches</option>
-            <% batches.forEach(batch => { %>
-              <option value="<%= batch %>">Batch <%= batch %></option>
-            <% }) %>
-          </select>
+        <!-- Page Header -->
+        <div class="page-header d-flex flex-wrap justify-content-between align-items-start gap-1">
+          <div>
+            <h4>Interns Directory</h4>
+            <p>Manage all <%= interns.length %> interns · View Profiles, Progress, Delete</p>
+          </div>
         </div>
 
-         <!-- Domain Filter -->
-  <div class="col-md-2">
-    <select id="domainFilter" class="form-select" onchange="applyInternFilters()">
-      <option value="all" selected>All Domains</option>
-    <% 
-  const internDomains = [...new Set(interns.map(i => i.domain))];
-  internDomains.forEach(domain => { 
-%>
-  <option value="<%= domain.toLowerCase() %>"><%= domain %></option>
-<% }) %>
-
-    </select>
-  </div>
-
- <!-- Duration Filter -->
-<div class="col-md-2">
-  <select id="durationFilter" class="form-select" onchange="applyInternFilters()">
-    <option value="all" selected>All Durations</option>
-    <% 
-      const internDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
-      internDurations.forEach(duration => { 
-    %>
-      <option value="<%= duration %>"><%= duration %> Weeks</option>
-    <% }) %>
-  </select>
-</div>
-
-        <div class="col-md-2 flex-grow-1">
-          <input type="text" id="internSearchInput" class="form-control" placeholder="Search by Name or ID" onkeyup="applyInternFilters()">
+        <!-- Toolbar -->
+        <div class="intern-toolbar">
+          <div class="intern-toolbar-left">
+            <div class="search-wrap">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text" id="internSearchInput" class="intern-search-input" placeholder="Search by name or ID…" onkeyup="applyInternFilters()">
+            </div>
+            <select id="batchFilter" class="intern-filter-select" onchange="applyInternFilters()" style="margin-left: 10px;">
+              <option value="all">All Batches</option>
+              <% batches.forEach(batch => { %>
+                <option value="<%= batch %>">Batch <%= batch %></option>
+              <% }) %>
+            </select>
+            <select id="domainFilter" class="intern-filter-select" onchange="applyInternFilters()">
+              <option value="all">All Domains</option>
+              <% 
+                const internDomains = [...new Set(interns.map(i => i.domain))];
+                internDomains.forEach(domain => { 
+              %>
+                <option value="<%= domain.toLowerCase() %>"><%= domain %></option>
+              <% }) %>
+            </select>
+            <select id="durationFilter" class="intern-filter-select" onchange="applyInternFilters()">
+              <option value="all">All Durations</option>
+              <% 
+                const internDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
+                internDurations.forEach(duration => { 
+              %>
+                <option value="<%= duration %>"><%= duration %> Weeks</option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="intern-toolbar-right">
+            <span id="internResultCount" class="intern-count-badge"><%= interns.length %> interns</span>
+            <button class="btn btn-sm btn-outline-secondary" style="border-radius: 20px;" onclick="clearInternFilters()">
+              <i class="bi bi-x-circle me-1"></i>Clear
+            </button>
+          </div>
         </div>
-        <div class="col-md-2">
-          <button class="btn btn-secondary w-100" onclick="clearInternFilters()">Clear Filters</button>
-        </div>
-      </div>
 
-      <!-- Intern Table -->
-      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table class="table table-striped table-bordered align-middle text-center mb-0">
-          <thead class="table-light" style="position: sticky; top: 0; z-index: 2; background-color: #f8f9fa;">
-             <tr class="text-center">
-               <th style="width: 60px;">S.No</th>
-               <th style="width: 5rem;">Profile</th>
-               <th>Name</th>
-               <th>Email</th>
-               <th>Duration</th>
-               <th>Intern ID</th>
-               <th>Batch</th>
-               <th style="min-width: 7.5rem !important;">Actions</th>
-             </tr>
-           </thead>
-          <tbody>
-            <% interns.forEach((i, index) => { %>
-              <tr class="intern-row" data-batch="<%= i.batch_no %>"  data-duration="<%= i.duration %>" data-domain="<%= i.domain.toLowerCase() %>" data-name="<%= i.name.toLowerCase() %>" data-id="<%= i.intern_id.toLowerCase() %>">
-                <td class="serial-no" style="padding:0 !important;"><%= index + 1 %></td>
-                 <td style="padding:0 !important;" class="position-relative">
-                    <div class="position-relative d-inline-block">
-                  
-                      <img src="<%= i.img_url %>" 
-                           alt="<%= i.name %>" 
-                           class="rounded-circle"
-                           style="width:40px; height:40px; object-fit:cover;">
-                  
-                      
-                  
-                    </div>
-                    <% if(i.isOnline){ %>
-                        <span class="position-absolute top-5 end-1  
-                                     p-1 bg-success border border-light rounded-circle">
-                        </span>
-                      <% } %>
-                  </td>
-
-                 <td style="text-align: left !important; padding-left: 1rem;"><%= i.name %></td>
-                 <td style="text-align: left !important; padding-left: 1rem;"><%= i.email %></td>
-                 <td style="padding:0 !important;"><%= i.duration %> Weeks</td>
-                 <td class="intern-id"><%= i.intern_id %></td>
-                 <td ><%= i.batch_no %></td>
-                <td class="d-flex justify-content-evenly gap-2">
-                  <a href="/admin/intern/<%= i._id %>" class="btn btn-outline-primary btn-sm px-3 rounded-pill shadow-sm" target="_blank"><i class="bi bi-eye"></i></a>
-                  <!-- <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#updateModal<%= i._id %>">Update</button> -->
-                  <button class="btn btn-outline-danger btn-sm px-3 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i._id %>"><i class="bi bi-trash"></i></button>
-                </td>
+        <!-- Desktop Table (md+) -->
+        <div class="intern-table-wrap d-none d-md-block" style="max-height: 500px; overflow-y: auto;">
+          <table class="table align-middle mb-0">
+            <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
+              <tr>
+                <th width="44" class="text-center">#</th>
+                <th width="56">Photo</th>
+                <th>Name & ID</th>
+                <th class="d-none d-lg-table-cell">Contact</th>
+                <th class="d-none d-lg-table-cell">Batch / Duration</th>
+                <th>Progress</th>
+                <th class="text-center">Actions</th>
               </tr>
-
-              <!-- Delete Intern Modal -->
-              <div class="modal fade" id="deleteModal<%= i._id %>" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Delete <%= i.name %>?</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </thead>
+            <tbody id="internTableBody">
+              <% interns.forEach((i, index) => { %>
+                <tr class="intern-row"
+                    data-batch="<%= i.batch_no %>"
+                    data-duration="<%= i.duration %>"
+                    data-domain="<%= i.domain.toLowerCase() %>"
+                    data-name="<%= i.name.toLowerCase() %>"
+                    data-id="<%= i.intern_id.toLowerCase() %>">
+                  <td class="text-center text-muted serial-no"><%= index + 1 %></td>
+                  <td>
+                    <div class="intern-avatar-wrap">
+                      <img src="<%= i.img_url %>" alt="<%= i.name %>" class="intern-avatar">
+                      <% if(i.isOnline){ %><span class="online-dot"></span><% } %>
                     </div>
-                    <div class="modal-body">Are you sure you want to delete this intern?</div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                      <form action="/delete-user/<%= i._id %>" method="POST">
-                        <button class="btn btn-danger">Delete</button>
-                      </form>
+                  </td>
+                  <td>
+                    <div class="fw-bold" style="font-size:0.875rem;"><%= i.name %></div>
+                    <div class="small font-monospace text-muted"><%= i.intern_id %></div>
+                  </td>
+                  <td class="d-none d-lg-table-cell">
+                    <div class="small"><i class="bi bi-envelope text-muted me-1"></i><%= i.email %></div>
+                    <div class="small text-muted"><i class="bi bi-telephone text-muted me-1"></i><%= i.phone || '—' %></div>
+                  </td>
+                  <td class="d-none d-lg-table-cell">
+                    <span class="batch-chip">Batch <%= i.batch_no %></span>
+                    <div class="small text-muted mt-1"><i class="bi bi-clock me-1"></i><%= i.duration %> Weeks</div>
+                  </td>
+                  <td style="min-width: 120px;">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress flex-grow-1" style="height: 6px;">
+                        <div class="progress-bar <%= (i.intern_progress || 0) === 100 ? 'bg-success' : 'bg-primary' %>" role="progressbar" style="width: <%= i.intern_progress || 0 %>%;" aria-valuenow="<%= i.intern_progress || 0 %>" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <span class="small fw-bold text-muted"><%= i.intern_progress || 0 %>%</span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="d-flex justify-content-center gap-1">
+                      <a href="/admin/intern/<%= i._id %>" target="_blank" class="icon-btn icon-btn-view" title="View Profile"><i class="bi bi-eye"></i></a>
+                      <button class="icon-btn icon-btn-delete text-danger" style="border: 1px solid #dc3545;" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i._id %>" title="Delete"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Delete Intern Modal -->
+                <div class="modal fade" id="deleteModal<%= i._id %>" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Delete <%= i.name %>?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body text-start">Are you sure you want to delete this intern?</div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="/delete-user/<%= i._id %>" method="POST">
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
+              <% }) %>
+            </tbody>
+          </table>
+          <div id="noInternResult" class="intern-empty" style="display:none;">
+            <i class="bi bi-search"></i>
+            <p>No interns match your filters.</p>
+            <button class="btn btn-sm btn-outline-secondary mt-1" onclick="clearInternFilters()">Clear Filters</button>
+          </div>
+        </div>
+
+        <!-- Mobile Card Grid (< md) -->
+        <div class="intern-card-grid d-md-none" id="internCardGrid">
+          <% interns.forEach((i) => { %>
+            <div class="intern-card intern-row"
+                 data-batch="<%= i.batch_no %>"
+                 data-duration="<%= i.duration %>"
+                 data-domain="<%= i.domain.toLowerCase() %>"
+                 data-name="<%= i.name.toLowerCase() %>"
+                 data-id="<%= i.intern_id.toLowerCase() %>">
+              <div class="intern-card-top">
+                <div class="intern-avatar-wrap">
+                  <img src="<%= i.img_url %>" alt="<%= i.name %>" class="intern-avatar intern-avatar-lg">
+                  <% if(i.isOnline){ %><span class="online-dot"></span><% } %>
+                </div>
+                <div class="intern-card-info">
+                  <div class="fw-bold"><%= i.name.split(' ').slice(0, 2).join(' ') %></div>
+                  <div class="small font-monospace text-muted"><%= i.intern_id %></div>
+                </div>
+              </div>
+              <span class="batch-chip batch-chip-absolute d-inline-block">Batch <%= i.batch_no %> · <%= i.duration %>W</span>
+              <div class="intern-card-meta mb-2">
+                <i class="bi bi-envelope me-1"></i><%= i.email %>
+              </div>
+              <div class="intern-card-meta mb-3">
+                <div class="w-100 d-flex align-items-center gap-2">
+                  <span class="small text-muted" style="min-width: 60px;">Progress:</span>
+                  <div class="progress flex-grow-1" style="height: 6px;">
+                    <div class="progress-bar <%= (i.intern_progress || 0) === 100 ? 'bg-success' : 'bg-primary' %>" role="progressbar" style="width: <%= i.intern_progress || 0 %>%;"></div>
+                  </div>
+                  <span class="small fw-bold text-muted"><%= i.intern_progress || 0 %>%</span>
+                </div>
               </div>
 
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
+              <div class="intern-card-actions">
+                <a href="/admin/intern/<%= i._id %>" target="_blank" class="icon-btn icon-btn-view flex-grow-1 justify-content-center">
+                  <i class="bi bi-eye me-1"></i>View
+                </a>
+                <button class="icon-btn icon-btn-delete flex-grow-1 justify-content-center text-danger" style="border: 1px solid #dc3545;" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i._id %>">
+                  <i class="bi bi-trash me-1"></i>Delete
+                </button>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+        <div id="noInternResultMobile" class="intern-empty d-md-none" style="display:none;">
+          <i class="bi bi-search"></i>
+          <p>No interns match your filters.</p>
+          <button class="btn btn-sm btn-outline-secondary mt-1" onclick="clearInternFilters()">Clear Filters</button>
+        </div>
 
-    </div>
-  </div>
-</section>
+      </section>
 
 <!-- ================= SCHEDULE MEETING ================= -->
 <section id="scheduleMeetingSection" class="container my-5" style="display:none;">
@@ -1476,6 +1537,406 @@
 
     </div>
   </div>
+</section>
+
+<!-- Feedback Analytics Section - Redesigned -->
+<section id="feedbackSection" style="display:none;">
+  <%
+    let totalFeedbacks = feedbacks ? feedbacks.length : 0;
+    let overallSum = 0, projectSum = 0, quizSum = 0;
+    let positiveCount = 0, suggestionsCount = 0, consentCount = 0;
+    if(totalFeedbacks > 0) {
+      feedbacks.forEach(f => {
+        overallSum += f.overallRating || 0;
+        projectSum += f.projectRating || 0;
+        quizSum    += f.quizRating    || 0;
+        if((f.overallRating || 0) >= 4) positiveCount++;
+        if(f.suggestions && f.suggestions.trim()) suggestionsCount++;
+        if(f.profilePictureConsent) consentCount++;
+      });
+    }
+    let avgOverall = totalFeedbacks > 0 ? (overallSum / totalFeedbacks).toFixed(1) : "0.0";
+    let avgProject = totalFeedbacks > 0 ? (projectSum / totalFeedbacks).toFixed(1) : "0.0";
+    let avgQuiz    = totalFeedbacks > 0 ? (quizSum    / totalFeedbacks).toFixed(1) : "0.0";
+    let positivePct    = totalFeedbacks > 0 ? Math.round((positiveCount    / totalFeedbacks) * 100) : 0;
+    let suggestionsPct = totalFeedbacks > 0 ? Math.round((suggestionsCount / totalFeedbacks) * 100) : 0;
+    let consentPct     = totalFeedbacks > 0 ? Math.round((consentCount     / totalFeedbacks) * 100) : 0;
+
+    function renderStars(ratingStr) {
+      const r = Math.round(parseFloat(ratingStr));
+      let html = "";
+      for(let i=1; i<=5; i++) {
+        html += `<i class="bi bi-star-fill ${i<=r ? 'text-warning' : 'text-muted opacity-25'}"></i>`;
+      }
+      return html;
+    }
+  %>
+
+  <!-- Hero Glass Banner -->
+  <div class="fb-hero-banner mb-4">
+    <div class="fb-hero-content">
+      <div class="fb-hero-icon">
+        <i class="bi bi-chat-square-heart-fill"></i>
+      </div>
+      <div>
+        <h3 class="fb-hero-title">Feedback Analytics</h3>
+        <p class="fb-hero-sub">Voice of interns — ratings, sentiment &amp; experience insights</p>
+      </div>
+    </div>
+    <div class="fb-hero-chips">
+      <span class="fb-hero-chip"><i class="bi bi-collection-fill me-1"></i><%= totalFeedbacks %> Responses</span>
+      <span class="fb-hero-chip fb-hero-chip-gold"><i class="bi bi-star-fill me-1"></i><%= avgOverall %>/5 Overall</span>
+    </div>
+  </div>
+
+  <!-- KPI Claymorphism Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="fb-clay-card fb-clay-blue">
+        <div class="fb-clay-orb"><i class="bi bi-chat-left-text-fill"></i></div>
+        <div class="fb-clay-value" data-target="<%= totalFeedbacks %>">0</div>
+        <div class="fb-clay-label">Total Responses</div>
+        <div class="fb-clay-sub">Intern submissions</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fb-clay-card fb-clay-gold">
+        <div class="fb-clay-orb"><i class="bi bi-star-fill"></i></div>
+        <div class="fb-clay-value"><%= avgOverall %></div>
+        <div class="fb-clay-label">Avg Overall Rating</div>
+        <div class="fb-clay-stars"><%- renderStars(avgOverall) %></div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fb-clay-card fb-clay-green">
+        <div class="fb-clay-orb"><i class="bi bi-journal-code"></i></div>
+        <div class="fb-clay-value"><%= avgProject %></div>
+        <div class="fb-clay-label">Avg Project Rating</div>
+        <div class="fb-clay-sub">out of 5.0</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fb-clay-card fb-clay-purple">
+        <div class="fb-clay-orb"><i class="bi bi-question-circle-fill"></i></div>
+        <div class="fb-clay-value"><%= avgQuiz %></div>
+        <div class="fb-clay-label">Avg Quiz Rating</div>
+        <div class="fb-clay-sub">out of 5.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="fb-glass-card h-100">
+        <div class="fb-glass-header">
+          <i class="bi bi-bar-chart-fill"></i>
+          <span>Rating Distribution</span>
+        </div>
+        <div class="fb-chart-wrap">
+          <canvas id="ratingDistributionChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="fb-glass-card h-100">
+        <div class="fb-glass-header">
+          <i class="bi bi-pie-chart-fill"></i>
+          <span>Domain-wise Average</span>
+        </div>
+        <div class="fb-chart-wrap">
+          <canvas id="domainRatingChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="fb-glass-card h-100">
+        <div class="fb-glass-header">
+          <i class="bi bi-activity"></i>
+          <span>Score Comparison</span>
+        </div>
+        <div class="fb-chart-wrap">
+          <canvas id="featureRatingChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sentiment Summary -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="fb-sentiment-card">
+        <div class="fb-sent-icon text-success"><i class="bi bi-emoji-smile-fill"></i></div>
+        <div class="fb-sent-value"><%= positivePct %>%</div>
+        <div class="fb-sent-label">Positive Responses</div>
+        <div class="fb-sent-bar-wrap"><div class="fb-sent-bar bg-success" style="width: <%= positivePct %>%"></div></div>
+        <div class="fb-sent-sub"><%= positiveCount %> of <%= totalFeedbacks %> rated &ge; 4 stars</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="fb-sentiment-card">
+        <div class="fb-sent-icon text-primary"><i class="bi bi-lightbulb-fill"></i></div>
+        <div class="fb-sent-value"><%= suggestionsPct %>%</div>
+        <div class="fb-sent-label">Provided Suggestions</div>
+        <div class="fb-sent-bar-wrap"><div class="fb-sent-bar bg-primary" style="width: <%= suggestionsPct %>%"></div></div>
+        <div class="fb-sent-sub"><%= suggestionsCount %> of <%= totalFeedbacks %> wrote suggestions</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="fb-sentiment-card">
+        <div class="fb-sent-icon" style="color:#ff6600;"><i class="bi bi-camera-fill"></i></div>
+        <div class="fb-sent-value"><%= consentPct %>%</div>
+        <div class="fb-sent-label">Photo Consent Given</div>
+        <div class="fb-sent-bar-wrap"><div class="fb-sent-bar" style="background:#ff6600; width: <%= consentPct %>%"></div></div>
+        <div class="fb-sent-sub"><%= consentCount %> of <%= totalFeedbacks %> gave consent</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="fb-filter-bar mb-3">
+    <div class="fb-filter-pill">
+      <i class="bi bi-search"></i>
+      <input type="text" id="feedbackSearch" placeholder="Search name or ID…" oninput="filterFeedbackTable()">
+    </div>
+    <div class="fb-filter-pill">
+      <i class="bi bi-layers"></i>
+      <select id="feedbackBatchFilter" onchange="filterFeedbackTable()">
+        <option value="">All Batches</option>
+        <% batches.forEach(b => { %>
+          <option value="<%= b %>">Batch <%= b %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="fb-filter-pill">
+      <i class="bi bi-diagram-3"></i>
+      <select id="feedbackDomainFilter" onchange="filterFeedbackTable()">
+        <option value="">All Domains</option>
+        <%
+          let feedbackDomains = [...new Set(feedbacks.map(f => f.userId ? f.userId.domain : 'Unknown'))];
+          feedbackDomains.forEach(d => { if(d && d!=='Unknown') {
+        %>
+          <option value="<%= d %>"><%= d %></option>
+        <% }}) %>
+      </select>
+    </div>
+    <div class="fb-filter-pill">
+      <i class="bi bi-clock"></i>
+      <select id="feedbackDurationFilter" onchange="filterFeedbackTable()">
+        <option value="">All Durations</option>
+        <option value="4">4 Weeks</option>
+        <option value="6">6 Weeks</option>
+        <option value="8">8 Weeks</option>
+      </select>
+    </div>
+    <button class="fb-filter-clear" onclick="
+      document.getElementById('feedbackSearch').value='';
+      document.getElementById('feedbackBatchFilter').value='';
+      document.getElementById('feedbackDomainFilter').value='';
+      document.getElementById('feedbackDurationFilter').value='';
+      filterFeedbackTable();">
+      <i class="bi bi-x-circle me-1"></i>Clear
+    </button>
+  </div>
+
+  <!-- Feedback Table Wrapper (Dual Layout) -->
+  <% if(feedbacks && feedbacks.length > 0) { %>
+    <div id="feedbackTable">
+      
+      <!-- Desktop Table (lg+) -->
+      <div class="table-responsive d-none d-lg-block mb-4" style="max-height: 500px; overflow-y: auto; border: 1px solid var(--border); border-radius: 12px;">
+        <table class="table align-middle mb-0 bg-white">
+          <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+            <tr>
+              <th width="50" class="ps-3">Photo</th>
+              <th>Name & Contact</th>
+              <th>Domain / Duration</th>
+              <th>Ratings</th>
+              <th>Submitted</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% feedbacks.forEach(fb => {
+              let user = fb.userId;
+              if(!user) return;
+            %>
+              <tr class="feedback-row"
+                  data-name="<%= user.name.toLowerCase() %>"
+                  data-intern-id="<%= (user.intern_id || '').toLowerCase() %>"
+                  data-batch="<%= user.batch_no %>"
+                  data-domain="<%= user.domain %>"
+                  data-duration="<%= user.duration %>">
+                <td class="ps-3">
+                  <img src="<%= user.img_url || '/img/default-avatar.png' %>" alt="<%= user.name %>" class="rounded-circle" width="40" height="40" style="object-fit:cover; border: 2px solid rgba(255,102,0,0.2);">
+                </td>
+                <td>
+                  <div class="fw-bold" style="font-size:0.875rem; color: var(--text-primary);"><%= user.name %></div>
+                  <div class="small text-muted"><i class="bi bi-person-badge me-1"></i><%= user.intern_id %></div>
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark rounded-pill mb-1"><%= user.domain %></span><br>
+                  <span class="badge bg-secondary rounded-pill">Batch <%= user.batch_no %></span>
+                </td>
+                <td>
+                  <div class="small mb-1"><strong>Overall:</strong> <span class="text-warning"><%- renderStars(fb.overallRating || 0) %></span></div>
+                  <div class="d-flex gap-2">
+                    <span class="badge" style="background: rgba(16,185,129,0.1); color: #10b981;">Proj: <%= fb.projectRating || 0 %></span>
+                    <span class="badge" style="background: rgba(102,126,234,0.1); color: #667eea;">Quiz: <%= fb.quizRating || 0 %></span>
+                  </div>
+                </td>
+                <td class="text-muted small">
+                  <%= new Date(fb.submittedAt).toLocaleDateString('en-GB') %>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-sm text-primary" style="background: rgba(13,110,253,0.1); border-radius: 20px; font-weight: 600;" data-bs-toggle="modal" data-bs-target="#viewFeedbackModal<%= fb._id %>">
+                    <i class="bi bi-eye"></i> View
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card Grid (< lg) -->
+      <div class="fb-card-grid d-block d-lg-none">
+        <% feedbacks.forEach(fb => {
+          let user = fb.userId;
+          if(!user) return;
+        %>
+          <div class="fb-card feedback-row"
+               data-name="<%= user.name.toLowerCase() %>"
+               data-intern-id="<%= (user.intern_id || '').toLowerCase() %>"
+               data-batch="<%= user.batch_no %>"
+               data-domain="<%= user.domain %>"
+               data-duration="<%= user.duration %>">
+
+            <div class="fb-card-top">
+              <div class="fb-card-avatar-wrap">
+                <img src="<%= user.img_url || '/img/default-avatar.png' %>" alt="<%= user.name %>" class="fb-card-avatar">
+                <div class="fb-card-rating-badge"><i class="bi bi-star-fill"></i> <%= fb.overallRating || 'N/A' %></div>
+              </div>
+              <div class="fb-card-info">
+                <h6 class="fb-card-name"><%= user.name %></h6>
+                <p class="fb-card-email"><i class="bi bi-person-badge"></i> <%= user.intern_id %></p>
+                <div class="fb-card-chips">
+                  <span class="fb-chip fb-chip-domain"><%= user.domain %></span>
+                  <span class="fb-chip fb-chip-batch">Batch <%= user.batch_no %></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="fb-card-ratings">
+              <div class="fb-rating-row">
+                <span class="fb-rating-label">Overall</span>
+                <div class="fb-rating-bar-wrap"><div class="fb-rating-bar fb-bar-gold" style="width: <%= ((fb.overallRating||0)/5)*100 %>%"></div></div>
+                <span class="fb-rating-val"><%= fb.overallRating || 0 %></span>
+              </div>
+              <div class="fb-rating-row">
+                <span class="fb-rating-label">Projects</span>
+                <div class="fb-rating-bar-wrap"><div class="fb-rating-bar fb-bar-green" style="width: <%= ((fb.projectRating||0)/5)*100 %>%"></div></div>
+                <span class="fb-rating-val"><%= fb.projectRating || 0 %></span>
+              </div>
+              <div class="fb-rating-row">
+                <span class="fb-rating-label">Quiz</span>
+                <div class="fb-rating-bar-wrap"><div class="fb-rating-bar fb-bar-purple" style="width: <%= ((fb.quizRating||0)/5)*100 %>%"></div></div>
+                <span class="fb-rating-val"><%= fb.quizRating || 0 %></span>
+              </div>
+            </div>
+
+            <div class="fb-card-footer-row">
+              <span class="fb-card-date"><i class="bi bi-calendar3 me-1"></i><%= new Date(fb.submittedAt).toLocaleDateString('en-GB') %></span>
+              <button class="fb-view-btn" data-bs-toggle="modal" data-bs-target="#viewFeedbackModal<%= fb._id %>">
+                <i class="bi bi-eye me-1"></i>View
+              </button>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+    </div>
+
+    <!-- Modals (Processed efficiently once per feedback) -->
+    <% feedbacks.forEach(fb => {
+      let user = fb.userId;
+      if(!user) return;
+    %>
+      <!-- View Feedback Modal -->
+      <div class="modal fade" id="viewFeedbackModal<%= fb._id %>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header border-0 text-white position-relative" style="background: linear-gradient(135deg, #1f2937, #0f172a); padding:32px 36px;">
+              <button type="button" class="btn-close btn-close-white position-absolute" style="top:18px; right:20px;" data-bs-dismiss="modal"></button>
+              <div class="d-flex align-items-center gap-3">
+                <img src="<%= user.img_url || '/img/default-avatar.png' %>" class="rounded-circle border border-3 border-white shadow" style="width:80px;height:80px;object-fit:cover;" crossorigin="anonymous">
+                <div>
+                  <h4 class="mb-1 fw-semibold"><%= user.name %></h4>
+                  <span class="badge bg-info text-dark"><%= user.domain %></span>
+                  <span class="badge bg-secondary ms-1">Batch <%= user.batch_no %></span>
+                  <small class="opacity-75 d-block mt-1"><i class="bi bi-person-badge"></i> <%= user.intern_id %></small>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body bg-light p-4">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-header bg-white border-bottom fw-semibold text-warning"><i class="bi bi-star-fill me-2"></i>Ratings</div>
+                    <div class="card-body small">
+                      <div class="d-flex justify-content-between mb-2"><span>Overall:</span> <span class="text-warning"><%- renderStars(fb.overallRating || 0) %></span></div>
+                      <div class="d-flex justify-content-between mb-2"><span>Projects:</span> <span class="text-warning"><%- renderStars(fb.projectRating || 0) %></span></div>
+                      <div class="d-flex justify-content-between mb-0"><span>Quizzes:</span> <span class="text-warning"><%- renderStars(fb.quizRating || 0) %></span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-header bg-white border-bottom fw-semibold text-primary"><i class="bi bi-link-45deg me-2"></i>Links &amp; Consent</div>
+                    <div class="card-body small">
+                      <% if(fb.linkedinUrl) { %>
+                        <p class="mb-2"><span class="text-muted">LinkedIn:</span> <a href="<%= fb.linkedinUrl %>" target="_blank" class="text-decoration-none text-truncate d-inline-block align-bottom" style="max-width:200px;"><%= fb.linkedinUrl %></a></p>
+                      <% } %>
+                      <% if(fb.githubUrl) { %>
+                        <p class="mb-2"><span class="text-muted">GitHub:</span> <a href="<%= fb.githubUrl %>" target="_blank" class="text-decoration-none text-truncate d-inline-block align-bottom" style="max-width:200px;"><%= fb.githubUrl %></a></p>
+                      <% } %>
+                      <p class="mb-0"><span class="text-muted">Consent to use profile picture:</span>
+                        <span class="badge bg-<%= fb.profilePictureConsent ? 'success' : 'secondary' %>"><%= fb.profilePictureConsent ? 'Yes' : 'No' %></span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white border-bottom fw-semibold text-success"><i class="bi bi-chat-left-quote-fill me-2"></i>Experience</div>
+                    <div class="card-body">
+                      <p class="card-text text-muted" style="white-space: pre-line;"><%= fb.experienceText %></p>
+                    </div>
+                  </div>
+                </div>
+                <% if(fb.suggestions) { %>
+                  <div class="col-12">
+                    <div class="card border-0 shadow-sm rounded-3">
+                      <div class="card-header bg-white border-bottom fw-semibold text-info"><i class="bi bi-lightbulb-fill me-2"></i>Suggestions</div>
+                      <div class="card-body">
+                        <p class="card-text text-muted" style="white-space: pre-line;"><%= fb.suggestions %></p>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <div class="fb-empty-state">
+      <i class="bi bi-chat-square-text fb-empty-icon"></i>
+      <h5>No Feedback Yet</h5>
+      <p>Intern feedback submissions will appear here once available.</p>
+    </div>
+  <% } %>
 </section>
 
 <!-- Registrations Section -->
@@ -2626,7 +3087,173 @@ function updateIntern(id) {
       document.querySelectorAll('.modal').forEach(modal => {
         document.body.appendChild(modal);
       });
+      initFeedbackCharts();
     });
+
+    // --- Feedback Logic ---
+    function filterFeedbackTable() {
+      const search = document.getElementById('feedbackSearch').value.toLowerCase();
+      const batch = document.getElementById('feedbackBatchFilter').value;
+      const domain = document.getElementById('feedbackDomainFilter').value;
+      const duration = document.getElementById('feedbackDurationFilter').value;
+
+      // Updated selector: card grid has no <tbody>, cards are direct children
+      const rows = document.querySelectorAll('#feedbackTable .feedback-row');
+      rows.forEach(row => {
+        const rName     = (row.getAttribute('data-name')     || '').toLowerCase();
+        const rInternId = (row.getAttribute('data-intern-id')|| '').toLowerCase();
+        const rBatch    = row.getAttribute('data-batch')    || '';
+        const rDomain   = row.getAttribute('data-domain')   || '';
+        const rDuration = row.getAttribute('data-duration') || '';
+
+        const matchSearch   = rName.includes(search) || rInternId.includes(search);
+        const matchBatch    = batch    === "" || rBatch    === batch;
+        const matchDomain   = domain   === "" || rDomain   === domain;
+        const matchDuration = duration === "" || rDuration === duration;
+
+        row.style.display = (matchSearch && matchBatch && matchDomain && matchDuration) ? "" : "none";
+      });
+    }
+
+    function initFeedbackCharts() {
+      // Safely inject JSON payload from EJS to JS without backticks
+      let fbData = <%- JSON.stringify(feedbacks || []).replace(/</g, '\\u003c') %>;
+
+      if(!Array.isArray(fbData) || fbData.length === 0) return;
+
+      const starColors   = ['#ef4444','#f97316','#eab308','#22c55e','#10b981'];
+      const brandPalette = [
+        'rgba(255,102,0,0.85)','rgba(255,153,0,0.85)','rgba(102,126,234,0.85)',
+        'rgba(16,185,129,0.85)','rgba(245,87,108,0.85)','rgba(240,147,251,0.85)','rgba(59,130,246,0.85)'
+      ];
+
+      // 1. Rating Distribution — uses FLAT overallRating (bug fix)
+      const dist = {1:0, 2:0, 3:0, 4:0, 5:0};
+      fbData.forEach(f => {
+        const r = Math.round(f.overallRating || 0);
+        if(r >= 1 && r <= 5) dist[r]++;
+      });
+
+      const rdCtx = document.getElementById('ratingDistributionChart');
+      if(rdCtx) {
+        new Chart(rdCtx.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['1 Star','2 Stars','3 Stars','4 Stars','5 Stars'],
+            datasets: [{
+              label: 'Responses',
+              data: [dist[1], dist[2], dist[3], dist[4], dist[5]],
+              borderColor: '#f97316',
+              backgroundColor: 'rgba(249, 115, 22, 0.1)',
+              borderWidth: 3,
+              pointBackgroundColor: starColors,
+              pointBorderColor: '#fff',
+              pointRadius: 6,
+              fill: true,
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: { callbacks: { label: ctx => ` ${ctx.raw} responses` } }
+            },
+            scales: {
+              y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,0.05)' } },
+              x: { grid: { display: false } }
+            }
+          }
+        });
+      }
+
+      // 2. Domain-wise Average — uses FLAT overallRating (bug fix)
+      const domainAvg = {};
+      fbData.forEach(f => {
+        if(f.userId && f.userId.domain) {
+          const d = f.userId.domain;
+          if(!domainAvg[d]) domainAvg[d] = { sum: 0, count: 0 };
+          domainAvg[d].sum   += (f.overallRating || 0);
+          domainAvg[d].count++;
+        }
+      });
+      const domainLabels = Object.keys(domainAvg);
+      const domainData   = domainLabels.map(d => (domainAvg[d].sum / domainAvg[d].count).toFixed(1));
+
+      const drCtx = document.getElementById('domainRatingChart');
+      if(drCtx) {
+        new Chart(drCtx.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: domainLabels,
+            datasets: [{
+              label: 'Avg Rating',
+              data: domainData,
+              backgroundColor: brandPalette.slice(0, domainLabels.length),
+              borderWidth: 2,
+              borderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+              legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10 } },
+              tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}/5` } }
+            }
+          }
+        });
+      }
+
+      // 3. Score Comparison — uses FLAT fields (bug fix)
+      const avgOvr  = fbData.reduce((s,f) => s + (f.overallRating || 0), 0) / fbData.length;
+      const avgPrj  = fbData.reduce((s,f) => s + (f.projectRating  || 0), 0) / fbData.length;
+      const avgQz   = fbData.reduce((s,f) => s + (f.quizRating     || 0), 0) / fbData.length;
+
+      const frCtx = document.getElementById('featureRatingChart');
+      if(frCtx) {
+        new Chart(frCtx.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['Overall Rating','Project Rating','Quiz Rating'],
+            datasets: [{
+              label: 'Avg Score',
+              data: [avgOvr.toFixed(2), avgPrj.toFixed(2), avgQz.toFixed(2)],
+              backgroundColor: ['rgba(255,102,0,0.85)','rgba(16,185,129,0.85)','rgba(102,126,234,0.85)'],
+              borderRadius: 10,
+              borderSkipped: false
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: { callbacks: { label: ctx => ` ${ctx.raw} / 5` } }
+            },
+            scales: {
+              y: { min: 0, max: 5, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,0.05)' } },
+              x: { grid: { display: false } }
+            }
+          }
+        });
+      }
+
+      // Counter animation for Total Responses KPI card
+      document.querySelectorAll('.fb-clay-value[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        if(isNaN(target) || target === 0) { el.textContent = 0; return; }
+        let current = 0;
+        const step  = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current += step;
+          if(current >= target) { el.textContent = target; clearInterval(timer); }
+          else { el.textContent = current; }
+        }, 25);
+      });
+    }
   </script>
 </body>
 </html>

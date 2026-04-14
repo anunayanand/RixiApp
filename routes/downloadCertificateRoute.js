@@ -8,6 +8,10 @@ router.get("/download-certificate/:userId", authRole(['intern','admin','superAdm
   const user = await User.findById(req.params.userId);
   if (!user) return res.status(404).send("User not found");
 
+  if (!user.feedbackSubmitted) {
+    return res.status(403).send("Please submit your internship feedback before downloading the certificate.");
+  }
+
   if (user.isPassed) {
     if (!user.completion_date) {
       return res.status(400).send("Certificate not available yet.");

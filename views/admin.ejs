@@ -813,7 +813,15 @@
                     </select>
                   </div>
 
-                  <div class="col-md-3">
+                  <div class="col-md-4">
+                    <label class="form-label">Internship Type</label>
+                    <select name="internshipType" class="form-select">
+                      <option value="Internship" selected>Internship</option>
+                      <option value="Summer Internship">Summer Internship</option>
+                      <option value="Winter Internship">Winter Internship</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
                     <label class="form-label">Duration</label>
                     <select name="duration" class="form-select" required>
                       <option value="4">4 Weeks</option>
@@ -821,15 +829,15 @@
                       <option value="8">8 Weeks</option>
                     </select>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <label class="form-label">Starting Date</label>
                     <input type="date" name="starting_date" class="form-control" required>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <label class="form-label">Batch No.</label>
                     <input type="number" name="batch_no" class="form-control" required>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <label class="form-label">Referral Code</label>
                     <input type="text" name="referal_code" class="form-control">
                   </div>
@@ -1604,6 +1612,7 @@
                   <th>Duration</th>
                   <th>Batch No</th>
                   <th>Intern ID</th>
+                  <th>Internship Type</th>
                   <th class="text-center">Actions</th>
                 </tr>
               </thead>
@@ -1624,6 +1633,13 @@
                       </td>
                       <td>
                         <input type="text" id="intern_id_<%= reg._id %>" class="form-control form-control-sm" placeholder="Intern ID" style="width: 110px;">
+                      </td>
+                      <td>
+                        <select id="internshipType_<%= reg._id %>" class="form-select form-select-sm" style="width: 150px;">
+                          <option value="Internship" selected>Internship</option>
+                          <option value="Summer Internship">Summer</option>
+                          <option value="Winter Internship">Winter</option>
+                        </select>
                       </td>
                       <td class="text-center">
                         <div class="d-flex align-items-center justify-content-center">
@@ -2544,6 +2560,7 @@
     async function approveRegistration(regId) {
       const intern_id = document.getElementById(`intern_id_${regId}`).value;
       const batch_no = document.getElementById(`batch_no_${regId}`).value;
+      const internshipType = document.getElementById(`internshipType_${regId}`).value;
       const btn = document.getElementById(`approveBtn_${regId}`);
       const btnText = btn.querySelector('.btn-text');
       const spinner = btn.querySelector('.spinner-border');
@@ -2564,7 +2581,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ intern_id, batch_no })
+          body: JSON.stringify({ intern_id, batch_no, internshipType })
         });
         const data = await response.json();
         
