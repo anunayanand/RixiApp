@@ -39,7 +39,7 @@ async function generateCertificatePDF(data) {
     doc.font('Montserrat');
     doc.fontSize(18);
     doc.fillColor('#000000');
-    doc.text(`has successfully completed ${data.duration} week online project based "${data.domain} Internship" at \n"Rixi Lab", from ${data.starting_date} to ${data.completion_date}, And submitted all assigned projects with 100% \ncompletion with dedication, discipline, and timely delivery. \nTheir performance was exemplary, demonstrating strong skills and a proactive attitude.\nWe appreciate their dedication and wish them success in their future endeavors.`, 50, 460, {
+    doc.text(`has successfully completed ${data.duration} week online project based "${data.domain}" ${data.internship_type} at \n"Rixi Lab", from ${data.starting_date} to ${data.completion_date}, And submitted all assigned projects with 100% \ncompletion with dedication, discipline, and timely delivery. \nTheir performance was exemplary, demonstrating strong skills and a proactive attitude.\nWe appreciate their dedication and wish them success in their future endeavors.`, 50, 460, {
       width: 950,
       align: 'center',
       lineGap: 8

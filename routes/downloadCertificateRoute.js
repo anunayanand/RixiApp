@@ -25,6 +25,10 @@ router.get("/download-certificate/:userId", authRole(['intern','admin','superAdm
     }
   }
 
+  if (user.certificate_id && String(user.certificate_id).startsWith("TEMP")) {
+    return res.status(400).send("Certificate is not valid yet. Please wait for final approval.");
+  }
+
   function formatDate(date) {
     if (!date) return '';
     const d = new Date(date);
@@ -53,7 +57,8 @@ router.get("/download-certificate/:userId", authRole(['intern','admin','superAdm
     domain: user.domain,
     duration: user.duration,
     starting_date: startingDate,
-    completion_date: completionDate
+    completion_date: completionDate,
+    internship_type : user.internshipType
   });
 
   res.setHeader("Content-Type", "application/pdf");

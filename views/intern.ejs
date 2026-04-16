@@ -779,16 +779,22 @@
                       </div>
                     </div>
                     <% if (intern.certificate_link) { %>
-                      <a href="<%= intern.certificate_link %>" download
-                        class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i
-                          class="bi bi-download"></i></a>
+                      <% if (intern.certificate_id && String(intern.certificate_id).startsWith('TEMP')) { %>
+                        <button type="button" class="btn btn-outline-primary-custom rounded-circle p-2 px-3" onclick="showToast('Your certificate is not valid yet (TEMP ID).', 'warning')"><i class="bi bi-download"></i></button>
+                      <% } else { %>
+                        <a href="<%= intern.certificate_link %>" download class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i class="bi bi-download"></i></a>
+                      <% } %>
                       <% } else if (intern.completion_date) { %>
                         <% if (!intern.feedbackSubmitted) { %>
                           <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50"
                             title="Submit feedback first" disabled><i class="bi bi-lock-fill"></i></button>
                           <% } else { %>
-                            <a href="/download-certificate/<%= intern._id %>" target="_blank"
-                              class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
+                            <% if (intern.certificate_id && String(intern.certificate_id).startsWith('TEMP')) { %>
+                              <button type="button" class="btn btn-outline-primary-custom rounded-circle" onclick="showToast('Your certificate is not valid yet. Please wait for final approval.', 'warning')"><i class="bi bi-download"></i></button>
+                            <% } else { %>
+                              <a href="/download-certificate/<%= intern._id %>" target="_blank"
+                                class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
+                            <% } %>
                             <% } %>
                               <% } else { %>
                                 <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50" disabled><i
@@ -1833,14 +1839,7 @@
                       document.getElementById('linkedinUrl').style.borderColor = '';
                     }
 
-                    if (!github) {
-                      showToast('Please provide your GitHub profile URL.', 'warning');
-                      document.getElementById('githubUrl').style.borderColor = '#ff6600';
-                      document.getElementById('githubUrl').focus();
-                      return;
-                    } else {
-                      document.getElementById('githubUrl').style.borderColor = '';
-                    }
+
 
                     const payload = {
                       overallRating: overall.value,

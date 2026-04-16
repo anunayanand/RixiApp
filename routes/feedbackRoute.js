@@ -54,8 +54,7 @@ router.post("/intern/feedback", authRole("intern"), async (req, res, next) => {
       return res.status(400).json({ success: false, message: "Please provide all required fields: ratings, experience text, improvement suggestions and LinkedIn URL." });
     }
 
-    // Create Feedback Document
-    const feedback = new Feedback({
+    const feedbackData = {
       userId: intern._id,
       overallRating: parseInt(overallRating, 10),
       quizRating: parseInt(quizRating, 10),
@@ -63,9 +62,15 @@ router.post("/intern/feedback", authRole("intern"), async (req, res, next) => {
       experienceText: experienceText.trim(),
       suggestions: suggestions ? suggestions.trim() : "",
       linkedinUrl: linkedinUrl ? linkedinUrl.trim() : "",
-      githubUrl: githubUrl ? githubUrl.trim() : "",
       profilePictureConsent: profilePictureConsent === true || profilePictureConsent === 'true'
-    });
+    };
+
+    if (githubUrl && githubUrl.trim() !== "") {
+      feedbackData.githubUrl = githubUrl.trim();
+    }
+
+    // Create Feedback Document
+    const feedback = new Feedback(feedbackData);
 
     await feedback.save();
 
