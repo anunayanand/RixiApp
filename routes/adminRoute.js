@@ -6,6 +6,7 @@ const SuperAdmin = require("../models/SuperAdmin");
 const Project = require("../models/Project");
 const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
+const Lecture = require("../models/Lecture");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -122,6 +123,10 @@ router.get("/", authRole("admin"), async (req, res, next) => {
       domain: admin.domain,
       isCreated: false,
     }).sort({ approvedAt: -1 });
+    
+    // Lectures
+    const lectures = await Lecture.find({ domain: admin.domain }).sort({ createdAt: -1 });
+
     // Render dashboard
     req.flash("info", `Welcome ${admin.name}`);
     res.render("admin", {
@@ -136,6 +141,7 @@ router.get("/", authRole("admin"), async (req, res, next) => {
       quizzes,
       notifications,
       registrations,
+      lectures,
     });
   } catch (err) {
     next(err);

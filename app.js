@@ -187,6 +187,9 @@ app.get('/cap',(req,res) => res.render('cap'));
 const adminRoute = require('./routes/adminRoute');
 app.use('/admin', adminRoute);
 
+const lectureRoute = require('./routes/lectureRoute');
+app.use('/', lectureRoute);
+
 // Superadmin dashboard
 
 const superAdminRoute = require('./routes/superAdminRoute');
@@ -275,7 +278,7 @@ app.get('/superAdmin/ambassador/:ambassadorId',viewAmbassadorRoute);
 // --- Intern Routes ---
 
 const internRouter = require('./routes/internRoute');
-app.get('/intern', internRouter);
+app.use('/', internRouter);
 
 const viewAdminRouter = require('./routes/viewAdminRoute');
 app.get('/superAdmin/admin/:adminId', viewAdminRouter);

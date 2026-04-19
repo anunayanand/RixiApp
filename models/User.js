@@ -49,9 +49,23 @@ const userSchema = new mongoose.Schema({
   quiz_score: { type: Number, default: 0 },
   isPassed: { type: Boolean, default: false },
   progress: { type: Number, default: 0 },
+  lectureProgress: { type: Number, default: 0 },
   screenshot_img: { type: String, default: "" },
   screenshot_public_id: { type: String },
   lastHeartbeat: { type: Date, default: null },
+
+
+  lectureAssigned: [
+    {
+      lectureId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Lecture",
+      },
+      dateAssigned: { type: Date, default: Date.now },
+      completed: { type: Boolean, default: false },
+      watchedTime: { type: Number, default: 0 }
+    }
+  ],
 
   projectAssigned: [
     {

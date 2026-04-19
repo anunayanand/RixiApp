@@ -7,7 +7,10 @@ const Project = require("../models/Project");
 
 router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (req, res) => {
   try{
-    const intern = await User.findById(req.params.internId).populate('quizAssignments.quizId');
+    const intern = await User.findById(req.params.internId)
+      .populate('quizAssignments.quizId')
+      .populate('lectureAssigned.lectureId');
+      
   if (!intern || intern.role !== "intern"){
     req.flash("error", "Intern not found");
     return res.redirect("/admin")
@@ -41,6 +44,19 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
 
+  const allLectures = (intern.lectureAssigned || [])
+    .filter(la => la.lectureId)
+    .map(la => ({
+      _id: la._id,
+      title: la.lectureId.title,
+      description: la.lectureId.description,
+      duration: la.lectureId.duration,
+      videoId: la.lectureId.videoId,
+      watchedTime: la.watchedTime,
+      completed: la.completed
+    }));
+  const lectureProgress = intern.lectureProgress || 0;
+
   function formatWithOrdinal(dateStr) {
   const date = new Date(dateStr);
 
@@ -63,7 +79,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
 const str_date = formatWithOrdinal(intern.starting_date);
 
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications,startingDate: str_date });
+  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications,startingDate: str_date, allLectures, lectureProgress });
   }catch(err){
     console.error(err);
     req.flash("error", "Intern details loading failed");

@@ -26,6 +26,10 @@
 
   <!-- Cashfree JS SDK -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+  <!-- YouTube Iframe API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <style>
     /* ── Feedback Section – Modern Minimal ── */
@@ -230,6 +234,146 @@
       cursor: pointer;
       line-height: 1.5;
     }
+
+    /* YouTube Style Lecture Card */
+    .lecture-yt-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lecture-yt-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 102, 0, 0.4);
+    }
+
+    .lecture-yt-card:hover .lecture-yt-play-overlay {
+      opacity: 1;
+    }
+
+    .lecture-yt-thumbnail {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    .lecture-yt-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .lecture-yt-card:hover .lecture-yt-thumbnail img {
+      transform: scale(1.05);
+    }
+
+    .lecture-yt-duration {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .lecture-yt-play-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .lecture-yt-play-overlay i {
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      background: rgba(255, 102, 0, 0.9);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 4px;
+      box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+    }
+
+    .lecture-yt-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 2;
+    }
+
+    .lecture-yt-progress-fill {
+      height: 100%;
+      background: #ff6600;
+    }
+
+    .lecture-yt-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .lecture-yt-title {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .lecture-yt-desc {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .lecture-yt-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    /* Fullscreen Lecture Modal Handling (Class-based) */
+    .modal-fullscreen #lectureModalBody {
+      flex-grow: 1 !important;
+      height: auto !important;
+    }
   </style>
 </head>
 
@@ -295,12 +439,16 @@
           <i class="bi bi-camera-video-fill"></i>
           <span>Meetings</span>
         </a>
+        <a href="#lectures" class="nav-link" onclick="switchSection('lectures', this)">
+          <i class="bi bi-play-btn-fill"></i>
+          <span>Lectures</span>
+        </a>
         <a href="#documents" class="nav-link" onclick="switchSection('documents', this)">
           <i class="bi bi-file-earmark-text-fill"></i>
           <span>Documents</span>
         </a>
 
-        <a href="#chat" class="nav-link" onclick="switchSection('chat', this)" id="navChatLink">
+        <a href="#chat" class="nav-link d-lg-none" onclick="switchSection('chat', this)" id="navChatLink">
           <i class="bi bi-chat-dots-fill"></i>
           <span>Support Chat</span>
           <span id="chatUnreadBadge" class="chat-nav-badge d-none">0</span>
@@ -338,6 +486,12 @@
         </div>
 
         <div class="id-topbar-right">
+
+          <!-- Support Chat Topbar Button -->
+          <a href="#chat" class="id-topbar-btn d-none d-lg-flex position-relative text-decoration-none" onclick="switchSection('chat', document.getElementById('navChatLink'))" title="Support Chat">
+            <i class="bi bi-chat-dots"></i>
+            <span id="chatUnreadBadgeDesktop" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size: 0.6rem; padding: 0.25rem 0.45rem;">0</span>
+          </a>
 
           <!-- Notifications -->
           <div class="dropdown">
@@ -422,85 +576,99 @@
         <!-- 1. DASHBOARD SECTION -->
         <section id="dashboard" class="id-section active">
 
-          <!-- Claymorphism Stat Cards Row -->
-          <div class="row g-4 mb-4">
-            <div class="col-12 col-md-4">
-              <div class="id-stat-card h-100">
-                <div class="id-stat-icon"><i class="bi bi-kanban"></i></div>
-                <div class="id-stat-title">Projects Assigned</div>
-                <div class="id-stat-value">
-                  <%= totalProjects %>
+          <!-- Lecture Progress from server (totalWatchedTime / totalAssignedDuration) -->
+          <% const serverLectureProgress = typeof lectureProgress !== 'undefined' ? lectureProgress : 0; %>
+            <!-- Claymorphism Stat Cards Row -->
+            <div class="row g-4 mb-4">
+              <div class="col-12 col-sm-6 col-xl-3">
+                <div class="id-stat-card h-100">
+                  <div class="id-stat-icon"><i class="bi bi-kanban"></i></div>
+                  <div class="id-stat-title">Projects Assigned</div>
+                  <div class="id-stat-value">
+                    <%= totalProjects %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="id-stat-card h-100">
-                <div class="id-stat-icon"><i class="bi bi-calendar-check" style="color: #ff6600;"></i></div>
-                <div class="id-stat-title">Attendance</div>
-                <div class="id-stat-value">
-                  <%= attendanceRate %>%
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="id-stat-card h-100">
-                <div class="id-stat-icon"><i class="bi bi-graph-up-arrow " style="color: #ff6600;"></i></div>
-                <div class="id-stat-title">Overall Progress</div>
-                <div class="id-stat-value">
-                  <%= progress %>%
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Glassmorphism Details Panels -->
-          <div class="row g-4">
-            <div class="col-12 col-lg-6">
-              <div class="id-glass-panel h-100">
-                <h3 class="id-panel-title"><i class="bi bi-building"></i> College Details</h3>
-                <ul class="id-info-list">
-                  <li><span class="id-info-label">University</span><span class="id-info-value">
-                      <%= intern.university %>
-                    </span></li>
-                  <li><span class="id-info-label">College</span><span class="id-info-value">
-                      <%= intern.college %>
-                    </span></li>
-                  <li><span class="id-info-label">Course</span><span class="id-info-value">
-                      <%= intern.course %>
-                    </span></li>
-                  <li><span class="id-info-label">Branch</span><span class="id-info-value">
-                      <%= intern.branch %>
-                    </span></li>
-                  <li><span class="id-info-label">Year/Sem</span><span class="id-info-value">
-                      <%= intern.year_sem %>
-                    </span></li>
-                </ul>
+              <div class="col-12 col-sm-6 col-xl-3">
+                <div class="id-stat-card h-100">
+                  <div class="id-stat-icon"><i class="bi bi-play-btn-fill" style="color: #ff6600;"></i></div>
+                  <div class="id-stat-title">Lecture Progress</div>
+                  <div class="id-stat-value" id="dashboard-lecture-progress">
+                    <%= serverLectureProgress %>%
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-xl-3">
+                <div class="id-stat-card h-100">
+                  <div class="id-stat-icon"><i class="bi bi-calendar-check" style="color: #ff6600;"></i></div>
+                  <div class="id-stat-title">Meeting Attendance</div>
+                  <div class="id-stat-value">
+                    <%= attendanceRate %>%
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-xl-3">
+                <div class="id-stat-card h-100">
+                  <div class="id-stat-icon"><i class="bi bi-graph-up-arrow " style="color: #ff6600;"></i></div>
+                  <div class="id-stat-title">Project Progress</div>
+                  <div class="id-stat-value">
+                    <%= progress %>%
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-12 col-lg-6">
-              <div class="id-glass-panel h-100">
-                <h3 class="id-panel-title"><i class="bi bi-briefcase"></i> Internship Details</h3>
-                <ul class="id-info-list">
-                  <li><span class="id-info-label">Intern ID</span><span class="id-info-value"
-                      style="color: var(--primary);">
-                      <%= intern.intern_id %>
-                    </span></li>
-                  <li><span class="id-info-label">Domain</span><span class="id-info-value">
-                      <%= intern.domain %>
-                    </span></li>
-                  <li><span class="id-info-label">Duration</span><span class="id-info-value">
-                      <%= intern.duration %> Weeks
-                    </span></li>
-                  <li><span class="id-info-label">Start Date</span><span class="id-info-value">
-                      <%= startingDate %>
-                    </span></li>
-                  <li><span class="id-info-label">Mentor</span><span class="id-info-value">
-                      <%= mentorName %>
-                    </span></li>
-                </ul>
+
+            <!-- Glassmorphism Details Panels -->
+            <div class="row g-4">
+              <div class="col-12 col-lg-6">
+                <div class="id-glass-panel h-100">
+                  <h3 class="id-panel-title"><i class="bi bi-building"></i> College Details</h3>
+                  <ul class="id-info-list">
+                    <li><span class="id-info-label">University</span><span class="id-info-value">
+                        <%= intern.university %>
+                      </span></li>
+                    <li><span class="id-info-label">College</span><span class="id-info-value">
+                        <%= intern.college %>
+                      </span></li>
+                    <li><span class="id-info-label">Course</span><span class="id-info-value">
+                        <%= intern.course %>
+                      </span></li>
+                    <li><span class="id-info-label">Branch</span><span class="id-info-value">
+                        <%= intern.branch %>
+                      </span></li>
+                    <li><span class="id-info-label">Year/Sem</span><span class="id-info-value">
+                        <%= intern.year_sem %>
+                      </span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="id-glass-panel h-100">
+                  <h3 class="id-panel-title"><i class="bi bi-briefcase"></i> Internship Details</h3>
+                  <ul class="id-info-list">
+                    <li><span class="id-info-label">Intern ID</span><span class="id-info-value"
+                        style="color: var(--primary);">
+                        <%= intern.intern_id %>
+                      </span></li>
+                    <li><span class="id-info-label">Domain</span><span class="id-info-value">
+                        <%= intern.domain %>
+                      </span></li>
+                    <li><span class="id-info-label">Duration</span><span class="id-info-value">
+                        <%= intern.duration %> Weeks
+                      </span></li>
+                    <li><span class="id-info-label">Start Date</span><span class="id-info-value">
+                        <%= startingDate %>
+                      </span></li>
+                    <li><span class="id-info-label">Mentor</span><span class="id-info-value">
+                        <%= mentorName %>
+                      </span></li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
         </section>
 
         <!-- 2. PROJECTS SECTION -->
@@ -578,8 +746,8 @@
 
         <!-- 2.5 QUIZ SECTION -->
         <section id="quiz" class="id-section">
-          <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i
-              class="bi bi-patch-question-fill me-2" style="color: #ff6600;"></i> Assigned Quizzes</h3>
+          <h4 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i
+              class="bi bi-patch-question-fill me-2" style="color: #ff6600;"></i> Assigned Quizzes</h4>
 
           <div class="row g-3">
             <% if (progress===100 && assignedQuizzes && assignedQuizzes.length> 0) { %>
@@ -667,8 +835,8 @@
 
         <!-- 3. MEETINGS SECTION -->
         <section id="meetings" class="id-section">
-          <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-camera-video me-2"
-              style="color: #ff6600;"></i> Scheduled Meetings</h3>
+          <h4 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-camera-video me-2"
+              style="color: #ff6600;"></i> Scheduled Meetings</h4>
 
           <div class="row g-3">
             <% if (assignedMeetings && assignedMeetings.length> 0) { %>
@@ -715,6 +883,79 @@
                     </div>
                     <% } %>
           </div>
+        </section>
+
+        <!-- 3.5 LECTURES SECTION -->
+        <section id="lectures" class="id-section">
+          <!-- <h4 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i class="bi bi-play-btn-fill me-2"
+              style="color: #ff6600;"></i> Assigned Lectures</h4> -->
+
+          <!-- Timeline Progress (uses server-computed lectureProgress) -->
+          <% const _lectures=typeof allLectures !=='undefined' ? allLectures : [];
+            const lecProgPct = typeof lectureProgress !== 'undefined' ? lectureProgress : 0;
+            %>
+            <div class="id-progress-wrapper mb-4">
+              <div class="id-progress-header">
+                <h3>Your Lecture Timeline</h3>
+                <span class="id-progress-pct" id="lecture-progress-pct">
+                  <%= lecProgPct %>%
+                </span>
+              </div>
+              <div class="id-progress-bar-container">
+                <div class="id-progress-bar-fill" id="lecture-progress-bar" style="width: <%= lecProgPct %>%;">
+                </div>
+              </div>
+              <div class="mt-3 text-secondary opacity-75" style="font-size: 0.85rem;">
+                <span>Note : Watch the lecture without skipping to ensure your progress is counted.</span>  
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <% if (_lectures.length> 0) { %>
+                <% _lectures.forEach(lecture=> { %>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="lecture-yt-card" onclick="openLectureVideo('<%= lecture._id %>', '<%= (lecture.title || '').replace(/'/g, '&#39;') %>', <%= lecture.watchedTime || 0 %>, <%= lecture.completed || false %>)">
+                      <div class="lecture-yt-thumbnail">
+                        <img src="https://img.youtube.com/vi/<%= lecture.videoId %>/mqdefault.jpg" alt="Lecture Thumbnail">
+                        <div class="lecture-yt-duration"><%= lecture.duration || '0:00' %></div>
+                        <div class="lecture-yt-play-overlay"><i class="bi bi-play-fill fs-1"></i></div>
+                        
+                        <!-- Track progress visually on thumbnail -->
+                        <% 
+                          let pct = 0;
+                          let _durSecs = 0;
+                          if (lecture.duration) {
+                            const p = String(lecture.duration).split(':').map(Number);
+                            if (p.length === 3) _durSecs = p[0]*3600 + p[1]*60 + p[2];
+                            else if (p.length === 2) _durSecs = p[0]*60 + p[1];
+                          }
+                          if (lecture.completed) { pct = 100; }
+                          else if (_durSecs > 0 && lecture.watchedTime) { pct = Math.min(100, (lecture.watchedTime / _durSecs)*100); }
+                        %>
+                        <div class="lecture-yt-progress-bar">
+                          <div class="lecture-yt-progress-fill" style="width: <%= pct %>%;"></div>
+                        </div>
+                      </div>
+                      <div class="lecture-yt-info">
+                        <div class="lecture-yt-title d-flex justify-content-between align-items-center"><%= lecture.title %> 
+                           <% if (lecture.completed) { %>
+                            <span id="lecture-badge-<%= lecture._id %>" class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 lecture-status-badge"><i class="bi bi-check-circle-fill me-1"></i> Watched</span>
+                          <% } else { %>
+                            <span id="lecture-badge-<%= lecture._id %>" class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 lecture-status-badge"><i class="bi bi-clock-fill me-1"></i> Pending</span>
+                          <% } %>
+                        </div>
+                        <div class="lecture-yt-desc"><%= lecture.description ? lecture.description : 'Recorded Video Lecture' %></div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }) %>
+                    <% } else { %>
+                      <div class="col-12 text-center py-5">
+                        <i class="bi bi-camera-reels fs-1 text-light opacity-50 mb-3 d-block"></i>
+                        <p class="text-light">No lectures assigned yet.</p>
+                      </div>
+                      <% } %>
+            </div>
         </section>
 
         <!-- 4. DOCUMENTS SECTION -->
@@ -780,26 +1021,33 @@
                     </div>
                     <% if (intern.certificate_link) { %>
                       <% if (intern.certificate_id && String(intern.certificate_id).startsWith('TEMP')) { %>
-                        <button type="button" class="btn btn-outline-primary-custom rounded-circle p-2 px-3" onclick="showToast('Your certificate is not valid yet (TEMP ID).', 'warning')"><i class="bi bi-download"></i></button>
-                      <% } else { %>
-                        <a href="<%= intern.certificate_link %>" download class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i class="bi bi-download"></i></a>
-                      <% } %>
-                      <% } else if (intern.completion_date) { %>
-                        <% if (!intern.feedbackSubmitted) { %>
-                          <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50"
-                            title="Submit feedback first" disabled><i class="bi bi-lock-fill"></i></button>
-                          <% } else { %>
-                            <% if (intern.certificate_id && String(intern.certificate_id).startsWith('TEMP')) { %>
-                              <button type="button" class="btn btn-outline-primary-custom rounded-circle" onclick="showToast('Your certificate is not valid yet. Please wait for final approval.', 'warning')"><i class="bi bi-download"></i></button>
-                            <% } else { %>
-                              <a href="/download-certificate/<%= intern._id %>" target="_blank"
-                                class="btn btn-outline-primary-custom rounded-circle "><i class="bi bi-download"></i></a>
-                            <% } %>
-                            <% } %>
-                              <% } else { %>
-                                <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50" disabled><i
-                                    class="bi bi-lock-fill"></i></button>
-                                <% } %>
+                        <button type="button" class="btn btn-outline-primary-custom rounded-circle p-2 px-3"
+                          onclick="showToast('Your certificate is not valid yet (TEMP ID).', 'warning')"><i
+                            class="bi bi-download"></i></button>
+                        <% } else { %>
+                          <a href="<%= intern.certificate_link %>" download
+                            class="btn btn-outline-primary-custom rounded-circle p-2 px-3"><i
+                              class="bi bi-download"></i></a>
+                          <% } %>
+                            <% } else if (intern.completion_date) { %>
+                              <% if (!intern.feedbackSubmitted) { %>
+                                <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50"
+                                  title="Submit feedback first" disabled><i class="bi bi-lock-fill"></i></button>
+                                <% } else { %>
+                                  <% if (intern.certificate_id && String(intern.certificate_id).startsWith('TEMP')) { %>
+                                    <button type="button" class="btn btn-outline-primary-custom rounded-circle"
+                                      onclick="showToast('Your certificate is not valid yet. Please wait for final approval.', 'warning')"><i
+                                        class="bi bi-download"></i></button>
+                                    <% } else { %>
+                                      <a href="/download-certificate/<%= intern._id %>" target="_blank"
+                                        class="btn btn-outline-primary-custom rounded-circle "><i
+                                          class="bi bi-download"></i></a>
+                                      <% } %>
+                                        <% } %>
+                                          <% } else { %>
+                                            <button class="btn btn-secondary rounded-circle p-2 px-3 opacity-50"
+                                              disabled><i class="bi bi-lock-fill"></i></button>
+                                            <% } %>
                   </div>
                 </div>
 
@@ -1193,7 +1441,6 @@
           </div>
           <% } %>
 
-            <!-- Logout Confirmation Modal -->
             <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -1211,6 +1458,83 @@
                       <a href="/logout" class="btn btn-danger w-50 fw-bold">Logout</a>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Lecture Video Modal -->
+            <div class="modal fade" id="lectureVideoModal" tabindex="-1" aria-labelledby="lectureVideoModalLabel"
+              aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content shadow-lg" id="lectureModalContent"
+                  style="background-color: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden;"
+                  onmouseenter="this.querySelector('.lecture-modal-header').style.opacity='1'"
+                  onmouseleave="this.querySelector('.lecture-modal-header').style.opacity='0'">
+
+                  <div class="lecture-modal-header modal-header border-bottom-0 p-4"
+                    style="background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); position: absolute; top:0; z-index: 20; width: 100%; opacity: 0; transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;">
+                    <div class="d-flex justify-content-between align-items-center w-100" style="pointer-events: auto;">
+                      <h5 class="modal-title text-white fw-semibold mb-0" style="font-size: 1rem; text-shadow: 0 1px 4px rgba(0,0,0,0.6);"><span id="lectureVideoTitle">Lecture Video</span></h5>
+                      <button type="button" class="btn btn-link text-white p-0 border-0 text-decoration-none hover-effect" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeLectureVideo()"
+                        style="text-shadow: 0 1px 4px rgba(0,0,0,0.6);"><i class="bi bi-x-lg fs-5"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="modal-body p-0 position-relative" id="lectureModalBody"
+                    style="background-color: #000; height: 50vh; display: flex; align-items: center; justify-content: center;"
+                    oncontextmenu="return false;">
+                    <!-- A transparent overlay blocks interactions directly on the iframe so they must use our UI -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: 5; cursor: pointer;"
+                      onclick="toggleCustomPlay()"></div>
+
+                    <div class="w-100 h-100" id="lectureIframeContainer" style="position: relative; z-index: 1;">
+                      <div id="ytplayer"></div>
+                    </div>
+                  </div>
+
+                  <!-- Modern Custom Control Bar -->
+                  <div class="custom-video-controls d-flex align-items-center px-3 py-2"
+                    style="background: linear-gradient(180deg, var(--surface) 0%, var(--surface-alt) 100%);">
+                    <button id="customPlayBtn"
+                      class="btn rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm"
+                      style="width: 36px; height: 36px; border: none; flex-shrink: 0; background-color: #ff6600;" onclick="toggleCustomPlay()">
+                      <i class="bi bi-play-fill fs-5" id="customPlayIcon" style="margin-left: 3px;"></i>
+                    </button>
+
+                    <div class="d-flex align-items-center flex-grow-1 position-relative gap-3">
+                      <span id="customTimeText" style="color: var(--text-primary); letter-spacing: 0.5px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; min-width: 70px;">0:00 / 0:00</span>
+                      
+                      <!-- Progress Bar & Scrubber -->
+                      <div id="customProgressBarBg" onmousedown="startScrubbing(event)"
+                        class="d-flex align-items-center flex-grow-1"
+                        style="padding: 10px 0; cursor: pointer; position: relative;">
+                        <!-- Track Background -->
+                        <div class="w-100" style="height: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; position: relative;">
+                          <!-- Fill -->
+                          <div id="customProgressBar"
+                            style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ff4500); border-radius: 4px; position: relative;">
+                            <!-- Scrubber Thumb -->
+                            <div style="position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-color: #fff; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.5); transition: transform 0.1s ease-out;" onmouseover="this.style.transform='translateY(-50%) scale(1.2)'" onmouseout="this.style.transform='translateY(-50%) scale(1)'"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center ms-3 gap-3">
+                      <button id="customFullscreenBtn"
+                        class="btn btn-link text-white p-0 border-0 text-decoration-none hover-effect"
+                        onclick="toggleCustomFullscreen()">
+                        <i class="bi bi-fullscreen" style="font-size: 1.1rem;" id="customFullscreenIcon"></i>
+                      </button>
+                      <button id="customMuteBtn"
+                        class="btn btn-link text-white p-0 border-0 text-decoration-none hover-effect"
+                        onclick="toggleCustomMute()">
+                        <i class="bi bi-volume-up-fill" style="font-size: 1.25rem;" id="customMuteIcon"></i>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -1260,6 +1584,362 @@
                   const target = document.getElementById('feedback_section');
                   if (target) target.classList.add('active');
                   document.getElementById('topbarTitle').innerText = 'Internship Feedback';
+                }
+
+                // Custom Lecture Video Logic
+                let ytPlayer;
+                let currentLectureId = null;
+                let currentWatchedTime = 0;
+                let maxWatchedTimeAllowed = 0;
+                let isLectureCompleted = false;
+                let animationFrameId = null;
+                let syncInterval = null;
+                let currentVideoDuration = 0;
+
+                function onYouTubeIframeAPIReady() {
+                  console.log("YouTube API Ready");
+                }
+
+                function markLectureCompletedInUI(id) {
+                  const badge = document.getElementById('lecture-badge-' + id);
+                  if (badge && badge.classList.contains('text-warning')) {
+                    badge.className = 'badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 lecture-status-badge';
+                    badge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Watched';
+
+                    // Update card onclick to reflect completed status so it can be replayed freely without skipping restriction
+                    const card = badge.closest('.lecture-yt-card');
+                    if (card) {
+                      const oldOnclick = card.getAttribute('onclick');
+                      if (oldOnclick) {
+                        card.setAttribute('onclick', oldOnclick.replace(/,\s*false\s*\)$/, ', true)'));
+                      }
+                      
+                      // Also update the progress bar visually
+                      const progressFill = card.querySelector('.lecture-yt-progress-fill');
+                      if (progressFill) progressFill.style.width = '100%';
+                    }
+
+                    // Update progress by counting DOM elements
+                    const lectureBadges = document.querySelectorAll('.lecture-status-badge');
+                    if (lectureBadges.length > 0) {
+                      const total = lectureBadges.length;
+                      const completed = document.querySelectorAll('.lecture-status-badge.text-success').length;
+                      const pct = Math.round((completed / total) * 100);
+
+                      const pctSpan = document.getElementById('lecture-progress-pct');
+                      const barFill = document.getElementById('lecture-progress-bar');
+                      const dashPct = document.getElementById('dashboard-lecture-progress');
+                      if (pctSpan) pctSpan.innerText = pct + '%';
+                      if (barFill) barFill.style.width = pct + '%';
+                      if (dashPct) dashPct.innerText = pct + '%';
+                    }
+                  }
+                }
+
+                async function openLectureVideo(lectureId, title, watchedTime, completed) {
+                  currentLectureId = lectureId;
+                  isLectureCompleted = completed === true || completed === 'true';
+
+                  if (isLectureCompleted) {
+                    currentWatchedTime = 0;
+                  } else {
+                    currentWatchedTime = parseFloat(watchedTime) || 0;
+                  }
+                  maxWatchedTimeAllowed = parseFloat(watchedTime) || 0;
+
+                  document.getElementById('lectureVideoTitle').innerText = title || "Lecture Video";
+                  let cStatusEl1 = document.getElementById('customStatusText');
+                  if (cStatusEl1) cStatusEl1.innerText = isLectureCompleted ? "Completed" : "0% Watched";
+                  document.getElementById('customProgressBar').style.width = '0%';
+
+                  // Fetch signed token from server (never expose videoId in HTML)
+                  let videoId = '';
+                  try {
+                    const tokenRes = await fetch(`/intern/lecture/${lectureId}/token`);
+                    if (!tokenRes.ok) throw new Error('Token fetch failed');
+                    const tokenData = await tokenRes.json();
+                    if (!tokenData.token) throw new Error('No token received');
+                    // Decode videoId from token payload (server embeds it securely)
+                    videoId = tokenData.videoId;
+                  } catch (err) {
+                    console.error('Failed to get lecture token:', err);
+                    showToast('Could not load lecture. Please try again.', 'danger');
+                    return;
+                  }
+
+                  const modal = new bootstrap.Modal(document.getElementById('lectureVideoModal'));
+
+                  if (ytPlayer && ytPlayer.loadVideoById) {
+                    ytPlayer.loadVideoById({ videoId: videoId, startSeconds: currentWatchedTime });
+                  } else {
+                    ytPlayer = new YT.Player('ytplayer', {
+                      height: '100%',
+                      width: '100%',
+                      videoId: videoId,
+                      playerVars: {
+                        'playsinline': 1,
+                        'controls': 0,
+                        'disablekb': 1,
+                        'rel': 0,
+                        'modestbranding': 1,
+                        'showinfo': 0,
+                        'fs': 0
+                      },
+                      events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                      }
+                    });
+                  }
+
+                  modal.show();
+                }
+
+                function onPlayerReady(event) {
+                  event.target.seekTo(currentWatchedTime);
+                  event.target.playVideo();
+                }
+
+                function onPlayerStateChange(event) {
+                  if (event.data == YT.PlayerState.PLAYING) {
+                    document.getElementById('customPlayIcon').classList.remove('bi-play-fill');
+                    document.getElementById('customPlayIcon').classList.add('bi-pause-fill');
+                    document.getElementById('customPlayIcon').style.marginLeft = "0"; // Adjust icon positioning
+                    currentVideoDuration = ytPlayer.getDuration();
+                    startProgressTracking();
+                  } else {
+                    document.getElementById('customPlayIcon').classList.remove('bi-pause-fill');
+                    document.getElementById('customPlayIcon').classList.add('bi-play-fill');
+                    document.getElementById('customPlayIcon').style.marginLeft = "3px"; // Adjust icon positioning
+                    stopProgressTracking();
+                    syncProgressToServer(); // Save when paused
+                  }
+                }
+
+                function toggleCustomPlay() {
+                  if (!ytPlayer || !ytPlayer.getPlayerState) return;
+                  const state = ytPlayer.getPlayerState();
+                  if (state == YT.PlayerState.PLAYING) {
+                    ytPlayer.pauseVideo();
+                  } else {
+                    ytPlayer.playVideo();
+                  }
+                }
+
+                function toggleCustomMute() {
+                  if (!ytPlayer) return;
+                  const icon = document.getElementById('customMuteIcon');
+                  if (ytPlayer.isMuted()) {
+                    ytPlayer.unMute();
+                    icon.classList.replace('bi-volume-mute-fill', 'bi-volume-up-fill');
+                  } else {
+                    ytPlayer.mute();
+                    icon.classList.replace('bi-volume-up-fill', 'bi-volume-mute-fill');
+                  }
+                }
+
+                function toggleCustomFullscreen() {
+                  const dialog = document.querySelector('#lectureVideoModal .modal-dialog');
+                  const icon = document.getElementById('customFullscreenIcon');
+
+                  if (dialog) {
+                    dialog.classList.toggle('modal-fullscreen');
+                    const isFullscreen = dialog.classList.contains('modal-fullscreen');
+
+                    if (icon) {
+                      if (isFullscreen) {
+                        icon.classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
+                      } else {
+                        icon.classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
+                      }
+                    }
+                  }
+                }
+
+                let isScrubbing = false;
+
+                function getScrubTime(event) {
+                  const bar = document.getElementById('customProgressBarBg');
+                  const rect = bar.getBoundingClientRect();
+                  let clickX = event.clientX - rect.left;
+                  let percent = clickX / rect.width;
+                  if (percent < 0) percent = 0;
+                  if (percent > 1) percent = 1;
+
+                  let targetTime = percent * currentVideoDuration;
+
+                  // ONLY IF NOT COMPLETED: Prevent skipping into unwatched territory!
+                  if (!isLectureCompleted && targetTime > maxWatchedTimeAllowed + 1) {
+                    targetTime = maxWatchedTimeAllowed;
+                  }
+                  return targetTime;
+                }
+
+                function startScrubbing(event) {
+                  if (!ytPlayer || !currentVideoDuration) return;
+                  isScrubbing = true;
+                  handleScrubMove(event);
+                  document.addEventListener('mousemove', handleScrubMove);
+                  document.addEventListener('mouseup', stopScrubbing);
+                  event.preventDefault(); // Prevent text selection while dragging
+                }
+
+                function handleScrubMove(event) {
+                  if (!isScrubbing || !currentVideoDuration) return;
+                  let targetTime = getScrubTime(event);
+                  
+                  let pcent = (targetTime / currentVideoDuration) * 100;
+                  document.getElementById('customProgressBar').style.width = pcent + '%';
+                  
+                  const durationStr = formatTime(currentVideoDuration);
+                  const currentStr = formatTime(targetTime);
+                  const timeTextEl = document.getElementById('customTimeText');
+                  if (timeTextEl && timeTextEl.innerText !== `${currentStr} / ${durationStr}`) {
+                    timeTextEl.innerText = `${currentStr} / ${durationStr}`;
+                  }
+
+                  ytPlayer.seekTo(targetTime, true);
+                }
+
+                function stopScrubbing(event) {
+                  if (!isScrubbing) return;
+                  isScrubbing = false;
+                  document.removeEventListener('mousemove', handleScrubMove);
+                  document.removeEventListener('mouseup', stopScrubbing);
+                }
+
+                function progressLoop() {
+                  if (!ytPlayer || !ytPlayer.getCurrentTime) return;
+
+                  const ctime = ytPlayer.getCurrentTime();
+
+                  // Anti-skip enforcement on the fly
+                  if (!isLectureCompleted && ctime > maxWatchedTimeAllowed + 2) {
+                    ytPlayer.seekTo(maxWatchedTimeAllowed);
+                    animationFrameId = requestAnimationFrame(progressLoop);
+                    return;
+                  }
+
+                  // Update max strictly
+                  if (ctime > maxWatchedTimeAllowed) {
+                    maxWatchedTimeAllowed = ctime;
+                  }
+
+                  // Format Time visually (checking equality avoids unnecessary reflows)
+                  if (!isScrubbing) {
+                    const durationStr = formatTime(currentVideoDuration);
+                    const currentStr = formatTime(ctime);
+                    const timeTextEl = document.getElementById('customTimeText');
+                    if (timeTextEl && timeTextEl.innerText !== `${currentStr} / ${durationStr}`) {
+                      timeTextEl.innerText = `${currentStr} / ${durationStr}`;
+                    }
+
+                    // Update Progress bar visually to show current playback position
+                    let pcent = (ctime / currentVideoDuration) * 100;
+                    if (pcent > 100) pcent = 100;
+                    document.getElementById('customProgressBar').style.width = pcent + '%';
+                  }
+
+                  if (!isLectureCompleted) {
+                    // Status shows highest achieved progress
+                    let maxPcent = (maxWatchedTimeAllowed / currentVideoDuration) * 100;
+                    let cStatusEl2 = document.getElementById('customStatusText');
+                    if (cStatusEl2) {
+                      const newStatus = Math.round(maxPcent) + '% Watched';
+                      if (cStatusEl2.innerText !== newStatus) {
+                        cStatusEl2.innerText = newStatus;
+                      }
+                    }
+
+                    // Condition meets 99%
+                    if (maxPcent >= 99) {
+                      isLectureCompleted = true;
+                      if (cStatusEl2) cStatusEl2.innerText = "Completed";
+                      syncProgressToServer();
+                      showToast("Lecture successfully completed!", "success");
+                      markLectureCompletedInUI(currentLectureId);
+                    }
+                  }
+
+                  animationFrameId = requestAnimationFrame(progressLoop);
+                }
+
+                function startProgressTracking() {
+                  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                  if (syncInterval) clearInterval(syncInterval);
+
+                  progressLoop(); // Start visual update loop using requestAnimationFrame
+
+                  // Server sync every 5 seconds securely
+                  syncInterval = setInterval(syncProgressToServer, 5000);
+                }
+
+                function stopProgressTracking() {
+                  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                  if (syncInterval) clearInterval(syncInterval);
+                }
+
+                function syncProgressToServer() {
+                  if (!currentLectureId || currentVideoDuration <= 0) return;
+
+                  axios.post(`/intern/lecture/${currentLectureId}/progress`, {
+                    watchedTime: maxWatchedTimeAllowed,
+                    duration: currentVideoDuration
+                  })
+                    .then(({ data }) => {
+                      if (data.success) {
+                        // Update completion badge in UI
+                        if (data.completed && !isLectureCompleted) {
+                          isLectureCompleted = true;
+                          let cStatusEl3 = document.getElementById('customStatusText');
+                          if (cStatusEl3) cStatusEl3.innerText = "Completed";
+                          markLectureCompletedInUI(currentLectureId);
+                        }
+
+                        // Update overall progress from server calculation (totalWatchedTime / totalAssignedDuration)
+                        if (typeof data.overallProgress === 'number') {
+                          const pct = data.overallProgress;
+                          const pctSpan = document.getElementById('lecture-progress-pct');
+                          const barFill = document.getElementById('lecture-progress-bar');
+                          const dashPct = document.getElementById('dashboard-lecture-progress');
+                          if (pctSpan) pctSpan.innerText = pct + '%';
+                          if (barFill) barFill.style.width = pct + '%';
+                          if (dashPct) dashPct.innerText = pct + '%';
+                        }
+                      }
+                    })
+                    .catch(err => console.error('Sync error:', err));
+                }
+
+                function formatTime(seconds) {
+                  if (!seconds || isNaN(seconds)) return "0:00";
+                  const s = Math.floor(seconds % 60);
+                  const m = Math.floor(seconds / 60);
+                  return m + ':' + (s < 10 ? '0' : '') + s;
+                }
+
+                function closeLectureVideo() {
+                  if (ytPlayer && ytPlayer.pauseVideo) {
+                    ytPlayer.pauseVideo();
+                  }
+                  stopProgressTracking();
+                  syncProgressToServer();
+                }
+
+                // Keyboard listener for Spacebar play/pause
+                document.addEventListener('keydown', function (event) {
+                  if (currentLectureId && event.code === 'Space') {
+                    event.preventDefault();
+                    toggleCustomPlay();
+                  }
+                });
+
+                // Clean up modal on hide as well (fallbacks)
+                const lectureModalEl = document.getElementById('lectureVideoModal');
+                if (lectureModalEl) {
+                  lectureModalEl.addEventListener('hidden.bs.modal', function () {
+                    closeLectureVideo();
+                  });
                 }
 
                 // Sidebar Toggle Logic
@@ -1565,7 +2245,9 @@
                 function markMessagesAsRead(ticketId) {
                   fetch(`/chat/mark-read/${ticketId}`, { method: 'POST' });
                   const badge = document.getElementById('chatUnreadBadge');
+                  const badgeDesktop = document.getElementById('chatUnreadBadgeDesktop');
                   if (badge) badge.classList.add('d-none');
+                  if (badgeDesktop) badgeDesktop.classList.add('d-none');
                 }
 
                 function fetchUnreadCount() {
@@ -1574,11 +2256,20 @@
                     .then(res => res.json())
                     .then(data => {
                       const badge = document.getElementById('chatUnreadBadge');
+                      const badgeDesktop = document.getElementById('chatUnreadBadgeDesktop');
                       if (data.success && data.count > 0) {
-                        badge.innerText = data.count > 99 ? '99+' : data.count;
-                        badge.classList.remove('d-none');
+                        const countText = data.count > 99 ? '99+' : data.count;
+                        if (badge) {
+                          badge.innerText = countText;
+                          badge.classList.remove('d-none');
+                        }
+                        if (badgeDesktop) {
+                          badgeDesktop.innerText = countText;
+                          badgeDesktop.classList.remove('d-none');
+                        }
                       } else {
-                        badge.classList.add('d-none');
+                        if (badge) badge.classList.add('d-none');
+                        if (badgeDesktop) badgeDesktop.classList.add('d-none');
                       }
                     }).catch(console.error);
                 }
