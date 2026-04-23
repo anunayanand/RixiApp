@@ -20,8 +20,7 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
     const admins = await Admin.find({ domain });
 
     if (!interns.length && !admins.length) {
-      req.flash("error", "No interns or admins found for selected criteria");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "No interns or admins found for selected criteria" });
     }
 
     // ✅ Generate one shared _id for all
@@ -68,16 +67,13 @@ router.post("/allot-meetings", authRole("superAdmin"), async (req, res) => {
     // console.log("✅ Meeting Allotted with ID:", meetingObj._id);
 
     if (allottedCount === 0) {
-      req.flash("warning", "No meetings allotted. Possibly all interns exceed the week limit.");
+      return res.json({ success: true, message: "No meetings allotted. Possibly all interns exceed the week limit." });
     } else {
-      req.flash("success", `Meeting allotted successfully to ${allottedCount} users.`);
+      return res.json({ success: true, message: `Meeting allotted successfully to ${allottedCount} users.` });
     }
-
-    res.redirect("/superAdmin");
   } catch (err) {
     console.log(err);
-    req.flash("error", "Error while allotting meeting");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Error while allotting meeting" });
   }
 });
 
@@ -106,8 +102,7 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
     });
 
     if (!interns.length && !admins.length) {
-      req.flash("error", "Meeting not found for any users");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "Meeting not found for any users" });
     }
 
     let updatedCount = 0;
@@ -144,16 +139,13 @@ router.post("/update-meeting/:meetingId", authRole("superAdmin"), async (req, re
     }
 
     if (updatedCount === 0) {
-      req.flash("warning", "No meetings updated.");
+      return res.json({ success: true, message: "No meetings updated." });
     } else {
-      req.flash("success", `Meeting updated successfully for ${updatedCount} users.`);
+      return res.json({ success: true, message: `Meeting updated successfully for ${updatedCount} users.` });
     }
-
-    res.redirect("/superAdmin");
   } catch (err) {
     console.log(err);
-    req.flash("error", "Error while updating meeting");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Error while updating meeting" });
   }
 });
 
@@ -178,8 +170,7 @@ router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, re
     });
 
     if (!interns.length && !admins.length) {
-      req.flash("error", "Meeting not found for any users");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "Meeting not found for any users" });
     }
 
     let deletedCount = 0;
@@ -205,16 +196,13 @@ router.post("/delete-meeting/:meetingId", authRole("superAdmin"), async (req, re
     }
 
     if (deletedCount === 0) {
-      req.flash("warning", "No meetings were deleted.");
+      return res.json({ success: true, message: "No meetings were deleted." });
     } else {
-      req.flash("success", `Meeting deleted successfully for ${deletedCount} users.`);
+      return res.json({ success: true, message: `Meeting deleted successfully for ${deletedCount} users.` });
     }
-
-    res.redirect("/superAdmin");
   } catch (err) {
     console.log(err);
-    req.flash("error", "Error while deleting meeting");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Error while deleting meeting" });
   }
 });
 

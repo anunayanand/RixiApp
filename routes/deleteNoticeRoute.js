@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
+const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require('../middleware/authRole');
 
 
@@ -8,19 +8,18 @@ const authRole = require('../middleware/authRole');
 router.post('/notice/delete/:index', authRole('superAdmin'), async (req, res) => {
   try {
     const index = parseInt(req.params.index);
-    const superAdmin = await User.findById(req.session.user);
+    const superAdmin = await SuperAdmin.findById(req.session.user);
 
     if (superAdmin.notice && superAdmin.notice.length > index) {
       superAdmin.notice.splice(index, 1);
       await superAdmin.save();
-      req.flash('success', 'Notice deleted successfully.');
+      return res.json({ success: true, message: 'Notice deleted successfully.' });
     }
 
-    res.redirect('/superAdmin');
+    return res.json({ success: false, message: 'Notice not found.' });
   } catch (err) {
     // console.error(err);
-    req.flash('error', 'Failed to delete notice.');
-    res.redirect('/superAdmin');
+    res.json({ success: false, message: 'Failed to delete notice.' });
   }
 });
 

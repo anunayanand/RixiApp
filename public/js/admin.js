@@ -242,21 +242,25 @@ window.addEventListener('DOMContentLoaded', () => {
   (() => {
     'use strict'
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    // Bootstrap validation: prevent submit on invalid + show red feedback
     const forms = document.querySelectorAll('.needs-validation')
 
-    // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
         }
-
         form.classList.add('was-validated')
       }, false)
     })
   })()
+
+  // Helper: safely reset a form AND clear Bootstrap's red-outline state
+  function resetFormClean(form) {
+    form.reset();
+    form.classList.remove('was-validated');
+  }
 
 // Filters
 function applyAttendanceFilters() {
@@ -660,12 +664,138 @@ async function sendHeartbeat() {
 document.addEventListener('DOMContentLoaded', () => {
   // Send initial heartbeat
   sendHeartbeat();
-  
+
   // Set up periodic heartbeat
   setInterval(sendHeartbeat, HEARTBEAT_INTERVAL);
-  
+
   // Send heartbeat before page unload
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon('/heartbeat', JSON.stringify({}));
+  });
+
+  // ==========================
+  // Global AJAX Form Interceptor
+  // Prevents page reloads for all admin form actions
+  // ==========================
+  document.addEventListener('submit', async (e) => {
+    const form = e.target;
+    if (form.tagName !== 'FORM') return;
+
+    const action = form.getAttribute('action') || '';
+    const method = (form.getAttribute('method') || 'POST').toUpperCase();
+
+    // Routes handled asynchronously — do NOT include bulkAttendanceForm (/meetings/update-attendance)
+    // NOTE: /update-user/*, /admin/project/update/*, /delete-project/*, /quiz/assign, /quiz/delete-quiz/*
+    // are handled by the inline delegated handler in admin.ejs — do NOT duplicate them here.
+    const isAsyncRoute =
+      action === '/create-user' ||
+      action === '/admin/projects' ||
+      action === '/update-admin-profile' ||
+      action === '/update-image';
+
+    if (!isAsyncRoute) return;
+
+    e.preventDefault();
+
+    // Grab submit button to show spinner
+    const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+    const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+    }
+
+    try {
+      const isMultipart = form.getAttribute('enctype') === 'multipart/form-data';
+      const formData = new FormData(form);
+      let fetchOptions = { method };
+
+      if (isMultipart) {
+        // For multipart (file uploads) — send as FormData
+        // Must also set Accept:json so /update-image returns JSON
+        fetchOptions.headers = { 'Accept': 'application/json' };
+        fetchOptions.body = formData;
+      } else {
+        fetchOptions.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+        fetchOptions.body = new URLSearchParams(formData).toString();
+      }
+
+      const response = await fetch(action, fetchOptions);
+      const data = await response.json();
+
+      if (data.success) {
+        showAcceptToast(data.message, 'success');
+
+        // ---- Forms that should clear after success ----
+        const resetRoutes = ['/create-user', '/admin/projects', '/update-admin-profile', '/quiz/create'];
+        if (resetRoutes.includes(action)) {
+          resetFormClean(form); // reset + remove was-validated (fixes red outline)
+        }
+
+        // ---- Delete actions: fade-out and remove the row/card from DOM ----
+        if (action.startsWith('/delete-project/') || action.startsWith('/quiz/delete-quiz/')) {
+          const modal = form.closest('.modal');
+          if (modal) {
+            const modalId = modal.getAttribute('id');
+            const bsModal = window.bootstrap && window.bootstrap.Modal.getInstance(modal);
+            if (bsModal) bsModal.hide();
+
+            if (modalId) {
+              try {
+                const triggers = document.querySelectorAll(`[data-bs-target="#${CSS.escape(modalId)}"]`);
+                triggers.forEach(btn => {
+                  const container =
+                    btn.closest('tr') ||
+                    btn.closest('.project-card') ||
+                    btn.closest('.quiz-card') ||
+                    btn.closest('.col');
+                  if (container) {
+                    container.style.transition = 'opacity 0.3s';
+                    container.style.opacity = '0';
+                    setTimeout(() => container.remove(), 300);
+                  }
+                });
+              } catch (err) {
+                console.error('DOM removal error:', err);
+              }
+            }
+          }
+        }
+
+        // ---- Update actions: close modal ----
+        if (action.startsWith('/admin/project/update/') || action.startsWith('/update-user/')) {
+          const modal = form.closest('.modal');
+          if (modal) {
+            const bsModal = window.bootstrap && window.bootstrap.Modal.getInstance(modal);
+            if (bsModal) bsModal.hide();
+          }
+        }
+
+        // ---- Profile image: update img src immediately ----
+        if (action === '/update-image' && data.img_url) {
+          document.querySelectorAll('.admin-avatar, .profile-img, [src*="cloudinary"]').forEach(img => {
+            if (img.closest('.modal') || img.tagName === 'IMG') {
+              img.src = data.img_url;
+            }
+          });
+          const modal = form.closest('.modal');
+          if (modal) {
+            const bsModal = window.bootstrap && window.bootstrap.Modal.getInstance(modal);
+            if (bsModal) bsModal.hide();
+          }
+        }
+
+      } else {
+        showAcceptToast(data.message || 'Something went wrong', 'error');
+      }
+    } catch (err) {
+      console.error('AJAX submit error:', err);
+      showAcceptToast('Server error. Please try again.', 'error');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHTML;
+      }
+    }
   });
 });

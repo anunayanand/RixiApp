@@ -147,18 +147,15 @@ router.post("/send-confirmation-mail", async (req, res) => {
     const internIds = interns ? (Array.isArray(interns) ? interns : [interns]) : [];
 
     if (!internIds.length) {
-      req.flash("error", "No interns selected.");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "No interns selected." });
     }
 
     if (!whatsappLink || whatsappLink.trim() === "") {
-      req.flash("error", "WhatsApp link is required.");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "WhatsApp link is required." });
     }
 
     if (!batchConfirm || batchConfirm === "all") {
-      req.flash("error", "Please select a batch before sending mails.");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "Please select a batch before sending mails." });
     }
 
     // Update WhatsApp link for selected batch
@@ -177,14 +174,14 @@ router.post("/send-confirmation-mail", async (req, res) => {
     const success = results.filter(r => r.status === "fulfilled").length;
     const failed = results.filter(r => r.status === "rejected").length;
 
-    if (failed === 0) req.flash("success", `✅ ${success} confirmation mails sent successfully.`);
-    else req.flash("error", `⚠️ ${success} sent, ${failed} failed.`);
-
-    res.redirect("/superAdmin");
+    if (failed === 0) {
+      return res.json({ success: true, message: `✅ ${success} confirmation mails sent successfully.` });
+    } else {
+      return res.json({ success: false, message: `⚠️ ${success} sent, ${failed} failed.` });
+    }
   } catch (err) {
     // console.error("Error in confirmation route:", err);
-    req.flash("error", "Server error while sending confirmation mails.");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Server error while sending confirmation mails." });
   }
 });
 

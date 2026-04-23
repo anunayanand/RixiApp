@@ -26,16 +26,14 @@ router.post("/create-admin", authRole("superAdmin"), upload.single("image"), asy
     const { name, email, password, domain, phone, emp_id, designation } = req.body;
 
     if (!name || !email || !password || !domain || !phone || !emp_id || !designation) {
-      req.flash("error", "All required fields must be filled!");
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "All required fields must be filled!" });
     }
 
     // Check if admin already exists
     const existingAdmin = await Admin.findOne({ $or: [{ email }, { emp_id }] });
     if (existingAdmin) {
-      if (existingAdmin.email === email) req.flash("error", "Email already exists!");
-      else req.flash("error", "Employee ID already exists!");
-      return res.redirect("/superAdmin");
+      if (existingAdmin.email === email) return res.json({ success: false, message: "Email already exists!" });
+      else return res.json({ success: false, message: "Employee ID already exists!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -60,13 +58,11 @@ router.post("/create-admin", authRole("superAdmin"), upload.single("image"), asy
     const admin = new Admin(adminData);
     await admin.save();
 
-    req.flash("success", "Admin created successfully!");
-    res.redirect("/superAdmin");
+    res.json({ success: true, message: "Admin created successfully!" });
 
   } catch (err) {
     console.error(err);
-    req.flash("error", "Error creating admin");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Error creating admin" });
   }
 });
 

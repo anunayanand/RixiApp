@@ -80,8 +80,7 @@ router.post(
         }
 
         await Admin.findByIdAndUpdate(req.params.id, updateData);
-        req.flash("success", "Admin Updated Successfully!");
-        return res.redirect("/superAdmin");
+        return res.json({ success: true, message: "Admin Updated Successfully!" });
       }
 
       // ✅ SuperAdmin updating an Admin stored in User model (role === 'admin')
@@ -122,8 +121,7 @@ router.post(
         }
 
         await User.findByIdAndUpdate(req.params.id, updateData);
-        req.flash("success", "Admin Updated Successfully!");
-        return res.redirect("/superAdmin");
+        return res.json({ success: true, message: "Admin Updated Successfully!" });
       }
 
       // ✅ Admin updating an Intern
@@ -178,18 +176,15 @@ router.post(
         }
 
         await User.findByIdAndUpdate(req.params.id, updateData);
-        req.flash("success", "Intern Updated Successfully!");
-        return res.redirect("/admin#viewInterns");
+        return res.json({ success: true, message: "Intern Updated Successfully!" });
       }
 
       // Role mismatch
-      req.flash("error", "No Authority to make this change");
-      return res.redirect("/login");
+      return res.status(403).json({ success: false, message: "No Authority to make this change" });
 
     } catch (err) {
       console.error("Update Error:", err);
-      req.flash("error", err.message);
-      return res.redirect("back");
+      return res.status(500).json({ success: false, message: err.message });
     }
   }
 );

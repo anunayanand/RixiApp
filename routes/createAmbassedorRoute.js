@@ -42,10 +42,9 @@ router.post("/create-ambassador", authRole("superAdmin"), upload.single("image")
       $or: [{ email }, { referralId }, { ambassador_id }]
     });
     if (existing) {
-      if (existing.email === email) req.flash("error", "Email already exists!");
-      else if (existing.referralId === referralId) req.flash("error", "Referral ID already exists!");
-      else req.flash("error", "Ambassador ID already exists!");
-      return res.redirect("/superAdmin");
+      if (existing.email === email) return res.json({ success: false, message: "Email already exists!" });
+      else if (existing.referralId === referralId) return res.json({ success: false, message: "Referral ID already exists!" });
+      else return res.json({ success: false, message: "Ambassador ID already exists!" });
     }
 
     // 🔒 Hash password
@@ -80,13 +79,11 @@ router.post("/create-ambassador", authRole("superAdmin"), upload.single("image")
     const ambassador = new Ambassador(ambassadorData);
     await ambassador.save();
 
-    req.flash("success", "Ambassador created successfully!");
-    res.redirect("/superAdmin");
+    res.json({ success: true, message: "Ambassador created successfully!" });
 
   } catch (err) {
     console.error("Error creating ambassador:", err);
-    req.flash("error", "Something went wrong! Please try again.");
-    res.redirect("/superAdmin");
+    res.json({ success: false, message: "Something went wrong! Please try again." });
   }
 });
 

@@ -12,8 +12,7 @@ router.post(
     try {
       const ambassador = await Ambassador.findById(req.params.id);
       if (!ambassador) {
-        req.flash("error", "Ambassador not found");
-        return res.redirect("/superAdmin");
+        return res.json({ success: false, message: "Ambassador not found" });
       }
 
       const {
@@ -70,12 +69,10 @@ router.post(
 
       await Ambassador.findByIdAndUpdate(req.params.id, updateData);
 
-      req.flash("success", "Ambassador Updated Successfully!");
-      return res.redirect("/superAdmin#viewAmbassadors");
+      return res.json({ success: true, message: "Ambassador Updated Successfully!" });
     } catch (err) {
       // console.error("Update Ambassador Error:", err);
-      req.flash("error", "Failed to update ambassador: " + err.message);
-      return res.redirect("/superAdmin");
+      return res.json({ success: false, message: "Failed to update ambassador: " + err.message });
     }
   }
 );

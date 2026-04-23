@@ -243,6 +243,9 @@ app.use('/', offerLetterMailRouter);
 const deleteUserRouter = require('./routes/deleteUser');
 app.post('/delete-user/:id', deleteUserRouter);
 
+const deleteAdminRoute = require('./routes/deleteAdminRoute');
+app.use('/', deleteAdminRoute);
+
 // Update user (post form)
 const updateUserRouter = require('./routes/updateUserRoute');
 app.post('/update-user/:id', updateUserRouter);

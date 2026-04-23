@@ -18,10 +18,9 @@ router.post("/admin/project/update/:id", authRole("admin"), async (req, res) => 
       uploadLink
     });
 
-    res.redirect("/admin"); // go back to dashboard
+    res.json({ success: true, message: "Project updated successfully!" });
   } catch (err) {
-    // console.error("🔥 Error updating project:", err);
-    res.status(500).send("Server Error");
+    res.status(500).json({ success: false, message: "Server Error while updating project" });
   }
 });
 

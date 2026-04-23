@@ -9,13 +9,11 @@ router.post('/meetings/update-attendance', authRole('admin'), async (req, res) =
     const { attendance, interns } = req.body;
 
     if (!attendance) {
-      req.flash('error', 'Attendance value is required');
-      return res.redirect('/admin');
+      return res.status(400).json({ success: false, message: 'Attendance value is required' });
     }
 
     if (!interns) {
-      req.flash('error', 'No interns selected');
-      return res.redirect('/admin');
+      return res.status(400).json({ success: false, message: 'No interns selected' });
     }
 
     const internsArr = JSON.parse(interns);
@@ -27,13 +25,11 @@ router.post('/meetings/update-attendance', authRole('admin'), async (req, res) =
       );
     }
 
-    req.flash('success', `Attendance marked as "${attendance}" for selected interns`);
-    res.redirect('/admin');
+    res.json({ success: true, message: `Attendance marked as "${attendance}" for selected interns` });
 
   } catch (err) {
     console.error(err);
-    req.flash('error', 'Error updating attendance');
-    res.redirect('/admin');
+    res.status(500).json({ success: false, message: 'Error updating attendance' });
   }
 });
 

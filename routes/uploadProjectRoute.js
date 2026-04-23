@@ -75,11 +75,9 @@ router.post("/admin/projects", authRole("admin"), async (req, res) => {
       await superAdmin.save();
     }
 
-    req.flash('success', 'Project Created Successfully! Notifications sent.');
-    res.redirect("/admin#uploadProject");
+    res.json({ success: true, message: 'Project Created Successfully! Notifications sent.' });
   } catch (err) {
-    req.flash('error', 'Project Creation Failed! ' + err.message);
-    res.redirect('/admin#uploadproject');
+    res.status(500).json({ success: false, message: 'Project Creation Failed! ' + err.message });
   }
 });
 

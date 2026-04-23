@@ -281,8 +281,7 @@ router.post("/update-admin-profile", authRole("admin"), async (req, res) => {
 
     const admin = await Admin.findById(adminId);
     if (!admin) {
-      req.flash("error", "Admin not found.");
-      return res.redirect("/login");
+      return res.status(404).json({ success: false, message: "Admin not found." });
     }
 
     if (name) admin.name = name.trim();
@@ -290,12 +289,10 @@ router.post("/update-admin-profile", authRole("admin"), async (req, res) => {
 
     await admin.save();
     
-    req.flash("success", "Profile settings updated successfully!");
-    res.redirect("/admin#settings");
+    res.json({ success: true, message: "Profile settings updated successfully!" });
   } catch (err) {
     console.error("Error updating admin profile:", err);
-    req.flash("error", "Server Error while updating profile.");
-    res.redirect("/admin#settings");
+    res.status(500).json({ success: false, message: "Server Error while updating profile." });
   }
 });
 

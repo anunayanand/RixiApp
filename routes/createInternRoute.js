@@ -5,9 +5,6 @@ const User = require("../models/User");
 const Project = require("../models/Project");
 const authRole = require('../middleware/authRole');
 
-
-
-
 // =============================
 // 👩‍🎓 CREATE INTERN (Admin Only)
 // =============================
@@ -21,16 +18,14 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
     // ✅ Validation
     if (!name || !email || !password || !domain || !college || !university ||
         !phone || !course || !year_sem || !duration || !intern_id || !batch_no || !starting_date) {
-      req.flash("error", "All required fields must be filled!");
-      return res.redirect("/admin"); 
+      return res.status(400).json({ success: false, message: "All required fields must be filled!" });
     }
 
     // ✅ Check for existing email or intern_id
     const existingUser = await User.findOne({ $or: [{ email }, { intern_id }] });
     if (existingUser) {
-      if (existingUser.email === email) req.flash("error", "Email already exists!");
-      else req.flash("error", "Intern ID already exists!");
-      return res.redirect("/admin");
+      let msg = existingUser.email === email ? "Email already exists!" : "Intern ID already exists!";
+      return res.status(400).json({ success: false, message: msg });
     }
 
     // ✅ Hash password
@@ -65,13 +60,11 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
       await user.save();
     }
 
-    req.flash("success", `Intern ${name} created successfully!`);
-    res.redirect("/admin");
+    res.json({ success: true, message: `Intern ${name} created successfully!` });
 
   } catch (err) {
     console.error("Error creating intern:", err);
-    req.flash("error", "Error creating Intern.");
-    res.redirect("/admin");
+    res.status(500).json({ success: false, message: "Error creating Intern." });
   }
 });
 

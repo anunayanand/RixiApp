@@ -11,8 +11,7 @@ router.post("/delete-project/:id", authRole("admin"), async (req, res) => {
     // Delete the project
     const deletedProject = await Project.findByIdAndDelete(projectId);
     if (!deletedProject) {
-      req.flash("error", "Project not found");
-      return res.redirect('/admin/projects');
+      return res.status(404).json({ success: false, message: "Project not found" });
     }
 
     // Remove project from all users' projectAssigned array
@@ -21,15 +20,10 @@ router.post("/delete-project/:id", authRole("admin"), async (req, res) => {
       { $pull: { projectAssigned: { projectId: projectId } } }
     );
 
-    // Flash success message with project title
-    req.flash("success", `${deletedProject.title} deleted successfully`);
-    res.redirect('/admin');
+    res.json({ success: true, message: `${deletedProject.title} deleted successfully` });
   } catch (err) {
-    // console.error(err);
-    req.flash("error", "Error deleting project");
-    res.redirect('/admin/projects');
+    res.status(500).json({ success: false, message: "Error deleting project" });
   }
 });
-
 
 module.exports = router;

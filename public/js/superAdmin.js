@@ -942,4 +942,118 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon('/heartbeat', JSON.stringify({}));
   });
+
+  // Intercept form submissions for async routes
+  document.addEventListener("submit", async (e) => {
+    if (e.target.tagName !== "FORM") return;
+    
+    const action = e.target.getAttribute("action") || "";
+    const isAsyncRoute = 
+      action === "/superAdmin/notice" || 
+      action.startsWith("/superAdmin/notice/delete/") ||
+      action === "/create-admin" ||
+      action === "/create-ambassador" ||
+      action.startsWith("/delete-admin/") ||
+      action.startsWith("/delete-user/") ||
+      action === "/allot-meetings" ||
+      action.startsWith("/update-meeting/") ||
+      action.startsWith("/delete-meeting/") ||
+      action === "/send-confirmation-mail" ||
+      action.startsWith("/update-ambassador/") ||
+      action.startsWith("/delete-ambassador/") ||
+      action.startsWith("/update-user/") ||
+      action === "/change-password" ||
+      action === "/update-profile-image";
+      
+    if (isAsyncRoute) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+      
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+      }
+      
+      try {
+        const isMultipart = form.getAttribute("enctype") === "multipart/form-data";
+        const formData = new FormData(form);
+        let options = { method: form.getAttribute("method") || "POST" };
+        
+        if (isMultipart) {
+          options.body = formData;
+        } else {
+          options.headers = { "Content-Type": "application/x-www-form-urlencoded" };
+          options.body = new URLSearchParams(formData).toString();
+        }
+
+        const response = await fetch(action, options);
+        const data = await response.json();
+        
+        if (data.success) {
+          showToast(data.message, "success");
+          
+          if (action === "/superAdmin/notice" || action === "/create-admin" || action === "/create-ambassador" || action === "/allot-meetings" || action === "/change-password" || action === "/update-profile-image") {
+            form.classList.remove('was-validated');
+            form.reset();
+          }
+          
+          if (action.startsWith("/superAdmin/notice/delete/") || action.startsWith("/delete-admin/") || action.startsWith("/delete-user/") || action.startsWith("/delete-ambassador/") || action.startsWith("/delete-meeting/")) {
+            let elementsToRemove = [];
+            
+            const directContainer = form.closest('tr') || form.closest('.notice-item') || form.closest('.col');
+            if (directContainer && !directContainer.classList.contains('modal-content') && directContainer.tagName !== 'TR') {
+              elementsToRemove.push(directContainer);
+            } else if (directContainer && directContainer.tagName === 'TR') {
+              // Modals in Bootstrap tables can glitch out closest('tr').
+              elementsToRemove.push(directContainer);
+            }
+
+            const modal = form.closest('.modal');
+            if (modal) {
+              const modalId = modal.getAttribute('id');
+              if (modalId) {
+                try {
+                  const triggerButtons = document.querySelectorAll(`[data-bs-target="#${CSS.escape(modalId)}"]`);
+                  triggerButtons.forEach(btn => {
+                    const container = btn.closest('tr') || btn.closest('.intern-card') || btn.closest('.admin-card-modern') || btn.closest('.col');
+                    if (container && !elementsToRemove.includes(container)) {
+                      elementsToRemove.push(container);
+                    }
+                  });
+                } catch(e) {
+                  console.error("Selector error", e);
+                }
+              }
+            }
+            
+            elementsToRemove.forEach(el => {
+              el.style.transition = 'opacity 0.3s';
+              el.style.opacity = '0';
+              setTimeout(() => el.remove(), 300);
+            });
+          }
+          
+          const modal = form.closest('.modal');
+          if (modal) {
+            const modalInstance = window.bootstrap.Modal.getInstance(modal);
+            if (modalInstance) modalInstance.hide();
+          }
+        } else {
+          showToast(data.message, "error");
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Server Error", "error");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      }
+    }
+  });
+
 });

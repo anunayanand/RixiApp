@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const SuperAdmin = require('../models/SuperAdmin');
 const authRole = require('../middleware/authRole');
 
 // Add a notice (SuperAdmin only)
@@ -8,20 +8,17 @@ router.post('/notice', authRole('superAdmin'), async (req, res) => {
   try {
     const { title, description } = req.body;
     if (!title || !description) {
-      req.flash('error', 'Title and description are required.');
-      return res.redirect('/superAdmin');
+      return res.json({ success: false, message: 'Title and description are required.' });
     }
 
-    const superAdmin = await User.findById(req.session.user);
+    const superAdmin = await SuperAdmin.findById(req.session.user);
     superAdmin.notice.push({ title, description });
     await superAdmin.save();
 
-    req.flash('success', 'Notice added successfully.');
-    res.redirect('/superAdmin');
+    res.json({ success: true, message: 'Notice added successfully.' });
   } catch (err) {
     // console.error(err);
-    req.flash('error', 'Failed to add notice.');
-    res.redirect('/superAdmin');
+    res.json({ success: false, message: 'Failed to add notice.' });
   }
 });
 

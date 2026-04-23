@@ -794,7 +794,7 @@
                   <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Update: <%= i.name %></h5>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/update-user/<%= i._id %>" method="POST">
+                <form id="ajaxFormUpdateUser_<%= i._id %>" action="/update-user/<%= i._id %>" method="POST">
                   <div class="modal-body">
                     <div class="row g-3">
                       <div class="col-md-6">
@@ -867,7 +867,7 @@
                   <h4><i class="bi bi-person-plus-fill me-2"></i> Onboard New Intern</h4>
                 </div>
                 <div class="panel-card-body">
-                  <form action="/create-user" method="POST" class="row g-3 needs-validation" novalidate>
+                  <form id="ajaxFormCreateIntern" action="/create-user" method="POST" class="row g-3 needs-validation" novalidate>
 
                     <div class="col-md-6">
                       <label class="form-label">Full Name</label>
@@ -978,7 +978,7 @@
                   <h4><i class="bi bi-cloud-arrow-up-fill me-2"></i> Upload New Project</h4>
                 </div>
                 <div class="panel-card-body">
-                  <form method="POST" action="/admin/projects" class="row g-4 needs-validation" novalidate>
+                  <form id="ajaxFormUploadProject" method="POST" action="/admin/projects" class="row g-4 needs-validation" novalidate>
                     <div class="col-12">
                       <label class="form-label">Project Title</label>
                       <input type="text" name="title" class="form-control form-control-lg"
@@ -1370,7 +1370,7 @@
                             <h5 class="modal-title">Edit Project</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                           </div>
-                          <form action="/admin/project/update/<%= p._id %>" method="POST">
+                          <form id="ajaxFormEditProject_<%= p._id %>" action="/admin/project/update/<%= p._id %>" method="POST">
                             <div class="modal-body">
                               <label class="form-label">Title</label>
                               <input type="text" name="title" class="form-control mb-2" value="<%= p.title %>" required>
@@ -1416,7 +1416,7 @@
                           </div>
                           <div class="modal-footer justify-content-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <form action="/delete-project/<%= p._id %>" method="POST">
+                            <form id="ajaxFormDeleteProject_<%= p._id %>" action="/delete-project/<%= p._id %>" method="POST">
                               <button type="submit" class="btn btn-danger">Yes, Delete</button>
                             </form>
                           </div>
@@ -1886,11 +1886,53 @@
                       document.addEventListener('DOMContentLoaded', () => {
                         const confirmPublishBtn = document.getElementById('confirmPublishBtn');
                         if (confirmPublishBtn) {
-                          confirmPublishBtn.addEventListener('click', () => {
+                          confirmPublishBtn.addEventListener('click', async () => {
                             // Disable button to prevent double submission
-                            confirmPublishBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Publishing...';
+                            const originalBtnHtml = confirmPublishBtn.innerHTML;
+                            confirmPublishBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>';
                             confirmPublishBtn.disabled = true;
-                            document.getElementById('quizForm').submit();
+
+                            try {
+                              const form = document.getElementById('quizForm');
+                              const formData = new FormData(form);
+
+                              const res = await axios.post(form.action, formData, {
+                                headers: { 'Accept': 'application/json' }
+                              });
+
+                              if (res.data.success) {
+                                if (typeof showAcceptToast !== 'undefined') showAcceptToast(res.data.message, 'success');
+                                else if (typeof showToast !== 'undefined') showToast(res.data.message, 'success');
+
+                                // Close the modal
+                                const modalEl = document.getElementById('createQuizModal');
+                                const bsModal = bootstrap.Modal.getInstance(modalEl);
+                                if (bsModal) bsModal.hide();
+
+                                // Reset form cleanly
+                                form.reset();
+                                form.classList.remove('was-validated');
+
+                                // Reset quiz builder UI
+                                const slidesContainer = document.getElementById('questionSlides');
+                                if (slidesContainer) slidesContainer.innerHTML = '';
+                                const progressBar = document.getElementById('quizProgress');
+                                if (progressBar) progressBar.style.width = '0%';
+                                const progressText = document.getElementById('quizProgressText');
+                                if (progressText) progressText.innerText = 'Q1';
+                              } else {
+                                if (typeof showAcceptToast !== 'undefined') showAcceptToast(res.data.message || 'Failed to create quiz.', 'error');
+                                else if (typeof showToast !== 'undefined') showToast(res.data.message || 'Failed to create quiz.', 'error');
+                              }
+                            } catch (err) {
+                              console.error('Quiz creation error:', err);
+                              const msg = err.response?.data?.message || 'Server error while creating quiz.';
+                              if (typeof showAcceptToast !== 'undefined') showAcceptToast(msg, 'error');
+                              else if (typeof showToast !== 'undefined') showToast(msg, 'error');
+                            } finally {
+                              confirmPublishBtn.disabled = false;
+                              confirmPublishBtn.innerHTML = originalBtnHtml;
+                            }
                           });
                         }
                       });
@@ -1993,7 +2035,7 @@
                         </div> -->
 
                           <!-- Assign Form -->
-                          <form action="/quiz/assign" method="POST"
+                           <form id="ajaxFormAssignQuiz_<%= quiz._id %>" action="/quiz/assign" method="POST"
                             class="d-flex align-items-center gap-2 m-0 bg-light rounded-pill px-2 py-1 shadow-sm border">
                             <input type="hidden" name="quizId" value="<%= quiz._id %>">
                             <select name="batch" class="form-select border-0 bg-transparent py-0 ps-2"
@@ -2034,7 +2076,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                            <form action="/quiz/delete-quiz/<%= quiz._id %>" method="POST">
+                            <form id="ajaxFormDeleteQuiz_<%= quiz._id %>" action="/quiz/delete-quiz/<%= quiz._id %>" method="POST">
                               <button type="submit" class="btn btn-danger">Delete Permanently</button>
                             </form>
                           </div>
@@ -2091,7 +2133,7 @@
                   </div>
 
                   <div class="d-flex align-items-center gap-2 w-100 mt-2">
-                    <form action="/quiz/assign" method="POST" class="d-flex gap-2 flex-grow-1 m-0">
+                    <form id="ajaxFormAssignQuiz_<%= quiz._id %>" action="/quiz/assign" method="POST" class="d-flex gap-2 flex-grow-1 m-0">
                       <input type="hidden" name="quizId" value="<%= quiz._id %>">
                       <select name="batch" class="form-select form-select-sm shadow-sm border-light" required
                         style="height: 38px;">
@@ -2566,7 +2608,7 @@
               </div>
             </div>
 
-            <form action="/update-admin-profile" method="POST">
+            <form id="ajaxFormUpdateAdminProfile" action="/update-admin-profile" method="POST">
               <h6 class="text-muted fw-bold mb-4 small text-uppercase" style="letter-spacing: 0.8px;">Personal
                 Information</h6>
 
@@ -3806,7 +3848,7 @@
               if (data.success) {
                 if (typeof showToast !== 'undefined') showToast(data.message || 'Lecture posted successfully!', 'success');
                 document.getElementById('createLectureForm').reset();
-                setTimeout(() => window.location.reload(), 1200);
+                document.getElementById('createLectureForm').classList.remove('was-validated');
               } else {
                 if (typeof showToast !== 'undefined') showToast(data.message || 'Failed to create lecture.', 'error');
               }
@@ -3834,12 +3876,18 @@
               return;
             }
 
+            const btn = selectEl ? selectEl.nextElementSibling : null;
+            const originalHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+              btn.disabled = true;
+              btn.innerHTML = '<span class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;"></span>';
+            }
+
             try {
               const { data } = await axios.post('/admin/lectures/assign', { lectureId, batch_no });
 
               if (data.success) {
                 if (typeof showToast !== 'undefined') showToast(data.message || 'Lecture assigned!', 'success');
-                setTimeout(() => window.location.reload(), 1200);
               } else {
                 if (typeof showToast !== 'undefined') showToast(data.message || 'Assignment failed.', 'error');
               }
@@ -3847,6 +3895,11 @@
               console.error(err);
               const msg = err.response?.data?.message || 'Server error while assigning lecture.';
               if (typeof showToast !== 'undefined') showToast(msg, 'error');
+            } finally {
+              if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+              }
             }
           }
 
@@ -3854,6 +3907,19 @@
           // Delete Lecture (Axios)
           // =====================
           async function deleteLecture(lectureId) {
+            const modalEl = document.getElementById(`deleteLectureModal${lectureId}`);
+            let btn = null;
+            let originalHtml = '';
+            
+            if (modalEl) {
+              btn = modalEl.querySelector('.btn-danger');
+              if (btn) {
+                originalHtml = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Deleting...';
+              }
+            }
+
             try {
               const { data } = await axios.post(`/admin/lectures/delete/${lectureId}`);
 
@@ -3867,7 +3933,6 @@
                 if (card) card.remove();
 
                 // Close modal
-                const modalEl = document.getElementById(`deleteLectureModal${lectureId}`);
                 if (modalEl) {
                   const modal = bootstrap.Modal.getInstance(modalEl);
                   if (modal) modal.hide();
@@ -3879,6 +3944,11 @@
               console.error(err);
               const msg = err.response?.data?.message || 'Server error while deleting lecture.';
               if (typeof showToast !== 'undefined') showToast(msg, 'error');
+            } finally {
+              if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+              }
             }
           }
 
@@ -3897,6 +3967,220 @@
               row.style.display = (matchesSearch && matchesWeek) ? '' : 'none';
             });
           }
+        </script>
+        
+        <!-- NEW: Global Form Handlers for Axios -->
+        <script>
+          /**
+           * Generic handler for all AJAX forms
+           * Prevents traditional submission, shows toast — NO page reload.
+           */
+          async function handleAjaxForm(formId, successMessage = null) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+
+            form.addEventListener('submit', async function(e) {
+              e.preventDefault();
+              const btn = form.querySelector('button[type="submit"]');
+              const originalBtnHtml = btn ? btn.innerHTML : '';
+              
+              if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+              }
+
+              try {
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => data[key] = value);
+
+                const response = await axios.post(form.action, data);
+                
+                if (response.data.success) {
+                  if (typeof showToast !== 'undefined') showToast(response.data.message || successMessage || 'Success!', 'success');
+                  
+                  const modal = form.closest('.modal');
+                  if (modal) {
+                    const bModal = bootstrap.Modal.getInstance(modal);
+                    if (bModal) bModal.hide();
+                  }
+
+                  // Reset cleanly — removes was-validated red outlines
+                  form.reset();
+                  form.classList.remove('was-validated');
+                } else {
+                  if (typeof showToast !== 'undefined') showToast(response.data.message || 'Operation failed.', 'error');
+                }
+              } catch (err) {
+                console.error(err);
+                const msg = err.response?.data?.message || 'Server error occurred.';
+                if (typeof showToast !== 'undefined') showToast(msg, 'error');
+              } finally {
+                // Always restore the button
+                if (btn) {
+                  btn.disabled = false;
+                  btn.innerHTML = originalBtnHtml;
+                }
+              }
+            });
+          }
+
+          // Initialize Handlers
+          document.addEventListener('DOMContentLoaded', () => {
+            // Static Forms
+            handleAjaxForm('ajaxFormCreateIntern', 'Intern onboarded successfully!');
+            handleAjaxForm('ajaxFormUploadProject', 'Project uploaded successfully!');
+            handleAjaxForm('ajaxFormUpdateAdminProfile', 'Profile updated successfully!');
+
+            // Bulk Attendance
+            const bulkAttendanceForm = document.getElementById('bulkAttendanceForm');
+            if (bulkAttendanceForm) {
+              bulkAttendanceForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const interns = [];
+                const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+                checkedBoxes.forEach(cb => {
+                  interns.push({ userId: cb.dataset.user, meetingId: cb.dataset.meeting });
+                });
+
+                if (interns.length === 0) {
+                  if (typeof showToast !== 'undefined') showToast('Please select at least one intern.', 'warning');
+                  return;
+                }
+
+                document.getElementById('bulkInternsInput').value = JSON.stringify(interns);
+                
+                const btn = bulkAttendanceForm.querySelector('button[type="submit"]');
+                const originalBtnHtml = btn ? btn.innerHTML : '';
+                if (btn) {
+                  btn.disabled = true;
+                  btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                }
+
+                try {
+                  const formData = new FormData(bulkAttendanceForm);
+                  const data = {};
+                  formData.forEach((v, k) => data[k] = v);
+                  const res = await axios.post(bulkAttendanceForm.action, data);
+                  
+                  if (res.data.success) {
+                    if (typeof showToast !== 'undefined') showToast(res.data.message, 'success');
+                    
+                    // Dynamically update DOM without reload
+                    const newStatus = data.attendance;
+                    const badgeHtml = newStatus === 'present' 
+                        ? '<span class="badge bg-success">Present</span>' 
+                        : '<span class="badge bg-danger">Absent</span>';
+
+                    checkedBoxes.forEach(cb => {
+                      // Uncheck the checkbox
+                      cb.checked = false;
+
+                      // Desktop: td before the checkbox td
+                      const td = cb.closest('td');
+                      if (td && td.previousElementSibling) {
+                        td.previousElementSibling.innerHTML = badgeHtml;
+                      }
+
+                      // Mobile: div before the form-check div
+                      const formCheck = cb.closest('.form-check');
+                      if (formCheck && formCheck.previousElementSibling) {
+                        formCheck.previousElementSibling.innerHTML = badgeHtml;
+                      }
+                    });
+
+                    // Uncheck "Select All" if it's checked
+                    const selectAllCb = document.getElementById('selectAllAttendance');
+                    if (selectAllCb) selectAllCb.checked = false;
+
+                  } else {
+                    if (typeof showToast !== 'undefined') showToast(res.data.message, 'error');
+                  }
+                } catch (err) {
+                  console.error(err);
+                  if (typeof showToast !== 'undefined') showToast('Failed to update attendance.', 'error');
+                } finally {
+                  if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnHtml;
+                  }
+                }
+              });
+            }
+
+            // Delegated Handlers for Loop/Modal Forms
+            document.body.addEventListener('submit', async (e) => {
+              const form = e.target;
+              const matches = (fid) => fid && (
+                fid.startsWith('ajaxFormUpdateUser_') || 
+                fid.startsWith('ajaxFormEditProject_') || 
+                fid.startsWith('ajaxFormDeleteProject_') ||
+                fid.startsWith('ajaxFormAssignQuiz_') ||
+                fid.startsWith('ajaxFormDeleteQuiz_')
+              );
+
+              if (matches(form.id)) {
+                e.preventDefault();
+                const btn = form.querySelector('button[type="submit"]');
+                const originalBtnHtml = btn ? btn.innerHTML : '';
+                
+                if (btn) {
+                  btn.disabled = true;
+                  btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                }
+
+                try {
+                  const formData = new FormData(form);
+                  const data = {};
+                  formData.forEach((v, k) => data[k] = v);
+                  const res = await axios.post(form.action, data);
+                  
+                  if (res.data.success) {
+                    if (typeof showToast !== 'undefined') showToast(res.data.message, 'success');
+                    
+                    const modal = form.closest('.modal');
+                    if (modal) {
+                      const bModal = bootstrap.Modal.getInstance(modal);
+                      if (bModal) bModal.hide();
+                    }
+
+                    // Delete actions: remove the row/card from DOM instantly
+                    if (form.id.startsWith('ajaxFormDeleteProject_') || form.id.startsWith('ajaxFormDeleteQuiz_')) {
+                      const modalEl = form.closest('.modal');
+                      if (modalEl) {
+                        const modalId = modalEl.getAttribute('id');
+                        // Find the trigger button(s) that opened this modal
+                        const triggers = document.querySelectorAll(`[data-bs-target="#${CSS.escape(modalId)}"]`);
+                        triggers.forEach(triggerBtn => {
+                          const container =
+                            triggerBtn.closest('tr') ||
+                            triggerBtn.closest('.project-card') ||
+                            triggerBtn.closest('.quiz-card') ||
+                            triggerBtn.closest('.col');
+                          if (container) {
+                            container.style.transition = 'opacity 0.3s ease';
+                            container.style.opacity = '0';
+                            setTimeout(() => container.remove(), 300);
+                          }
+                        });
+                      }
+                    }
+                  } else {
+                    if (typeof showToast !== 'undefined') showToast(res.data.message, 'error');
+                  }
+                } catch (err) {
+                  console.error(err);
+                  const msg = err.response?.data?.message || 'Action failed.';
+                  if (typeof showToast !== 'undefined') showToast(msg, 'error');
+                } finally {
+                  if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnHtml;
+                  }
+                }
+              }
+            });
+          });
         </script>
 </body>
 
