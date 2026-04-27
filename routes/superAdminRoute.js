@@ -18,7 +18,7 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
     const ambassadors = await Ambassador.find({});
     const superAdmin = await SuperAdmin.findOne({});
     const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
-    const feedbacks = await Feedback.find({}).populate("userId", "name email domain batch_no duration img_url intern_id");
+    const feedbacks = await Feedback.find({}).populate("userId", "name email domain batch_no duration img_url intern_id").sort({ submittedAt: -1 });
     
     if (!superAdmin) {
       req.flash("error", "SuperAdmin not found");
