@@ -1399,35 +1399,36 @@
 <!-- Certified Interns Section -->
 <section id="completedInterns" style="display:none;">
   <div class="container px-0">
-    <div class="card shadow-sm border rounded p-3 " style="border: 1px solid #ff6600 !important;">
+    
 
-      <!-- Section Header -->
-      <h4 class="text-center mb-3">Certified Interns</h4>
+      <!-- Page Header -->
+        <div class="page-header d-flex flex-wrap justify-content-between align-items-start gap-1">
+          <div>
+            <h4>Certified Interns</h4>
+          </div>
+        </div>
 
-      <!-- Filters Row -->
-      <div class="row mb-3 g-2 justify-content-center flex-grow-1">
-        <div class="col-md-2">
-          <select id="batchFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
+      <!-- Filters Toolbar -->
+      <div class="intern-toolbar">
+        <div class="intern-toolbar-left">
+          <div class="search-wrap">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" id="completedSearchInput" class="intern-search-input" placeholder="Search by Intern ID…" onkeyup="applyCompletedFilters()">
+          </div>
+          <select id="batchFilterCompleted" class="intern-filter-select" onchange="applyCompletedFilters()" style="margin-left: 10px;">
             <option value="all" selected>All Batches</option>
             <% batches.forEach(batch => { %>
               <option value="<%= batch %>">Batch <%= batch %></option>
             <% }) %>
           </select>
-        </div>
-
-        <div class="col-md-2">
-          <select id="domainFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
+          <select id="domainFilterCompleted" class="intern-filter-select" onchange="applyCompletedFilters()">
             <option value="all" selected>All Domains</option>
             <% let domains = [...new Set(interns.map(i => i.domain))]; %>
             <% domains.forEach(domain => { %>
               <option value="<%= domain %>"><%= domain %></option>
             <% }) %>
           </select>
-        </div>
-
-        <!-- Duration Filter -->
-        <div class="col-md-2">
-          <select id="durationFilterCompleted" class="form-select" onchange="applyCompletedFilters()">
+          <select id="durationFilterCompleted" class="intern-filter-select" onchange="applyCompletedFilters()">
             <option value="all" selected>All Durations</option>
             <% 
               const completedDurations = [...new Set(interns.map(i => i.duration))].sort((a, b) => a - b);
@@ -1437,108 +1438,207 @@
             <% }) %>
           </select>
         </div>
-
-        <div class="col-md-2 flex-grow-1">
-          <input type="text" id="completedSearchInput" class="form-control" placeholder="Search by Intern ID" onkeyup="applyCompletedFilters()">
-        </div>
-
-        <div class="col-md-2">
-          <button class="btn btn-secondary w-100" onclick="clearCompletedFilters()">Clear Filters</button>
+        <div class="intern-toolbar-right">
+          <button class="btn btn-sm btn-outline-secondary" style="border-radius: 20px;" onclick="clearCompletedFilters()">
+            <i class="bi bi-x-circle me-1"></i>Clear
+          </button>
         </div>
       </div>
 
-      <!-- Intern Table -->
-      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table class="table table-striped table-bordered align-middle text-center mb-0">
-          <thead class="table-light" style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
+      <!-- Intern Table (Desktop Layout) -->
+      <div class="intern-table-wrap d-none d-md-block" style="max-height: 500px; overflow-y: auto;">
+        <table class="table align-middle mb-0">
+          <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
             <tr>
-              <th>S.No.</th>
-              <th>Name</th>
-              <th>Domain</th>
-              <th>Batch</th>
-              <th>Duration</th>
-              <th>Intern ID</th>
-              <th>Quiz Score</th>
+              <th width="44" class="text-center">#</th>
+              <th width="56">Photo</th>
+              <th>Name & ID</th>
+              <th class="d-none d-lg-table-cell">Contact</th>
+              <th class="d-none d-lg-table-cell">Batch / Duration</th>
+              <th>C.ID & Score</th>
               <th>Status</th>
-              <th>Screenshot</th>
-              <th>Update</th>
+              <th class="text-center">Actions</th>
             </tr>
           </thead>
-
           <tbody id="completedInternTable">
             <% let completedSerial = 0; %>
             <% interns
               .filter(i => i.intern_progress === 100 && i.quizAssignments.length != 0)
               .forEach(i => { %>
               <% completedSerial++; %>
+              <% 
+                let hasAttemptedQuiz = false;
+                if (i.quizAssignments && i.quizAssignments.length > 0) {
+                  hasAttemptedQuiz = i.quizAssignments.some(qa => qa.attemptCount > 0);
+                }
+              %>
 
-              <tr class="completed-intern-row"
+              <tr class="completed-intern-row intern-row"
                   data-batch="<%= i.batch_no %>"
                   data-domain="<%= i.domain %>"
                   data-duration="<%= i.duration %>"
-                  data-id="<%= i._id %>">
+                  data-id="<%= i.intern_id %>">
 
-                <td class="serial-no"><%= completedSerial %></td>
-                <td style="text-align: left !important; padding-left: 1rem;"><%= i.name %></td>
-                <td><%= i.domain %></td>
-                <td><%= i.batch_no %></td>
-                <td><%= i.duration %> Weeks</td>
-                <td class="intern-id"><%= i.intern_id %></td>
-                <td class="quiz-score"><%= i.quiz_score %></td>
-
+                <td class="text-center text-muted serial-no"><%= completedSerial %></td>
+                <td>
+                  <div class="intern-avatar-wrap">
+                    <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>" class="intern-avatar">
+                  </div>
+                </td>
+                <td>
+                  <div class="fw-bold" style="font-size:0.875rem; text-align: left;"><%= i.name %></div>
+                  <div class="small font-monospace text-muted intern-id"><%= i.intern_id %></div>
+                </td>
+                <td class="d-none d-lg-table-cell">
+                  <div class="small"><i class="bi bi-envelope text-muted me-1"></i><%= i.email %></div>
+                  <div class="small text-muted"><i class="bi bi-telephone text-muted me-1"></i><%= i.phone || '—' %></div>
+                </td>
+                <td class="d-none d-lg-table-cell text-center">
+                  <span class="batch-chip">Batch <%= i.batch_no %> - <%= i.duration %> W</span>
+                  <div class="small text-muted mt-1"><span class="badge text-dark rounded-pill me-1" style="background-color: #ffc39b;"><%= i.domain %></span></div>
+                </td>
+                <td>
+                  <div class="small fw-bold mb-1">
+                    C.ID: <% if (i.certificate_id && i.certificate_id.startsWith('TEMP')) { %>
+                      <span class="text-muted">N/A</span>
+                    <% } else { %>
+                      <span class="font-monospace"><%= i.certificate_id %></span>
+                    <% } %>
+                  </div>
+                  <div class="small text-muted quiz-score">Quiz Score: <strong><%= i.quiz_score %></strong></div>
+                </td>
                 <td class="status-cell">
                   <% if (i.isPassed === true) { %>
                     <span class="badge bg-success">Pass</span>
-                  <% } else if (i.isPassed === false) { %>
-                    <span class="badge bg-danger">Fail</span>
-                  <% } else { %>
+                  <% } else if (i.isPassed === false && !hasAttemptedQuiz) { %>
                     <span class="badge bg-secondary">Pending</span>
+                  <% } else { %>
+                    <span class="badge bg-danger">Fail</span>
                   <% } %>
                 </td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-1">
+                    <% if (i.screenshot_img) { %>
+                      <button class="icon-btn icon-btn-view" style="color: #0d6efd; border: 1px solid #0d6efd;" data-bs-toggle="modal" data-bs-target="#screenshotModal<%= i._id %>" title="View Screenshot"><i class="bi bi-image"></i></button>
 
-                <td>
-                  <% if (i.screenshot_img) { %>
-                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#screenshotModal<%= i._id %>">
-                      <i class="bi bi-eye"></i> View
-                    </button>
-
-                    <!-- Screenshot Modal -->
-                    <div class="modal fade" id="screenshotModal<%= i._id %>" tabindex="-1" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Screenshot - <%= i.name %></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body text-center">
-                            <img src="<%= i.screenshot_img %>" alt="Screenshot" class="img-fluid">
+                      <!-- Screenshot Modal -->
+                      <div class="modal fade" id="screenshotModal<%= i._id %>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Screenshot - <%= i.name %></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                              <img src="<%= i.screenshot_img %>" alt="Screenshot" class="img-fluid">
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  <% } else { %>
-                    <span class="text-muted" style="font-size: 0.8rem;">N/A</span>
-                  <% } %>
-                </td>
-
-                <!-- Update Button & Modal -->
-                <td>
-                  <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill"
-                          data-bs-toggle="modal"
-                          data-bs-target="#updateModal<%= i._id %>">
-                     Update
-                  </button>
+                    <% } else { %>
+                      <button class="icon-btn icon-btn-view" style="color: #6c757d; border: 1px solid #ced4da; cursor: not-allowed; opacity: 0.5;" title="No Screenshot" disabled><i class="bi bi-image"></i></button>
+                    <% } %>
+                    <button class="icon-btn icon-btn-edit text-secondary" style="border: 1px solid #6c757d;" data-bs-toggle="modal" data-bs-target="#updateModal<%= i._id %>" title="Update"><i class="bi bi-pencil"></i></button>
+                  </div>
                 </td>
               </tr>
-
-              </tr>
-
             <% }) %>
           </tbody>
         </table>
       </div>
 
-    </div>
+      <!-- Mobile Card Grid (< md) -->
+      <div class="intern-card-grid d-md-none" id="completedInternCardGrid">
+        <% interns
+          .filter(i => i.intern_progress === 100 && i.quizAssignments.length != 0)
+          .forEach((i) => { %>
+          <% 
+            let hasAttemptedQuiz = false;
+            if (i.quizAssignments && i.quizAssignments.length > 0) {
+              hasAttemptedQuiz = i.quizAssignments.some(qa => qa.attemptCount > 0);
+            }
+          %>
+          <div class="intern-card completed-intern-row intern-row"
+               data-batch="<%= i.batch_no %>"
+               data-domain="<%= i.domain %>"
+               data-duration="<%= i.duration %>"
+               data-id="<%= i.intern_id %>">
+            <div class="intern-card-top">
+              <div class="intern-avatar-wrap">
+                <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>" class="intern-avatar intern-avatar-lg">
+              </div>
+              <div class="intern-card-info">
+                <div class="fw-bold" style="text-align: left;"><%= i.name.split(' ').slice(0, 2).join(' ') %></div>
+                <div class="small font-monospace text-muted intern-id" style="text-align: left;"><%= i.intern_id %></div>
+              </div>
+            </div>
+            <span class="batch-chip batch-chip-absolute d-inline-block">Batch <%= i.batch_no %> · <%= i.duration %>W</span>
+            
+            <div class="intern-card-meta mb-2">
+              <span class="badge bg-info text-dark rounded-pill me-1"><%= i.domain %></span>
+            </div>
+
+            <div class="intern-card-meta mb-2 d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Cert ID:</strong> 
+                <% if (i.certificate_id && i.certificate_id.startsWith('TEMP')) { %>
+                  <span class="text-muted">N/A</span>
+                <% } else { %>
+                  <span class="font-monospace small"><%= i.certificate_id %></span>
+                <% } %>
+              </div>
+              <div class="quiz-score">
+                <strong>Quiz:</strong> <%= i.quiz_score %>
+              </div>
+            </div>
+
+            <div class="intern-card-meta mb-3 d-flex align-items-center justify-content-between">
+              <span class="small text-muted">Status:</span>
+              <div class="status-cell">
+                <% if (i.isPassed === true) { %>
+                  <span class="badge bg-success">Pass</span>
+                <% } else if (i.isPassed === false && !hasAttemptedQuiz) { %>
+                  <span class="badge bg-secondary">Pending</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Fail</span>
+                <% } %>
+              </div>
+            </div>
+
+            <div class="intern-card-actions">
+              <% if (i.screenshot_img) { %>
+                <button class="icon-btn icon-btn-view flex-grow-1 justify-content-center" style="color: #0d6efd; border: 1px solid #0d6efd;" data-bs-toggle="modal" data-bs-target="#screenshotModal<%= i._id %>Mobile">
+                  <i class="bi bi-image me-1"></i>Image
+                </button>
+
+                <!-- Mobile Screenshot Modal -->
+                <div class="modal fade" id="screenshotModal<%= i._id %>Mobile" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Screenshot</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        <img src="<%= i.screenshot_img %>" alt="Screenshot" class="img-fluid">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% } else { %>
+                <button class="icon-btn icon-btn-view flex-grow-1 justify-content-center" style="color: #6c757d; border: 1px solid #ced4da; cursor: not-allowed; opacity: 0.5;" disabled>
+                  <i class="bi bi-image me-1"></i>No Image
+                </button>
+              <% } %>
+              <button class="icon-btn icon-btn-edit flex-grow-1 justify-content-center text-secondary" style="border: 1px solid #6c757d;" data-bs-toggle="modal" data-bs-target="#updateModal<%= i._id %>">
+                <i class="bi bi-pencil me-1"></i>Update
+              </button>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+    
   </div>
 </section>
 
@@ -1951,49 +2051,100 @@
     </div>
   </div>
 
-  <div class="table-wrapper">
-    <div class="table-responsive" style="max-height: 75vh; overflow-y:auto;">
-      <table class="table table-striped align-middle mb-0">
-          <thead class="table-light" style="position: sticky; top: 0; z-index: 2;background-color: #fff">
+      <!-- Desktop Table (md+) -->
+      <div class="intern-table-wrap d-none d-md-block" style="max-height: 75vh; overflow-y: auto;">
+        <table class="table align-middle mb-0">
+          <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
             <tr>
-              <th>Profile</th>
+              <th width="56">Photo</th>
               <th>Name & Contact</th>
               <th>Domain</th>
               <th>Duration</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody id="registrationTable">
             <% registrations.forEach(reg => { %>
-              <tr>
+              <tr class="intern-row">
                 <td>
-                  <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="rounded-circle" width="40" height="40" style="object-fit:cover;">
+                  <div class="intern-avatar-wrap">
+                    <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="intern-avatar">
+                  </div>
                 </td>
                 <td>
-                  <strong><%= reg.name %></strong><br>
-                  <small class="text-muted"><%= reg.email %></small><br>
+                  <div class="fw-bold" style="font-size:0.875rem; text-align: left;"><%= reg.name %></div>
+                  <div class="small text-muted" style="text-align: left;"><i class="bi bi-envelope text-muted me-1"></i><%= reg.email %></div>
+                  
                 </td>
                 <td><span class="badge bg-info text-dark rounded-pill"><%= reg.domain %></span></td>
-                <td><%= reg.duration %> Weeks</td>
+                <td>
+                  <span class="batch-chip"><%= reg.duration %> Weeks</span>
+                </td>
                 <td>
                   <span class="badge bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning text-dark' %>">
                     <%= reg.payment_status %>
                   </span>
                 </td>
-                <td>
-                  <div class="d-flex align-items-center gap-1">
-                    <button class="btn btn-outline-primary btn-sm px-2 py-0 rounded-1" data-bs-toggle="modal" data-bs-target="#viewRegModal<%= reg._id %>">
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-1">
+                    <button class="icon-btn icon-btn-view" style="color: #0d6efd; border: 1px solid #0d6efd;" data-bs-toggle="modal" data-bs-target="#viewRegModal<%= reg._id %>" title="View Profile">
                       <i class="bi bi-eye"></i>
                     </button>
                     <% if (reg.status !== 'approved' && reg.status !== 'rejected') { %>
-                      <button class="btn btn-success btn-sm px-2 py-0 rounded-1" onclick="approveReject('<%= reg._id %>', 'approve', this)">
+                      <button class="icon-btn" style="color: #198754; border: 1px solid #198754; background: transparent;" onclick="approveReject('<%= reg._id %>', 'approve', this)" title="Approve">
                         <i class="bi bi-check2"></i>
                       </button>
-                      <button class="btn btn-danger btn-sm px-2 py-0 rounded-1" onclick="approveReject('<%= reg._id %>', 'reject', this)">
+                      <button class="icon-btn" style="color: #dc3545; border: 1px solid #dc3545; background: transparent;" onclick="approveReject('<%= reg._id %>', 'reject', this)" title="Reject">
                         <i class="bi bi-x"></i>
                       </button>
                     <% } %>
+                  </div>
+                </td>
+              </tr>
+              <!-- Adding Mobile View directly before the modal -->
+              <tr class="d-md-none border-0 p-0 m-0">
+                <td colspan="6" class="p-0 border-0">
+                  <div class="intern-card-grid d-md-none" style="padding: 1rem 0;">
+                    <div class="intern-card intern-row">
+                      <div class="intern-card-top">
+                        <div class="intern-avatar-wrap">
+                          <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="intern-avatar intern-avatar-lg">
+                        </div>
+                        <div class="intern-card-info">
+                          <div class="fw-bold" style="text-align: left;"><%= reg.name %></div>
+                          <div class="small text-muted" style="text-align: left;"><%= reg.email %></div>
+                        </div>
+                      </div>
+                      
+                      <span class="batch-chip batch-chip-absolute d-inline-block"><%= reg.duration %>W</span>
+
+                      <div class="intern-card-meta mb-2">
+                        <span class="badge bg-info text-dark rounded-pill"><%= reg.domain %></span>
+                      </div>
+                      <div class="intern-card-meta mb-2 d-flex justify-content-between align-items-center">
+                        <div class="small text-muted">Status:</div>
+                        <div>
+                          <span class="badge bg-<%= reg.payment_status === 'SUCCESS' ? 'success' : reg.payment_status === 'FAILED' ? 'danger' : 'warning text-dark' %>">
+                            <%= reg.payment_status %>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="intern-card-actions">
+                        <button class="icon-btn icon-btn-view flex-grow-1 justify-content-center" style="color: #0d6efd; border: 1px solid #0d6efd;" data-bs-toggle="modal" data-bs-target="#viewRegModal<%= reg._id %>">
+                          <i class="bi bi-eye me-1"></i>View
+                        </button>
+                        <% if (reg.status !== 'approved' && reg.status !== 'rejected') { %>
+                          <button class="icon-btn flex-grow-1 justify-content-center" style="color: #198754; border: 1px solid #198754; background: transparent;" onclick="approveReject('<%= reg._id %>', 'approve', this)">
+                            <i class="bi bi-check2 me-1"></i>Approve
+                          </button>
+                          <button class="icon-btn flex-grow-1 justify-content-center" style="color: #dc3545; border: 1px solid #dc3545; background: transparent;" onclick="approveReject('<%= reg._id %>', 'reject', this)">
+                            <i class="bi bi-x me-1"></i>Reject
+                          </button>
+                        <% } %>
+                      </div>
+                    </div>
                   </div>
                 </td>
               </tr>
