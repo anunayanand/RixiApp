@@ -202,6 +202,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       year_sem: registration.year_sem,
       img_url: registration.profile_image_url,
       img_public_id: registration.profile_image_public_id,
+      referral_code: registration.referral_code,
       intern_id,
       batch_no,
       starting_date: startDate,

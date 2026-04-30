@@ -40,6 +40,21 @@ const ambassadorSchema = new mongoose.Schema({
   },
   img_url: { type: String ,default: "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg" },
   discountPercent: { type: Number, default: 0, min: 0, max: 100 },
+  equity: { type: Number, default: 0, min: 0, max: 100 }, // equity % of intern payment
+  total_earnings: { type: Number, default: 0 }, // cumulative earnings from equity
+  referred_interns: [
+    {
+      name: { type: String },
+      email: { type: String },
+      phone: { type: String },
+      domain: { type: String },
+      duration: { type: Number },
+      batch_no: { type: String },
+      amount_paid: { type: Number },   // final amount paid by intern
+      equity_earned: { type: Number }, // equity% of amount_paid
+      joining_date: { type: Date, default: Date.now },
+    }
+  ],
 }, { timestamps: true });
 
 // 🏅 Badge updater method

@@ -21,17 +21,15 @@ router.get("/ambassador", authRole("ambassador"), async (req, res) => {
     await ambassador.save();
     
 
-    // 3️⃣ Fetch interns referred by this ambassador
-    const referredInterns = await User.find({ referal_code: ambassador.referralId , role: "intern" })
-      .select("name email domain batch_no joining_date") // only required fields
-      .lean();
-     // Placeholder value
+    // 3️⃣ Fetch interns referred by this ambassador from the stored array
+    const referredInterns = ambassador.referred_interns || [];
+    
     ambassador.internCount = referredInterns.length;
     await ambassador.save();
 
     // 4️⃣ Calculate stats
-    const totalReferred = referredInterns.length;
-    const earnings = totalReferred * 20;
+    const totalReferred = ambassador.internCount;
+    const earnings = ambassador.total_earnings || 0;
 
     // 5️⃣ Leaderboard (optional)
     const leaderboard = await Ambassador.find({}, { name: 1, email: 1, internCount: 1, _id: 0 })

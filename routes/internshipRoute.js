@@ -319,6 +319,36 @@ router.get("/payment/callback", async (req, res) => {
         } catch (sheetError) {
           console.error("Failed to send to sheet:", sheetError.message);
         }
+
+        // ✅ Update ambassador earnings & intern record if referral code is valid
+        if (registration.referral_code && registration.referral_code.trim() !== "") {
+          try {
+            const ambassador = await Ambassador.findOne({ referralId: registration.referral_code.trim() });
+            if (ambassador) {
+              const amountPaid = registration.final_amount || 0;
+              const equityEarned = parseFloat(((amountPaid * (ambassador.equity || 0)) / 100).toFixed(2));
+
+              ambassador.referred_interns.push({
+                name: registration.name,
+                email: registration.email,
+                phone: registration.phone,
+                domain: registration.domain,
+                duration: registration.duration,
+                amount_paid: amountPaid,
+                equity_earned: equityEarned,
+                registered_at: new Date(),
+              });
+
+              ambassador.total_earnings = parseFloat(((ambassador.total_earnings || 0) + equityEarned).toFixed(2));
+              ambassador.internCount = (ambassador.internCount || 0) + 1;
+
+              await ambassador.save();
+            }
+          } catch (ambErr) {
+            console.error("Failed to update ambassador on payment:", ambErr.message);
+          }
+        }
+
       }
 
       res.redirect(

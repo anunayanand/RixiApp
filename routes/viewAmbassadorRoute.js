@@ -15,13 +15,12 @@ router.get("/superAdmin/ambassador/:ambassadorId", authRole("superAdmin"), async
 
     // Fetch interns referred by this ambassador
     // Assuming User schema has a field storing the referralId used during registration
-   const referredInterns = await User.find({ referral_id: ambassador.referralId , role: "intern" })
-         .select("name email domain batch_no joining_date") // only required fields
-         .lean();
+   const referredInterns = ambassador.referred_interns || [];
 
     // Fetch other useful info if needed
-   const totalReferred = referredInterns.length;
-    const earnings = totalReferred * 20;
+    const totalReferred = ambassador.internCount;
+    const earnings = ambassador.total_earnings || 0;
+
     const badge = ambassador.badge;
     const leaderboard = await Ambassador.find({}, { name: 1, email: 1, internCount: 1, _id: 0 })
         .sort({ internCount: -1 })

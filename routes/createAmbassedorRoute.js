@@ -34,7 +34,8 @@ router.post("/create-ambassador", authRole("superAdmin"), upload.single("image")
       gender,
       linkedin_profile_url,
       insta_profile_url,
-      discountPercent
+      discountPercent,
+      equity
     } = req.body;
 
     // 🔹 Check if email, referralId or ambassador_id already exists
@@ -67,6 +68,7 @@ router.post("/create-ambassador", authRole("superAdmin"), upload.single("image")
       insta_profile_url,
       isFirstLogin: true,
       discountPercent: discountPercent ? Math.min(100, Math.max(0, parseInt(discountPercent))) : 0,
+      equity: equity ? Math.min(100, Math.max(0, parseFloat(equity))) : 0,
     };
 
     // ✅ Add uploaded image if exists
