@@ -300,8 +300,7 @@ app.post('/meetings/update-attendance',updateAttendence)
 
 //Password Change
 const updatePasswordRoute = require('./routes/changePasswordRoute');
-app.post('/intern/change-password',updatePasswordRoute);
-app.post('/ambassador/change-password',updatePasswordRoute);
+app.use('/', updatePasswordRoute);
 
 // Update Image Route
 const updateImageRoute = require('./routes/updateImageRoute');
