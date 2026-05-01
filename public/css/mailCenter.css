@@ -1,0 +1,50 @@
+/* =========================================
+   MAIL CENTER — Tab Navigation
+   ========================================= */
+.mc-tab-nav {
+  display: flex;
+  gap: 8px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 6px;
+  border: 1px solid var(--border);
+  width: fit-content;
+}
+
+.mc-tab-btn {
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.mc-tab-btn.active {
+  background: linear-gradient(135deg, #ff6600, #ff9d00);
+  color: white;
+  box-shadow: 0 4px 14px rgba(255, 102, 0, 0.35);
+}
+
+.mc-tab-badge {
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+}
+
+/* Sidebar count badge */
+.sidebar-badge-count {
+  background: #ff6600;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  padding: 1px 7px;
+  font-weight: 700;
+  margin-left: auto;
+}

@@ -269,4 +269,44 @@ router.post("/send-offer-letter", authRole("superAdmin"), async (req, res) => {
   }
 });
 
+// GET: Mail Center page
+router.get("/mail-center", authRole("superAdmin"), async (req, res, next) => {
+  try {
+    const interns  = await User.find({ role: "intern" });
+    const batches  = [...new Set(interns.map(i => i.batch_no).filter(Boolean))];
+    const superAdmin = await SuperAdmin.findOne({});
+
+    if (!superAdmin) {
+      req.flash("error", "SuperAdmin not found");
+      return res.redirect("/login");
+    }
+
+    // Derived counts for stat cards
+    const pendingOfferCount = interns.filter(i => !i.offer_letter_sent).length;
+    const pendingConfirmationCount = interns.filter(i => !i.confirmationSent).length;
+    const pendingCompletionCount = interns.filter(i => i.isPassed && !i.completionSent).length;
+    const totalSentOffer = interns.filter(i => i.offer_letter_sent).length;
+    const totalSentConfirmation = interns.filter(i => i.confirmationSent).length;
+    const totalSentCompletion = interns.filter(i => i.completionSent).length;
+    const notifications = superAdmin.notifications.sort((a, b) => b.createdAt - a.createdAt);
+    const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
+
+    res.render("mailCenter", {
+      interns,
+      batches,
+      superAdmin,
+      pendingOfferCount,
+      pendingConfirmationCount,
+      pendingCompletionCount,
+      totalSentOffer,
+      totalSentConfirmation,
+      totalSentCompletion,
+      notifications,
+      registrations,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

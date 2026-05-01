@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail Center | Super Admin</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/superAdmin.css">
+  <link rel="stylesheet" href="/css/mailCenter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- Favicons -->
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">  
+</head>
+<body>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
+      <div class="sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="sidebar-badge" style="border-color: #ff6600;">SUPER ADMIN</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <div class="sidebar-nav-label">Interns Mail</div>
+      <a href="#offerLetterTab" class="nav-link active" onclick="switchTab('offer', this)">
+        <i class="bi bi-envelope-paper-fill"></i>
+        <span>Offer Letter Mail</span>
+      </a>
+      <a href="#confirmationTab" class="nav-link" onclick="switchTab('confirm', this)">
+        <i class="bi bi-envelope-open-fill"></i>
+        <span>Confirmation Mail</span>
+      </a>
+      <a href="#completionTab" class="nav-link" onclick="switchTab('completion', this)">
+        <i class="bi bi-envelope-check-fill"></i>
+        <span>Completion Mail</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-content">
+    
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="d-flex align-items-center">
+        <button class="sidebar-toggle-btn" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="topbar-left ms-2">
+          <h4>Mail Center</h4>
+          <p class="d-none d-sm-block">Manage Internship Communications</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Back to Dashboard -->
+        <a href="/superAdmin" class="topbar-btn" title="Back to Dashboard">
+          <i class="bi bi-arrow-left-circle"></i>
+        </a>
+
+        <!-- Notification Bell -->
+        <div class="dropdown">
+          <button class="topbar-btn" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bell"></i>
+            <% const unreadCount = notifications ? notifications.length : 0; %>
+            <% if (unreadCount > 0) { %>
+              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle"></span>
+            <% } %>
+          </button>
+          
+          <ul class="dropdown-menu dropdown-menu-end notif-dropdown shadow-lg" style="width: 320px;" id="notificationList">
+            <li class="notif-header">
+              <span>Notifications (<%= unreadCount %>)</span>
+              <% if (notifications && notifications.length > 0) { %>
+                <button id="clearAllBtn" class="btn btn-xs btn-outline-light py-0" style="font-size: 0.7rem;">Clear All</button>
+              <% } %>
+            </li>
+            <div style="max-height: 300px; overflow-y: auto;">
+              <% if (notifications && notifications.length > 0) { %>
+                <% notifications.forEach(n => { %>
+                  <li class="notif-item" data-id="<%= n._id %>">
+                    <div>
+                      <strong><%= n.title %></strong>
+                      <small class="text-muted d-block"><%= n.message %></small>
+                      <small class="text-primary" style="font-size: 0.65rem;"><%= new Date(n.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-success mark-read-btn py-0 px-1" title="Mark as Read"><i class="bi bi-check2"></i></button>
+                  </li>
+                <% }) %>
+              <% } else { %>
+                <li class="p-4 text-center text-muted small">No new notifications 🎉</li>
+              <% } %>
+            </div>
+          </ul>
+        </div>
+
+        <!-- User Profile Dropdown -->
+        <div class="dropdown ms-2">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+            <img src="<%= superAdmin.img_url %>" alt="Profile" class="rounded-circle border border-2 border-white shadow-sm" width="40" height="40" style="object-fit: cover;">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0">
+            <li><h6 class="dropdown-header">Signed in as <br><strong><%= superAdmin.email %></strong></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <div class="content-body">
+      
+      <%- include("partials/toaster") %>
+      <%- include('partials/loader') %>
+
+      <div class="page-header">
+        <h4 id="mailCenterHeader">Offer Letter Mail</h4>
+        <p id="mailCenterDesc">Distribute internship offer letters securely to selected candidates.</p>
+      </div>
+
+
+
+      <!-- Tab Navigation Pill -->
+      <!-- <div class="mc-tab-nav mb-4">
+        <button class="mc-tab-btn active" id="tabOfferBtn" onclick="switchTab('offer', this)">
+          <i class="bi bi-envelope-paper-fill me-2"></i> Offer Letter Mail
+          <% if (pendingOfferCount > 0) { %>
+            <span class="mc-tab-badge"><%= pendingOfferCount %> pending</span>
+          <% } %>
+        </button>
+        <button class="mc-tab-btn" id="tabCompletionBtn" onclick="switchTab('completion', this)">
+          <i class="bi bi-envelope-check-fill me-2"></i> Completion Mail
+          <% if (pendingCompletionCount > 0) { %>
+            <span class="mc-tab-badge"><%= pendingCompletionCount %> pending</span>
+          <% } %>
+        </button>
+      </div> -->
+
+      <!-- ================= OFFER LETTER MAIL TAB ================= -->
+      <div id="offerLetterTab" class="mc-tab-content">
+        <div class="mail-section-card">
+          <form action="/send-offerletter-mail" method="POST" id="offerLetterForm">
+            
+            <!-- Styled Filter Bar -->
+            <div class="mail-filter-bar">
+              <!-- Status Filter -->
+              <div class="mail-filter-pill">
+                <i class="bi bi-funnel"></i>
+                <select id="filterOfferLetter" onchange="applyFilters('offerLetter')">
+                  <option value="sent">Sent</option>
+                  <option value="notSent" selected>Pending</option>
+                </select>
+              </div>
+
+              <!-- Batch Filter -->
+              <div class="mail-filter-pill">
+                <i class="bi bi-layers"></i>
+                <select id="batchOfferLetter" onchange="applyFilters('offerLetter')">
+                  <option value="all" selected>All Batches</option>
+                  <% batches.forEach(batch => { %>
+                    <option value="<%= batch %>">Batch <%= batch %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <!-- Search Filter -->
+              <div class="mail-filter-pill" style="flex: 2; min-width: 200px;">
+                <i class="bi bi-search"></i>
+                <input type="text" id="searchOfferLetter" placeholder="Search by name or email" onkeyup="applyFilters('offerLetter')">
+              </div>
+
+              <!-- Clear Button -->
+              <button type="button" class="fb-filter-clear" onclick="clearFilters('offerLetter')">
+                <i class="bi bi-x-circle me-1"></i> Clear
+              </button>
+
+              <!-- Send Button -->
+              <button type="button" onclick="sendOfferLetterMails()" class="mail-send-btn ms-auto">
+                <i class="bi bi-send-fill me-1"></i> Send Mail
+              </button>
+            </div>
+
+            <!-- Table Container -->
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Intern ID</th>
+                    <th>Batch</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">
+                      <input type="checkbox" id="selectAllOfferLetter" onclick="toggleSelectAll('offerLetter')" class="form-check-input">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="offerLetterTable">
+                  <% interns.forEach(i => { %>
+                    <tr data-status="<%= i.offer_letter_sent ? 'sent' : 'notSent' %>"
+                        data-batch="<%= i.batch_no %>" 
+                        data-name="<%= i.name.toLowerCase() %>" 
+                        data-email="<%= i.email.toLowerCase() %>"
+                        style="display: <%= i.offer_letter_sent ? 'none' : 'table-row' %>">
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="admin-avatar-wrapper" style="width: 32px; height: 32px; padding: 2px;">
+                            <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>">
+                          </div>
+                          <strong><%= i.name %></strong>
+                        </div>
+                      </td>
+                      <td class="text-muted"><%= i.email %></td>
+                      <td><strong><%= i.intern_id %></strong></td>
+                      <td><span class="fb-chip fb-chip-batch">Batch <%= i.batch_no %></span></td>
+                      <td>
+                        <% if(i.offer_letter_sent) { %>
+                          <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Sent</span>
+                        <% } else { %>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Not Sent</span>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(i.offer_letter_sent) { %>
+                          <button type="button" class="mail-resend-btn mx-auto" onclick="resendMail('<%= i.intern_id %>', 'offer')" title="Resend Mail">
+                            <i class="bi bi-arrow-repeat"></i>
+                          </button>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(!i.offer_letter_sent) { %>
+                          <input type="checkbox" name="interns[]" value="<%= i.intern_id %>" class="offerLetterCheckbox form-check-input" onclick="updateRowColor(this, 'offerLetter')">
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                  <!-- Initial state message -->
+                  <tr id="offerLetterAddFiltersMessage" style="display: none;">
+                    <td colspan="7" class="text-center py-5 text-muted">
+                      <i class="bi bi-funnel fs-3 d-block mb-2"></i>
+                      Add filters to see data
+                    </td>
+                  </tr>
+                  <!-- No data available message -->
+                  <tr id="offerLetterNoDataMessage" style="display: none;">
+                    <td colspan="7" class="text-center py-5 text-muted">
+                      <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
+                      No data available
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ================= CONFIRMATION MAIL TAB ================= -->
+      <div id="confirmationTab" class="mc-tab-content" style="display:none;">
+        <div class="mail-section-card">
+          <form action="/send-confirmation-mail" method="POST" id="confirmationForm">
+            
+            <!-- WhatsApp Link Input Section -->
+            <div class="mb-3 px-3 pt-3">
+              <label for="whatsappLink" class="form-label fw-bold">WhatsApp Group Link <span class="text-danger">*</span></label>
+              <input type="url" class="form-control" id="whatsappLink" name="whatsappLink" placeholder="Enter WhatsApp Group Link" required>
+            </div>
+
+            <!-- Styled Filter Bar -->
+            <div class="mail-filter-bar mt-2">
+              <!-- Status Filter -->
+              <div class="mail-filter-pill">
+                <i class="bi bi-funnel"></i>
+                <select id="filterConfirm" name="filterConfirm" onchange="applyFilters('confirm')">
+                  <option value="sent">Sent</option>
+                  <option value="notSent" selected>Pending</option>
+                </select>
+              </div>
+
+              <!-- Batch Filter -->
+              <div class="mail-filter-pill">
+                <i class="bi bi-layers"></i>
+                <select id="batchConfirm" name="batchConfirm" onchange="applyFilters('confirm')">
+                  <option value="all" selected>Select Batch</option>
+                  <% batches.forEach(batch => { %>
+                    <option value="<%= batch %>">Batch <%= batch %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <!-- Search Filter -->
+              <div class="mail-filter-pill" style="flex: 2; min-width: 200px;">
+                <i class="bi bi-search"></i>
+                <input type="text" id="searchConfirm" placeholder="Search by name or email" onkeyup="applyFilters('confirm')">
+              </div>
+
+              <!-- Clear Button -->
+              <button type="button" class="fb-filter-clear" onclick="clearFilters('confirm')">
+                <i class="bi bi-x-circle me-1"></i> Clear
+              </button>
+
+              <!-- Send Button -->
+              <button type="button" onclick="sendConfirmationMails()" class="mail-send-btn ms-auto">
+                <i class="bi bi-send-fill me-1"></i> Send Mail
+              </button>
+            </div>
+
+            <!-- Table Container -->
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">S.No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Intern ID</th>
+                    <th>Batch</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">
+                      <input type="checkbox" id="selectAllConfirm" onclick="toggleSelectAll('confirm')" class="form-check-input">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="confirmTable">
+                  <% 
+                  let confirmSerialNo = 1;
+                  interns.forEach(i => { 
+                  %>
+                    <tr data-status="<%= i.confirmationSent ? 'sent' : 'notSent' %>"
+                        data-batch="<%= i.batch_no %>" 
+                        data-name="<%= i.name.toLowerCase() %>" 
+                        data-email="<%= i.email.toLowerCase() %>"
+                        style="display: <%= i.confirmationSent ? 'none' : 'table-row' %>">
+                      <td class="serial-no text-muted"><%= confirmSerialNo++ %></td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="admin-avatar-wrapper" style="width: 32px; height: 32px; padding: 2px;">
+                            <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>">
+                          </div>
+                          <strong><%= i.name %></strong>
+                        </div>
+                      </td>
+                      <td class="text-muted"><%= i.email %></td>
+                      <td><strong><%= i.intern_id %></strong></td>
+                      <td><span class="fb-chip fb-chip-batch">Batch <%= i.batch_no %></span></td>
+                      <td>
+                        <% if(i.confirmationSent) { %>
+                          <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Sent</span>
+                        <% } else { %>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Not Sent</span>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(i.confirmationSent) { %>
+                          <button type="button" class="mail-resend-btn mx-auto" onclick="resendMail('<%= i.intern_id %>', 'confirm')" title="Resend Mail">
+                            <i class="bi bi-arrow-repeat"></i>
+                          </button>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(!i.confirmationSent) { %>
+                          <input type="checkbox" name="interns[]" value="<%= i.intern_id %>" class="confirmCheckbox form-check-input" onclick="updateRowColor(this, 'confirm')">
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                  <!-- Initial state message -->
+                  <tr id="confirmAddFiltersMessage" style="display: none;">
+                    <td colspan="8" class="text-center py-5 text-muted">
+                      <i class="bi bi-funnel fs-3 d-block mb-2"></i>
+                      Add filters to see data
+                    </td>
+                  </tr>
+                  <!-- No data available message -->
+                  <tr id="confirmNoDataMessage" style="display: none;">
+                    <td colspan="8" class="text-center py-5 text-muted">
+                      <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
+                      No data available
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ================= COMPLETION MAIL TAB ================= -->
+      <div id="completionTab" class="mc-tab-content" style="display:none;">
+        <div class="mail-section-card">
+          <form action="/send-completion-mail" method="POST" id="completionForm">
+            
+            <!-- Styled Filter Bar -->
+            <div class="mail-filter-bar">
+              <!-- Batch Filter -->
+              <div class="mail-filter-pill">
+                <i class="bi bi-layers"></i>
+                <select id="batchCompletion" onchange="applyFilters('completion')">
+                  <option value="all" selected>All Batches</option>
+                  <% batches.forEach(batch => { %>
+                    <option value="<%= batch %>">Batch <%= batch %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <!-- Search Filter -->
+              <div class="mail-filter-pill" style="flex: 2; min-width: 200px;">
+                <i class="bi bi-search"></i>
+                <input type="text" id="searchCompletion" placeholder="Search by name or email" onkeyup="applyFilters('completion')">
+              </div>
+
+              <!-- Clear Button -->
+              <button type="button" class="fb-filter-clear" onclick="clearFilters('completion')">
+                <i class="bi bi-x-circle me-1"></i> Clear
+              </button>
+
+              <!-- Send Button -->
+              <button type="button" onclick="sendCompletionMails()" class="mail-send-btn ms-auto">
+                <i class="bi bi-send-fill me-1"></i> Send Mail
+              </button>
+            </div>
+
+            <!-- Table Container -->
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">S.No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Week</th>
+                    <th>Batch</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">
+                      <input type="checkbox" id="selectAllCompletion" onclick="toggleSelectAll('completion')" class="form-check-input">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="completionTable">
+                  <% 
+                  let serialNo = 1;
+                  interns.filter(i => i.isPassed).forEach(i => { 
+                  %>
+                    <tr data-status="<%= i.completionSent ? 'sent' : 'notSent' %>"
+                        data-batch="<%= i.batch_no %>" 
+                        data-name="<%= i.name.toLowerCase() %>" 
+                        data-email="<%= i.email.toLowerCase() %>">
+                      <td class="serial-no text-muted"><%= serialNo++ %></td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="admin-avatar-wrapper" style="width: 32px; height: 32px; padding: 2px;">
+                            <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>">
+                          </div>
+                          <strong><%= i.name %></strong>
+                        </div>
+                      </td>
+                      <td class="text-muted"><%= i.email %></td>
+                      <td><%= i.duration %> Weeks</td>
+                      <td><span class="fb-chip fb-chip-batch">Batch <%= i.batch_no %></span></td>
+                      <td>
+                        <% if(i.completionSent) { %>
+                          <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Sent</span>
+                        <% } else { %>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Not Sent</span>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(i.completionSent) { %>
+                          <button type="button" class="mail-resend-btn mx-auto" onclick="resendMail('<%= i.intern_id %>', 'completion')" title="Resend Mail">
+                            <i class="bi bi-arrow-repeat"></i>
+                          </button>
+                        <% } %>
+                      </td>
+                      <td class="text-center">
+                        <% if(!i.completionSent) { %>
+                          <input type="checkbox" name="interns[]" value="<%= i.intern_id %>" class="completionCheckbox form-check-input">
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                  <!-- Initial state message -->
+                  <tr id="completionAddFiltersMessage" style="display: none;">
+                    <td colspan="8" class="text-center py-5 text-muted">
+                      <i class="bi bi-funnel fs-3 d-block mb-2"></i>
+                      Add filters to see data
+                    </td>
+                  </tr>
+                  <!-- No data available message -->
+                  <tr id="completionNoDataMessage" style="display: none;">
+                    <td colspan="8" class="text-center py-5 text-muted">
+                      <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
+                      No data available
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div> <!-- content-body end -->
+  </div> <!-- main-content end -->
+
+  <!-- Resend Mail Modal -->
+  <div class="modal fade" id="resendMailModal" tabindex="-1" aria-labelledby="resendMailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header text-white" style="background-color: #ff6600;">
+          <h5 class="modal-title" id="resendMailModalLabel"><i class="bi bi-envelope-exclamation-fill me-2"></i>Resend Mail</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <i class="bi bi-question-circle text-warning mb-3" style="font-size: 3rem;"></i>
+          <p class="fs-5 mb-1" id="resendMailMessage">Are you sure you want to resend the mail?</p>
+          <p class="text-muted small">This action will trigger an immediate email dispatch.</p>
+          
+          <!-- Hidden Inputs to hold context -->
+          <input type="hidden" id="resendInternId">
+          <input type="hidden" id="resendMailType">
+          
+          <!-- Optional WhatsApp Link Input (only shown for confirm type) -->
+          <div id="resendWhatsappGroup" class="text-start mt-3" style="display: none;">
+            <label for="resendWhatsappLink" class="form-label fw-bold small">WhatsApp Group Link <span class="text-danger">*</span></label>
+            <input type="url" class="form-control" id="resendWhatsappLink" placeholder="Enter WhatsApp Group Link">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center bg-light">
+          <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary px-4" id="confirmResendBtn" style="background-color: #ff6600; border-color: #ff6600;">Yes, Resend</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Include all dashboard logic for mails -->
+  <script src="/js/superAdmin.js"></script>
+
+  <!-- Tab Switching Logic -->
+  <script>
+    function switchTab(type, clickedBtn) {
+      // Hide all tab panes
+      document.querySelectorAll('.mc-tab-content').forEach(el => el.style.display = 'none');
+      // Show target
+      document.getElementById(type === 'offer' ? 'offerLetterTab' : type === 'confirm' ? 'confirmationTab' : 'completionTab').style.display = 'block';
+      
+      // Update pill buttons
+      document.querySelectorAll('.mc-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(type === 'offer' ? 'tabOfferBtn' : type === 'confirm' ? 'tabConfirmBtn' : 'tabCompletionBtn');
+      if(activeBtn) activeBtn.classList.add('active');
+
+      // Update sidebar links
+      document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+      const targetLink = document.querySelector(`.sidebar a[href="#${type === 'offer' ? 'offerLetterTab' : type === 'confirm' ? 'confirmationTab' : 'completionTab'}"]`);
+      if(targetLink) targetLink.classList.add('active');
+
+      // Update Header Text
+      const headerObj = document.getElementById('mailCenterHeader');
+      const descObj = document.getElementById('mailCenterDesc');
+      if (headerObj && descObj) {
+        if (type === 'offer') {
+          headerObj.innerText = 'Offer Letter Mail';
+          descObj.innerText = 'Distribute internship offer letters securely to selected candidates.';
+        } else if (type === 'confirm') {
+          headerObj.innerText = 'Confirmation Mail';
+          descObj.innerText = 'Send confirmation and welcome emails to selected interns along with WhatsApp group link.';
+        } else {
+          headerObj.innerText = 'Completion Mail';
+          descObj.innerText = 'Notify certified interns about their internship completion and provide access to certificates.';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

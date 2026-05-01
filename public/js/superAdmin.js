@@ -329,8 +329,8 @@ function clearFilters(type) {
 }
 
 
-async function sendMails(type) {
-  const checkboxes = document.querySelectorAll("." + type + "Checkbox:checked");
+async function sendConfirmationMails() {
+  const checkboxes = document.querySelectorAll(".confirmCheckbox:checked");
   const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
   if (selectedIds.length === 0) {
@@ -338,24 +338,64 @@ async function sendMails(type) {
     return;
   }
 
+  const whatsappLink = document.getElementById("whatsappLink").value;
+  if (!whatsappLink || whatsappLink.trim() === "") {
+    showToast("WhatsApp Group Link is required.", "warning");
+    return;
+  }
+
+  const batchConfirm = document.getElementById("batchConfirm").value;
+  if (!batchConfirm || batchConfirm === "all") {
+    showToast("Please select a specific batch before sending mails.", "warning");
+    return;
+  }
+
+  // Show loader
+  const loaderWrapper = document.getElementById("pageLoaderWrapper");
+  if (loaderWrapper) {
+    loaderWrapper.style.display = 'flex';
+    loaderWrapper.classList.remove("hidden");
+  }
+
   try {
-    const response = await fetch(type === "confirm" ? "/send-confirmation-mail" : "/send-completion-mail", {
+    const response = await fetch("/send-confirmation-mail", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ interns: selectedIds }),
+      body: JSON.stringify({ interns: selectedIds, whatsappLink, batchConfirm }),
     });
 
     const data = await response.json();
     if (data.success) {
-      showToast(`${data.sent} mails sent. ${data.failed} failed.`, data.failed > 0 ? "warning" : "success");
-      console.log(`${type} mail results:`, data);
+      showToast(data.message, "success");
+
+      checkboxes.forEach(cb => {
+        cb.disabled = true;
+        cb.checked = false;
+        const row = cb.closest('tr');
+        row.dataset.status = 'sent';
+        row.style.backgroundColor = '#d4edda';
+      });
+
+      updateMasterCheckbox('confirm');
+      applyFilters('confirm');
+
+      const remainingCheckboxes = document.querySelectorAll('.confirmCheckbox:not([disabled])');
+      if (remainingCheckboxes.length === 0) {
+        const dot = document.getElementById('confirmationDot');
+        if (dot) dot.style.display = 'none';
+      }
     } else {
       showToast(`Error: ${data.message}`, "error");
     }
   } catch (err) {
-   console.error("Unexpected error while sending mails:", err);
-   showToast("Unexpected error while sending mails. Check console.", "error");
- }
+    console.error("Unexpected error while sending confirmation mails:", err);
+    showToast("Unexpected error while sending confirmation mails. Check console.", "error");
+  } finally {
+    if (loaderWrapper) {
+      loaderWrapper.classList.add("hidden");
+      setTimeout(() => (loaderWrapper.style.display = "none"), 600);
+    }
+  }
 }
 
 async function sendOfferLetterMails() {
@@ -422,6 +462,14 @@ document.addEventListener('DOMContentLoaded', () => {
     offerLetterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       await sendOfferLetterMails();
+    });
+  }
+
+  const confirmationForm = document.getElementById('confirmationForm');
+  if (confirmationForm) {
+    confirmationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await sendConfirmationMails();
     });
   }
 });
@@ -570,8 +618,8 @@ function applyFilters(type) {
     const batch = document.getElementById("batchCompletion").value;
     const search = document.getElementById("searchCompletion").value.toLowerCase();
     const rows = document.getElementById("completionTable").querySelectorAll("tr[data-batch]");
-    const addFiltersMessage = document.getElementById("addFiltersMessage");
-    const noDataMessage = document.getElementById("noDataMessage");
+    const addFiltersMessage = document.getElementById("completionAddFiltersMessage");
+    const noDataMessage = document.getElementById("completionNoDataMessage");
 
     let visibleIndex = 0;
     let hasVisibleRows = false;
@@ -612,9 +660,13 @@ function applyFilters(type) {
   const filter = document.getElementById("filter" + capitalize(type)).value;
   const batch = document.getElementById("batch" + capitalize(type)).value;
   const search = document.getElementById("search" + capitalize(type)).value.toLowerCase();
-  const rows = document.getElementById(type + "Table").querySelectorAll("tr");
+  const rows = document.getElementById(type + "Table").querySelectorAll("tr[data-batch]");
+  const addFiltersMessage = document.getElementById(type + "AddFiltersMessage");
+  const noDataMessage = document.getElementById(type + "NoDataMessage");
 
   let visibleIndex = 0;
+  let hasVisibleRows = false;
+  const hasFilters = filter !== "notSent" || batch !== "all" || search !== "";
 
   rows.forEach(row => {
     const status = row.getAttribute("data-status");
@@ -636,8 +688,12 @@ function applyFilters(type) {
       if (serialCell) {
         serialCell.textContent = visibleIndex;
       }
+      hasVisibleRows = true;
     }
   });
+
+  if (addFiltersMessage) addFiltersMessage.style.display = hasFilters ? "none" : "table-row";
+  if (noDataMessage) noDataMessage.style.display = (hasFilters && !hasVisibleRows) ? "table-row" : "none";
 
   // reset master checkbox whenever filters or batch changes
   const master = document.getElementById(
@@ -1056,4 +1112,108 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+});
+
+// ==========================
+// Resend Mail Function
+// ==========================
+function resendMail(internId, type) {
+  // Update modal text
+  const typeText = type === 'offer' ? 'Offer Letter' : type === 'confirm' ? 'Confirmation' : 'Completion';
+  const messageEl = document.getElementById('resendMailMessage');
+  if (messageEl) {
+    messageEl.innerText = `Are you sure you want to resend the ${typeText} mail to intern ${internId}?`;
+  }
+  
+  // Set hidden values
+  const idEl = document.getElementById('resendInternId');
+  if (idEl) idEl.value = internId;
+  const typeEl = document.getElementById('resendMailType');
+  if (typeEl) typeEl.value = type;
+
+  // Handle WhatsApp Link field for "confirm"
+  const waGroup = document.getElementById('resendWhatsappGroup');
+  const waInput = document.getElementById('resendWhatsappLink');
+  if (waGroup && waInput) {
+    if (type === 'confirm') {
+      waGroup.style.display = 'block';
+      waInput.value = ''; // clear previous
+    } else {
+      waGroup.style.display = 'none';
+    }
+  }
+
+  // Show modal
+  const resendModalEl = document.getElementById('resendMailModal');
+  if (resendModalEl) {
+    const resendModal = new window.bootstrap.Modal(resendModalEl);
+    resendModal.show();
+  }
+}
+
+// Add event listener for the confirm button inside the modal
+document.addEventListener('DOMContentLoaded', () => {
+  const confirmResendBtn = document.getElementById('confirmResendBtn');
+  if (confirmResendBtn) {
+    confirmResendBtn.addEventListener('click', async () => {
+      const internId = document.getElementById('resendInternId').value;
+      const type = document.getElementById('resendMailType').value;
+      
+      let url = "/send-completion-mail";
+      if (type === "offer") url = "/send-offerletter-mail";
+      if (type === "confirm") url = "/send-confirmation-mail";
+
+      let bodyData = { interns: [internId] };
+      
+      if (type === "confirm") {
+        const link = document.getElementById('resendWhatsappLink').value;
+        if (!link || link.trim() === '') {
+          showToast("WhatsApp Group Link is required.", "warning");
+          return;
+        }
+        bodyData.whatsappLink = link;
+        
+        const resendBtnEl = document.querySelector(`button[onclick="resendMail('${internId}', 'confirm')"]`);
+        const row = resendBtnEl ? resendBtnEl.closest('tr') : null;
+        bodyData.batchConfirm = row ? row.dataset.batch : "all"; // Fallback if row not found
+      }
+
+      // Hide Modal
+      const modalEl = document.getElementById('resendMailModal');
+      if (modalEl) {
+        const modalInstance = window.bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) modalInstance.hide();
+      }
+
+      // Show loader
+      const loaderWrapper = document.getElementById("pageLoaderWrapper");
+      if (loaderWrapper) {
+        loaderWrapper.style.display = 'flex';
+        loaderWrapper.classList.remove("hidden");
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyData),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showToast(`Mail resent successfully.`, data.failed > 0 ? "warning" : "success");
+        } else {
+          showToast(`Error: ${data.message}`, "error");
+        }
+      } catch (err) {
+        console.error(`Unexpected error while resending ${type} mail:`, err);
+        showToast(`Unexpected error while resending mail.`, "error");
+      } finally {
+        if (loaderWrapper) {
+          loaderWrapper.classList.add("hidden");
+          setTimeout(() => (loaderWrapper.style.display = "none"), 600);
+        }
+      }
+    });
+  }
 });

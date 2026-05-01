@@ -1,26 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 const User = require("../models/User");
 
 // ==============================
 // CONFIGURATION
 // ==============================
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
-  },
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URI
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
 });
+
+const gmail = google.gmail({
+  version: "v1",
+  auth: oAuth2Client
+});
+
+// ==============================
+// HELPER: Encode Email for Gmail API
+// ==============================
+function makeBody(to, from, subject, message) {
+  const str = [
+    "Content-Type: text/html; charset=\"UTF-8\"\n",
+    "MIME-Version: 1.0\n",
+    "Content-Transfer-Encoding: 7bit\n",
+    "to: ", to, "\n",
+    "from: ", from, "\n",
+    "subject: ", subject, "\n\n",
+    message
+  ].join('');
+
+  return Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+}
 
 // ==============================
 // HELPER: Send Bulk Confirmation Emails
 // ==============================
-async function sendBulkConfirmationMails(interns) {
+async function sendBulkConfirmationMails(interns, whatsappLink) {
   const sendPromises = interns.map(async (intern) => {
     try {
-      const { intern_id, name, email, domain,duration,whatsappLink } = intern;
+      const { intern_id, name, email, domain, duration } = intern;
 
       const subject = `Internship Confirmation - Welcome to Rixi Lab!`;
       const body = `
@@ -115,11 +139,12 @@ async function sendBulkConfirmationMails(interns) {
 </html>
       `;
 
-      await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: email,
-        subject,
-        html: body,
+      const encodedMail = makeBody(email, process.env.EMAIL, subject, body);
+      await gmail.users.messages.send({
+        userId: 'me',
+        resource: {
+          raw: encodedMail
+        }
       });
 
       await User.findOneAndUpdate({ intern_id }, { confirmationSent: true });
@@ -169,7 +194,7 @@ router.post("/send-confirmation-mail", async (req, res) => {
     const internDocs = await User.find({ intern_id: { $in: internIds } });
 
     // Send mails (using your existing sendBulkConfirmationMails)
-    const results = await sendBulkConfirmationMails(internDocs);
+    const results = await sendBulkConfirmationMails(internDocs, whatsappLink);
 
     const success = results.filter(r => r.status === "fulfilled").length;
     const failed = results.filter(r => r.status === "rejected").length;

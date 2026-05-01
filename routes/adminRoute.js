@@ -211,6 +211,28 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
 
     await newUser.save();
 
+    // ✅ Assign eligible projects based on batch + domain + duration
+    const projects = await Project.find({
+      domain: registration.domain,
+      batch_no: batch_no
+    });
+
+    const eligibleProjects = projects.filter(p => {
+      if (p.week <= 4 && [4, 6, 8].includes(Number(registration.duration))) return true;
+      if (p.week === 6 && [6, 8].includes(Number(registration.duration))) return true;
+      if (p.week === 8 && [8].includes(Number(registration.duration))) return true;
+      return false;
+    });
+
+    if (eligibleProjects.length > 0) {
+      newUser.projectAssigned = eligibleProjects.map(p => ({
+        projectId: p._id,
+        week: p.week,
+        status: "pending"
+      }));
+      await newUser.save();
+    }
+
     function getOrdinal(day) {
       if (day > 3 && day < 21) return "th"; // 11–13
       switch (day % 10) {

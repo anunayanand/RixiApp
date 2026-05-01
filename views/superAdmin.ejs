@@ -149,19 +149,15 @@
 
       <!-- Mobile Only Mail Links -->
       <div class="sidebar-nav-label d-md-none">Mails</div>
-      <a href="#offerLetterMail" class="nav-link d-md-none" onclick="setActive(this)">
-        <i class="bi bi-envelope-paper-fill"></i> 
-        <span>Offer Letter Mail</span>
-      </a>
-      <a href="#completionMail" class="nav-link d-md-none" onclick="setActive(this)">
-        <i class="bi bi-envelope-check-fill"></i> 
-        <span>Completion Mail</span>
+      <a href="/superAdmin/mail-center" class="nav-link d-md-none">
+        <i class="bi bi-mailbox2"></i> 
+        <span>Mail Center</span>
       </a>
 
-      <div class="sidebar-nav-label">Account</div>
+      <!-- <div class="sidebar-nav-label">Account</div>
       <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="bi bi-box-arrow-right"></i> 
-        <span>Logout</span>
+        <span>Logout</span> -->
       </a>
     </nav>
 
@@ -197,23 +193,20 @@
           <% } %>
         </button>
 
-        <!-- Offer Letter Bell -->
-        <button class="topbar-btn d-none d-md-flex" id="offerLetterButton" onclick="showSection('offerLetterMail')" title="Offer Letter">
-          <i class="bi bi-envelope-paper"></i>
-          <% const pendingOfferCount = interns.filter(i => !i.offer_letter_sent).length; %>
-          <% if (pendingOfferCount > 0) { %>
-            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning border border-light rounded-circle"></span>
+        <!-- Mail Center Link -->
+        <a href="/superAdmin/mail-center" class="topbar-btn d-none d-md-flex" title="Mail Center" style="color: inherit; text-decoration: none;">
+          <i class="bi bi-envelope-fill"></i>
+          <% 
+            const totalPending = interns.filter(i => !i.offer_letter_sent).length 
+                               + interns.filter(i => i.isPassed && !i.completionSent).length; 
+          %>
+          <% if (totalPending > 0) { %>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+              <%= totalPending %>
+            </span>
           <% } %>
-        </button>
+        </a>
 
-        <!-- Completion Mail Bell -->
-        <button class="topbar-btn d-none d-md-flex" id="completionMailButton" onclick="showSection('completionMail')" title="Completion Mail">
-          <i class="bi bi-envelope-check"></i>
-          <% const pendingCompletionCount = interns.filter(i => i.isPassed && !i.completionSent).length; %>
-          <% if (pendingCompletionCount > 0) { %>
-            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle"></span>
-          <% } %>
-        </button>
 
         <!-- Notification Bell -->
         <div class="dropdown">
@@ -2420,170 +2413,7 @@ function updateIntern(id) {
 </script>
 
 
-<!-- ================= COMPLETION MAIL ================= -->
-<section id="completionMail" style="display:none; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #ff6600 !important;">
-  <h4 class="text-center mb-4">Send Internship Completion Mail</h4>
 
-  <form action="/send-completion-mail" method="POST" id="completionForm">
-    <!-- Filters + Button Row -->
-    <div class="row g-2 mb-3 align-items-center">
-      <div class="col-12 col-sm-auto flex-sm-grow-1">
-        <select id="batchCompletion" class="form-select" onchange="applyFilters('completion')">
-          <option value="all" selected>All Batches</option>
-          <% batches.forEach(batch => { %>
-            <option value="<%= batch %>">Batch <%= batch %></option>
-          <% }) %>
-        </select>
-      </div>
-
-      <div class="col-12 col-sm-auto flex-sm-grow-1">
-        <input type="text" id="searchCompletion" class="form-control" placeholder="Search by name or email" onkeyup="applyFilters('completion')">
-      </div>
-
-      <div class="col-6 col-sm-auto ">
-        <button type="button" class="btn btn-secondary w-100" onclick="clearFilters('completion')">Clear Filters</button>
-      </div>
-
-      <div class="col-6 col-sm-auto">
-        <button class="btn btn-success w-100" type="submit">Send Mail</button>
-      </div>
-    </div>
-
-    <div class="table-responsive" style="max-height: 500px; overflow-y: auto; overflow-x: auto;">
-      <table class="table table-striped table-bordered">
-        <thead style="position: sticky; top: 0; background: #f8f9fa; z-index: 1;">
-          <tr>
-            <th style="width: 60px;">S.No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Week</th>
-            <th>Batch</th>
-            <th class="text-center">
-              <input type="checkbox" id="selectAllCompletion" onclick="toggleSelectAll('completion')" class="form-check-input">
-            </th>
-          </tr>
-        </thead>
-        <tbody id="completionTable">
-          <% 
-          let serialNo = 1;
-          interns.filter(i => i.isPassed && !i.completionSent).forEach(i => { 
-          %>
-            <tr data-status="<%= i.completionSent ? 'sent' : 'notSent' %>"
-                data-batch="<%= i.batch_no %>" 
-                data-name="<%= i.name.toLowerCase() %>" 
-                data-email="<%= i.email.toLowerCase() %>"
-                style="display: none;">
-              <td class="serial-no"><%= serialNo++ %></td>
-              <td><%= i.name %></td>
-              <td><%= i.email %></td>
-              <td><%= i.duration %> Weeks</td>
-              <td><%= i.batch_no %></td>
-              <td class="text-center">
-                <input type="checkbox" name="interns[]" value="<%= i.intern_id %>" class="completionCheckbox form-check-input">
-              </td>
-            </tr>
-          <% }) %>
-          <!-- Initial state message -->
-          <tr id="addFiltersMessage" style="display: none;">
-            <td colspan="5" class="text-center py-5 text-muted">
-              <i class="bi bi-funnel fs-3 d-block mb-2"></i>
-              Add filters to see data
-            </td>
-          </tr>
-          <!-- No data available message -->
-          <tr id="noDataMessage" style="display: none;">
-            <td colspan="5" class="text-center py-5 text-muted">
-              <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
-              No data available
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </form>
-</section>
-
-<!-- ================= OFFER LETTER MAIL ================= -->
-
-<section id="offerLetterMail" style="display:none; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border:1px solid #ff6600 !important">
-  <h4 class="text-center mb-4">Send Offer Letter Mail</h4>
-
-  <form action="/send-offerletter-mail" method="POST" id="offerLetterForm" class="needs-validation" novalidate>
-    <!-- Filters + Search + Send Button in one row -->
-    <div class="row g-2 mb-3 align-items-center">
-      
-      <div class="col-12 col-sm-auto">
-        <select id="filterOfferLetter" class="form-select" onchange="applyFilters('offerLetter')">
-          <option value="sent">Sent</option>
-          <option value="notSent" selected>Pending</option>
-        </select>
-      </div>
-
-      <div class="col-12 col-sm-auto">
-        <select id="batchOfferLetter" class="form-select" onchange="applyFilters('offerLetter')">
-          <option value="all" selected>All Batches</option>
-          <% batches.forEach(batch => { %>
-            <option value="<%= batch %>"><%= batch %></option>
-          <% }) %>
-        </select>
-      </div>
-
-      <div class="col-12 col-sm-auto flex-sm-grow-1 mt-2 mt-sm-0">
-        <input type="text" id="searchOfferLetter" class="form-control" placeholder="Search by name or email" onkeyup="applyFilters('offerLetter')">
-      </div>
-
-      <div class="col-6 col-sm-auto">
-        <button type="button" class="btn btn-secondary w-100" onclick="clearFilters('offerLetter')">Clear Filters</button>
-      </div>
-
-      <div class="col-6 col-sm-auto">
-        <button class="btn btn-success w-100" type="submit">Send Mail</button>
-      </div>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-bordered mb-0">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Intern ID</th>
-            <th>Batch</th>
-            <th>Status</th>
-            <th class="text-center"><input type="checkbox" id="selectAllOfferLetter" onclick="toggleSelectAll('offerLetter')" class="form-check-input"></th>
-          </tr>
-        </thead>
-        <tbody id="offerLetterTable">
-          <% interns.forEach(i => { %>
-  <% if (!i.offer_letter_sent) { %>
-    <tr data-status="notSent" 
-        data-batch="<%= i.batch_no %>" 
-        data-name="<%= i.name.toLowerCase() %>" 
-        data-email="<%= i.email.toLowerCase() %>"
-        class="row-notSent">
-
-      <td><%= i.name %></td>
-      <td><%= i.email %></td>
-      <td><%= i.intern_id %></td>
-      <td><%= i.batch_no %></td>
-      <td>Not Sent</td>
-
-      <td class="text-center" style="padding-left: 5px !important;">
-        <input type="checkbox" 
-               name="interns[]" 
-               value="<%= i.intern_id %>" 
-               class="offerLetterCheckbox form-check-input" 
-               onclick="updateRowColor(this, 'offerLetter')">
-      </td>
-
-    </tr>
-  <% } %>
-<% }) %>
-        </tbody>
-      </table>
-    </div>
-  </form>
-</section>
 
 <!-- Logout Confirmation Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
