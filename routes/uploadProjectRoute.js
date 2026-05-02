@@ -5,6 +5,7 @@ const User = require("../models/User");
 const Admin = require("../models/Admin");
 const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require('../middleware/authRole');
+const { notify } = require("../services/notificationService");
 
 router.post("/admin/projects", authRole("admin"), async (req, res) => {
   try {
@@ -40,39 +41,40 @@ router.post("/admin/projects", authRole("admin"), async (req, res) => {
       duration: { $in: eligibleDurations }
     });
 
-    // 🟢 Notification object for interns
-    const internNotification = {
-      title: "New Project Assigned",
-      message: `A new project "${title}" has been assigned for Week ${week}. Check your dashboard for details.`,
-      type: "project",
-      createdAt: new Date(),
-      isRead: false
-    };
-
-    // Push notification and project assignment
+    // Push project assignment
+    const notificationPayloads = [];
     for (let intern of interns) {
       intern.projectAssigned = intern.projectAssigned || [];
-      intern.notifications = intern.notifications || [];
       intern.projectAssigned.push({
         projectId: newProject._id,
         week: newProject.week,
         status: "pending"
       });
-      intern.notifications.push(internNotification);
       await intern.save();
+
+      notificationPayloads.push({
+        recipientId: intern._id,
+        recipientModel: "User",
+        title: "New Project Assigned",
+        message: `A new project "${title}" has been assigned for Week ${week}. Check your dashboard for details.`,
+        type: "project"
+      });
+    }
+    
+    if (notificationPayloads.length > 0) {
+      await notify(notificationPayloads);
     }
 
     // 🟣 Notify SuperAdmin
     const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
-      superAdmin.notifications.push({
+      await notify({
+        recipientId: superAdmin._id,
+        recipientModel: "SuperAdmin",
         title: "New Project Created",
         message: `A new project "${title}" has been created by ${admin.name} for domain "${admin.domain}" (Week ${week}).`,
-        type: "project",
-        createdAt: new Date(),
-        isRead: false
+        type: "project"
       });
-      await superAdmin.save();
     }
 
     res.json({ success: true, message: 'Project Created Successfully! Notifications sent.' });

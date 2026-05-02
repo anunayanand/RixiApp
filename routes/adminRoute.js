@@ -10,6 +10,8 @@ const Lecture = require("../models/Lecture");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
+const { notify } = require("../services/notificationService");
+const Notification = require("../models/Notification");
 const GOOGLE_SCRIPT_URL = process.env.CNF_MAIL_SCRIPT_URL;
 // Function to split intern_id into parts
 const startingDate = {
@@ -71,12 +73,12 @@ router.get("/", authRole("admin"), async (req, res, next) => {
         if (!alreadyNotified) {
           const message = `Intern ${intern.name} has successfully completed 100% progress.`;
 
-          admin.notifications.push({
+          await notify({
+            recipientId: admin._id,
+            recipientModel: "Admin",
             title: "Intern Completed Internship",
             message,
-            type: "progress",
-            createdAt: new Date(),
-            isRead: false,
+            type: "progress"
           });
 
           admin.notifiedInterns.push(intern._id.toString());
@@ -115,9 +117,11 @@ router.get("/", authRole("admin"), async (req, res, next) => {
     const quizzes = await Quiz.find({ domain: admin.domain }).sort({
       createdAt: -1,
     });
-    const notifications = admin.notifications.sort(
-      (a, b) => b.createdAt - a.createdAt,
-    );
+    const unreadCount = await Notification.countDocuments({
+      recipientId: admin._id,
+      recipientModel: "Admin",
+      isRead: false
+    });
     const registrations = await NewRegistration.find({
       status: "approved",
       domain: admin.domain,
@@ -139,7 +143,7 @@ router.get("/", authRole("admin"), async (req, res, next) => {
       meetings: upcomingMeetings,
       showPasswordPopup: admin.isFirstLogin,
       quizzes,
-      notifications,
+      unreadCount,
       registrations,
       lectures,
     });

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require("../models/User");
 const Admin = require("../models/Admin");
 const Project = require("../models/Project");
+const Notification = require("../models/Notification");
 const authRole = require('../middleware/authRole');
 
 router.get("/intern", authRole("intern"), async (req, res, next) => {
@@ -40,8 +41,12 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
     const mentor = await Admin.findOne({ domain: intern.domain }).select("name");
     const mentorName = mentor?.name ?? "No Mentor";
 
-    // Sort notifications (newest first)
-    const notifications = (intern.notifications || []).sort((a, b) => b.createdAt - a.createdAt);
+    // Get unread notification count
+    const unreadCount = await Notification.countDocuments({
+      recipientId: intern._id,
+      recipientModel: "User",
+      isRead: false
+    });
 
     // Assigned quizzes with populated quiz (only for intern's current batch and matching duration)
     const assignedQuizzes = (intern.quizAssignments || [])
@@ -90,7 +95,7 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
       assignedMeetings,
       showPasswordPopup: intern.isFirstLogin,
       assignedQuizzes,
-      notifications,
+      unreadCount,
       startingDate,
       allLectures,
       lectureProgress

@@ -210,36 +210,24 @@
 
         <!-- Notification Bell -->
         <div class="dropdown">
-          <button class="topbar-btn" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="topbar-btn" data-bs-toggle="dropdown" aria-expanded="false" id="notificationButton">
             <i class="bi bi-bell"></i>
-            <% const unreadCount = notifications ? notifications.length : 0; %>
-            <% if (unreadCount > 0) { %>
-              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle"></span>
+            <% if (typeof unreadCount !== 'undefined' && unreadCount > 0) { %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge">
+                <%= unreadCount > 9 ? '9+' : unreadCount %>
+              </span>
+            <% } else { %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge">0</span>
             <% } %>
           </button>
           
           <ul class="dropdown-menu dropdown-menu-end notif-dropdown shadow-lg" style="width: 320px;" id="notificationList">
-            <li class="notif-header">
-              <span>Notifications (<%= unreadCount %>)</span>
-              <% if (notifications && notifications.length > 0) { %>
-                <button id="clearAllBtn" class="btn btn-xs btn-outline-light py-0" style="font-size: 0.7rem;">Clear All</button>
-              <% } %>
+            <li class="notif-header d-flex justify-content-between align-items-center p-2 border-bottom">
+              <span class="fw-bold">Notifications</span>
+              <button id="clearAllBtn" class="btn btn-xs btn-outline-secondary py-0" style="font-size: 0.7rem; display: none;">Clear All</button>
             </li>
-            <div style="max-height: 300px; overflow-y: auto;">
-              <% if (notifications && notifications.length > 0) { %>
-                <% notifications.forEach(n => { %>
-                  <li class="notif-item" data-id="<%= n._id %>">
-                    <div>
-                      <strong><%= n.title %></strong>
-                      <small class="text-muted d-block"><%= n.message %></small>
-                      <small class="text-primary" style="font-size: 0.65rem;"><%= new Date(n.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></small>
-                    </div>
-                    <button class="btn btn-sm btn-outline-success mark-read-btn py-0 px-1" title="Mark as Read"><i class="bi bi-check2"></i></button>
-                  </li>
-                <% }) %>
-              <% } else { %>
-                <li class="p-4 text-center text-muted small">No new notifications 🎉</li>
-              <% } %>
+            <div id="notificationItems" style="max-height: 300px; overflow-y: auto;">
+              <li class="p-4 text-center text-muted small">Loading...</li>
             </div>
           </ul>
         </div>
@@ -3239,5 +3227,6 @@ function updateIntern(id) {
       });
     }
   </script>
+  <script src="/js/notifications.js"></script>
 </body>
 </html>

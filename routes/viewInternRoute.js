@@ -35,12 +35,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
         attemptCount: a.attemptCount,
         isClosed: a.quizId?.isClosed || false
       }));
-  // Sort notifications (newest first)
-  const notifications = (intern.notifications || []).sort((a, b) => {
-    const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-    const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-    return bTime - aTime;
-  });
+  const unreadCount = 0; // Admin viewing intern doesn't need real unread count
   const projects = await Project.find({ domain: intern.domain });
   const showPasswordPopup = false;
 
@@ -79,7 +74,7 @@ router.get("/admin/intern/:internId", authRole(['admin','superAdmin']), async (r
 const str_date = formatWithOrdinal(intern.starting_date);
 
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,notifications,startingDate: str_date, allLectures, lectureProgress });
+  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,unreadCount,startingDate: str_date, allLectures, lectureProgress });
   }catch(err){
     console.error(err);
     req.flash("error", "Intern details loading failed");

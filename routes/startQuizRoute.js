@@ -140,30 +140,35 @@ router.post("/quiz/:quizId/submit", async (req, res) => {
     // 7️⃣ Notify SuperAdmin and Admins
     const notificationMessage = `${intern.name} has submitted the quiz "${quiz.title}" (Week ${quiz.week}) in domain "${quiz.domain}".`;
 
+    const { notify } = require("../services/notificationService");
+    const notificationPayloads = [];
+
     // SuperAdmin notification
     const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
-      superAdmin.notifications.push({
+      notificationPayloads.push({
+        recipientId: superAdmin._id,
+        recipientModel: "SuperAdmin",
         title: "Quiz Submitted by Intern",
         message: notificationMessage,
-        type: "quizSubmitted",
-        createdAt: new Date(),
-        isRead: false,
+        type: "quizSubmitted"
       });
-      await superAdmin.save();
     }
 
     // Admin notification
     const admins = await Admin.find({ domain: intern.domain });
     for (let admin of admins) {
-      admin.notifications.push({
+      notificationPayloads.push({
+        recipientId: admin._id,
+        recipientModel: "Admin",
         title: "Quiz Submitted",
         message: notificationMessage,
-        type: "quizSubmitted",
-        createdAt: new Date(),
-        isRead: false,
+        type: "quizSubmitted"
       });
-      await admin.save();
+    }
+
+    if (notificationPayloads.length > 0) {
+      await notify(notificationPayloads);
     }
 
     // 8️⃣ Confirmation message to intern

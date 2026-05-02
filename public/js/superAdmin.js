@@ -1054,6 +1054,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (action === "/superAdmin/notice" || action === "/create-admin" || action === "/create-ambassador" || action === "/allot-meetings" || action === "/change-password" || action === "/update-profile-image") {
             form.classList.remove('was-validated');
             form.reset();
+            setTimeout(() => window.location.reload(), 1500);
           }
           
           if (action.startsWith("/superAdmin/notice/delete/") || action.startsWith("/delete-admin/") || action.startsWith("/delete-user/") || action.startsWith("/delete-ambassador/") || action.startsWith("/delete-meeting/")) {

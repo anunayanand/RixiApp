@@ -6,6 +6,7 @@ const SuperAdmin = require("../models/SuperAdmin");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
+const { notify } = require("../services/notificationService");
 
 // ------------------- Cloudinary Storage -------------------
 const quizStorage = new CloudinaryStorage({
@@ -44,14 +45,13 @@ router.post("/create", quizUpload.array("images"), async (req, res) => {
     // 🟣 Notify SuperAdmin
     const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
-      superAdmin.notifications.push({
+      await notify({
+        recipientId: superAdmin._id,
+        recipientModel: "SuperAdmin",
         title: "New Quiz Created",
         message: `A new quiz "${title}" (Week ${week}) has been created for domain "${domain}".`,
-        type: "quizAssigned",
-        createdAt: new Date(),
-        isRead: false,
+        type: "quizAssigned"
       });
-      await superAdmin.save();
     }
 
     res.json({ success: true, message: "Quiz created successfully. Notification sent to SuperAdmin." });
@@ -87,17 +87,10 @@ router.post("/assign", async (req, res) => {
     // Note: I will provide the full logic to avoid previous mistakes.
     
     // (Actual logic below)
-    const internNotification = {
-      title: "New Quiz Assigned",
-      message: `A new quiz "${quiz.title}" (Week ${quiz.week}) has been assigned to you. Check your dashboard to attempt it.`,
-      type: "quizAssigned",
-      createdAt: new Date(),
-      isRead: false,
-    };
+    const notificationPayloads = [];
 
     for (let intern of interns) {
       if (!intern.quizAssignments) intern.quizAssignments = [];
-      if (!intern.notifications) intern.notifications = [];
       
       const alreadyAssigned = intern.quizAssignments.some(
         (q) => q && q.quizId && q.quizId.toString() === quiz._id.toString()
@@ -111,23 +104,33 @@ router.post("/assign", async (req, res) => {
           score: 0,
           attemptCount: 0,
         });
-        intern.notifications.push(internNotification);
         await intern.save();
+
+        notificationPayloads.push({
+          recipientId: intern._id,
+          recipientModel: "User",
+          title: "New Quiz Assigned",
+          message: `A new quiz "${quiz.title}" (Week ${quiz.week}) has been assigned to you. Check your dashboard to attempt it.`,
+          type: "quizAssigned"
+        });
       }
+    }
+    
+    if (notificationPayloads.length > 0) {
+      await notify(notificationPayloads);
     }
 
     await Quiz.findByIdAndUpdate(quiz._id, { $addToSet: { assignedBatches: batch } });
 
     const superAdmin = await SuperAdmin.findOne({});
     if (superAdmin) {
-      superAdmin.notifications.push({
+      await notify({
+        recipientId: superAdmin._id,
+        recipientModel: "SuperAdmin",
         title: "Quiz Assigned to Interns",
         message: `Quiz "${quiz.title}" (Week ${quiz.week}) has been assigned to batch "${batch}" in domain "${quiz.domain}".`,
-        type: "quizAssigned",
-        createdAt: new Date(),
-        isRead: false,
+        type: "quizAssigned"
       });
-      await superAdmin.save();
     }
 
     res.json({ success: true, message: "Quiz assigned successfully. Notifications sent." });

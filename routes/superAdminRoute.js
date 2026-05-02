@@ -7,7 +7,9 @@ const authRole = require("../middleware/authRole");
 const Ambassador = require("../models/Ambassador");
 const NewRegistration = require("../models/NewRegistration");
 const Feedback = require("../models/Feedback");
+const Notification = require("../models/Notification");
 const { generateSignature } = require("./profileRoute");
+const { notify } = require("../services/notificationService");
 
 
 router.get("/", authRole("superAdmin"), async (req, res, next) => {
@@ -45,12 +47,12 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
         if (!alreadyNotified) {
           const message = `Intern ${intern.name} from domain "${intern.domain}" has completed 100% progress.`;
 
-          superAdmin.notifications.push({
+          await notify({
+            recipientId: superAdmin._id,
+            recipientModel: "SuperAdmin",
             title: "Intern Completed Internship",
             message,
-            type: "progress",
-            createdAt: new Date(),
-            isRead: false,
+            type: "progress"
           });
 
           superAdmin.notifiedInterns.push(intern._id.toString());
@@ -129,8 +131,12 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
       }))
     );
 
-    // Sort notifications newest first
-    const notifications = superAdmin.notifications.sort((a, b) => b.createdAt - a.createdAt);
+    // Get unread notification count
+    const unreadCount = await Notification.countDocuments({
+      recipientId: superAdmin._id,
+      recipientModel: "SuperAdmin",
+      isRead: false
+    });
 
     // ==============================
     // 🏆 Top 5 Ambassadors
@@ -181,7 +187,7 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
       ambassadorCount,
       adminNotices,
       meetings,
-      notifications,
+      unreadCount,
       showPasswordPopup: superAdmin.isFirstLogin,
       registrations,
       topAmbassadorLabels,
@@ -288,7 +294,11 @@ router.get("/mail-center", authRole("superAdmin"), async (req, res, next) => {
     const totalSentOffer = interns.filter(i => i.offer_letter_sent).length;
     const totalSentConfirmation = interns.filter(i => i.confirmationSent).length;
     const totalSentCompletion = interns.filter(i => i.completionSent).length;
-    const notifications = superAdmin.notifications.sort((a, b) => b.createdAt - a.createdAt);
+    const unreadCount = await Notification.countDocuments({
+      recipientId: superAdmin._id,
+      recipientModel: "SuperAdmin",
+      isRead: false
+    });
     const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
 
     res.render("mailCenter", {
@@ -301,7 +311,7 @@ router.get("/mail-center", authRole("superAdmin"), async (req, res, next) => {
       totalSentOffer,
       totalSentConfirmation,
       totalSentCompletion,
-      notifications,
+      unreadCount,
       registrations,
     });
   } catch (err) {

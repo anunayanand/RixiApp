@@ -67,7 +67,7 @@ router.get(
         meetings: upcomingMeetings,
         showPasswordPopup,
         quizzes,
-        notifications: admin.notifications || [],
+        unreadCount: 0,
         registrations,
       });
     } catch (err) {
