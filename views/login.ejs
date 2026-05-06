@@ -15,8 +15,12 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,215 +35,200 @@
 </head>
 
 <body class="index-page">
- <%- include('partials/loader') %>
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+  <%- include('partials/loader') %>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="">
-        <h1 class="sitename">Rixi Lab</h1>
-      </a>
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+          <img src="/img/Rixi Lab New Logo PNG.png" alt="">
+          <h1 class="sitename">Rixi Lab</h1>
+        </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-         <li><a href="/" class="active">Home</a></li>
-          <li><a href="internship">Internship</a></li>
-          <li><a href="cap">CAP</a></li>
-          <li><a href="/#about">About</a></li>
-          <li><a href="/#services">Services</a></li>
-          <li><a href="/certificate">Certificate</a></li>
-          <li><a href="/#contact" style="color: white !important;">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="internship">Internship</a></li>
+            <li><a href="cap">CAP</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/certificate">Certificate</a></li>
+            <li><a href="/#contact" style="color: white !important;">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
-      <a class="btn-getstarted" href="internship">Internship</a>
+        <a class="btn-getstarted" href="internship">Internship</a>
 
-    </div>
-  </header>
+      </div>
+    </header>
 
-  <main class="main "><br><br>
-    <!-- Contact Section -->
-    <section id="contact" class="contact section ">
-      <!-- Section Title -->
-      <div class="container  section-title" data-aos="fade-up">
-        <h2>Student Login</h2>
-        <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
-      </div><!-- End Section Title -->
+    <main class="main "><br><br>
+      <!-- Contact Section -->
+      <section id="contact" class="contact section ">
+        <!-- Section Title -->
+        <div class="container  section-title" data-aos="fade-up">
+          <h2>Student Login</h2>
+          <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+        </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row d-flex justify-content-center">
-          
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row d-flex justify-content-center">
 
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-            <div class="contact-form-wrapper">
-              <div class="form-header">
-                <h3>Login With Your Email & Password</h3>
-              </div>
 
-              <form id="loginForm" class="php-email-form needs-validation" action="/login" method="POST" novalidate>
-                
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+              <div class="contact-form-wrapper">
+                <div class="form-header">
+                  <h3>Login With Your Email & Password</h3>
+                </div>
+
+                <form id="loginForm" class="php-email-form needs-validation" action="/login" method="POST" novalidate>
+
                   <div class="mb-3">
                     <label for="contactEmail" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" name="email" id="contactEmail" placeholder="Enter your email address" required>
+                    <input type="email" class="form-control" name="email" id="contactEmail"
+                      placeholder="Enter your email address" required>
                   </div>
-               <div class="mb-3">
-  <label for="InternID" class="form-label">Password</label>
+                  <div class="mb-3">
+                    <label for="InternID" class="form-label">Password</label>
 
-  <div class="position-relative">
-    <input type="password" name="password" class="form-control pe-5"
-           id="InternID" placeholder="Password" required>
+                    <div class="position-relative">
+                      <input type="password" name="password" class="form-control pe-5" id="InternID"
+                        placeholder="Password" required>
 
-    <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3"
-       id="toggleIcon"
-       style="cursor: pointer;"
-       onclick="togglePassword()"></i>
-  </div>
-</div>
-             <div class="mb-3">
-  <label for="captchaInput" class="form-label">Enter the captcha below:</label>
+                      <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3" id="toggleIcon"
+                        style="cursor: pointer;" onclick="togglePassword()"></i>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="captchaInput" class="form-label">Enter the captcha below:</label>
 
-  <div id="captcha-container" class="mb-2" style="display:flex; align-items:center; justify-content:center;">
-    <div id="captcha-text"
-         class="form-control text-center fw-bold"
-         style="letter-spacing: 6px; font-size: 1.75rem; background: #000; color: #ff6600; font-family: 'Special Elite',system-ui;">
-      <%= captchaText %>
-    </div>
-    <button type="button" id="refresh-captcha"
-            style="background:none; border:none; margin-left:5px;margin-right: 5px; font-size:22px; color:#ff6600; cursor:pointer;">↻</button>
-    <input type="text" id="captchaInput" name="captchaInput"
-         class="form-control"
-         placeholder="Enter captcha here" required>
-    
-  </div>
+                    <div id="captcha-container" class="mb-2"
+                      style="display:flex; align-items:center; justify-content:center;">
+                      <div id="captcha-text" class="form-control text-center fw-bold"
+                        style="letter-spacing: 6px; font-size: 1.75rem; background: #000; color: #ff6600; font-family: 'Special Elite',system-ui;">
+                        <%= captchaText %>
+                      </div>
+                      <button type="button" id="refresh-captcha"
+                        style="background:none; border:none; margin-left:5px;margin-right: 5px; font-size:22px; color:#ff6600; cursor:pointer;">↻</button>
+                      <input type="text" id="captchaInput" name="captchaInput" class="form-control"
+                        placeholder="Enter captcha here" required>
 
-</div>
+                    </div>
+
+                  </div>
 
 
 
-                <div class="mb-2 text-center" id="errorMsg"></div>
+                  <div class="mb-2 text-center" id="errorMsg"></div>
 
-                <button type="submit" class="submit-btn">
-                  <span>Login</span>
-                  <i class="bi bi-arrow-right"></i>
-                </button>
+                  <button type="submit" class="submit-btn">
+                    <span>Login</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
                   <div class="text-center mt-3">
-                     <a href="/reset-password" style="text-decoration: none; color: #ff6600;">
-                          Forgot Password? Click to Reset
-                     </a>
-                </div>
-                <!-- <p class="text-center" style="color: #ff6600;"><a href="/forgot-password" style="text-decoration: none;">Forgot Password?</a> </p> -->
-              </form>
+                    <a href="/reset-password" style="text-decoration: none; color: #ff6600;">
+                      Forgot Password? Click to Reset
+                    </a>
+                  </div>
+                  <!-- <p class="text-center" style="color: #ff6600;"><a href="/forgot-password" style="text-decoration: none;">Forgot Password?</a> </p> -->
+                </form>
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section><!-- /Contact Section -->
+      </section><!-- /Contact Section -->
 
-  </main>
-  <%- include("partials/toaster") %>
- <footer id="footer" class="footer light-background">
-      <div class="copyright text-center">
-        <div
-          class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center"
-        >
+    </main>
+    <%- include("partials/toaster") %>
+      <footer id="footer" class="footer light-background">
+        <div class="copyright text-center">
           <div
-            class="d-flex flex-column align-items-center align-items-lg-start"
-          >
-            <div>
-              © Copyright 2025-26 <strong><span>Rixi Lab</span></strong
-              >. All Rights Reserved
+            class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+            <div class="d-flex flex-column align-items-center align-items-lg-start">
+              <div>
+                © Copyright 2025-26 <strong><span>Rixi Lab</span></strong>. All Rights Reserved
+              </div>
+              <div class="credits">
+                Designed by
+                <a style="text-decoration: none; color: #ff6600" href="https://www.rixilab.tech"><b>Rixi Lab</b></a>
+              </div>
             </div>
-            <div class="credits">
-              Designed by
-              <a
-                style="text-decoration: none; color: #ff6600"
-                href="https://www.rixilab.tech"
-                ><b>Rixi Lab</b></a
-              >
-            </div>
-          </div>
 
-          <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-            <a class="btn-getstarted btn-outline" style=" width: 5rem;" href="admin-login">Login</a>
-            <a href="https://www.linkedin.com/company/rixilab"
-              ><i class="bi bi-linkedin"></i
-            ></a>
-            <a href="https://www.facebook.com/rixilab"
-              ><i class="bi bi-facebook"></i
-            ></a>
-            <a href="https://www.instagram.com/rixilab.in"
-              ><i class="bi bi-instagram"></i
-            ></a>
-            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+              <a class="btn-getstarted btn-outline" style=" width: 5rem;" href="admin-login">Login</a>
+              <a href="https://www.linkedin.com/company/rixilab"><i class="bi bi-linkedin"></i></a>
+              <a href="https://www.facebook.com/rixilab"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/rixilab.in"><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+            </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
 
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+      <!-- Scroll Top -->
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/vendor/aos/aos.js"></script>
-  <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="/js/vendor/typed.js/typed.umd.js"></script>
-  <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
+      <!-- Vendor JS Files -->
+      <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="/js/vendor/aos/aos.js"></script>
+      <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
+      <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
+      <script src="/js/vendor/typed.js/typed.umd.js"></script>
+      <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
-  <script src="/js/main.js"></script>
- <script>
- document.getElementById("refresh-captcha").addEventListener("click", async () => {
-   try {
-      const res = await fetch("/generate-captcha");
-      const data = await res.json();
-      document.getElementById("captcha-text").textContent = data.captcha;
-    } catch (err) {
-      console.error("Failed to refresh captcha:", err);
-    }
-  });
-const captchaText = document.getElementById("captcha-text");
-captchaText.addEventListener("contextmenu", e => e.preventDefault());
-captchaText.addEventListener("copy", e => e.preventDefault());
-captchaText.style.userSelect = "none";
-</script>
-<script>
-  function togglePassword() {
-    const passwordInput = document.getElementById("InternID");
-    const toggleIcon = document.getElementById("toggleIcon");
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      toggleIcon.classList.remove("bi-eye-slash");
-      toggleIcon.classList.add("bi-eye");
-    } else {
-      passwordInput.type = "password";
-      toggleIcon.classList.remove("bi-eye");
-      toggleIcon.classList.add("bi-eye-slash");
-    }
-  }
-</script>
+      <!-- Main JS File -->
+      <script src="/js/main.js"></script>
+      <script>
+        document.getElementById("refresh-captcha").addEventListener("click", async () => {
+          try {
+            const res = await fetch("/generate-captcha");
+            const data = await res.json();
+            document.getElementById("captcha-text").textContent = data.captcha;
+          } catch (err) {
+            console.error("Failed to refresh captcha:", err);
+          }
+        });
+        const captchaText = document.getElementById("captcha-text");
+        captchaText.addEventListener("contextmenu", e => e.preventDefault());
+        captchaText.addEventListener("copy", e => e.preventDefault());
+        captchaText.style.userSelect = "none";
+      </script>
+      <script>
+        function togglePassword() {
+          const passwordInput = document.getElementById("InternID");
+          const toggleIcon = document.getElementById("toggleIcon");
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("bi-eye-slash");
+            toggleIcon.classList.add("bi-eye");
+          } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("bi-eye");
+            toggleIcon.classList.add("bi-eye-slash");
+          }
+        }
+      </script>
 
-  <nav class="mobile-bottom-nav d-xl-none">
-    <a href="/" class="bottom-nav-item">
-      <i class="bi bi-house"></i><span>Home</span>
-    </a>
-    <a href="/internship" class="bottom-nav-item">
-      <i class="bi bi-laptop"></i><span>Internship</span>
-    </a>
-    <a href="/cap" class="bottom-nav-item">
-      <i class="bi bi-mortarboard"></i><span>CAP</span>
-    </a>
-    <a href="/certificate" class="bottom-nav-item">
-      <i class="bi bi-award"></i><span>Certificate</span>
-    </a>
-    <a href="/login" class="bottom-nav-item active">
-      <i class="bi bi-person"></i><span>Login</span>
-    </a>
-  </nav>
+      <nav class="mobile-bottom-nav d-xl-none">
+        <a href="/" class="bottom-nav-item">
+          <i class="bi bi-house"></i><span>Home</span>
+        </a>
+        <a href="/internship" class="bottom-nav-item">
+          <i class="bi bi-laptop"></i><span>Internship</span>
+        </a>
+        <a href="/cap" class="bottom-nav-item">
+          <i class="bi bi-mortarboard"></i><span>CAP</span>
+        </a>
+        <a href="/certificate" class="bottom-nav-item">
+          <i class="bi bi-award"></i><span>Certificate</span>
+        </a>
+        <a href="/login" class="bottom-nav-item active">
+          <i class="bi bi-person"></i><span>Login</span>
+        </a>
+      </nav>
 </body>
 
 </html>
