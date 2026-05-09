@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
   domain: { type: String },
   college: { type: String },
   isFirstLogin: { type: Boolean, default: true },
+  otp: { type: String, default: null },
+  otpExpiry: { type: Date, default: null },
   duration: { type: Number },
   branch: { type: String },
   course: { type: String },

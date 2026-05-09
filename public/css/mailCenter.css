@@ -48,3 +48,88 @@
   font-weight: 700;
   margin-left: auto;
 }
+
+/* =========================================
+   RESPONSIVE DESIGN (mailCenter.ejs)
+   ========================================= */
+
+/* Mobile Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -280px; /* Hide sidebar */
+    top: 0;
+    bottom: 0;
+    z-index: 1050;
+    transition: left 0.3s ease;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .main-content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1040;
+  }
+  .sidebar-overlay.active {
+    display: block;
+  }
+  .admin-topbar {
+    padding: 0 15px;
+  }
+}
+
+/* Filter Bar Adjustments */
+@media (max-width: 576px) {
+  .mail-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mail-filter-pill {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+  .mail-send-btn {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .fb-filter-clear {
+    width: 100%;
+    text-align: center;
+  }
+  #notificationList {
+    width: 100% !important;
+    max-width: 320px;
+    right: -10px;
+  }
+}
+
+/* Table Adjustments */
+@media (max-width: 768px) {
+  .mail-table thead th {
+    font-size: 0.65rem;
+    padding: 8px 10px;
+  }
+  .mail-table tbody td {
+    font-size: 0.75rem;
+    padding: 8px 10px;
+  }
+  .mail-badge {
+    padding: 2px 6px;
+    font-size: 0.65rem;
+  }
+}
+
+/* Modal Padding */
+@media (max-width: 576px) {
+  #resendMailModal .modal-body {
+    padding: 1.5rem !important;
+  }
+}
