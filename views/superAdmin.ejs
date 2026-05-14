@@ -113,6 +113,10 @@
         <i class="bi bi-person-plus"></i> 
         <span>Create Admin</span>
       </a>
+      <a href="#createBootcampManager" class="nav-link" onclick="setActive(this)">
+        <i class="bi bi-person-video3"></i> 
+        <span>Create Bootcamp Mgr</span>
+      </a>
       
       <div class="sidebar-nav-label">Intern Management</div>
       <a href="#viewInterns" class="nav-link" onclick="setActive(this)">
@@ -537,6 +541,37 @@
       <!-- Button Centered -->
       <div class="col-12 text-center mt-3">
         <button class="btn btn-primary px-5">Create Admin</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- Create Bootcamp Manager -->
+<section id="createBootcampManager" style="display:none;">
+  <div class="card p-4 shadow-sm mb-4" style="border-color: #6366f1 !important;">
+    <h4 class="text-center mb-4">Create Bootcamp Manager</h4>
+    <form action="/create-bootcamp-manager" method="POST" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+      
+      <!-- Row 1 -->
+      <div class="col-md-6">
+        <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+      </div>
+      <div class="col-md-6">
+        <input type="email" name="email" class="form-control" placeholder="Email" required>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="col-md-6">
+        <input type="text" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="col-md-6">
+       <input type="file" name="image" id="managerImg" class="form-control" accept="image/*">
+      </div>
+
+      <!-- Button Centered -->
+      <div class="col-12 text-center mt-3">
+        <button class="btn btn-primary px-5" style="background-color: #6366f1; border-color: #6366f1;">Create Bootcamp Manager</button>
       </div>
 
     </form>

@@ -1008,6 +1008,7 @@ document.addEventListener('DOMContentLoaded', () => {
       action === "/superAdmin/notice" || 
       action.startsWith("/superAdmin/notice/delete/") ||
       action === "/create-admin" ||
+      action === "/create-bootcamp-manager" ||
       action === "/create-ambassador" ||
       action.startsWith("/delete-admin/") ||
       action.startsWith("/delete-user/") ||
@@ -1051,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.success) {
           showToast(data.message, "success");
           
-          if (action === "/superAdmin/notice" || action === "/create-admin" || action === "/create-ambassador" || action === "/allot-meetings" || action === "/change-password" || action === "/update-profile-image") {
+          if (action === "/superAdmin/notice" || action === "/create-admin" || action === "/create-bootcamp-manager" || action === "/create-ambassador" || action === "/allot-meetings" || action === "/change-password" || action === "/update-profile-image") {
             form.classList.remove('was-validated');
             form.reset();
             setTimeout(() => window.location.reload(), 1500);

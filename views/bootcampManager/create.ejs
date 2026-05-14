@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Bootcamp | Rixi Lab</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+  <style>
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #f8fafc, #eef2ff);
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 10px 10px 0 0;
+    }
+    .section-header .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .section-header .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0;
+      color: #1e293b;
+    }
+    .form-section {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+    .form-section .section-body {
+      padding: 20px;
+    }
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .form-control, .form-select {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      padding: 10px 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+    }
+    .create-header {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      padding: 28px 32px;
+      color: #fff;
+      border-radius: 14px 14px 0 0;
+    }
+    .create-wrapper {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.08);
+    }
+    .create-body {
+      padding: 28px 32px;
+      background: #f8fafc;
+    }
+
+    .session-slider-wrapper {
+      overflow: hidden;
+      background: #f8f9fa;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 1rem;
+      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    }
+    .session-slider {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .session-item {
+      min-width: 100%;
+      padding: 24px;
+    }
+    .session-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .slider-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: #fff;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .dot-indicator {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .dot-indicator .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .dot-indicator .dot.active {
+      width: 24px;
+      border-radius: 6px;
+      background: #0d6efd;
+    }
+    .amount-reveal {
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .publish-btn {
+      background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+      border: none;
+      border-radius: 50rem;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 14px rgba(13,110,253,0.35);
+    }
+    .publish-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(13,110,253,0.45);
+    }
+    @media (max-width: 768px) {
+      .session-item { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
+      <div class="sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="sidebar-badge">BOOTCAMP MGR</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-label">Main Menu</div>
+      <a href="/bootcampManager" class="nav-link">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="/bootcampManager/manage" class="nav-link">
+        <i class="bi bi-kanban"></i>
+        <span>Manage Bootcamp</span>
+      </a>
+      <a href="/bootcampManager/create" class="nav-link active">
+        <i class="bi bi-plus-square-fill"></i>
+        <span>Create Bootcamp</span>
+      </a>
+      <a href="/bootcampManager/attendance" class="nav-link">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Attendance</span>
+      </a>
+      <a href="/bootcampManager/users" class="nav-link">
+        <i class="bi bi-people-fill"></i>
+        <span>View Users</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header class="admin-topbar">
+      <div class="d-flex align-items-center">
+        <button class="sidebar-toggle-btn" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="topbar-left ms-2">
+          <h4>Create New Bootcamp</h4>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-body" style="padding: 24px;">
+      <div class="row justify-content-center">
+        <div class="col-xl-9 col-lg-11">
+
+          <form action="/bootcampManager/create" method="POST" enctype="multipart/form-data">
+            <!-- Header -->
+            <div class="panel-card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+              <div class="panel-card-header bg-white border-bottom px-4 py-3 d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-rocket-takeoff-fill me-2 text-primary"></i> Publish New Bootcamp</h4>
+              </div>
+              <div class="panel-card-body p-4 bg-white">
+
+                <!-- General Details, Schedule & Pricing inside Quiz-like Grey Block -->
+                <div class="row g-3 mb-5 align-items-end p-4 rounded-4 shadow-sm" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.05); padding-top: 0px;">
+                  <div class="col-12 mb-2 pb-2 border-bottom">
+                    <h6 class="mb-0 fw-bold text-muted text-uppercase" style="letter-spacing: 0.5px; font-size: 0.8rem;"><i class="bi bi-info-circle-fill me-1"></i>General Details</h6>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Bootcamp ID <span class="text-danger">*</span></label>
+                    <input type="text" name="bootcamp_id" class="form-control form-control-sm px-3 shadow-sm border-0" required placeholder="e.g. MERN-BATCH-01">
+                  </div>
+                  <div class="col-md-8">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Bootcamp Name <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control form-control-sm px-3 shadow-sm border-0" required placeholder="e.g. Full Stack Web Development">
+                  </div>
+                  <div class="col-12 mt-3">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Description <span class="text-danger">*</span></label>
+                    <textarea name="description" class="form-control form-control-sm px-3 shadow-sm border-0" rows="2" required placeholder="Describe what students will learn..."></textarea>
+                  </div>
+                  <div class="col-12 mt-3 mb-2">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Banner Image <span class="text-danger">*</span></label>
+                    <input type="file" name="banner_img" accept="image/*" class="form-control form-control-sm px-3 shadow-sm border-0 bg-white" required>
+                  </div>
+                  
+                  <div class="col-12 mt-4 mb-2 pb-2 border-bottom">
+                    <h6 class="mb-0 fw-bold text-muted text-uppercase" style="letter-spacing: 0.5px; font-size: 0.8rem;"><i class="bi bi-calendar3 me-1"></i>Schedule & Pricing</h6>
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Start Date & Time (IST) <span class="text-danger">*</span></label>
+                    <input type="text" name="start_date" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select start date" required>
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">End Date & Time (IST) <span class="text-danger">*</span></label>
+                    <input type="text" name="end_date" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select end date" required>
+                  </div>
+                  <div class="col-md-2 mt-3 d-flex flex-column align-items-center">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Paid?</label>
+                    <div class="form-check form-switch fs-5 mb-0" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" id="isPaidToggle" name="isPaid" value="true" style="cursor: pointer;">
+                    </div>
+                  </div>
+                  <div class="col-md-2 mt-3" id="paymentDetails" style="display:none;">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Amt (INR) <span class="text-danger">*</span></label>
+                    <input type="number" name="amount" class="form-control form-control-sm px-3 shadow-sm border-0 amount-reveal" placeholder="0" min="1">
+                  </div>
+                </div>
+
+                <!-- Sessions / Curriculum -->
+                <div class="mb-3 d-flex justify-content-between align-items-center px-2">
+                  <h6 class="mb-0 fw-bold text-dark text-uppercase" style="letter-spacing: 0.5px; font-size: 0.9rem;">
+                    <i class="bi bi-camera-video-fill me-2 text-primary"></i>Curriculum / Sessions
+                  </h6>
+                  <button type="button" class="btn btn-sm btn-light rounded-pill px-3 fw-bold shadow-sm border" id="addSessionBtn">
+                    <i class="bi bi-plus-lg me-1"></i>Add Session
+                  </button>
+                </div>
+
+                <!-- Slider Viewport -->
+                <div class="session-slider-wrapper shadow-sm mb-4">
+                  <div id="sessionsSlider" class="session-slider">
+
+                    <!-- ── Session 1 (Mandatory) ── -->
+                    <div class="session-item">
+                      <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                        <span class="session-badge bg-primary bg-opacity-10 text-primary border">
+                          <i class="bi bi-play-circle-fill"></i>
+                          <span class="session-number ms-1">Session 1</span>
+                          <span class="badge bg-primary ms-2" style="font-size:10px;">Mandatory</span>
+                        </span>
+                        <button type="button" class="btn btn-sm remove-session-btn" style="display:none;color:#ef4444;border:1px solid #fecaca;background:#fff5f5;border-radius:8px;font-size:12px;">
+                          <i class="bi bi-trash me-1"></i>Remove
+                        </button>
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Name <span class="text-danger">*</span></label>
+                          <input type="text" name="session_id" class="form-control form-control-sm px-3 shadow-sm border-0" required placeholder="e.g. Intro to HTML">
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Instructor <span class="text-danger">*</span></label>
+                          <input type="text" name="session_instructor" class="form-control form-control-sm px-3 shadow-sm border-0" required placeholder="John Doe">
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Meeting Link <span class="text-danger">*</span></label>
+                          <input type="url" name="session_link" class="form-control form-control-sm px-3 shadow-sm border-0" required placeholder="https://zoom.us/j/...">
+                        </div>
+                        <div class="col-md-6 mt-3">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Date & Time (IST) <span class="text-danger">*</span></label>
+                          <input type="text" name="session_time" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select session time" required>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Expiry Date & Time (IST) <span class="text-danger">*</span></label>
+                          <input type="text" name="session_expiryTime" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select expiry time" required>
+                        </div>
+                        <div class="col-12 mt-3">
+                          <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Details</label>
+                          <textarea name="session_details" class="form-control form-control-sm px-3 shadow-sm border-0" rows="2" placeholder="Topics covered: arrays, functions..."></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- Slider Footer Controls -->
+                  <div id="sliderControls" class="slider-footer" style="display:none;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold shadow-sm" id="prevSessionBtn" disabled>
+                      <i class="bi bi-arrow-left me-1"></i> Prev
+                    </button>
+                    <div class="dot-indicator" id="dotIndicator">
+                      <div class="dot active"></div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold shadow-sm" id="nextSessionBtn" disabled>
+                      Next <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="d-flex justify-content-end border-top pt-4 px-2 mt-4">
+                  <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold shadow-sm publish-btn d-flex align-items-center">
+                    <i class="bi bi-floppy-fill me-2"></i> Save as Draft
+                  </button>
+                </div>
+                <div class="text-muted small text-end w-100 mt-2 px-3">
+                  <i class="bi bi-info-circle me-1"></i>Saved as <strong>Draft</strong>. Publish from the Dashboard.
+                </div>
+
+              </div><!-- /panel-card-body -->
+            </div><!-- /panel-card -->
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    // Initialize Flatpickr on existing inputs
+    flatpickr(".flatpickr-datetime", {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+    });
+
+    // Sidebar
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('show');
+      document.getElementById('sidebarOverlay').classList.toggle('show');
+    });
+    document.getElementById('sidebarOverlay').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('show');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+    });
+
+    // Paid Toggle
+    document.getElementById('isPaidToggle').addEventListener('change', function() {
+      const det = document.getElementById('paymentDetails');
+      det.style.display = this.checked ? 'block' : 'none';
+      if (!this.checked) det.querySelector('input').value = '';
+    });
+
+    // ─── Session Slider ───
+    let currentSlide = 0;
+
+    function updateSlider() {
+      const slider  = document.getElementById('sessionsSlider');
+      const items   = slider.querySelectorAll('.session-item');
+      const total   = items.length;
+      const controls = document.getElementById('sliderControls');
+      const dots    = document.getElementById('dotIndicator');
+
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      if (total > 1) {
+        controls.style.display = 'flex';
+        document.getElementById('prevSessionBtn').disabled = currentSlide === 0;
+        document.getElementById('nextSessionBtn').disabled = currentSlide === total - 1;
+
+        // Rebuild dots
+        dots.innerHTML = '';
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+          dot.addEventListener('click', () => { currentSlide = i; updateSlider(); });
+          dots.appendChild(dot);
+        }
+      } else {
+        controls.style.display = 'none';
+      }
+    }
+
+    document.getElementById('prevSessionBtn').addEventListener('click', () => {
+      if (currentSlide > 0) { currentSlide--; updateSlider(); }
+    });
+    document.getElementById('nextSessionBtn').addEventListener('click', () => {
+      const total = document.querySelectorAll('.session-item').length;
+      if (currentSlide < total - 1) { currentSlide++; updateSlider(); }
+    });
+
+    document.getElementById('addSessionBtn').addEventListener('click', function () {
+      const slider = document.getElementById('sessionsSlider');
+      const items  = slider.querySelectorAll('.session-item');
+      const newIdx = items.length + 1;
+
+      const clone = items[0].cloneNode(true);
+
+      // Update badge
+      clone.querySelector('.session-number').textContent = `Session ${newIdx}`;
+      const mandatoryBadge = clone.querySelector('.badge.bg-primary');
+      if (mandatoryBadge) mandatoryBadge.remove();
+      
+      // Clear fields & remove required
+      clone.querySelectorAll('input, textarea').forEach(el => {
+        el.value = '';
+        el.removeAttribute('required');
+      });
+
+      // Clear any generated flatpickr instances (like hidden inputs)
+      clone.querySelectorAll('.flatpickr-input[type="hidden"]').forEach(el => el.remove());
+      const dateInputs = clone.querySelectorAll('.flatpickr-datetime');
+      dateInputs.forEach(input => {
+        input.classList.remove('flatpickr-input');
+        input.removeAttribute('readonly');
+      });
+
+      // Re-init Flatpickr for the new clone inputs
+      flatpickr(dateInputs, {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+      });
+
+      // Show remove btn
+      const removeBtn = clone.querySelector('.remove-session-btn');
+      removeBtn.style.display = 'inline-flex';
+      removeBtn.addEventListener('click', function () {
+        clone.remove();
+        const remaining = document.querySelectorAll('.session-item').length;
+        currentSlide = Math.min(currentSlide, remaining - 1);
+        renumberSessions();
+        updateSlider();
+      });
+
+      slider.appendChild(clone);
+      currentSlide = newIdx - 1;
+      updateSlider();
+    });
+
+    function renumberSessions() {
+      document.querySelectorAll('.session-item').forEach((item, i) => {
+        item.querySelector('.session-number').textContent = `Session ${i + 1}`;
+      });
+    }
+  </script>
+</body>
+</html>

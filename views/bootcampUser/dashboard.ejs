@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Bootcamp Dashboard | Rixi Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+  <link href="/css/intern.css" rel="stylesheet" />
+
+  <style>
+    /* ── Bootcamp Card – Claymorphism ── */
+    .bc-card {
+      position: relative;
+      background: var(--surface);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow:
+        8px 8px 20px rgba(0,0,0,0.45),
+        -4px -4px 10px rgba(255,255,255,0.03),
+        inset 0px 4px 6px rgba(255,255,255,0.05),
+        inset 0px -4px 6px rgba(0,0,0,0.2);
+      transition: all 0.35s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .bc-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255,102,0,0.35);
+      box-shadow:
+        14px 14px 30px rgba(0,0,0,0.55),
+        -6px -6px 14px rgba(255,255,255,0.04),
+        inset 0px 4px 8px rgba(255,255,255,0.06),
+        0 0 0 1px rgba(255,102,0,0.2);
+    }
+
+    /* Orange glow dot top-right accent */
+    .bc-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,0,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .bc-banner {
+      height: 150px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+    .bc-banner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      opacity: 0.85;
+    }
+    .bc-card:hover .bc-banner img { transform: scale(1.07); opacity: 1; }
+
+    /* glassmorphism overlay on banner */
+    .bc-banner-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(18,18,18,0.95), transparent);
+    }
+
+    .bc-body {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bc-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin: 0;
+    }
+    .bc-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.55;
+    }
+    .bc-progress-wrap { margin-top: auto; padding-top: 10px; }
+    .bc-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .bc-progress-label span:last-child { color: var(--primary); }
+    .bc-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; }
+    .bc-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      transition: width 1s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .bc-bar-fill::after {
+      content: '';
+      position: absolute; top:0; left:0; right:0; bottom:0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer { 0%{transform:translateX(-100%);} 100%{transform:translateX(100%);} }
+
+    .bc-footer {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      font-size: 0.8rem; color: var(--text-secondary);
+    }
+    .bc-footer i { color: var(--primary); }
+
+    /* ── Detail Panel – Glassmorphism ── */
+    .bc-detail-panel {
+      background: rgba(30,30,30,0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,102,0,0.08);
+    }
+    .bc-detail-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,102,0,0.04);
+    }
+    .bc-back-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-secondary);
+      border-radius: 50px;
+      padding: 7px 16px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: var(--transition);
+    }
+    .bc-back-btn:hover {
+      background: rgba(255,102,0,0.12);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .bc-detail-info {
+      padding: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .bc-detail-info h4 { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .bc-detail-info p  { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
+
+    .bc-sessions-area {
+      padding: 24px;
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+    .bc-sessions-title {
+      font-size: 1rem; font-weight: 700; color: var(--text-primary);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .bc-sessions-title i { color: var(--primary); }
+
+    /* Session Row – Claymorphism card */
+    .bc-session-row {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow:
+        4px 4px 10px rgba(0,0,0,0.35),
+        -2px -2px 6px rgba(255,255,255,0.025),
+        inset 0 2px 4px rgba(255,255,255,0.04);
+      transition: var(--transition);
+      border-left: 4px solid var(--primary);
+    }
+    .bc-session-row + .bc-session-row { margin-top: 10px; }
+    .bc-session-row:hover { transform: translateX(4px); border-color: var(--primary); }
+    .bc-session-row h6 { font-weight: 700; color: #fff; margin: 0 0 4px; font-size: 0.9rem; }
+    .bc-session-row .meta { font-size: 0.78rem; color: var(--text-secondary); }
+
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .status-present { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+    .status-absent  { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .status-pending { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+
+    /* Completed banner */
+    .bc-completed-banner {
+      margin: 0 24px 24px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.10), rgba(16,185,129,0.06));
+      border: 1px solid rgba(34,197,94,0.25);
+      box-shadow: 4px 4px 14px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.03);
+    }
+
+    /* Section label */
+    .section-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--primary); margin-bottom: 6px;
+    }
+    .section-heading {
+      font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="id-sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="id-sidebar" id="sidebar">
+    <div class="id-sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
+      <div class="id-sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="id-sidebar-badge">BOOTCAMP</span>
+      </div>
+    </div>
+
+    <div class="id-sidebar-profile">
+      <div class="id-profile-img-wrap">
+        <img src="<%= user.profile_image %>" alt="Profile" />
+      </div>
+      <% const formattedName = user.name.trim().split(" ").slice(0,2).join(" "); %>
+      <h4><%= formattedName %></h4>
+      <p style="font-size:0.72rem;color:var(--text-secondary);word-break:break-all;margin:0;"><%= user.email %></p>
+      <%
+        const totalBC = user.enrolledBootcamps.length;
+        const completedBC = user.enrolledBootcamps.filter(e => e.progress === 100).length;
+        let sumProg = 0; user.enrolledBootcamps.forEach(e => sumProg += (e.progress||0));
+        const avgProg = totalBC > 0 ? Math.round(sumProg / totalBC) : 0;
+      %>
+      <div class="id-sidebar-profile-stats mt-3">
+        <div><span>Enrolled</span><strong><%= totalBC %></strong></div>
+        <div><span>Completed</span><strong><%= completedBC %></strong></div>
+      </div>
+    </div>
+
+    <nav class="id-sidebar-nav mt-1">
+      <div class="id-sidebar-nav-label">Main Menu</div>
+      <a href="#" class="nav-link active">
+        <i class="bi bi-grid-1x2-fill"></i><span>My Bootcamps</span>
+      </a>
+      <!-- <a href="/bootcamps" class="nav-link">
+        <i class="bi bi-compass-fill"></i><span>Explore Bootcamps</span>
+      </a> -->
+      <a href="/bootcamp-portal/logout" class="nav-link d-xl-none text-danger mt-4" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
+        <i class="bi bi-box-arrow-right"></i><span>Logout</span>
+      </a>
+    </nav>
+
+    <div class="id-sidebar-footer">
+      Technical Support:<br>
+      <strong style="color:var(--primary);">support@rixilab.tech</strong><br>
+      <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="id-main-content">
+    <header class="id-topbar">
+      <div class="id-topbar-left">
+        <button class="id-sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+        <div>
+          <h4 id="topbarTitle">My Learning</h4>
+          <p class="d-none d-sm-block mt-1 mb-0">Welcome back, <%= formattedName %> 👋</p>
+        </div>
+      </div>
+      <div class="id-topbar-right">
+        <div class="dropdown ms-2">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" style="color:var(--text-primary);font-weight:500;">
+            <img src="<%= user.profile_image %>" alt="Profile" class="rounded-circle border border-2 shadow-sm" width="42" height="42" style="object-fit:cover;border-color:white!important;">
+            <span class="ms-2 d-none d-md-inline" style="font-size:0.9rem;"><%= formattedName %></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end profile-dropdown-menu">
+            <li><h6 class="dropdown-header">Signed in as<br><strong><%= user.email %></strong></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="/bootcamp-portal/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="id-content-body">
+      <section id="dashboard" class="id-section active">
+
+        <% if(user.enrolledBootcamps.length > 0) { %>
+          <% const reversed = [...user.enrolledBootcamps].reverse(); %>
+
+          <!-- BOOTCAMP CARDS GRID -->
+          <div id="bootcamp-list-container">
+            <p class="section-eyebrow">Your Learning</p>
+            <h2 class="section-heading">Enrolled Bootcamps</h2>
+            <div class="row g-4">
+              <% reversed.forEach((eb, index) => { %>
+                <% const bc = eb.bootcamp_id; %>
+                <% if(bc) { %>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="bc-card" onclick="showBootcampDetails(<%= index %>)">
+                      <div class="bc-banner">
+                        <img src="<%= bc.banner_img %>" alt="<%= bc.name %>" onerror="this.src='https://placehold.co/800x400/1e1e1e/ff6600?text=Bootcamp'">
+                        <div class="bc-banner-overlay"></div>
+                      </div>
+                      <div class="bc-body">
+                        <h3 class="bc-title"><%= bc.name %></h3>
+                        <% if(eb.progress === 100) { %>
+                          <span class="badge" style="background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);border-radius:20px;align-self:flex-start;font-size:0.75rem;padding:4px 12px;">
+                            <i class="bi bi-patch-check-fill me-1"></i>Completed
+                          </span>
+                        <% } %>
+                        <p class="bc-desc"><%= bc.description %></p>
+                        <div class="bc-progress-wrap">
+                          <div class="bc-progress-label"><span>Progress</span><span><%= eb.progress %>%</span></div>
+                          <div class="bc-bar"><div class="bc-bar-fill" style="width:<%= eb.progress %>%;"></div></div>
+                        </div>
+                      </div>
+                      <div class="bc-footer">
+                        <i class="bi bi-calendar-event"></i>
+                        <%= bc.sessions ? bc.sessions.length : 0 %> Sessions
+                        <span class="ms-auto" style="color:var(--primary);font-weight:600;font-size:0.78rem;">View Details →</span>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- BOOTCAMP DETAIL PANEL -->
+          <div id="bootcamp-details-container" style="display:none;">
+            <div class="bc-detail-panel">
+              <div class="bc-detail-header">
+                <button class="bc-back-btn" onclick="hideBootcampDetails()">
+                  <i class="bi bi-arrow-left"></i> Back
+                </button>
+                <h5 class="m-0 text-white fw-bold">Bootcamp Details</h5>
+              </div>
+
+              <% reversed.forEach((eb, index) => { %>
+                <% const bc = eb.bootcamp_id; %>
+                <% if(bc) { %>
+                  <div id="details-<%= index %>" class="bootcamp-details-pane" style="display:none;">
+                    <div class="bc-detail-info">
+                      <h4><%= bc.name %></h4>
+                      <p><%= bc.description %></p>
+                      <!-- Progress bar in detail -->
+                      <div class="bc-progress-wrap mt-3">
+                        <div class="bc-progress-label"><span>Your Progress</span><span><%= eb.progress %>%</span></div>
+                        <div class="bc-bar" style="height:8px;"><div class="bc-bar-fill" style="width:<%= eb.progress %>%;"></div></div>
+                      </div>
+                    </div>
+
+                    <div class="bc-sessions-area">
+                      <div class="bc-sessions-title">
+                        <i class="bi bi-calendar2-week-fill"></i> Sessions &amp; Attendance
+                      </div>
+
+                      <% if(!bc.sessions || bc.sessions.length === 0) { %>
+                        <div class="text-center py-5">
+                          <i class="bi bi-calendar-x" style="font-size:2.5rem;color:var(--text-muted);"></i>
+                          <p class="text-secondary mt-3 mb-0">No sessions scheduled yet.</p>
+                        </div>
+                      <% } else { %>
+                        <% bc.sessions.forEach(s => { %>
+                          <%
+                            let attRec = eb.attendance ? eb.attendance.find(a => a.session_id === s.session_id) : null;
+                            let sCls = 'status-pending', sTxt = 'Upcoming', sIcon = 'bi-clock';
+                            if(attRec) {
+                              if(attRec.status === 'present') { sCls='status-present'; sTxt='Present';  sIcon='bi-check-circle-fill'; }
+                              else if(attRec.status === 'absent') { sCls='status-absent'; sTxt='Absent'; sIcon='bi-x-circle-fill'; }
+                            }
+                          %>
+                          <div class="bc-session-row">
+                            <div>
+                              <h6><%= s.session_id %></h6>
+                              <div class="meta"><i class="bi bi-calendar-event me-1"></i><%= new Date(s.time).toLocaleString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) %></div>
+                            </div>
+                            <span class="status-badge <%= sCls %>"><i class="bi <%= sIcon %>"></i><%= sTxt %></span>
+                          </div>
+                        <% }) %>
+                      <% } %>
+                    </div>
+
+                    <% if(eb.progress === 100) { %>
+                      <div class="bc-completed-banner">
+                        <div>
+                          <h6 class="text-success fw-bold mb-1"><i class="bi bi-patch-check-fill me-2"></i>Bootcamp Completed!</h6>
+                          <p class="small text-secondary mb-0">You can now download your certificate.</p>
+                        </div>
+                        <button class="btn btn-success fw-bold px-4" style="white-space:nowrap;"><i class="bi bi-download me-1"></i>Certificate</button>
+                      </div>
+                    <% } %>
+                  </div>
+                <% } %>
+              <% }) %>
+            </div>
+          </div>
+
+        <% } else { %>
+          <div style="min-height:55vh;display:flex;align-items:center;justify-content:center;">
+            <div class="bc-detail-panel text-center p-5">
+              <i class="bi bi-inbox" style="font-size:4rem;color:var(--text-muted);"></i>
+              <h4 class="mt-4 text-white fw-bold">No Bootcamps Yet</h4>
+              <p class="text-secondary mb-4">You haven't enrolled in any bootcamps.</p>
+              <a href="/bootcamps" class="btn btn-primary-custom px-4 py-2">
+                <i class="bi bi-compass me-2"></i>Explore Bootcamps
+              </a>
+            </div>
+          </div>
+        <% } %>
+
+      </section>
+    </div>
+  </main>
+
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebarToggle && sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('show');
+      overlay.classList.toggle('show');
+    });
+    overlay && overlay.addEventListener('click', () => {
+      sidebar.classList.remove('show');
+      overlay.classList.remove('show');
+    });
+
+    function showBootcampDetails(index) {
+      document.getElementById('bootcamp-list-container').style.display = 'none';
+      document.getElementById('bootcamp-details-container').style.display = 'block';
+      document.querySelectorAll('.bootcamp-details-pane').forEach(el => el.style.display = 'none');
+      const sel = document.getElementById('details-' + index);
+      if(sel) sel.style.display = 'block';
+    }
+
+    function hideBootcampDetails() {
+      document.getElementById('bootcamp-list-container').style.display = 'block';
+      document.getElementById('bootcamp-details-container').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

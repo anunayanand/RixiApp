@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance | Rixi Lab</title>
+
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+</head>
+<body style="background-color: #f4f6f9;">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
+      <div class="sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="sidebar-badge">BOOTCAMP MGR</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-label">Main Menu</div>
+      <a href="/bootcampManager" class="nav-link">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="/bootcampManager/manage" class="nav-link">
+        <i class="bi bi-kanban"></i>
+        <span>Manage Bootcamp</span>
+      </a>
+      <a href="/bootcampManager/create" class="nav-link">
+        <i class="bi bi-plus-square-fill"></i>
+        <span>Create Bootcamp</span>
+      </a>
+      <a href="/bootcampManager/attendance" class="nav-link active">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Attendance</span>
+      </a>
+      <a href="/bootcampManager/users" class="nav-link">
+        <i class="bi bi-people-fill"></i>
+        <span>View Users</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header class="admin-topbar">
+      <div class="d-flex align-items-center">
+        <button class="sidebar-toggle-btn" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="topbar-left ms-2">
+          <h4>Manage Attendance</h4>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-body">
+      
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h4>Attendance Registry</h4>
+          <p class="text-muted mb-0">Track and update attendance records for bootcamp sessions.</p>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar border rounded shadow-sm mb-3">
+        <form action="/bootcampManager/attendance" method="GET" class="d-flex flex-wrap w-100 align-items-center gap-2">
+          <select name="bootcamp_id" class="form-select form-select-sm w-auto" required onchange="this.form.submit()">
+            <option value="" disabled <%= !selectedBootcamp ? 'selected' : '' %>>All Bootcamps</option>
+            <% bootcamps.forEach(b => { %>
+              <option value="<%= b._id %>" <%= selectedBootcamp && selectedBootcamp._id.toString() === b._id.toString() ? 'selected' : '' %>><%= b.name %></option>
+            <% }) %>
+          </select>
+          
+          <% if (selectedBootcamp) { %>
+            <select name="session_id" class="form-select form-select-sm w-auto" required onchange="this.form.submit()">
+              <option value="" disabled <%= !selectedSessionId ? 'selected' : '' %>>All Sessions</option>
+              <% selectedBootcamp.sessions.forEach(s => { %>
+                <option value="<%= s.session_id %>" <%= selectedSessionId === s.session_id ? 'selected' : '' %>>
+                  <%= s.session_id %> (<%= new Date(s.time).toLocaleString('en-IN') %>)
+                </option>
+              <% }) %>
+            </select>
+          <% } %>
+          
+          <input type="text" id="attendanceSearch" class="form-control form-control-sm w-auto flex-grow-1" placeholder="Search User..." onkeyup="applyAttendanceFilters()">
+          
+          <% if (selectedBootcamp && selectedSessionId) { %>
+          <div class="border-start ps-3 ms-2 d-flex align-items-center gap-2">
+            <span class="small text-muted text-uppercase fw-bold">Bulk Action:</span>
+            <button type="button" class="btn btn-sm btn-primary" onclick="markAllPresent()">Mark All Present</button>
+          </div>
+          <% } %>
+        </form>
+      </div>
+
+      <!-- Attendance Table -->
+      <% if (selectedBootcamp && selectedSessionId) { %>
+        <div class="table-wrapper">
+          <div class="table-responsive d-none d-md-block" style="max-height: 75vh;">
+            <table class="table table-striped align-middle mb-0" id="attendanceTable">
+              <thead class="table-light sticky-top">
+                <tr>
+                  <th width="50" class="text-center">#</th>
+                  <th>User Details</th>
+                  <th class="text-center">Current Status</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% enrolledUsers.forEach((u, idx) => { 
+                     const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() === selectedBootcamp._id.toString());
+                     let currentStatus = 'pending';
+                     if (enrollment) {
+                       const attRec = enrollment.attendance.find(a => a.session_id === selectedSessionId);
+                       if (attRec) currentStatus = attRec.status;
+                     }
+                %>
+                  <tr class="attendance-row" data-user="<%= u.name.toLowerCase() %> <%= u.email.toLowerCase() %>">
+                    <td class="text-center text-muted"><%= idx + 1 %></td>
+                    <td>
+                      <div class="d-flex align-items-center gap-3">
+                        <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>" class="rounded-circle shadow-sm" width="40" height="40" style="object-fit:cover;">
+                        <div>
+                          <div class="fw-bold"><%= u.name %></div>
+                          <div class="small text-muted font-monospace"><%= u.email %></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <span class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>" id="status-<%= u._id %>">
+                        <%= currentStatus === 'pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-success" onclick="markAttendance('<%= u._id %>', 'present')"><i class="bi bi-check-lg me-1"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="markAttendance('<%= u._id %>', 'absent')"><i class="bi bi-x-lg me-1"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+                <% if (enrolledUsers.length === 0) { %>
+                  <tr><td colspan="4" class="text-center py-4 text-muted">No users enrolled in this bootcamp.</td></tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile Attendance Card Grid (< md) -->
+          <div class="attendance-card-grid d-md-none" id="attendanceCardGrid">
+            <% enrolledUsers.forEach((u, idx) => { 
+                 const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() === selectedBootcamp._id.toString());
+                 let currentStatus = 'pending';
+                 if (enrollment) {
+                   const attRec = enrollment.attendance.find(a => a.session_id === selectedSessionId);
+                   if (attRec) currentStatus = attRec.status;
+                 }
+            %>
+              <div class="attendance-card attendance-row" data-user="<%= u.name.toLowerCase() %> <%= u.email.toLowerCase() %>">
+                <div class="attendance-card-top">
+                  <div class="attendance-card-info">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                       <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>" class="rounded-circle shadow-sm" width="45" height="45" style="object-fit:cover;">
+                       <div>
+                         <div class="fw-bold fs-6"><%= u.name %></div>
+                         <div class="text-muted small font-monospace"><%= u.email %></div>
+                       </div>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column align-items-end justify-content-between gap-2">
+                    <div>
+                      <span class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>" id="status-mobile-<%= u._id %>">
+                        <%= currentStatus === 'pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1) %>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex gap-2 mt-3 pt-3 border-top">
+                  <button type="button" class="btn btn-sm btn-outline-success flex-grow-1" onclick="markAttendance('<%= u._id %>', 'present')"><i class="bi bi-check-lg me-1"></i>Present</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger flex-grow-1" onclick="markAttendance('<%= u._id %>', 'absent')"><i class="bi bi-x-lg me-1"></i>Absent</button>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } else if (selectedBootcamp) { %>
+        <div class="alert alert-warning shadow-sm" style="border-radius: 10px;">
+          <i class="bi bi-exclamation-triangle me-2"></i> Please select a session from the dropdown above to view the attendance roster.
+        </div>
+      <% } else { %>
+        <div class="alert alert-info shadow-sm" style="border-radius: 10px;">
+          <i class="bi bi-info-circle me-2"></i> Please select a bootcamp to manage attendance.
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('show');
+      document.getElementById('sidebarOverlay').classList.toggle('show');
+    });
+    document.getElementById('sidebarOverlay').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('show');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+    });
+
+    function applyAttendanceFilters() {
+      const searchVal = document.getElementById('attendanceSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('.attendance-row');
+      rows.forEach(row => {
+        const user = row.getAttribute('data-user') || '';
+        if (user.includes(searchVal)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function markAttendance(userId, status) {
+      const bootcampId = '<%= selectedBootcamp ? selectedBootcamp._id : "" %>';
+      const sessionId = '<%= selectedSessionId || "" %>';
+      
+      if(!bootcampId || !sessionId) return;
+
+      fetch('/bootcampManager/attendance/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bootcamp_id: bootcampId, session_id: sessionId, user_id: userId, status: status })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success) {
+          const badge = document.getElementById(`status-${userId}`);
+          if(badge) {
+            badge.textContent = status === 'pending' ? 'Pending' : status.charAt(0).toUpperCase() + status.slice(1);
+            badge.className = `badge bg-${status === 'present' ? 'success' : (status === 'absent' ? 'danger' : 'warning text-dark')}`;
+          }
+          const badgeMobile = document.getElementById(`status-mobile-${userId}`);
+          if(badgeMobile) {
+            badgeMobile.textContent = status === 'pending' ? 'Pending' : status.charAt(0).toUpperCase() + status.slice(1);
+            badgeMobile.className = `badge bg-${status === 'present' ? 'success' : (status === 'absent' ? 'danger' : 'warning text-dark')}`;
+          }
+        } else {
+          alert('Failed to mark attendance.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Server error.');
+      });
+    }
+
+    function markAllPresent() {
+      if (!confirm('Are you sure you want to mark all currently visible users as Present?')) return;
+      const rows = document.querySelectorAll('.attendance-row');
+      rows.forEach(row => {
+        if (row.style.display !== 'none') {
+          // Extract user id from the row badge ID
+          const badge = row.querySelector('[id^="status-"]');
+          if (badge) {
+             let userId = badge.id.replace('status-mobile-', '');
+             userId = userId.replace('status-', '');
+             markAttendance(userId, 'present');
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

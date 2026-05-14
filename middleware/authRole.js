@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Admin = require("../models/Admin");
 const SuperAdmin = require("../models/SuperAdmin");
 const Ambassador = require("../models/Ambassador");
+const BootcampManager = require("../models/BootcampManager");
 
 function authRole(roles) {
   return async (req, res, next) => {
@@ -22,6 +23,8 @@ function authRole(roles) {
         user = await Admin.findById(req.session.user);
       } else if (req.session.role === "superAdmin") {
         user = await SuperAdmin.findById(req.session.user);
+      } else if (req.session.role === "bootcamp_manager") {
+        user = await BootcampManager.findById(req.session.user);
       } else {
         user = await User.findById(req.session.user);
       }

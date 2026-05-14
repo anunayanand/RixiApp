@@ -175,6 +175,14 @@ app.get("/internship", (req, res) => {
 const internshipRouter = require('./routes/internshipRoute');
 app.use('/internship', internshipRouter);
 
+const bootcampPublicRoute = require('./routes/bootcampPublicRoute');
+app.use('/bootcamps', bootcampPublicRoute);
+// Redirect /bootcamp → /bootcamps (nav link compatibility)
+app.get('/bootcamp', (req, res) => res.redirect('/bootcamps'));
+
+const bootcampPortalRoute = require('./routes/bootcampPortalRoute');
+app.use('/bootcamp-portal', bootcampPortalRoute);
+
 const certPaymentRouter = require('./routes/certPaymentRoute');
 app.use('/', certPaymentRouter);
 
@@ -195,6 +203,10 @@ app.use('/', lectureRoute);
 const superAdminRoute = require('./routes/superAdminRoute');
 app.use('/superAdmin', superAdminRoute);
 
+// Bootcamp Manager Dashboard
+const bootcampManagerRoute = require('./routes/bootcampManagerRoute');
+app.use('/bootcampManager', bootcampManagerRoute);
+
 // Create Interns
 const createInternRouter = require('./routes/createInternRoute');
 app.post('/create-user', createInternRouter);
@@ -202,6 +214,9 @@ app.post('/create-user', createInternRouter);
 // Create Admin
 const createAdminRouter = require('./routes/createAdminRoute');
 app.post('/create-admin', createAdminRouter);
+
+const createBootcampManagerRouter = require('./routes/createBootcampManagerRoute');
+app.post('/create-bootcamp-manager', createBootcampManagerRouter);
 
 // Upload Project
 const uploadProjectRouter = require('./routes/uploadProjectRoute');

@@ -53,6 +53,7 @@
           <li><a href="cap">CAP</a></li>
           <li><a href="/#about">About</a></li>
           <li><a href="/#services">Services</a></li>
+          <li><a href="/bootcamp">Bootcamps</a></li>
           <li><a href="/certificate">Certificate</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
@@ -877,6 +878,65 @@
     </section>
 
 
+
+    <!-- ── Bootcamps Section ── -->
+    <% if (typeof bootcamps !== 'undefined' && bootcamps.length > 0) { %>
+    <section id="bootcamps" class="section" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); padding: 80px 0;">
+      <div class="container">
+        <!-- Title -->
+        <div class="text-center mb-5">
+          <span style="display:inline-block;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;padding:6px 18px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">
+            <i class="bi bi-rocket-takeoff-fill me-1"></i> Live Now
+          </span>
+          <h2 style="font-size:2.5rem;font-weight:700;color:#f1f5f9;margin-bottom:12px;">Bootcamp Programs</h2>
+          <p style="color:#94a3b8;font-size:1.05rem;max-width:540px;margin:0 auto;">Intensive, expert-led programs designed to fast-track your tech career.</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="row g-4 justify-content-center">
+          <% bootcamps.forEach((b, i) => { %>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div style="background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:24px;overflow:hidden;backdrop-filter:blur(10px);transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);height:100%;display:flex;flex-direction:column;" class="bootcamp-home-card">
+              <!-- Banner -->
+              <div style="position:relative;width:100%;height:200px;overflow:hidden;">
+                <img src="<%= b.banner_img %>" alt="<%= b.name %>" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;" class="bootcamp-home-banner">
+                <div style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);padding:5px 13px;border-radius:30px;font-size:13px;font-weight:600;color:#fff;">
+                  <% if(b.isPaid) { %>
+                    <i class="bi bi-currency-rupee"></i><%= b.payment.amount %>
+                  <% } else { %>
+                    <i class="bi bi-lightning-charge-fill" style="color:#fbbf24;"></i> FREE
+                  <% } %>
+                </div>
+              </div>
+              <!-- Content -->
+              <div style="padding:1.4rem;flex-grow:1;display:flex;flex-direction:column;">
+                <h4 style="font-size:1.2rem;font-weight:700;color:#f1f5f9;margin-bottom:8px;"><%= b.name %></h4>
+                <p style="color:#94a3b8;font-size:0.92rem;line-height:1.6;flex-grow:1;"><%= b.description.substring(0, 100) %>...</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.06);margin-top:auto;">
+                  <span style="color:#94a3b8;font-size:0.85rem;"><i class="bi bi-camera-video me-1"></i><%= b.sessions.length %> Sessions</span>
+                  <a href="/bootcamps/<%= b._id %>" style="background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;padding:9px 20px;border-radius:12px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 14px rgba(99,102,241,0.3);">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+
+        <!-- View All CTA -->
+        <div class="text-center mt-5">
+          <a href="/bootcamps" style="display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid rgba(99,102,241,0.5);color:#a5b4fc;padding:12px 32px;border-radius:50px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:all 0.3s ease;">
+            Browse All Bootcamps <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hover effect styles -->
+      <style>
+        .bootcamp-home-card:hover { transform: translateY(-8px); border-color: rgba(99,102,241,0.5) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(99,102,241,0.2); }
+        .bootcamp-home-card:hover .bootcamp-home-banner { transform: scale(1.05); }
+      </style>
+    </section>
+    <% } %>
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">

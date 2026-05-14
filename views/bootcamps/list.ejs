@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Live Bootcamps | Rixi Lab</title>
+
+  <!-- Favicons -->
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Vendor CSS Files -->
+  <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/js/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="/js/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+  <link href="/js/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+  <!-- Main CSS File -->
+  <link href="/css/main.css" rel="stylesheet" />
+  
+  <style>
+    .hero-section {
+      padding: 4rem 0 1.5rem 0 ;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--heading-color, #212529);
+      margin-bottom: 20px;
+      margin-top: 40px;
+    }
+    .bootcamp-card {
+      background: var(--surface-color, #ffffff);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .bootcamp-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .card-banner-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .card-banner {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .bootcamp-card:hover .card-banner {
+      transform: scale(1.05);
+    }
+    .badge-price {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--accent-color, #ff6600);
+      color: var(--contrast-color, #ffffff);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .card-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .bootcamp-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--heading-color, #212529);
+      margin-bottom: 0.5rem;
+    }
+    .bootcamp-desc {
+      color: var(--default-color, #444444);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .btn-premium {
+      background: var(--accent-color, #ff6600);
+      color: var(--contrast-color, #ffffff);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .btn-premium:hover {
+      background: #e65c00;
+      color: var(--contrast-color, #ffffff);
+    }
+  </style>
+</head>
+
+<body class="index-page">
+  <%- include('../partials/loader') %>
+  
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="" />
+        <h1 class="sitename">Rixi Lab</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/internship">Internship</a></li>
+          <li><a href="/cap">CAP</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/certificate">Certificate</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="/login">Login</a>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero-section">
+      <div class="container">
+        <h1 class="hero-title animate-up">Rixi Lab - Bootcamps</h1>
+      </div>
+    </section>
+
+    <!-- Bootcamps Grid -->
+    <section class="container pb-5">
+      <div class="row g-4">
+        <% if(bootcamps.length === 0) { %>
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-stars display-1 text-muted opacity-50 mb-3 d-block"></i>
+            <h3 class="text-dark">No Live Bootcamps Right Now</h3>
+            <p class="text-muted">Stay tuned! We are crafting something amazing.</p>
+          </div>
+        <% } else { %>
+          <% bootcamps.forEach((b, i) => { %>
+            <div class="col-12 col-md-6 col-lg-4 animate-up" style="animation-delay: <%= 0.1 + (i * 0.1) %>s;">
+              <div class="bootcamp-card">
+                <div class="card-banner-wrapper">
+                  <img src="<%= b.banner_img %>" alt="<%= b.name %>" class="card-banner">
+                  <div class="badge-price">
+                    <% if(b.isPaid) { %>
+                      <i class="bi bi-currency-rupee"></i><%= b.payment.amount %>
+                    <% } else { %>
+                      <i class="bi bi-lightning-charge-fill text-warning"></i> FREE
+                    <% } %>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="bootcamp-title"><%= b.name %></h3>
+                  <p class="bootcamp-desc"><%= b.description.substring(0, 110) %>...</p>
+                  <div class="card-meta">
+                    <div class="text-white small">
+                      <i class="bi bi-camera-video me-1"></i> <%= b.sessions.length %> Sessions
+                    </div>
+                    <a href="/bootcamps/<%= b._id %>" class="btn-premium">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <%- include('../partials/toaster') %>
+
+  <footer id="footer" class="footer light-background">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="/" class="logo d-flex align-items-center">
+              <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" style="height: 2rem !important" />
+              <span class="sitename">Rixi Lab</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>Bhatpar Rani, Deoria,</p>
+              <p>Uttar Pradesh, 274506 INDIA</p>
+              <p class="mt-3">
+                <strong>Phone:</strong>
+                <span>+91 7617803891 Whatsapp Only</span>
+              </p>
+              <p><strong>Email:</strong> <span>rixilab7@gmail.com</span></p>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="#">Product Management</a></li>
+              <li><a href="#">Marketing</a></li>
+              <li><a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Internships & Training</h4>
+            <ul>
+              <li><a href="#">Full Stack Web Development</a></li>
+              <li><a href="#">UI/UX Design</a></li>
+              <li><a href="#">Live Project Experience</a></li>
+              <li><a href="#">Canva Premium free</a></li>
+              <li><a href="#">Career Mentorship</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Courses & Certification</h4>
+            <ul>
+              <li><a href="#">Training Certificate</a></li>
+              <li><a href="#">Internship Certificate</a></li>
+              <li><a href="#">Couce Certificate.</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright text-center">
+      <div
+        class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+        <div class="d-flex flex-column align-items-center align-items-lg-start">
+          <div>
+            © Copyright 2025-26 <strong><span>Rixi Lab</span></strong>. All Rights Reserved
+          </div>
+          <div class="credits">Designed by <a href="#">Rixi Lab</a></div>
+        </div>
+
+        <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+          <a href="https://www.linkedin.com/company/rixilab"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.facebook.com/rixilab"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/rixilab.in"><i class="bi bi-instagram"></i></a>
+          <a href=""><i class="bi bi-twitter-x"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/vendor/aos/aos.js"></script>
+  <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/js/vendor/typed.js/typed.umd.js"></script>
+  <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/js/main.js"></script>
+</body>
+</html>
