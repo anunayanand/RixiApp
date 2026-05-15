@@ -8,8 +8,11 @@ router.get("/", async (req, res) => {
     const superAdminExists = await SuperAdmin.findOne({});
     if (!superAdminExists) return res.redirect("/register-superAdmin");
 
-    // Fetch up to 3 live bootcamps to preview on home page
-    const bootcamps = await Bootcamp.find({ status: 'live' }).limit(3).lean();
+    // Fetch all live bootcamps sorted by creation date (newest first)
+    const bootcamps = await Bootcamp.find({ status: 'live' })
+      .sort({ creationDate: -1 })
+      .lean();
+
     res.render("index", { bootcamps });
   } catch(err) {
     // console.error(err);

@@ -34,25 +34,231 @@ function makeBody(to, from, subject, message) {
 }
 
 async function sendWelcomeEmail(user, bootcamp) {
-    const loginLink = `${process.env.BASE_URL || 'http://localhost:3000'}/bootcamp-portal/login`;
+    const loginLink = `${process.env.BASE_URL || 'https://www.rixilab.tech'}/bootcamp-portal/login`;
     const subject = `Welcome to ${bootcamp.name} - Rixi Lab`;
     const body = `
-      <html>
-      <body style="font-family: Arial, sans-serif; background-color: #f4f6f9; padding: 20px;">
-        <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <h2 style="color: #6366f1;">Welcome to ${bootcamp.name}!</h2>
-            <p>Hi <strong>${user.name}</strong>,</p>
-            <p>Your registration is confirmed. We are thrilled to have you in this bootcamp.</p>
-            <p>You can access your exclusive dashboard to track your sessions, progress, and download your certificate using the link below:</p>
-            <a href="${loginLink}" style="display: inline-block; padding: 12px 25px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px;">Access Dashboard</a>
-            <p style="margin-top: 20px; color: #555; font-size: 14px;">Please use your registered email (<strong>${user.email}</strong>) to log in via OTP.</p>
-            
-            <p style="margin-top: 30px; font-size: 12px; color: #888; text-align: center;">
-              © ${new Date().getFullYear()} Rixi Lab | <a href="https://rixilab.tech" style="color:#6366f1;">www.rixilab.tech</a>
-            </p>
-        </div>
-      </body>
-      </html>
+    <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    body{
+      margin:0;
+      padding:0;
+      background:#f5f5f5;
+      font-family:Arial,sans-serif;
+    }
+
+    table{
+      border-spacing:0;
+    }
+
+    img{
+      border:0;
+      display:block;
+    }
+
+    @media screen and (max-width:600px){
+
+      .container{
+        width:100% !important;
+      }
+
+      .content{
+        padding:30px 20px !important;
+      }
+
+      .heading{
+        font-size:30px !important;
+      }
+
+      .button{
+        width:100% !important;
+        display:block !important;
+        text-align:center !important;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center" style="padding:30px 15px;">
+
+<table 
+  width="600"
+  class="container"
+  cellpadding="0"
+  cellspacing="0"
+  bgcolor="#ffffff"
+  style="max-width:600px;border-radius:24px;overflow:hidden;border:1px solid #ececec;"
+>
+
+<tr>
+  <td height="8" bgcolor="#ff6600"></td>
+</tr>
+
+<tr>
+<td class="content" style="padding:50px 40px;">
+
+  <!-- Logo -->
+  <table width="100%">
+    <tr>
+      <td align="center">
+
+        <table 
+          width="100"
+          height="100"
+          cellpadding="0"
+          cellspacing="0"
+          style="background:#fff3eb;border-radius:50%;"
+        >
+          <tr>
+            <td align="center" valign="middle">
+
+              <img 
+                src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+                width="60"
+                alt="Rixi Lab"
+              />
+
+            </td>
+          </tr>
+        </table>
+
+        <h1 
+          class="heading"
+          style="margin:25px 0 0;font-size:40px;line-height:1.2;color:#ff6600;"
+        >
+          Welcome to ${bootcamp.name}
+        </h1>
+
+        <p style="margin:15px 0 0;color:#777;font-size:17px;line-height:1.7;">
+          Your registration has been confirmed successfully
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- Greeting -->
+  <table width="100%" style="margin-top:50px;">
+    <tr>
+      <td>
+
+        <p style="margin:0;font-size:20px;color:#222;">
+          Hi <strong>${user.name}</strong>,
+        </p>
+
+        <p style="margin:25px 0 0;font-size:16px;line-height:1.9;color:#555;">
+          We're excited to have you onboard for this bootcamp journey.
+          Your dashboard is now ready where you can access sessions,
+          track progress, and download your certificate.
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- Dashboard Card -->
+  <table 
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    style="margin-top:35px;background:#fffaf7;border:1px solid #ffd8c2;border-radius:20px;"
+  >
+    <tr>
+      <td style="padding:30px;">
+
+        <p style="margin:0 0 20px;font-size:18px;font-weight:bold;color:#222;">
+          Account Information
+        </p>
+
+        <ul style="padding-left:20px;margin:0;color:#555;">
+
+          <li style="margin-bottom:14px;line-height:1.8;">
+            <strong>Bootcamp:</strong>
+            ${bootcamp.name}
+          </li>
+
+          <li style="margin-bottom:14px;line-height:1.8;">
+            <strong>Email:</strong>
+            ${user.email}
+          </li>
+
+          <li style="line-height:1.8;">
+            <strong>Login Method:</strong>
+            Secure OTP Verification
+          </li>
+
+        </ul>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- Button -->
+  <table width="100%" style="margin-top:40px;">
+    <tr>
+      <td align="center">
+
+        <a 
+          href="${loginLink}"
+          class="button"
+          style="
+            background:#ff6600;
+            color:#ffffff;
+            text-decoration:none;
+            padding:16px 36px;
+            border-radius:12px;
+            font-weight:bold;
+            display:inline-block;
+            font-size:16px;
+          "
+        >
+          Access Dashboard
+        </a>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- Footer -->
+  <table width="100%" style="margin-top:50px;border-top:1px solid #ececec;">
+    <tr>
+      <td align="center" style="padding-top:25px;">
+
+        <p style="margin:0;color:#888;font-size:14px;line-height:1.8;">
+          Rixi Lab Bootcamp • Learn. Build. Grow.
+        </p>
+
+        <a 
+          href="https://rixilab.tech"
+          style="color:#ff6600;text-decoration:none;font-size:14px;font-weight:bold;"
+        >
+          www.rixilab.tech
+        </a>
+
+      </td>
+    </tr>
+  </table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
     `;
     const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
     try {
@@ -165,8 +371,7 @@ router.post('/register/:id', async (req, res) => {
 
             await sendWelcomeEmail(user, bootcamp);
 
-            req.flash('success', 'Registration successful! Check your email for login details.');
-            res.redirect('/bootcamps');
+            res.redirect(`/bootcamps/${bootcamp._id}?registered=true`);
         }
     } catch (err) {
         console.error(err);
@@ -231,8 +436,7 @@ router.get('/payment-callback', async (req, res) => {
 
             await sendWelcomeEmail(user, bootcamp);
 
-            req.flash('success', 'Payment successful! Registration complete. Check your email for access.');
-            res.redirect('/bootcamps');
+            res.redirect(`/bootcamps/${bootcamp._id}?registered=true`);
         } else {
             req.flash('error', 'Payment failed or was cancelled.');
             res.redirect(`/bootcamps/${pending.bootcampId}`);

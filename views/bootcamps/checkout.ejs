@@ -3,65 +3,424 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Complete Payment | Rixi Lab</title>
+  <title>Secure Checkout | Rixi Lab Bootcamps</title>
+  <meta name="description" content="Complete your bootcamp registration securely with Rixi Lab.">
 
   <!-- Favicons -->
   <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Raleway:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/js/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet" />
 
-  <!-- Using Cashfree JS SDK V3 -->
+  <!-- Cashfree SDK V3 -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
   <style>
-    body {
-      background-color: var(--background-color, #f8f9fa);
-      color: var(--default-color, #444444);
-      font-family: var(--default-font, 'Roboto', sans-serif);
+    :root {
+      --accent: var(--accent-color, #ff6600);
+      --accent-soft: rgba(255,102,0,0.08);
+      --surface: var(--surface-color, #ffffff);
+      --heading: var(--heading-color, #212529);
+      --text: var(--default-color, #444444);
+      --border: rgba(0,0,0,0.07);
+      --bg: var(--background-color, #f8f9fa);
     }
-    .loader-container {
-      height: 100vh;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+    }
+
+    /* ── Page wrapper: sits between fixed header and footer ── */
+    .checkout-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .checkout-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 1rem 4rem; /* top offset for fixed header */
+    }
+
+    /* ── Card ── */
+    .checkout-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.09);
+      overflow: hidden;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    /* Top accent bar */
+    .checkout-bar {
+      height: 5px;
+      background: linear-gradient(90deg, #ff6600 0%, #ff9940 50%, #ff6600 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s infinite linear;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Body */
+    .checkout-body { padding: 2.8rem 2.5rem 2.5rem; }
+
+    /* Icon */
+    .checkout-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.4rem;
+      position: relative;
+    }
+    .checkout-icon i {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    /* Pulsing ring */
+    .checkout-icon::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,102,0,0.2);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.25); opacity: 0; }
+    }
+
+    /* Title */
+    .checkout-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--heading);
+      margin-bottom: 0.4rem;
+    }
+    .checkout-sub {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.65;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* Progress steps */
+    .checkout-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+    .step-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 4px;
+    }
+    .step-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      background: var(--surface-color, #ffffff);
+      font-size: 0.75rem;
+      font-weight: 700;
     }
-    .spinner-border {
-      width: 3rem;
-      height: 3rem;
-      color: var(--accent-color, #ff6600);
+    .step-dot.done {
+      background: var(--accent);
+      color: #fff;
     }
+    .step-dot.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      animation: step-pulse 1.5s ease infinite;
+    }
+    @keyframes step-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,102,0,0.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(255,102,0,0); }
+    }
+    .step-label {
+      font-size: 0.67rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      opacity: 0.55;
+    }
+    .step-label.active { color: var(--accent); opacity: 1; }
+    .step-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      max-width: 60px;
+      margin-bottom: 18px; /* align with step-dot center */
+    }
+    .step-connector.done { background: var(--accent); }
+
+    /* Spinner */
+    .checkout-spinner {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1.2rem;
+    }
+    .checkout-spinner svg {
+      animation: rotate 1.4s linear infinite;
+      width: 48px;
+      height: 48px;
+    }
+    .checkout-spinner circle {
+      fill: none;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-dasharray: 80, 200;
+      stroke-dashoffset: 0;
+      stroke: var(--accent);
+      animation: dash 1.4s ease-in-out infinite;
+    }
+    @keyframes rotate { 100% { transform: rotate(360deg); } }
+    @keyframes dash {
+      0%   { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }
+      50%  { stroke-dasharray: 100, 200; stroke-dashoffset: -30px; }
+      100% { stroke-dasharray: 100, 200; stroke-dashoffset: -125px; }
+    }
+
+    .checkout-status {
+      font-size: 0.85rem;
+      color: var(--text);
+      opacity: 0.6;
+      margin-top: 0.5rem;
+    }
+
+    /* Trust badges */
+    .checkout-trust {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding-top: 1.6rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1.6rem;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .trust-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .trust-text {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    /* Warning */
+    .checkout-warning {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(255,193,7,0.07);
+      border: 1px solid rgba(255,193,7,0.2);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      color: #856404;
+      margin-top: 1.2rem;
+    }
+
+    /* ── Fade-in animation for the whole card ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .checkout-card { animation: fadeUp 0.55s ease both; }
   </style>
 </head>
-<body class="index-page">
-  <div class="loader-container">
-    <div class="spinner-border mb-4" role="status"></div>
-    <h3 class="fw-bold" style="color: var(--heading-color, #212529);">Initializing Secure Checkout...</h3>
-    <p class="text-white">Please do not close or refresh this window.</p>
-  </div>
+
+<body class="index-page checkout-page">
+
+  <!-- ── Header ── -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
+        <h1 class="sitename">Rixi Lab</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/internship">Internship</a></li>
+          <li><a href="/cap">CAP</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/bootcamps" class="active">Bootcamps</a></li>
+          <li><a href="/certificate">Certificate</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="/login">Login</a>
+    </div>
+  </header>
+
+  <!-- ── Main: Checkout Card ── -->
+  <main class="checkout-main">
+    <div class="checkout-card">
+
+      <!-- Shimmer bar -->
+      <div class="checkout-bar"></div>
+
+      <div class="checkout-body">
+
+        <!-- Icon -->
+        <div class="checkout-icon">
+          <i class="bi bi-shield-lock-fill"></i>
+        </div>
+
+        <!-- Title -->
+        <h1 class="checkout-title">Secure Checkout</h1>
+        <p class="checkout-sub">
+          We're initializing your payment session.<br>
+          You'll be redirected to the payment gateway shortly.
+        </p>
+
+        <!-- Progress Steps -->
+        <div class="checkout-steps">
+          <div class="step-item">
+            <div class="step-dot done"><i class="bi bi-check-lg"></i></div>
+            <span class="step-label">Registered</span>
+          </div>
+          <div class="step-connector done"></div>
+          <div class="step-item">
+            <div class="step-dot active"><i class="bi bi-arrow-right"></i></div>
+            <span class="step-label active">Payment</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-item">
+            <div class="step-dot" style="background:var(--border);color:var(--text);opacity:0.4;">
+              <i class="bi bi-trophy"></i>
+            </div>
+            <span class="step-label">Confirmed</span>
+          </div>
+        </div>
+
+        <!-- Spinner -->
+        <div class="checkout-spinner">
+          <svg viewBox="22 22 44 44">
+            <circle cx="44" cy="44" r="20"></circle>
+          </svg>
+        </div>
+        <p class="checkout-status" id="checkout-status-text">Connecting to payment gateway…</p>
+
+        <!-- Trust Badges -->
+        <div class="checkout-trust">
+          <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-shield-check"></i></div>
+            <span class="trust-text">SSL<br>Secured</span>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-lock-fill"></i></div>
+            <span class="trust-text">256-bit<br>Encryption</span>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-credit-card-2-back-fill"></i></div>
+            <span class="trust-text">Powered by<br>Cashfree</span>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="checkout-warning">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          Do not close or refresh this window
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <%- include('../partials/footer') %>
+
+  <!-- Vendor JS -->
+  <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/main.js"></script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
+      const statusEl = document.getElementById('checkout-status-text');
+      const messages = [
+        "Connecting to payment gateway…",
+        "Establishing secure session…",
+        "Almost ready…"
+      ];
+      let msgIdx = 0;
+
+      // Cycle status messages
+      const msgInterval = setInterval(() => {
+        msgIdx = (msgIdx + 1) % messages.length;
+        statusEl.textContent = messages[msgIdx];
+      }, 1800);
+
       const mode = window.location.hostname.includes('localhost') ? 'sandbox' : 'production';
-      const cashfree = Cashfree({ mode: mode }); 
-      
+      const cashfree = Cashfree({ mode: mode });
+
       cashfree.checkout({
         paymentSessionId: "<%= paymentSessionId %>"
-      }).then(function(result) {
-        if(result.error){
-            alert("Payment encountered an error: " + result.error.message);
-            window.history.back();
+      }).then(function (result) {
+        clearInterval(msgInterval);
+        if (result.error) {
+          statusEl.textContent = "Payment error: " + result.error.message;
+          alert("Payment encountered an error: " + result.error.message);
+          window.history.back();
         }
-        if(result.redirect){
-            console.log("Redirection handled by cashfree");
+        if (result.redirect) {
+          statusEl.textContent = "Redirecting…";
+          console.log("Redirection handled by Cashfree");
         }
       });
     });

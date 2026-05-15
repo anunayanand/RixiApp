@@ -1,86 +1,343 @@
-const cron = require('node-cron');
-const Bootcamp = require('../models/Bootcamp');
-const BootcampUser = require('../models/BootcampUser');
-const { google } = require('googleapis');
+const cron = require("node-cron");
+const Bootcamp = require("../models/Bootcamp");
+const BootcampUser = require("../models/BootcampUser");
+const { google } = require("googleapis");
 
 // ==============================
 // GMAIL CONFIGURATION
 // ==============================
 const oAuth2Client = new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    process.env.REDIRECT_URI
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URI,
 );
 oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
 function makeBody(to, from, subject, message) {
-    const str = [
-        "Content-Type: text/html; charset=\"UTF-8\"\n",
-        "MIME-Version: 1.0\n",
-        "Content-Transfer-Encoding: 7bit\n",
-        "to: ", to, "\n",
-        "from: ", from, "\n",
-        "subject: ", subject, "\n\n",
-        message
-    ].join('');
-    return Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+  const str = [
+    'Content-Type: text/html; charset="UTF-8"\n',
+    "MIME-Version: 1.0\n",
+    "Content-Transfer-Encoding: 7bit\n",
+    "to: ",
+    to,
+    "\n",
+    "from: ",
+    from,
+    "\n",
+    "subject: ",
+    subject,
+    "\n\n",
+    message,
+  ].join("");
+  return Buffer.from(str)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
 }
 
 // ==============================
 // CRON JOB: 30-Min Session Reminders
 // ==============================
 // Runs every minute to check if any session starts in exactly 30 minutes.
-cron.schedule('* * * * *', async () => {
-    try {
-        const now = new Date();
-        const thirtyMinutesFromNow = new Date(now.getTime() + 30 * 60000);
+cron.schedule("* * * * *", async () => {
+  try {
+    const now = new Date();
+
+    // Find bootcamps that are live
+    const bootcamps = await Bootcamp.find({ status: "live" });
+
+    for (const bootcamp of bootcamps) {
+      for (const session of bootcamp.sessions) {
+        const sessionTime = new Date(session.time);
+
+        // Check if session starts exactly within the next 30 minutes
+        const timeDiffMinutes = (sessionTime.getTime() - now.getTime()) / 60000;
         
-        // Find bootcamps that are live
-        const bootcamps = await Bootcamp.find({ status: 'live' });
+        if (timeDiffMinutes > 29 && timeDiffMinutes <= 30) {
+          const loginLink = `${process.env.BASE_URL || "https://www.rixilab.tech"}/bootcamp-portal/login`;
 
-        for (const bootcamp of bootcamps) {
-            for (const session of bootcamp.sessions) {
-                const sessionTime = new Date(session.time);
-                
-                // Check if session starts exactly within the next 30-31 minutes
-                const diffMs = thirtyMinutesFromNow - sessionTime;
-                if (sessionTime > now && diffMs >= 0 && diffMs < 60000) {
-                    
-                    const loginLink = `${process.env.BASE_URL || 'http://localhost:3000'}/bootcamp-portal/login`;
+          // Send email to all enrolled users
+          for (const userId of bootcamp.usersEnrolled) {
+            const user = await BootcampUser.findById(userId);
+            if (user) {
+              const subject = `Reminder: Bootcamp Session starting in 30 minutes!`;
+              const body = `
+                             <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-                    // Send email to all enrolled users
-                    for (const userId of bootcamp.usersEnrolled) {
-                        const user = await BootcampUser.findById(userId);
-                        if (user) {
-                            const subject = `Reminder: Bootcamp Session starting in 30 minutes!`;
-                            const body = `
-                                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
-                                    <h2 style="color: #6366f1;">Hi ${user.name},</h2>
-                                    <p style="font-size: 16px; color: #333;">Get ready! Your session <strong>${session.session_id}</strong> for <strong>${bootcamp.name}</strong> is starting in exactly 30 minutes.</p>
-                                    
-                                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                                        <p style="margin: 5px 0;"><strong>Time:</strong> ${sessionTime.toLocaleString('en-IN')}</p>
-                                        <p style="margin: 5px 0;"><strong>Instructor:</strong> ${session.instructor || 'TBA'}</p>
-                                        <p style="margin: 5px 0;"><strong>Details:</strong> ${session.details || 'Join via your dashboard.'}</p>
-                                    </div>
-                                    
-                                    <p>Please log in to your dashboard to access the session link and materials:</p>
-                                    <a href="${loginLink}" style="display: inline-block; padding: 12px 25px; background: #6366f1; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 10px;">Go to Dashboard</a>
-                                </div>
+  <style>
+    body{
+      margin:0;
+      padding:0;
+      background:#f5f5f5;
+      font-family:Arial,sans-serif;
+    }
+
+    table{
+      border-spacing:0;
+    }
+
+    img{
+      border:0;
+      display:block;
+    }
+
+    @media screen and (max-width:600px){
+
+      .container{
+        width:100% !important;
+      }
+
+      .content{
+        padding:30px 20px !important;
+      }
+
+      .heading{
+        font-size:30px !important;
+      }
+
+      .otp{
+        font-size:34px !important;
+        letter-spacing:6px !important;
+      }
+
+      .button{
+        width:100% !important;
+        display:block !important;
+        text-align:center !important;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center" style="padding:30px 15px;">
+
+        <!-- Main Container -->
+        <table 
+          width="600" 
+          class="container"
+          cellpadding="0" 
+          cellspacing="0" 
+          bgcolor="#ffffff"
+          style="max-width:600px;border-radius:24px;overflow:hidden;border:1px solid #ececec;"
+        >
+
+          <!-- Top Bar -->
+          <tr>
+            <td height="8" bgcolor="#ff6600"></td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td class="content" style="padding:50px 40px;">
+
+              <!-- Logo -->
+              <table width="100%">
+                <tr>
+                  <td align="center">
+
+                    <table 
+                      width="100" 
+                      height="100"
+                      cellpadding="0"
+                      cellspacing="0"
+                      style="background:#fff3eb;border-radius:50%;"
+                    >
+                      <tr>
+                        <td align="center" valign="middle">
+                          <img 
+                            src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+                            width="60"
+                            alt="Rixi Lab"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+
+                    <h1 
+                      class="heading"
+                      style="margin:25px 0 0;font-size:42px;line-height:1.2;color:#ff6600;"
+                    >
+                      Session Reminder
+                    </h1>
+
+                    <p style="margin:15px 0 0;color:#777;font-size:17px;line-height:1.7;">
+                      Your upcoming session starts in 30 minutes.
+                    </p>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Greeting -->
+              <table width="100%" style="margin-top:45px;">
+                <tr>
+                  <td>
+
+                    <p style="margin:0;font-size:20px;color:#222;">
+                      Hi <strong>${user.name}</strong>,
+                    </p>
+
+                    <p style="margin:25px 0 0;font-size:16px;line-height:1.9;color:#555;">
+                      Get ready for your upcoming session
+                      <strong>${session.session_id}</strong>
+                      from <strong>${bootcamp.name}</strong>.
+                    </p>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Session Card -->
+              <table 
+                width="100%" 
+                cellpadding="0"
+                cellspacing="0"
+                style="margin-top:35px;background:#fffaf7;border:1px solid #ffd8c2;border-radius:20px;"
+              >
+                <tr>
+                  <td style="padding:30px;">
+
+                    <p style="margin:0 0 20px;font-size:20px;font-weight:bold;color:#222;">
+                      Session Details
+                    </p>
+
+                    <ul style="padding-left:20px;margin:0;color:#555;">
+
+                      <li style="margin-bottom:14px;line-height:1.8;">
+                        <strong>Session ID:</strong>
+                        ${session.session_id}
+                      </li>
+
+                      <li style="margin-bottom:14px;line-height:1.8;">
+                        <strong>Bootcamp:</strong>
+                        ${bootcamp.name}
+                      </li>
+
+                      <li style="margin-bottom:14px;line-height:1.8;">
+                        <strong>Time:</strong>
+                        ${sessionTime.toLocaleString('en-IN')}
+                      </li>
+
+                      <li style="margin-bottom:14px;line-height:1.8;">
+                        <strong>Instructor:</strong>
+                        ${session.instructor || 'TBA'}
+                      </li>
+
+                      <li style="line-height:1.8;">
+                        <strong>Details:</strong>
+
+                        <ul style="padding-left:20px;margin-top:10px;">
+
+                          ${(session.details || '')
+                              .split('\\n')
+                              .filter(d => d.trim().length > 0)
+                              .map(point => `
+                            <li style="margin-bottom:10px;">
+                              ${point.replace(/^-/, '').trim()}
+                            </li>
+                          `).join('')}
+
+                        </ul>
+
+                      </li>
+
+                    </ul>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Button -->
+              <table width="100%" style="margin-top:40px;">
+                <tr>
+                  <td align="center">
+
+                    <a 
+                      href="${loginLink}"
+                      class="button"
+                      style="
+                        background:#ff6600;
+                        color:#ffffff;
+                        text-decoration:none;
+                        padding:16px 36px;
+                        border-radius:12px;
+                        font-weight:bold;
+                        display:inline-block;
+                        font-size:16px;
+                      "
+                    >
+                      Go to Dashboard
+                    </a>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Footer -->
+              <table width="100%" style="margin-top:50px;border-top:1px solid #ececec;">
+                <tr>
+                  <td align="center" style="padding-top:25px;">
+
+                    <p style="margin:0;color:#888;font-size:14px;line-height:1.8;">
+                      Rixi Lab Bootcamp • Learn. Build. Grow.
+                    </p>
+
+                    <a 
+                      href="https://rixilab.tech"
+                      style="color:#ff6600;text-decoration:none;font-size:14px;font-weight:bold;"
+                    >
+                      www.rixilab.tech
+                    </a>
+
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
                             `;
 
-                            const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
-                            
-                            // Send mail asynchronously
-                            gmail.users.messages.send({ userId: 'me', resource: { raw: encodedMail } })
-                                .catch(err => console.error(`Failed sending reminder to ${user.email}`, err.message));
-                        }
-                    }
-                }
+              const encodedMail = makeBody(
+                user.email,
+                process.env.EMAIL,
+                subject,
+                body,
+              );
+
+              // Send mail asynchronously
+              gmail.users.messages
+                .send({ userId: "me", resource: { raw: encodedMail } })
+                .catch((err) =>
+                  console.error(
+                    `Failed sending reminder to ${user.email}`,
+                    err.message,
+                  ),
+                );
             }
+          }
         }
-    } catch (err) {
-        console.error("Bootcamp Reminder Cron Error:", err);
+      }
     }
+  } catch (err) {
+    console.error("Bootcamp Reminder Cron Error:", err);
+  }
 });

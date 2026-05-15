@@ -137,19 +137,28 @@
                 </td>
                 <td>
                   <% if (u.enrolledBootcamps && u.enrolledBootcamps.length > 0) { %>
-                    <ul class="list-unstyled mb-0">
-                      <% u.enrolledBootcamps.forEach(eb => { %>
-                        <li class="mb-2">
-                          <span class="batch-chip mb-1"><%= eb.bootcamp_id ? eb.bootcamp_id.name : 'Unknown Bootcamp' %></span>
-                          <div class="d-flex align-items-center gap-2 mt-1">
-                            <div class="progress" style="height: 6px; width: 100px; border-radius: 10px;">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: <%= eb.progress %>%; border-radius: 10px;"></div>
+                    <div class="bc-dropdown-wrap">
+                      <!-- Trigger pill -->
+                      <button class="bc-dropdown-trigger" onclick="toggleBcDropdown(this)" type="button">
+                        <i class="bi bi-mortarboard-fill"></i>
+                        <%= u.enrolledBootcamps.length %> Bootcamp<%= u.enrolledBootcamps.length > 1 ? 's' : '' %>
+                        <i class="bi bi-chevron-down bc-chev"></i>
+                      </button>
+                      <!-- Dropdown panel -->
+                      <div class="bc-dropdown-panel">
+                        <% u.enrolledBootcamps.forEach(eb => { %>
+                          <div class="bc-dropdown-item">
+                            <div class="bc-dropdown-name"><%= eb.bootcamp_id ? eb.bootcamp_id.name : 'Unknown Bootcamp' %></div>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                              <div class="progress flex-grow-1" style="height: 5px; border-radius: 10px; min-width: 80px;">
+                                <div class="progress-bar bg-success" style="width: <%= eb.progress %>%; border-radius: 10px;"></div>
+                              </div>
+                              <span class="bc-dropdown-pct"><%= eb.progress %>%</span>
                             </div>
-                            <span class="small fw-bold text-muted" style="font-size: 0.7rem;"><%= eb.progress %>%</span>
                           </div>
-                        </li>
-                      <% }) %>
-                    </ul>
+                        <% }) %>
+                      </div>
+                    </div>
                   <% } else { %>
                     <span class="text-muted small">None</span>
                   <% } %>
@@ -199,18 +208,25 @@
             <div class="mt-2">
               <div class="small fw-bold text-muted mb-2">Enrolled Bootcamps:</div>
               <% if (u.enrolledBootcamps && u.enrolledBootcamps.length > 0) { %>
-                <div class="d-flex flex-column gap-2">
-                  <% u.enrolledBootcamps.forEach(eb => { %>
-                    <div class="bg-light p-2 rounded border">
-                      <div class="small fw-bold mb-1"><%= eb.bootcamp_id ? eb.bootcamp_id.name : 'Unknown Bootcamp' %></div>
-                      <div class="d-flex align-items-center gap-2">
-                        <div class="progress flex-grow-1" style="height: 6px; border-radius: 10px;">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: <%= eb.progress %>%; border-radius: 10px;"></div>
+                <div class="bc-dropdown-wrap">
+                  <button class="bc-dropdown-trigger w-100" onclick="toggleBcDropdown(this)" type="button">
+                    <i class="bi bi-mortarboard-fill"></i>
+                    <%= u.enrolledBootcamps.length %> Bootcamp<%= u.enrolledBootcamps.length > 1 ? 's' : '' %>
+                    <i class="bi bi-chevron-down bc-chev"></i>
+                  </button>
+                  <div class="bc-dropdown-panel">
+                    <% u.enrolledBootcamps.forEach(eb => { %>
+                      <div class="bc-dropdown-item">
+                        <div class="bc-dropdown-name"><%= eb.bootcamp_id ? eb.bootcamp_id.name : 'Unknown Bootcamp' %></div>
+                        <div class="d-flex align-items-center gap-2 mt-1">
+                          <div class="progress flex-grow-1" style="height: 5px; border-radius: 10px;">
+                            <div class="progress-bar bg-success" style="width: <%= eb.progress %>%; border-radius: 10px;"></div>
+                          </div>
+                          <span class="bc-dropdown-pct"><%= eb.progress %>%</span>
                         </div>
-                        <span class="small fw-bold text-muted" style="font-size: 0.7rem;"><%= eb.progress %>%</span>
                       </div>
-                    </div>
-                  <% }) %>
+                    <% }) %>
+                  </div>
                 </div>
               <% } else { %>
                 <span class="text-muted small">None</span>
@@ -240,6 +256,92 @@
       </div>
     </div>
   </div>
+
+  <style>
+    /* ── Bootcamp enrolled dropdown ── */
+    .bc-dropdown-wrap {
+      position: relative;
+    }
+    .bc-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-alt, #f8f9fc);
+      border: 1px solid var(--border, #e5e7eb);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary, #1a1a2e);
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+    .bc-dropdown-trigger:hover {
+      background: var(--primary-glow, rgba(255,102,0,.1));
+      border-color: rgba(255,102,0,.35);
+      color: var(--primary, #ff6600);
+    }
+    .bc-dropdown-trigger.open {
+      background: var(--primary-glow, rgba(255,102,0,.1));
+      border-color: rgba(255,102,0,.4);
+      color: var(--primary, #ff6600);
+    }
+    .bc-chev {
+      font-size: 0.65rem;
+      transition: transform .2s ease;
+    }
+    .bc-dropdown-trigger.open .bc-chev {
+      transform: rotate(180deg);
+    }
+    .bc-dropdown-panel {
+      display: none;
+      margin-top: 6px;
+      background: var(--surface, #fff);
+      border: 1px solid var(--border, #e5e7eb);
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      padding: 8px;
+      min-width: 220px;
+      z-index: 50;
+    }
+    .bc-dropdown-panel.open {
+      display: block;
+      animation: bcDropFade .18s ease both;
+    }
+    @keyframes bcDropFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .bc-dropdown-item {
+      padding: 7px 8px;
+      border-radius: 7px;
+      transition: background .15s;
+    }
+    .bc-dropdown-item:not(:last-child) {
+      border-bottom: 1px solid var(--border, #e5e7eb);
+      margin-bottom: 4px;
+      padding-bottom: 10px;
+    }
+    .bc-dropdown-item:hover {
+      background: var(--surface-alt, #f8f9fc);
+    }
+    .bc-dropdown-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary, #1a1a2e);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+    .bc-dropdown-pct {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted, #9ca3af);
+      white-space: nowrap;
+    }
+  </style>
 
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -293,6 +395,25 @@
       document.getElementById('bootcampFilter').value = 'all';
       applyUserFilters();
     }
+
+    function toggleBcDropdown(btn) {
+      const panel = btn.nextElementSibling;
+      const isOpen = panel.classList.contains('open');
+      // Close all open panels first
+      document.querySelectorAll('.bc-dropdown-panel.open').forEach(p => p.classList.remove('open'));
+      document.querySelectorAll('.bc-dropdown-trigger.open').forEach(b => b.classList.remove('open'));
+      if (!isOpen) {
+        panel.classList.add('open');
+        btn.classList.add('open');
+      }
+    }
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.bc-dropdown-wrap')) {
+        document.querySelectorAll('.bc-dropdown-panel.open').forEach(p => p.classList.remove('open'));
+        document.querySelectorAll('.bc-dropdown-trigger.open').forEach(b => b.classList.remove('open'));
+      }
+    });
   </script>
 </body>
 </html>

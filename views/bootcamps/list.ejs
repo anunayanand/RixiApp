@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Live Bootcamps | Rixi Lab</title>
+  <meta name="description" content="Explore live bootcamps by Rixi Lab. Learn cutting-edge tech skills with expert instructors through hands-on sessions.">
 
   <!-- Favicons -->
   <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
@@ -12,9 +13,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,110 +23,281 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet" />
-  
+
   <style>
-    .hero-section {
-      padding: 4rem 0 1.5rem 0 ;
+    :root {
+      --accent: var(--accent-color, #ff6600);
+      --accent-soft: rgba(255, 102, 0, 0.08);
+      --surface: var(--surface-color, #ffffff);
+      --heading: var(--heading-color, #212529);
+      --text: var(--default-color, #444444);
+      --border: rgba(0,0,0,0.07);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.1);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body { font-family: 'Inter', sans-serif; }
+
+    /* ── Hero ── */
+    .bc-hero {
+      padding: 7rem 0 0;
       text-align: center;
-    }
-    .hero-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--heading-color, #212529);
-      /* margin-bottom: 20px; */
-      margin-top: 40px;
-    }
-    .bootcamp-card {
-      background: var(--surface-color, #ffffff);
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 12px;
+      position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
+    }
+    .bc-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,102,0,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .bc-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,102,0,0.15);
+      margin-bottom: 1.2rem;
+    }
+    .bc-hero-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+    .bc-hero-title span { color: var(--accent); }
+    .bc-hero-sub {
+      font-size: 1rem;
+      color: var(--text);
+      opacity: 0.75;
+      max-width: 480px;
+      margin: 0 auto 1.8rem;
+    }
+    .bc-hero-stats {
+      display: inline-flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .bc-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bc-stat-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--heading);
+    }
+    .bc-stat-label {
+      font-size: 0.75rem;
+      color: var(--text);
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Divider ── */
+    .bc-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ── Grid ── */
+    .bc-grid-section { padding-bottom: 5rem; }
+
+    /* ── Card ── */
+    .bc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
     }
-    .bootcamp-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    .bc-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255,102,0,0.2);
     }
-    .card-banner-wrapper {
+
+    /* Banner */
+    .bc-card-img-wrap {
       position: relative;
-      width: 100%;
-      height: 200px;
+      height: 195px;
       overflow: hidden;
+      flex-shrink: 0;
     }
-    .card-banner {
+    .bc-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
-    .bootcamp-card:hover .card-banner {
-      transform: scale(1.05);
-    }
-    .badge-price {
+    .bc-card:hover .bc-card-img { transform: scale(1.06); }
+
+    /* Overlay gradient on image */
+    .bc-card-img-wrap::after {
+      content: '';
       position: absolute;
-      top: 15px;
-      right: 15px;
-      background: var(--accent-color, #ff6600);
-      color: var(--contrast-color, #ffffff);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.85rem;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.18) 0%, transparent 60%);
     }
-    .card-content {
-      padding: 1.5rem;
-      flex-grow: 1;
+
+    /* Price badge */
+    .bc-price-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      color: var(--heading);
+      padding: 5px 13px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .bc-price-badge.free {
+      background: rgba(255,102,0,0.9);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* Body */
+    .bc-card-body {
+      padding: 1.4rem 1.5rem 1.5rem;
       display: flex;
       flex-direction: column;
-    }
-    .bootcamp-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--heading-color, #212529);
-      margin-bottom: 0.5rem;
-    }
-    .bootcamp-desc {
-      color: var(--default-color, #444444);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
       flex-grow: 1;
     }
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(0,0,0,0.05);
-    }
-    .btn-premium {
-      background: var(--accent-color, #ff6600);
-      color: var(--contrast-color, #ffffff);
-      border: none;
-      padding: 8px 20px;
-      border-radius: 8px;
+    .bc-card-category {
+      font-size: 0.72rem;
       font-weight: 600;
-      transition: all 0.3s ease;
-      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
     }
-    .btn-premium:hover {
-      background: #e65c00;
-      color: var(--contrast-color, #ffffff);
+    .bc-card-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+    .bc-card-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.65;
+      opacity: 0.8;
+      flex-grow: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Footer row */
+    .bc-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* padding-top: 1rem; */
+      border-top: 1px solid var(--border);
+      gap: 0.75rem;
+    }
+    .bc-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      opacity: 0.7;
+    }
+    .bc-meta-pill i { color: var(--accent); }
+
+    /* CTA button */
+    .bc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      border: none;
+    }
+    .bc-btn:hover {
+      background: #e55a00;
+      color: #fff;
+      transform: translateX(2px);
+    }
+    .bc-btn i { font-size: 0.9rem; }
+
+    /* ── Empty State ── */
+    .bc-empty {
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+    .bc-empty-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--accent-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    .bc-empty h3 { font-size: 1.3rem; font-weight: 700; color: var(--heading); margin-bottom: 0.5rem; }
+    .bc-empty p { color: var(--text); opacity: 0.65; font-size: 0.95rem; }
+
+    /* ── Fade-up animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-up {
+      animation: fadeUp 0.55s ease both;
     }
   </style>
 </head>
 
 <body class="index-page">
   <%- include('../partials/loader') %>
-  
-  <header id="header" class="header d-flex align-items-center fixed-top">
+
+  <!-- ── Rixi Lab Header (theme-consistent) ── -->
+  <header id="header" class="header d-flex align-items-center fixed-top ">
     <div class="container position-relative d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="" />
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
         <h1 class="sitename">Rixi Lab</h1>
       </a>
 
@@ -138,6 +308,7 @@
           <li><a href="/cap">CAP</a></li>
           <li><a href="/#about">About</a></li>
           <li><a href="/#services">Services</a></li>
+          <li><a href="/bootcamps" class="active">Bootcamps</a></li>
           <li><a href="/certificate">Certificate</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
@@ -149,150 +320,109 @@
   </header>
 
   <main class="main">
-    <section class="hero-section">
+
+    <!-- ── Hero ── -->
+    <section class="bc-hero">
       <div class="container">
-        <h1 class="hero-title animate-up" style="margin-bottom: 0;">Rixi Lab - Bootcamps</h1>
+        <div class="bc-hero-eyebrow animate-up">
+          <i class="bi bi-lightning-charge-fill"></i> Live & Upcoming
+        </div>
+        <h1 class="bc-hero-title animate-up" style="animation-delay:0.05s">
+          Skill-Up with Rixi Lab <span>Bootcamps</span>
+        </h1>
+        <!-- <p class="bc-hero-sub animate-up" style="animation-delay:0.1s">
+          Hands-on, instructor-led programs designed to take you from zero to job-ready in weeks.
+        </p> -->
+        <!-- <div class="bc-hero-stats animate-up" style="animation-delay:0.15s">
+          <div class="bc-stat">
+            <span class="bc-stat-num"><%= bootcamps.length %></span>
+            <span class="bc-stat-label">Bootcamps</span>
+          </div>
+          <div class="bc-stat">
+            <span class="bc-stat-num"><%= bootcamps.reduce((sum, b) => sum + b.sessions.length, 0) %></span>
+            <span class="bc-stat-label">Total Sessions</span>
+          </div>
+          <div class="bc-stat">
+            <span class="bc-stat-num"><%= bootcamps.reduce((sum, b) => sum + b.usersEnrolled.length, 0) %></span>
+            <span class="bc-stat-label">Enrolled</span>
+          </div>
+        </div> -->
       </div>
     </section>
 
-    <!-- Bootcamps Grid -->
-    <section class="container pb-5">
-      <div class="row g-4">
-        <% if(bootcamps.length === 0) { %>
-          <div class="col-12 text-center py-5">
-            <i class="bi bi-stars display-1 text-muted opacity-50 mb-3 d-block"></i>
-            <h3 class="text-dark">No Live Bootcamps Right Now</h3>
-            <p class="text-muted">Stay tuned! We are crafting something amazing.</p>
-          </div>
-        <% } else { %>
-          <% bootcamps.forEach((b, i) => { %>
-            <div class="col-12 col-md-6 col-lg-4 animate-up" style="animation-delay: <%= 0.1 + (i * 0.1) %>s;">
-              <div class="bootcamp-card">
-                <div class="card-banner-wrapper">
-                  <img src="<%= b.banner_img %>" alt="<%= b.name %>" class="card-banner">
-                  <div class="badge-price">
-                    <% if(b.isPaid) { %>
-                      <i class="bi bi-currency-rupee"></i><%= b.payment.amount %>
+    <!-- <div class="bc-divider"></div> -->
+
+    <!-- ── Bootcamps Grid ── -->
+    <section class="bc-grid-section">
+      <div class="container">
+        <div class="row g-4">
+          <% if (bootcamps.length === 0) { %>
+            <div class="col-12">
+              <div class="bc-empty animate-up">
+                <div class="bc-empty-icon"><i class="bi bi-stars"></i></div>
+                <h3>No Live Bootcamps Right Now</h3>
+                <p>We're crafting something amazing — check back soon!</p>
+              </div>
+            </div>
+          <% } else { %>
+            <% bootcamps.forEach((b, i) => { %>
+              <div class="col-12 col-md-6 col-lg-4 animate-up" style="animation-delay: <%= 0.05 + (i * 0.07) %>s;">
+                <div class="bc-card">
+                  <!-- Image -->
+                  <div class="bc-card-img-wrap">
+                    <img src="<%= b.banner_img %>" alt="<%= b.name %>" class="bc-card-img">
+                    <% if (b.isPaid) { %>
+                      <span class="bc-price-badge">
+                        <i class="bi bi-currency-rupee"></i><%= b.payment.amount %>
+                      </span>
                     <% } else { %>
-                      <i class="bi bi-lightning-charge-fill text-warning"></i> FREE
+                      <span class="bc-price-badge free">
+                        <i class="bi bi-lightning-charge-fill"></i> FREE
+                      </span>
                     <% } %>
                   </div>
-                </div>
-                <div class="card-content">
-                  <h3 class="bootcamp-title"><%= b.name %></h3>
-                  <p class="bootcamp-desc"><%= b.description.substring(0, 110) %>...</p>
-                  <div class="card-meta">
-                    <div class="text-white small">
-                      <i class="bi bi-camera-video me-1"></i> <%= b.sessions.length %> Sessions
+
+                  <!-- Body -->
+                  <div class="bc-card-body">
+                    <div class="bc-card-category">Bootcamp</div>
+                    <h3 class="bc-card-title"><%= b.name %></h3>
+                    <p class="bc-card-desc"><%= b.description.substring(0, 115) %>...</p>
+
+                    <div class="bc-card-footer">
+                      <span class="bc-meta-pill">
+                        <i class="bi bi-calendar-event"></i>
+                            <%= new Date(b.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
+                      </span>
+                      <span class="bc-meta-pill">
+                        <i class="bi bi-people-fill"></i> <%= b.usersEnrolled.length %> Enrolled
+                      </span>
+                      <a href="/bootcamps/<%= b._id %>" class="bc-btn">
+                        Details <i class="bi bi-arrow-right"></i>
+                      </a>
                     </div>
-                    <a href="/bootcamps/<%= b._id %>" class="btn-premium">View Details</a>
                   </div>
                 </div>
               </div>
-            </div>
-          <% }) %>
-        <% } %>
+            <% }) %>
+          <% } %>
+        </div>
       </div>
     </section>
   </main>
 
   <%- include('../partials/toaster') %>
-
-  <footer id="footer" class="footer light-background">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 footer-about">
-            <a href="/" class="logo d-flex align-items-center">
-              <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" style="height: 2rem !important" />
-              <span class="sitename">Rixi Lab</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>Bhatpar Rani, Deoria,</p>
-              <p>Uttar Pradesh, 274506 INDIA</p>
-              <p class="mt-3">
-                <strong>Phone:</strong>
-                <span>+91 7617803891 Whatsapp Only</span>
-              </p>
-              <p><strong>Email:</strong> <span>rixilab7@gmail.com</span></p>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Web Development</a></li>
-              <li><a href="#">Product Management</a></li>
-              <li><a href="#">Marketing</a></li>
-              <li><a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Internships & Training</h4>
-            <ul>
-              <li><a href="#">Full Stack Web Development</a></li>
-              <li><a href="#">UI/UX Design</a></li>
-              <li><a href="#">Live Project Experience</a></li>
-              <li><a href="#">Canva Premium free</a></li>
-              <li><a href="#">Career Mentorship</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Courses & Certification</h4>
-            <ul>
-              <li><a href="#">Training Certificate</a></li>
-              <li><a href="#">Internship Certificate</a></li>
-              <li><a href="#">Couce Certificate.</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="copyright text-center">
-      <div
-        class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
-        <div class="d-flex flex-column align-items-center align-items-lg-start">
-          <div>
-            © Copyright 2025-26 <strong><span>Rixi Lab</span></strong>. All Rights Reserved
-          </div>
-          <div class="credits">Designed by <a href="#">Rixi Lab</a></div>
-        </div>
-
-        <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-          <a href="https://www.linkedin.com/company/rixilab"><i class="bi bi-linkedin"></i></a>
-          <a href="https://www.facebook.com/rixilab"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/rixilab.in"><i class="bi bi-instagram"></i></a>
-          <a href=""><i class="bi bi-twitter-x"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <%- include('../partials/footer') %>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
   <!-- Vendor JS Files -->
   <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/vendor/aos/aos.js"></script>
   <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="/js/vendor/typed.js/typed.umd.js"></script>
   <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
