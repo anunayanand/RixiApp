@@ -309,10 +309,10 @@
       gap: 8px;
       letter-spacing: 0.02em;
     }
-    .dt-submit-btn:hover {
+    /* .dt-submit-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(255,102,0,0.35);
-    }
+    } */
     .dt-trust {
       display: flex;
       align-items: center;
@@ -323,7 +323,12 @@
       color: var(--text);
       opacity: 0.55;
     }
-
+    .no-hover:hover {
+    background: #ff6600 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    color: white !important;
+  }
     /* ── Animate ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -511,28 +516,44 @@
   <%- include('../partials/footer') %>
 
   <!-- Registration Confirmation Modal -->
-  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border-radius: var(--radius); border: none; box-shadow: var(--shadow-md);">
-        <div class="modal-header border-0 pb-0" style="justify-content: flex-end;">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ ```html
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color: #040000; color: #f8f8f8; border-radius: var(--radius); border: none; box-shadow: var(--shadow-md);">
+      
+      <div class="modal-header border-0 pb-0" style="justify-content: flex-end;">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body text-center pt-0 pb-4 px-4">
+        
+        <div style="width: 70px; height: 70px; background: rgba(40, 167, 69, 0.15); color: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem;">
+          <i class="bi bi-check-lg"></i>
         </div>
-        <div class="modal-body text-center pt-0 pb-4 px-4">
-          <div style="width: 70px; height: 70px; background: rgba(40, 167, 69, 0.1); color: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem;">
-            <i class="bi bi-check-lg"></i>
-          </div>
-          <h4 style="font-family: 'Raleway', sans-serif; font-weight: 700; color: var(--heading); margin-bottom: 0.8rem;">Registration Successful!</h4>
-          <p style="color: var(--text); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            Thank you for registering for <strong><%= bootcamp.name %></strong>. We've sent the login details and further instructions to your email.
-          </p>
-          <a href="/login" class="dt-submit-btn" style="text-decoration: none; display: inline-flex; width: auto; padding: 10px 24px; min-width: 140px; margin: 0 auto;">
+
+        <h4 style="font-family: 'Raleway', sans-serif; font-weight: 700; color: #f8f8f8; margin-bottom: 0.8rem;">
+          Registration Successful!
+        </h4>
+
+        <p style="color: #f8f8f8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          Thank you for registering for <strong><%= bootcamp.name %></strong>. We've sent the login details and further instructions to your email.
+        </p>
+
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          
+          <a href="/login" class="dt-submit-btn no-hover" style="text-decoration: none; display: inline-flex; width: auto; padding: 10px 24px; min-width: 140px; margin: 0 auto;">
             Go to Login
           </a>
+
+          <a href="/bootcamps" class="dt-submit-btn no-hover" style="text-decoration: none; display: inline-flex; width: auto; padding: 10px 24px; min-width: 140px; margin: 0 auto;">
+            Okay
+          </a>
+
         </div>
       </div>
     </div>
   </div>
-
+</div>
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
     <i class="bi bi-arrow-up-short"></i>
