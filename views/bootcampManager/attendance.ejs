@@ -69,8 +69,8 @@
 
       <!-- Filter Bar -->
       <div class="filter-bar border rounded shadow-sm mb-3">
-        <form action="/bootcampManager/attendance" method="GET" class="d-flex flex-wrap w-100 align-items-center gap-2">
-          <select name="bootcamp_id" class="form-select form-select-sm w-auto" required onchange="this.form.submit()">
+        <div class="d-flex flex-wrap w-100 align-items-center gap-2">
+          <select id="bootcampSelect" class="form-select form-select-sm w-auto" required onchange="changeBootcamp(this.value)">
             <option value="" disabled <%= !selectedBootcamp ? 'selected' : '' %>>All Bootcamps</option>
             <% bootcamps.forEach(b => { %>
               <option value="<%= b._id %>" <%= selectedBootcamp && selectedBootcamp._id.toString() === b._id.toString() ? 'selected' : '' %>><%= b.name %></option>
@@ -78,7 +78,7 @@
           </select>
           
           <% if (selectedBootcamp) { %>
-            <select name="session_id" class="form-select form-select-sm w-auto" required onchange="this.form.submit()">
+            <select id="sessionSelect" class="form-select form-select-sm w-auto" required onchange="changeSession(this.value)">
               <option value="" disabled <%= !selectedSessionId ? 'selected' : '' %>>All Sessions</option>
               <% selectedBootcamp.sessions.forEach(s => { %>
                 <option value="<%= s.session_id %>" <%= selectedSessionId === s.session_id ? 'selected' : '' %>>
@@ -93,10 +93,19 @@
           <% if (selectedBootcamp && selectedSessionId) { %>
           <div class="border-start ps-3 ms-2 d-flex align-items-center gap-2">
             <span class="small text-muted text-uppercase fw-bold">Bulk Action:</span>
-            <button type="button" class="btn btn-sm btn-primary" onclick="markAllPresent()">Mark All Present</button>
+            <form id="bulkAttendanceForm" action="/bootcampManager/attendance/bulk-update" method="POST" class="d-flex gap-2 mb-0">
+              <input type="hidden" name="bootcamp_id" value="<%= selectedBootcamp._id %>">
+              <input type="hidden" name="session_id" value="<%= selectedSessionId %>">
+              <input type="hidden" name="users" id="bulkUsersInput">
+              <select name="status" class="form-select form-select-sm w-auto">
+                <option value="present">Mark Present</option>
+                <option value="absent">Mark Absent</option>
+              </select>
+              <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+            </form>
           </div>
           <% } %>
-        </form>
+        </div>
       </div>
 
       <!-- Attendance Table -->
@@ -109,7 +118,7 @@
                   <th width="50" class="text-center">#</th>
                   <th>User Details</th>
                   <th class="text-center">Current Status</th>
-                  <th class="text-center">Action</th>
+                  <th class="text-center"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
                 </tr>
               </thead>
               <tbody>
@@ -138,10 +147,7 @@
                       </span>
                     </td>
                     <td class="text-center">
-                      <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-sm btn-outline-success" onclick="markAttendance('<%= u._id %>', 'present')"><i class="bi bi-check-lg me-1"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="markAttendance('<%= u._id %>', 'absent')"><i class="bi bi-x-lg me-1"></i></button>
-                      </div>
+                      <input type="checkbox" class="row-checkbox" data-user="<%= u._id %>">
                     </td>
                   </tr>
                 <% }) %>
@@ -179,11 +185,10 @@
                         <%= currentStatus === 'pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1) %>
                       </span>
                     </div>
+                    <div class="form-check mt-auto pt-2">
+                      <input type="checkbox" class="form-check-input row-checkbox" data-user="<%= u._id %>" style="transform: scale(1.2);">
+                    </div>
                   </div>
-                </div>
-                <div class="d-flex gap-2 mt-3 pt-3 border-top">
-                  <button type="button" class="btn btn-sm btn-outline-success flex-grow-1" onclick="markAttendance('<%= u._id %>', 'present')"><i class="bi bi-check-lg me-1"></i>Present</button>
-                  <button type="button" class="btn btn-sm btn-outline-danger flex-grow-1" onclick="markAttendance('<%= u._id %>', 'absent')"><i class="bi bi-x-lg me-1"></i>Absent</button>
                 </div>
               </div>
             <% }) %>
@@ -212,6 +217,15 @@
       document.getElementById('sidebarOverlay').classList.remove('show');
     });
 
+    function changeBootcamp(bootcampId) {
+      window.location.href = `/bootcampManager/attendance?bootcamp_id=${bootcampId}`;
+    }
+
+    function changeSession(sessionId) {
+      const bootcampId = document.getElementById('bootcampSelect').value;
+      window.location.href = `/bootcampManager/attendance?bootcamp_id=${bootcampId}&session_id=${sessionId}`;
+    }
+
     function applyAttendanceFilters() {
       const searchVal = document.getElementById('attendanceSearch').value.toLowerCase();
       const rows = document.querySelectorAll('.attendance-row');
@@ -225,52 +239,72 @@
       });
     }
 
-    function markAttendance(userId, status) {
-      const bootcampId = '<%= selectedBootcamp ? selectedBootcamp._id : "" %>';
-      const sessionId = '<%= selectedSessionId || "" %>';
-      
-      if(!bootcampId || !sessionId) return;
-
-      fetch('/bootcampManager/attendance/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bootcamp_id: bootcampId, session_id: sessionId, user_id: userId, status: status })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.success) {
-          const badge = document.getElementById(`status-${userId}`);
-          if(badge) {
-            badge.textContent = status === 'pending' ? 'Pending' : status.charAt(0).toUpperCase() + status.slice(1);
-            badge.className = `badge bg-${status === 'present' ? 'success' : (status === 'absent' ? 'danger' : 'warning text-dark')}`;
-          }
-          const badgeMobile = document.getElementById(`status-mobile-${userId}`);
-          if(badgeMobile) {
-            badgeMobile.textContent = status === 'pending' ? 'Pending' : status.charAt(0).toUpperCase() + status.slice(1);
-            badgeMobile.className = `badge bg-${status === 'present' ? 'success' : (status === 'absent' ? 'danger' : 'warning text-dark')}`;
-          }
-        } else {
-          alert('Failed to mark attendance.');
+    function toggleSelectAll(source) {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => {
+        const row = cb.closest('.attendance-row');
+        if (row && row.style.display !== 'none') {
+          cb.checked = source.checked;
         }
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Server error.');
       });
     }
 
-    function markAllPresent() {
-      if (!confirm('Are you sure you want to mark all currently visible users as Present?')) return;
-      const rows = document.querySelectorAll('.attendance-row');
-      rows.forEach(row => {
-        if (row.style.display !== 'none') {
-          // Extract user id from the row badge ID
-          const badge = row.querySelector('[id^="status-"]');
-          if (badge) {
-             let userId = badge.id.replace('status-mobile-', '');
-             userId = userId.replace('status-', '');
-             markAttendance(userId, 'present');
+    const bulkAttendanceForm = document.getElementById('bulkAttendanceForm');
+    if (bulkAttendanceForm) {
+      bulkAttendanceForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const checked = document.querySelectorAll('.row-checkbox:checked');
+        if (checked.length === 0) {
+          alert('Please select at least one user.');
+          return;
+        }
+        const users = Array.from(checked).map(cb => cb.dataset.user);
+        document.getElementById('bulkUsersInput').value = JSON.stringify(users);
+
+        const btn = bulkAttendanceForm.querySelector('button[type="submit"]');
+        const originalHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Applying...';
+
+        try {
+          const formData = new FormData(bulkAttendanceForm);
+          const data = Object.fromEntries(formData.entries());
+          const res = await fetch(bulkAttendanceForm.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+
+          if (result.success) {
+            const newStatus = data.status;
+            checked.forEach(cb => {
+              const row = cb.closest('.attendance-row');
+              if(row) {
+                const userId = cb.dataset.user;
+                const badges = row.querySelectorAll(`[id="status-${userId}"], [id="status-mobile-${userId}"]`);
+                badges.forEach(badge => {
+                  badge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+                  badge.className = `badge bg-${newStatus === 'present' ? 'success' : (newStatus === 'absent' ? 'danger' : 'warning text-dark')}`;
+                });
+              }
+            });
+            const selectAll = document.getElementById('selectAll');
+            if (selectAll) selectAll.checked = false;
+            checked.forEach(cb => cb.checked = false);
+            // alert('Attendance updated successfully.');
+          } else {
+            alert(result.message || 'Failed to update attendance.');
           }
+        } catch (err) {
+          console.error(err);
+          alert('Server error while updating attendance.');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
         }
       });
     }

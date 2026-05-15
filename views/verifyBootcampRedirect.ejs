@@ -199,8 +199,8 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 14px;
-      padding: 24px 28px;
-      margin-bottom: 32px;
+      padding: 12px 28px;
+      margin-bottom: 20px;
     }
     @media (max-width: 480px) {
       .details-grid { padding: 18px 16px; }
@@ -392,38 +392,13 @@
         <!-- Details Grid -->
         <div class="details-grid">
 
-          <div class="detail-row">
-            <div class="detail-icon"><i class="bi bi-mortarboard-fill"></i></div>
-            <div>
-              <div class="detail-label">Domain / Program</div>
-              <div class="detail-value orange"><%= user.domain %></div>
-            </div>
-          </div>
-
-          <div class="detail-row">
-            <div class="detail-icon"><i class="bi bi-clock-history"></i></div>
-            <div>
-              <div class="detail-label">Duration</div>
-              <div class="detail-value"><%= user.duration %> Week<%= user.duration > 1 ? 's' : '' %> Online Internship</div>
-            </div>
-          </div>
-
-          <div class="detail-row">
-            <div class="detail-icon"><i class="bi bi-calendar3"></i></div>
-            <div>
-              <div class="detail-label">Period</div>
-              <div class="detail-value">
-                <%= new Date(user.starting_date).toDateString().slice(4) %> &rarr; <%= new Date(user.completion_date).toDateString().slice(4) %>
-              </div>
-            </div>
-          </div>
-
-          <div class="detail-row">
-            <div class="detail-icon"><i class="bi bi-building"></i></div>
-            <div>
-              <div class="detail-label">Issued Date</div>
-              <div class="detail-value"><%= new Date(user.completion_date).toDateString().slice(4) %></div>
-            </div>
+          <div class="certificate-text" style="text-align: center; color: rgba(248, 248, 248, 0.9); font-size: 16px; line-height: 1.5; padding: 5px 0;">
+            <p>
+              Has successfully participated in the <strong style="color: #ff6600;"><%= user.domain %></strong> Bootcamp organized by Rixi Lab from 
+              <strong><%= new Date(user.starting_date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></strong> to 
+              <strong><%= new Date(user.completion_date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></strong>.
+            </p>
+            
           </div>
 
         </div>
@@ -483,19 +458,18 @@
       const btn = document.getElementById('linkedinShareBtn');
       const name     = btn.dataset.name;
       const domain   = btn.dataset.domain;
-      const duration = btn.dataset.duration;
       const start    = btn.dataset.start;
       const end      = btn.dataset.end;
 
       const domainTag = '#' + domain.replace(/\\s+/g, '');
 
       const postText =  
-          `Honored to share that I have successfully completed a ${duration}-week Online "${domain}" Internship at Rixi Lab!\\n\\n` +
+          `Honored to share that I have successfully completed the "${domain}" Bootcamp at Rixi Lab!\\n\\n` +
           `Duration: ${start} → ${end}\\n` +
           `Organization: Rixi Lab\\n\\n` +
-          `This experience has been an incredible journey of learning, growth, and real-world exposure.\\n` +
+          `This bootcamp has been an incredible journey of learning, growth, and real-world exposure.\\n` +
           `Grateful to the entire Rixi Lab team for the mentorship and opportunity!\\n\\n` +
-          `#RixiLab #Internship ${domainTag} #Learning #Growth #Opportunity`;
+          `#RixiLab #Bootcamp ${domainTag} #Learning #Growth #Opportunity`;
 
       // LinkedIn feed intent URL — the only method that actually pre-fills post text
       const fullText   = postText + '\n\n Verify: ' + window.location.href;

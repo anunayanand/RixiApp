@@ -145,6 +145,39 @@ router.get('/', requireBootcampUser, async (req, res) => {
     }
 });
 
+// Download Certificate
+router.get('/download-certificate/:bootcampId', requireBootcampUser, async (req, res) => {
+    try {
+        const user = await BootcampUser.findById(req.session.bootcampUser).populate('enrolledBootcamps.bootcamp_id');
+        if (!user) return res.status(404).send('User not found');
+
+        const enrollment = user.enrolledBootcamps.find(e => e.bootcamp_id._id.toString() === req.params.bootcampId);
+        if (!enrollment) return res.status(400).send('Not enrolled in this bootcamp.');
+        
+        if (enrollment.progress < 100) {
+            return res.status(400).send('Certificate not unlocked yet. Complete all sessions.');
+        }
+
+        const bootcamp = enrollment.bootcamp_id;
+        const { generateBootcampCertificatePDF } = require('../services/pdfGenerator');
+        
+        const pdf = await generateBootcampCertificatePDF({
+            name: user.name,
+            bootcamp_name: bootcamp.name,
+            certificate_id: enrollment.certificate_id,
+            start_date: bootcamp.start_date,
+            end_date: bootcamp.end_date,
+        });
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${user.name.replace(/\s+/g, '_')}_Bootcamp_Certificate.pdf`);
+        res.send(pdf);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error generating certificate');
+    }
+});
+
 // Logout
 router.get('/logout', (req, res) => {
     req.session.bootcampUser = null;

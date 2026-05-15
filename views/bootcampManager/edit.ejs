@@ -193,12 +193,12 @@
                   <div class="col-md-4 mt-3">
                     <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Start Date & Time (IST) <span class="text-danger">*</span></label>
                     <input type="text" name="start_date" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select start date" required
-                      value="<%= bootcamp.start_date ? new Date(bootcamp.start_date).toISOString().slice(0,16) : '' %>">
+                      value="<%= bootcamp.start_date ? new Date(new Date(bootcamp.start_date).getTime() + 5.5*60*60*1000).toISOString().slice(0,16) : '' %>">
                   </div>
                   <div class="col-md-4 mt-3">
                     <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">End Date & Time (IST) <span class="text-danger">*</span></label>
                     <input type="text" name="end_date" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select end date" required
-                      value="<%= bootcamp.end_date ? new Date(bootcamp.end_date).toISOString().slice(0,16) : '' %>">
+                      value="<%= bootcamp.end_date ? new Date(new Date(bootcamp.end_date).getTime() + 5.5*60*60*1000).toISOString().slice(0,16) : '' %>">
                   </div>
                   <div class="col-md-2 mt-3 d-flex flex-column align-items-center">
                     <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Paid?</label>
@@ -256,16 +256,16 @@
                           <div class="col-md-6 mt-3">
                             <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Date & Time (IST) <span class="text-danger">*</span></label>
                             <input type="text" name="session_time" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select session time" required
-                              value="<%= session.time ? new Date(session.time).toISOString().slice(0,16) : '' %>">
+                              value="<%= session.time ? new Date(new Date(session.time).getTime() + 5.5*60*60*1000).toISOString().slice(0,16) : '' %>">
                           </div>
                           <div class="col-md-6 mt-3">
                             <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Expiry Date & Time (IST) <span class="text-danger">*</span></label>
                             <input type="text" name="session_expiryTime" class="form-control form-control-sm px-3 shadow-sm border-0 flatpickr-datetime bg-white" placeholder="Select expiry time" required
-                              value="<%= session.expiryTime ? new Date(session.expiryTime).toISOString().slice(0,16) : '' %>">
+                              value="<%= session.expiryTime ? new Date(new Date(session.expiryTime).getTime() + 5.5*60*60*1000).toISOString().slice(0,16) : '' %>">
                           </div>
                           <div class="col-12 mt-3">
                             <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Details</label>
-                            <textarea name="session_details" class="form-control form-control-sm px-3 shadow-sm border-0" rows="2" placeholder="Topics covered..."><%= session.details || '' %></textarea>
+                            <textarea name="session_details" class="form-control form-control-sm px-3 shadow-sm border-0" rows="3" placeholder="Enter details line by line for bullet points...&#10;e.g.&#10;Topic 1&#10;Topic 2"><%= session.details || '' %></textarea>
                           </div>
                         </div>
                       </div>
@@ -306,7 +306,7 @@
                           </div>
                           <div class="col-12 mt-3">
                             <label class="form-label fw-bold text-muted small text-uppercase mb-2" style="letter-spacing: 0.5px;">Session Details</label>
-                            <textarea name="session_details" class="form-control form-control-sm px-3 shadow-sm border-0" rows="2" placeholder="Topics covered..."></textarea>
+                            <textarea name="session_details" class="form-control form-control-sm px-3 shadow-sm border-0" rows="3" placeholder="Enter details line by line for bullet points...&#10;e.g.&#10;Topic 1&#10;Topic 2"></textarea>
                           </div>
                         </div>
                       </div>
@@ -350,10 +350,16 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     // Initialize Flatpickr on existing inputs
-    flatpickr(".flatpickr-datetime", {
-      enableTime: true,
-      dateFormat: "Y-m-d H:i",
-    });
+    function initFlatpickr(selector) {
+      flatpickr(selector, {
+        enableTime: true,
+        dateFormat: "Y-m-dTH:i",
+        altInput: true,
+        altFormat: "d M Y, h:i K",
+        allowInput: true,
+      });
+    }
+    initFlatpickr(".flatpickr-datetime");
 
     // Sidebar
     document.getElementById('sidebarToggle').addEventListener('click', () => {
@@ -403,12 +409,32 @@
     // Init slider for pre-filled sessions
     updateSlider();
 
+    // Unlock readonly flatpickr inputs before form submit so values are POSTed
+    document.querySelector('form').addEventListener('submit', function() {
+      document.querySelectorAll('.flatpickr-input').forEach(el => {
+        el.removeAttribute('readonly');
+        el.removeAttribute('disabled');
+      });
+    });
+
     document.getElementById('prevSessionBtn').addEventListener('click', () => {
       if (currentSlide > 0) { currentSlide--; updateSlider(); }
     });
     document.getElementById('nextSessionBtn').addEventListener('click', () => {
       const total = document.querySelectorAll('.session-item').length;
       if (currentSlide < total - 1) { currentSlide++; updateSlider(); }
+    });
+
+    // Attach event listener to existing remove buttons
+    document.querySelectorAll('.remove-session-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.session-item').remove();
+        const remaining = document.querySelectorAll('.session-item').length;
+        currentSlide = Math.min(currentSlide, remaining - 1);
+        if (currentSlide < 0) currentSlide = 0;
+        renumberSessions();
+        updateSlider();
+      });
     });
 
     document.getElementById('addSessionBtn').addEventListener('click', function () {
@@ -423,7 +449,6 @@
 
       clone.querySelectorAll('input, textarea').forEach(el => {
         el.value = '';
-        el.removeAttribute('required');
       });
 
       // Clear any generated flatpickr instances (like hidden inputs)
@@ -437,7 +462,10 @@
       // Re-init Flatpickr for the new clone inputs
       flatpickr(dateInputs, {
         enableTime: true,
-        dateFormat: "Y-m-d H:i",
+        dateFormat: "Y-m-dTH:i",
+        altInput: true,
+        altFormat: "d M Y, h:i K",
+        allowInput: true,
       });
 
       const removeBtn = clone.querySelector('.remove-session-btn');
@@ -453,6 +481,7 @@
       slider.appendChild(clone);
       currentSlide = newIdx - 1;
       updateSlider();
+      attachValidationHook();
     });
 
     function renumberSessions() {
@@ -460,6 +489,29 @@
         item.querySelector('.session-number').textContent = `Session ${i + 1}`;
       });
     }
+
+    // Handle HTML5 validation errors inside hidden slider elements
+    function attachValidationHook() {
+      document.querySelectorAll('input[required], select[required], textarea[required]').forEach(el => {
+        // Remove existing listener to prevent duplicates
+        el.removeEventListener('invalid', handleInvalid);
+        el.addEventListener('invalid', handleInvalid);
+      });
+    }
+
+    function handleInvalid(e) {
+      const slide = this.closest('.session-item');
+      if (slide) {
+        const items = Array.from(document.querySelectorAll('.session-item'));
+        const idx = items.indexOf(slide);
+        if (idx !== -1 && idx !== currentSlide) {
+          currentSlide = idx;
+          updateSlider();
+        }
+      }
+    }
+
+    attachValidationHook();
   </script>
 </body>
 </html>

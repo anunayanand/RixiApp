@@ -405,31 +405,86 @@
                           <%
                             let attRec = eb.attendance ? eb.attendance.find(a => a.session_id === s.session_id) : null;
                             let sCls = 'status-pending', sTxt = 'Upcoming', sIcon = 'bi-clock';
-                            if(attRec) {
+                            let isJoinable = false;
+                            
+                            if (attRec && (attRec.status === 'present' || attRec.status === 'absent')) {
                               if(attRec.status === 'present') { sCls='status-present'; sTxt='Present';  sIcon='bi-check-circle-fill'; }
-                              else if(attRec.status === 'absent') { sCls='status-absent'; sTxt='Absent'; sIcon='bi-x-circle-fill'; }
+                              else { sCls='status-absent'; sTxt='Absent'; sIcon='bi-x-circle-fill'; }
+                            } else {
+                              const now = new Date();
+                              const sessionTime = new Date(s.time);
+                              const expiryTime = new Date(s.expiryTime);
+                              const tenMinsBefore = new Date(sessionTime.getTime() - 10 * 60000);
+                              
+                              if (now >= tenMinsBefore && now <= expiryTime) {
+                                isJoinable = true;
+                                sCls = 'status-present'; 
+                                sTxt = 'Join'; 
+                                sIcon = 'bi-box-arrow-up-right';
+                              } else if (now > expiryTime) {
+                                sCls = 'status-pending';
+                                sTxt = 'Pending';
+                                sIcon = 'bi-clock-history';
+                              } else {
+                                sCls = 'status-pending';
+                                sTxt = 'Upcoming';
+                                sIcon = 'bi-clock';
+                              }
                             }
                           %>
-                          <div class="bc-session-row">
-                            <div>
-                              <h6><%= s.session_id %></h6>
-                              <div class="meta"><i class="bi bi-calendar-event me-1"></i><%= new Date(s.time).toLocaleString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) %></div>
+                          <div class="bc-session-row" onclick="toggleSessionDetails('details-<%= index %>-<%= s.session_id.replace(/\s+/g, '-') %>')" style="cursor: pointer; flex-direction: column; align-items: stretch;">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                              <div>
+                                <h6><%= s.session_id %></h6>
+                                <div class="meta"><i class="bi bi-calendar-event me-1"></i><%= new Date(s.time).toLocaleString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) %></div>
+                              </div>
+                              <% if (isJoinable) { %>
+                                <a href="<%= s.link %>" target="_blank" class="status-badge <%= sCls %>" style="text-decoration: none;" onclick="event.stopPropagation();"><i class="bi <%= sIcon %>"></i><%= sTxt %></a>
+                              <% } else { %>
+                                <span class="status-badge <%= sCls %>"><i class="bi <%= sIcon %>"></i><%= sTxt %></span>
+                              <% } %>
                             </div>
-                            <span class="status-badge <%= sCls %>"><i class="bi <%= sIcon %>"></i><%= sTxt %></span>
+                            
+                            <div id="details-<%= index %>-<%= s.session_id.replace(/\s+/g, '-') %>" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
+                              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                                <strong style="color: var(--text-primary);">Details:</strong>
+                                <% if (s.details && s.details.trim().length > 0) { %>
+                                  <ul style="padding-left: 20px; margin-top: 6px; margin-bottom: 0;">
+                                    <% s.details.split('\n').forEach(line => { %>
+                                      <% if (line.trim()) { %>
+                                        <li><%= line.trim() %></li>
+                                      <% } %>
+                                    <% }) %>
+                                  </ul>
+                                <% } else { %>
+                                  <p style="margin-top: 6px; margin-bottom: 0;">No details provided.</p>
+                                <% } %>
+                                <div style="margin-top: 8px;">
+                                  <strong style="color: var(--text-primary);">Instructor:</strong> <%= s.instructor %>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         <% }) %>
                       <% } %>
                     </div>
 
-                    <% if(eb.progress === 100) { %>
-                      <div class="bc-completed-banner">
-                        <div>
-                          <h6 class="text-success fw-bold mb-1"><i class="bi bi-patch-check-fill me-2"></i>Bootcamp Completed!</h6>
-                          <p class="small text-secondary mb-0">You can now download your certificate.</p>
-                        </div>
-                        <button class="btn btn-success fw-bold px-4" style="white-space:nowrap;"><i class="bi bi-download me-1"></i>Certificate</button>
+                    <div class="bc-completed-banner" style="background: <%= eb.progress === 100 ? 'linear-gradient(135deg, rgba(34,197,94,0.10), rgba(16,185,129,0.06))' : 'rgba(255,255,255,0.03)' %>; border-color: <%= eb.progress === 100 ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.08)' %>;">
+                      <div>
+                        <h6 class="<%= eb.progress === 100 ? 'text-success' : 'text-white' %> fw-bold mb-1">
+                          <i class="bi <%= eb.progress === 100 ? 'bi-patch-check-fill' : 'bi-award' %> me-2"></i>
+                          <%= eb.progress === 100 ? 'Bootcamp Completed!' : 'Certificate of Completion' %>
+                        </h6>
+                        <p class="small text-secondary mb-0">
+                          <%= eb.progress === 100 ? 'You can now download your certificate.' : 'Complete the bootcamp to unlock your certificate.' %>
+                        </p>
                       </div>
-                    <% } %>
+                      <% if(eb.progress === 100) { %>
+                        <a href="/bootcamp-portal/download-certificate/<%= bc._id %>" class="btn btn-success fw-bold px-4" style="white-space:nowrap; text-decoration: none;"><i class="bi bi-download me-1"></i>Download</a>
+                      <% } else { %>
+                        <button class="btn btn-secondary fw-bold px-4" style="white-space:nowrap; opacity: 0.6; cursor: not-allowed; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff;" disabled><i class="bi bi-lock-fill me-1"></i>Locked</button>
+                      <% } %>
+                    </div>
                   </div>
                 <% } %>
               <% }) %>
@@ -479,6 +534,13 @@
     function hideBootcampDetails() {
       document.getElementById('bootcamp-list-container').style.display = 'block';
       document.getElementById('bootcamp-details-container').style.display = 'none';
+    }
+
+    function toggleSessionDetails(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      }
     }
   </script>
 </body>

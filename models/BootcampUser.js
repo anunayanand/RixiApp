@@ -14,6 +14,8 @@ const bootcampUserSchema = new mongoose.Schema({
     {
       bootcamp_id: { type: mongoose.Schema.Types.ObjectId, ref: "Bootcamp" },
       progress: { type: Number, default: 0 },
+      certificate_id: { type: String, default: null },
+      certificate_date: { type: Date, default: null },
       attendance: [
         {
           session_id: { type: String },

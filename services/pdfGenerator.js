@@ -1,6 +1,7 @@
 const PDFDocument = require("pdfkit");
 const path = require("path");
 const fs = require("fs");
+const QRCode = require("qrcode");
 
 async function generateCertificatePDF(data) {
   return new Promise((resolve, reject) => {
@@ -199,4 +200,78 @@ doc.font("Montserrat")
 }
 
 
-module.exports = { generateCertificatePDF,generateOfferLetterPDF };
+async function generateBootcampCertificatePDF(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const imageName = "bootcamp_certificate.png";
+      const imagePath = path.join(__dirname, "../public/templet", imageName);
+
+      const doc = new PDFDocument({ size: [1123, 794], margins: { top: 0, left: 0, right: 0, bottom: 0 } });
+      const chunks = [];
+
+      doc.on("data", c => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
+
+      doc.registerFont("Montserrat", path.join(__dirname, "../public/fonts/Montserrat-Regular.ttf"));
+      doc.registerFont("Montserrat-Bold", path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf"));
+      doc.registerFont("Allura", path.join(__dirname, "../public/fonts/Allura-Regular.ttf"));
+
+      doc.image(imagePath, 0, 0, { width: 1123, height: 794 });
+
+      // Certificate ID
+      doc.font("Montserrat");
+      doc.fontSize(15);
+      doc.fillColor("black");
+      doc.text(`CERTIFICATE No: ${data.certificate_id}`, 830, 38); // Adjust position as needed
+
+      // Name
+      doc.font("Allura");
+      doc.fontSize(80);
+      doc.fillColor("#1800ad"); // Adjust color if needed
+      doc.text(data.name, 80, 350,);
+
+      // Body text
+      const formatDate = (dateStr) => {
+        if (!dateStr) return "___";
+        return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+      };
+      
+      const start = formatDate(data.start_date);
+      const end = formatDate(data.end_date);
+      
+      doc.font("Montserrat");
+      doc.fontSize(18);
+      doc.fillColor("#000000");
+      doc.text(
+        `has successfully participated in the ${data.bootcamp_name} Bootcamp organized by Rixi \nLab from ${start} to ${end}.\nThe participant demonstrated dedication, enthusiasm, and active involvement\nthroughout the bootcamp program and successfully completed all learning sessions.\nWe appreciate their commitment to learning and wish them continued success.`,
+        10, 460,
+        {
+          width: 1023,
+          align: "center",
+          lineGap: 8
+        }
+      );
+
+      // QR Code
+      const baseUrl = process.env.BASE_URL || "https://rixilab.tech";
+      const verifyUrl = `${baseUrl}/verify-bootcamp-certificate/${data.certificate_id}`;
+      const qrBuffer = await QRCode.toBuffer(verifyUrl, {
+        errorCorrectionLevel: "H",
+        margin: 1,
+        color: { dark: "#000000", light: "#ffffff" }
+      });
+      
+      doc.image(qrBuffer, 970, 85, { fit: [100, 100] }); // Adjust QR position
+      doc.fontSize(12);
+      // doc.text("Scan to verify", 960, 230);
+
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+
+module.exports = { generateCertificatePDF,generateOfferLetterPDF, generateBootcampCertificatePDF };
