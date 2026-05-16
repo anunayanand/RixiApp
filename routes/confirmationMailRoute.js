@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { google } = require("googleapis");
 const User = require("../models/User");
+const BASE_URL=process.env.BASE_URL;
 
 // ==============================
 // CONFIGURATION
@@ -48,92 +49,445 @@ async function sendBulkConfirmationMails(interns, whatsappLink) {
 
       const subject = `Internship Confirmation - Welcome to Rixi Lab!`;
       const body = `
-      <html>
-   <body style="margin:0; padding:0; background-color:#f4f4f4; font-family: Arial, sans-serif;">
+     
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Wrapper -->
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td align="center" style="padding: 20px 10px;">
+<style>
 
-        <!-- Main Container -->
-        <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-          <!-- Header -->
-          <tr>
-            <td align="center" bgcolor="#ff6600" style="padding: 20px;">
-              <h1 style="margin:0; font-size:20px; color:#000;">Internship Confirmation - Welcome to Rixi Lab!</h1>
-            </td>
-          </tr>
+table{
+  border-spacing:0;
+}
 
-          <!-- Body -->
-          <tr>
-            <td style="padding: 30px; color:#111827; font-size:15px; line-height:1.6;">
-              <p>Dear <strong>${name}</strong>,</p>
+img{
+  border:0;
+  display:block;
+}
 
-              <p><strong>Congratulations!</strong> We are excited to inform you that your application for the internship at <strong>Rixi Lab</strong> has been successfully accepted. We welcome you aboard and look forward to working with you on this exciting journey of learning and innovation!</p>
+@media screen and (max-width:600px){
 
-              <h3 style="color:#111827; margin-top:20px; font-size:16px;">Internship Details:</h3>
-              <ul style="padding-left:20px; margin:10px 0;">
-                <li><strong>Start Date:</strong> 1st October 2025</li>
-                <li><strong>Domain:</strong> ${domain}</li>
-                <li><strong>Duration:</strong> ${duration} Weeks</li>
-              </ul>
+  .container{
+    width:100% !important;
+  }
 
-              <h3 style="color:#111827; margin-top:20px; font-size:16px;">Next Steps:</h3>
-              <p>To complete your onboarding and receive important updates, please join our official internship WhatsApp group:</p>
+  .content{
+    padding:24px 18px !important;
+  }
 
-              <!-- Button -->
-              <p style="text-align:center; margin:20px 0;">
-                <a href="${whatsappLink}" target="_blank" 
-                   style="background-color:#22c55e; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-weight:bold; display:inline-block;">
-                  Join WhatsApp Group
-                </a>
-              </p>
+  .heading{
+    font-size:24px !important;
+    line-height:1.3 !important;
+  }
 
-              <p style="font-size:14px; color:#555555; line-height:1.5;">
-                <strong>Important:</strong> Please join the group using your registered mobile number (the same number you provided during registration). This will help us verify your identity and provide timely updates and resources during the internship.
-              </p>
+  .normal-text{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
 
-              <p>If you have any questions, feel free to contact us on WhatsApp.</p>
+  .button{
+    display:block !important;
+    width:100% !important;
+    box-sizing:border-box !important;
+  }
 
-              <!-- ✅ Signature -->
-              <p style="font-size: 14px; color: #333; margin-top: 30px; margin-bottom: 5px;">
-                Thanks & Regards,<br>
-                <b style="font-size:16px; font-weight:700; color:#2c3e50;">Rixi Lab</b><br>
-                <i>"Rethink Innovate eXecute Inspire"</i>
-              </p>
+  .card-padding{
+    padding:18px !important;
+  }
 
-              <!-- ✅ Social Media -->
-              <p style="text-align: center; margin-top: 15px;">
-                <a href="https://www.instagram.com/rixilab.in" target="_blank" style="margin: 0 10px;">
-                  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" 
-                       alt="Instagram" width="26" style="vertical-align: middle;">
-                </a>
-                <a href="https://www.linkedin.com/company/rixilab" target="_blank" style="margin: 0 10px;">
-                  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
-                       alt="LinkedIn" width="26" style="vertical-align: middle;">
-                </a>
-                <a href="https://www.facebook.com/rixilab" target="_blank" style="margin: 0 10px;">
-                  <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" 
-                       alt="Facebook" width="26" style="vertical-align: middle;">
-                </a>
-              </p>
+  .footer-text{
+    font-size:11px !important;
+  }
 
-              <p style="font-size: 12px; color: #888; text-align: center; margin-top: 20px;">
-                © 2025 Rixi Lab | <a href="https://rixilab.tech" style="color:#3498db; text-decoration:none;">www.rixilab.tech</a>
-              </p>
+}
 
-            </td>
-          </tr>
+</style>
+</head>
 
-        </table>
-        <!-- End Main Container --> 
+<body>
 
-      </td>
-    </tr>
-  </table>
-  <!-- End Wrapper -->
+<table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center" style="padding:24px 12px;">
+
+<table
+  width="620"
+  class="container"
+  cellpadding="0"
+  cellspacing="0"
+  bgcolor="#ffffff"
+  style="
+    max-width:620px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
+>
+
+<tr>
+  <td height="6" bgcolor="#ff6600"></td>
+</tr>
+
+<tr>
+<td class="content" style="padding:42px 34px;">
+
+<!-- Logo -->
+<table width="100%">
+<tr>
+<td align="center">
+
+<table
+  width="90"
+  height="90"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
+
+<img
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="54"
+  alt="Rixi Lab"
+/>
+
+</td>
+</tr>
+</table>
+
+<h1
+  class="heading"
+  style="
+    margin:24px 0 0;
+    font-size:32px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  Welcome to Rixi Lab 
+</h1>
+
+<p
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:14px;
+    line-height:1.7;
+  "
+>
+  Your internship application has been accepted
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Greeting -->
+<table width="100%" style="margin-top:40px;">
+<tr>
+<td>
+
+<p
+  style="
+    margin:0;
+    font-size:15px;
+    color:#222;
+    font-weight:500;
+  "
+>
+  Dear <strong>${name}</strong>,
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  Congratulations! We are excited to inform you that your application
+  for the internship at <strong>Rixi Lab</strong> has been successfully accepted.
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:12px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We are thrilled to welcome you aboard and look forward to supporting
+  you throughout this exciting journey of learning, building, and innovation.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Internship Details -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:30px;
+    background:#fffaf7;
+    border:1px solid #ffd8c2;
+    border-radius:18px;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Internship Details
+</p>
+
+<table width="100%" style="margin-top:16px;">
+<tr>
+<td
+  style="
+    font-size:13px;
+    color:#555;
+    line-height:2;
+  "
+>
+
+<strong>Start Date:</strong> 1st October 2025<br/>
+<strong>Domain:</strong> ${domain}<br/>
+<strong>Duration:</strong> ${duration} Weeks
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- WhatsApp Section -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:24px;
+    background:#f7fff8;
+    border-radius:18px;
+    border:1px solid #cdeed4;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#16a34a;
+  "
+>
+  📲 Next Step
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:14px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  To receive important updates, resources, announcements, and internship
+  guidance, please join our official internship WhatsApp group.
+</p>
+
+<table width="100%" style="margin-top:22px;">
+<tr>
+<td align="center">
+
+<a
+  href="${whatsappLink}"
+  class="button"
+  style="
+    background:#22c55e;
+    color:#ffffff;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:bold;
+    display:inline-block;
+    font-size:14px;
+  "
+>
+  Join WhatsApp Group
+</a>
+
+</td>
+</tr>
+</table>
+
+<p
+  class="normal-text"
+  style="
+    margin:20px 0 0;
+    font-size:12px;
+    line-height:1.8;
+    color:#666;
+  "
+>
+  <strong>Important:</strong>
+  Please join the group using your registered mobile number
+  to help us verify your identity and provide smooth communication.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Appreciation -->
+<table width="100%" style="margin-top:30px;">
+<tr>
+<td>
+
+<p
+  class="normal-text"
+  style="
+    margin:0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We are excited to have you as part of the Rixi Lab community.
+  Get ready to learn, collaborate, and work on impactful projects.
+</p>
+
+<p
+  style="
+    margin:18px 0 0;
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Best wishes for your internship journey 🚀
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Footer -->
+<table
+  width="100%"
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
+
+<p
+  class="footer-text"
+  style="
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab • Rethink Innovate eXecute Inspire
+</p>
+
+<p style="margin:18px 0 0;">
+
+<a href="https://www.instagram.com/rixilab.in" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a href="https://www.linkedin.com/company/rixilab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a href="https://www.facebook.com/rixilab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a href="https://www.youtube.com/@RixiLab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+    line-height:1.8;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
 
 </body>
 </html>

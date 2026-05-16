@@ -2,6 +2,7 @@ const cron = require("node-cron");
 const Bootcamp = require("../models/Bootcamp");
 const BootcampUser = require("../models/BootcampUser");
 const { google } = require("googleapis");
+const BASE_URL = process.env.BASE_URL;
 
 // ==============================
 // GMAIL CONFIGURATION
@@ -53,7 +54,7 @@ cron.schedule("* * * * *", async () => {
 
         // Check if session starts exactly within the next 30 minutes
         const timeDiffMinutes = (sessionTime.getTime() - now.getTime()) / 60000;
-        
+
         if (timeDiffMinutes > 29 && timeDiffMinutes <= 30) {
           const loginLink = `${process.env.BASE_URL || "https://www.rixilab.tech"}/bootcamp-portal/login`;
 
@@ -62,7 +63,8 @@ cron.schedule("* * * * *", async () => {
             const user = await BootcampUser.findById(userId);
             if (user) {
               const subject = `Reminder: Bootcamp Session starting in 30 minutes!`;
-              const body = `<!DOCTYPE html>
+              const body = `
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
@@ -296,8 +298,8 @@ cron.schedule("* * * * *", async () => {
               font-size:14px;
             "
           >
-            <strong>Session ID:</strong>
-            ${session.session_id}
+            <strong>Session Name:</strong>
+            ${session.session_name}
           </li>
 
           <li 
@@ -321,7 +323,7 @@ cron.schedule("* * * * *", async () => {
             "
           >
             <strong>Time:</strong>
-            ${sessionTime.toLocaleString('en-IN')}
+            ${sessionTime}
           </li>
 
           <li 
@@ -333,7 +335,7 @@ cron.schedule("* * * * *", async () => {
             "
           >
             <strong>Instructor:</strong>
-            ${session.instructor || 'TBA'}
+            ${session.instructor || "TBA"}
           </li>
 
           <li 
@@ -347,14 +349,17 @@ cron.schedule("* * * * *", async () => {
 
             <ul style="padding-left:18px;margin-top:10px;">
 
-              ${(session.details || '')
-                .split('\\n')
-                .filter(d => d.trim().length > 0)
-                .map(point => `
+              ${(session.details || "")
+                .split("\\n")
+                .filter((d) => d.trim().length > 0)
+                .map(
+                  (point) => `
                   <li style="margin-bottom:8px;line-height:1.7;">
-                    ${point.replace(/^-/, '').trim()}
+                    ${point.replace(/^-/, "").trim()}
                   </li>
-                `).join('')}
+                `,
+                )
+                .join("")}
 
             </ul>
 
@@ -404,7 +409,7 @@ cron.schedule("* * * * *", async () => {
     "
   >
     <tr>
-      <td align="center" style="padding-top:20px;">
+      <td align="center" style="padding-top:24px;">
 
         <p 
           class="footer-text"
@@ -418,18 +423,66 @@ cron.schedule("* * * * *", async () => {
           Rixi Lab Bootcamp • Learn. Build. Grow.
         </p>
 
-        <a 
-          href="https://rixilab.tech"
+        <!-- Social Icons -->
+        <p style="margin:18px 0 0;">
+
+          <a 
+            href="https://www.instagram.com/rixilab.in"
+            style="display:inline-block;margin:0 6px;"
+          >
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+              width="24"
+              alt="Instagram"
+            />
+          </a>
+
+          <a 
+            href="https://www.linkedin.com/company/rixilab"
+            style="display:inline-block;margin:0 6px;"
+          >
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+              width="24"
+              alt="LinkedIn"
+            />
+          </a>
+
+          <a 
+            href="https://www.facebook.com/rixilab"
+            style="display:inline-block;margin:0 6px;"
+          >
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+              width="24"
+              alt="Facebook"
+            />
+          </a>
+
+          <a 
+            href="https://www.youtube.com/@RixiLab"
+            style="display:inline-block;margin:0 6px;"
+          >
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+              width="24"
+              alt="YouTube"
+            />
+          </a>
+
+        </p>
+
+        <p
           class="footer-text"
           style="
-            color:#ff6600;
-            text-decoration:none;
-            font-size:12px;
-            font-weight:bold;
+            margin:18px 0 0;
+            color:#999;
+            font-size:11px;
+            line-height:1.8;
           "
         >
-          www.rixilab.tech
-        </a>
+          © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+        </p>
 
       </td>
     </tr>
@@ -446,6 +499,7 @@ cron.schedule("* * * * *", async () => {
 
 </body>
 </html>
+
                             `;
 
               const encodedMail = makeBody(

@@ -89,7 +89,8 @@
 
       <!-- Bootcamp Cards Grid -->
       <div class="row g-4 mb-4" id="bootcampGrid">
-        <% bootcamps.forEach(bootcamp => { %>
+        <% const reversedBootcamps=[...bootcamps].reverse(); %>
+        <% reversedBootcamps.forEach(bootcamp => { %>
           <div class="col-12 col-md-6 col-xl-4">
             <div class="bc-card">
 

@@ -4,6 +4,7 @@ const { google } = require("googleapis");
 const BootcampUser = require("../models/BootcampUser");
 const Bootcamp = require("../models/Bootcamp");
 
+const BASE_URL=process.env.BASE_URL;
 // ==============================
 // GMAIL API CONFIGURATION
 // ==============================
@@ -82,75 +83,76 @@ router.post("/send-otp", async (req, res) => {
 
     const subject = `Your Rixi Lab Bootcamp Login OTP`;
     const body = `
-  <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
+<style>
 
-    body{
-      margin:0;
-      padding:0;
-      background:#f5f5f5;
-      font-family:Arial,sans-serif;
-    }
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-    table{
-      border-spacing:0;
-    }
+table{
+  border-spacing:0;
+}
 
-    img{
-      border:0;
-      display:block;
-    }
+img{
+  border:0;
+  display:block;
+}
 
-    @media screen and (max-width:600px){
+@media screen and (max-width:600px){
 
-      .container{
-        width:100% !important;
-      }
+  .container{
+    width:100% !important;
+  }
 
-      .content{
-        padding:24px 16px !important;
-      }
+  .content{
+    padding:24px 16px !important;
+  }
 
-      .heading{
-        font-size:24px !important;
-        line-height:1.3 !important;
-      }
+  .heading{
+    font-size:24px !important;
+    line-height:1.3 !important;
+  }
 
-      .subtext{
-        font-size:13px !important;
-        line-height:1.7 !important;
-      }
+  .subtext{
+    font-size:13px !important;
+    line-height:1.7 !important;
+  }
 
-      .normal-text{
-        font-size:13px !important;
-        line-height:1.8 !important;
-      }
+  .normal-text{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
 
-      .otp-wrapper{
-        width:100% !important;
-      }
+  .otp-wrapper{
+    width:100% !important;
+  }
 
-      .otp-box{
-        padding:18px 16px !important;
-      }
+  .otp-box{
+    padding:18px 16px !important;
+  }
 
-      .otp{
-        font-size:28px !important;
-        letter-spacing:4px !important;
-      }
+  .otp{
+    font-size:28px !important;
+    letter-spacing:4px !important;
+  }
 
-      .footer-text{
-        font-size:11px !important;
-      }
+  .footer-text{
+    font-size:11px !important;
+  }
 
-    }
+}
 
-  </style>
+</style>
 </head>
 
 <body>
@@ -180,182 +182,267 @@ router.post("/send-otp", async (req, res) => {
 <tr>
 <td class="content" style="padding:40px 30px;">
 
-  <!-- Logo -->
-  <table width="100%">
-    <tr>
-      <td align="center">
+<!-- Logo -->
+<table width="100%">
+<tr>
+<td align="center">
 
-        <table 
-          width="88"
-          height="88"
-          cellpadding="0"
-          cellspacing="0"
-          style="
-            background:#fff3eb;
-            border-radius:50%;
-          "
-        >
-          <tr>
-            <td align="center" valign="middle">
+<table 
+  width="88"
+  height="88"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
 
-              <img 
-                src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
-                width="52"
-                alt="Rixi Lab"
-              />
+<img 
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="52"
+  alt="Rixi Lab"
+/>
 
-            </td>
-          </tr>
-        </table>
-
-        <h1 
-          class="heading"
-          style="
-            margin:22px 0 0;
-            font-size:32px;
-            line-height:1.25;
-            color:#ff6600;
-            font-weight:bold;
-          "
-        >
-          Login Verification
-        </h1>
-
-        <p 
-          class="subtext"
-          style="
-            margin:12px 0 0;
-            color:#777;
-            font-size:12px;
-            line-height:1.7;
-          "
-        >
-          Secure OTP verification for your account
-        </p>
-
-      </td>
-    </tr>
-  </table>
-
-  <!-- Greeting -->
-  <table width="100%" style="margin-top:38px;">
-    <tr>
-      <td>
-
-        <p 
-          style="
-            margin:0;
-            font-size:16px;
-            color:#222;
-            font-weight:500;
-          "
-        >
-          Hello <strong>${user.name}</strong>,
-        </p>
-
-        <p 
-          class="normal-text"
-          style="
-            margin:18px 0 0;
-            font-size:12px;
-            line-height:1.9;
-            color:#555;
-          "
-        >
-          You requested to log in to your Rixi Lab Bootcamp portal.
-          Please use the OTP below to continue securely.
-        </p>
-
-      </td>
-    </tr>
-  </table>
-
-  <!-- OTP -->
-  
-<!-- OTP -->
-<table width="100%" style="margin-top:34px;">
-  <tr>
-    <td align="center">
-
-      <table 
-        class="otp-wrapper"
-        cellpadding="0"
-        cellspacing="0"
-        align="center"
-        style="
-          background:#fffaf7;
-          border:2px solid #ffd8c2;
-          border-radius:18px;
-          margin:0 auto;
-        "
-      >
-        <tr>
-          <td 
-            class="otp-box"
-            align="center"
-            style="
-              padding:22px 34px;
-              text-align:center;
-            "
-          >
-
-            <div
-              class="otp"
-              style="
-                font-size:42px;
-                font-weight:bold;
-                letter-spacing:10px;
-                color:#ff6600;
-                line-height:1;
-                text-align:center;
-                display:block;
-                width:100%;
-              "
-            >
-              ${otp}
-            </div>
-
-          </td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
+</td>
+</tr>
 </table>
 
+<h1 
+  class="heading"
+  style="
+    margin:22px 0 0;
+    font-size:32px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  Login Verification
+</h1>
 
-  <!-- Footer -->
-  <table width="100%" style="margin-top:38px;">
-    <tr>
-      <td align="center">
+<p 
+  class="subtext"
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:12px;
+    line-height:1.7;
+  "
+>
+  Secure OTP verification for your account
+</p>
 
-        <p 
-          class="normal-text"
-          style="
-            margin:0;
-            color:#666;
-            font-size:12px;
-            line-height:1.8;
-          "
-        >
-          This OTP is valid for <strong>10 minutes</strong>.
-        </p>
+</td>
+</tr>
+</table>
 
-        <p 
-          class="footer-text"
-          style="
-            margin:10px 0 0;
-            color:#999;
-            font-size:12px;
-            line-height:1.8;
-          "
-        >
-          If you did not request this login, please ignore this email.
-        </p>
+<!-- Greeting -->
+<table width="100%" style="margin-top:38px;">
+<tr>
+<td>
 
-      </td>
-    </tr>
-  </table>
+<p 
+  style="
+    margin:0;
+    font-size:16px;
+    color:#222;
+    font-weight:500;
+  "
+>
+  Hello <strong>${user.name}</strong>,
+</p>
+
+<p 
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:12px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  You requested to log in to your Rixi Lab Bootcamp portal.
+  Please use the OTP below to continue securely.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- OTP -->
+<table width="100%" style="margin-top:34px;">
+<tr>
+<td align="center">
+
+<table 
+  class="otp-wrapper"
+  cellpadding="0"
+  cellspacing="0"
+  align="center"
+  style="
+    background:#fffaf7;
+    border:2px solid #ffd8c2;
+    border-radius:18px;
+    margin:0 auto;
+  "
+>
+<tr>
+<td 
+  class="otp-box"
+  align="center"
+  style="
+    padding:22px 34px;
+    text-align:center;
+  "
+>
+
+<div
+  class="otp"
+  style="
+    font-size:42px;
+    font-weight:bold;
+    letter-spacing:10px;
+    color:#ff6600;
+    line-height:1;
+    text-align:center;
+    display:block;
+    width:100%;
+  "
+>
+  ${otp}
+</div>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- OTP Info -->
+<table width="100%" style="margin-top:38px;">
+<tr>
+<td align="center">
+
+<p 
+  class="normal-text"
+  style="
+    margin:0;
+    color:#666;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  This OTP is valid for <strong>10 minutes</strong>.
+</p>
+
+<p 
+  class="footer-text"
+  style="
+    margin:10px 0 0;
+    color:#999;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  If you did not request this login, please ignore this email.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Footer -->
+<table
+  width="100%"
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
+
+<p
+  class="footer-text"
+  style="
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab Bootcamp • Learn. Build. Grow.
+</p>
+
+<!-- Social Icons -->
+<p style="margin:18px 0 0;">
+
+<a
+  href="https://www.instagram.com/rixilab.in"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a
+  href="https://www.linkedin.com/company/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a
+  href="https://www.facebook.com/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a
+  href="https://www.youtube.com/@RixiLab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+    line-height:1.8;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
+
+</td>
+</tr>
+</table>
 
 </td>
 </tr>
@@ -367,7 +454,8 @@ router.post("/send-otp", async (req, res) => {
 </table>
 
 </body>
-</html> `;
+</html>
+ `;
 
     const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
     await gmail.users.messages.send({

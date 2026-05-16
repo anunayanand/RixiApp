@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { google } = require("googleapis");
+const BASE_URL=process.env.BASE_URL;
 
 // ==============================
 // CONFIGURATION
@@ -49,79 +50,442 @@ async function sendBulkOfferLetterMails(interns) {
 
       const subject = `Internship Offer Letter Available, Login to Rixi Lab Portal`;
       const body = `
-        <html>
-  <body style="font-family: Arial, sans-serif; background-color: #f7f3f1; padding: 20px;">
-    <div style="max-width: 600px; margin: auto; background: white; border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px;">
+      
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+<style>
 
-      <h2 style="color: #2c3e50;">Dear ${name},</h2>
-      <p style="font-size: 15px; color: #333;">
-        We are pleased to inform you that your <b>Internship Offer Letter</b> is now available
-        on our official website.
-      </p>
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-      <div style="background: #f7f3f1; border-left: 4px solid #ff6600; padding: 12px; margin: 20px 0;">
-      <p><b>Email ID: </b> ${email}</p>
-        <p><b>Intern ID: </b> <span style="color:black;"><b>${intern_id}</b></span></p>
-      </div>
+table{
+  border-spacing:0;
+}
 
-      <p style="font-size: 15px; color: #333;">To access your offer letter, please follow these steps:</p>
-      <ol style="color: #555; font-size: 14px;">
-        <li>Visit our website</li>
-        <li>Navigate to the Login page</li>
-        <li>Login using your credentials</li>
-        <li><b>Your Intern ID is your default password </b></li>
-      </ol>
+img{
+  border:0;
+  display:block;
+}
 
-      <!-- ✅ Button -->
-      <p style="text-align: center; margin: 25px 0;">
-        <a href="https://rixilab.tech"
-           style="background: #ff6600; color: white; text-decoration: none;
-                  padding: 12px 20px; border-radius: 6px; font-weight: bold;
-                  display: inline-block;">
-          Login & Download Offer Letter
-        </a>
-      </p>
+@media screen and (max-width:600px){
 
-      <p style="font-size: 14px; color: #333;">
-        Once you logged in using your email and default password (Intern ID), you can change your password.
-      </p>
+  .container{
+    width:100% !important;
+  }
 
-      <p style="font-size: 14px; color: #666;">
-        If you face any difficulties logging in, feel free to reach out to our support team on WhatsApp.
-      </p>
+  .content{
+    padding:24px 18px !important;
+  }
 
-      <hr style="border:none; border-top:1px solid #ddd; margin:20px 0;">
+  .heading{
+    font-size:24px !important;
+    line-height:1.3 !important;
+  }
 
-      <!-- ✅ Signature -->
-      <p style="font-size: 14px; color: #333; margin-bottom: 5px;">
-   Thanks & Regards,<br>
-   <b style="font-size:16px; font-weight:700; color:#2c3e50;">Rixi Lab</b><br>
-   <i>"Rethink Innovate eXecute Inspire"</i>
- </p>
+  .normal-text{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
 
-      <!-- ✅ Social Media -->
-      <p style="text-align: center; margin-top: 15px;">
-        <a href="https://www.instagram.com/rixilab.in" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
-               alt="Instagram" width="26" style="vertical-align: middle;">
-        </a>
-        <a href="https://www.linkedin.com/company/rixilab" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-               alt="LinkedIn" width="26" style="vertical-align: middle;">
-        </a>
-        <a href="https://www.facebook.com/rixilab" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-               alt="Facebook" width="26" style="vertical-align: middle;">
-        </a>
-      </p>
+  .button{
+    display:block !important;
+    width:100% !important;
+    box-sizing:border-box !important;
+  }
 
-      <p style="font-size: 12px; color: #888; text-align: center; margin-top: 20px;">
-        © 2025 Rixi Lab | <a href="https://rixilab.tech" style="color:#3498db; text-decoration:none;">www.rixilab.tech</a>
-      </p>
-    </div>
-  </body>
+  .card-padding{
+    padding:18px !important;
+  }
+
+  .footer-text{
+    font-size:11px !important;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center" style="padding:24px 12px;">
+
+<table
+  width="620"
+  class="container"
+  cellpadding="0"
+  cellspacing="0"
+  bgcolor="#ffffff"
+  style="
+    max-width:620px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
+>
+
+<tr>
+  <td height="6" bgcolor="#ff6600"></td>
+</tr>
+
+<tr>
+<td class="content" style="padding:42px 34px;">
+
+<!-- Logo -->
+<table width="100%">
+<tr>
+<td align="center">
+
+<table
+  width="90"
+  height="90"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
+
+<img
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="54"
+  alt="Rixi Lab"
+/>
+
+</td>
+</tr>
+</table>
+
+<h1
+  class="heading"
+  style="
+    margin:24px 0 0;
+    font-size:32px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  Offer Letter Available 
+</h1>
+
+<p
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:14px;
+    line-height:1.7;
+  "
+>
+  Your internship offer letter is now ready
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Greeting -->
+<table width="100%" style="margin-top:40px;">
+<tr>
+<td>
+
+<p
+  style="
+    margin:0;
+    font-size:15px;
+    color:#222;
+    font-weight:500;
+  "
+>
+  Dear <strong>${name}</strong>,
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We are pleased to inform you that your
+  <strong>Internship Offer Letter</strong>
+  is now available on the official Rixi Lab portal.
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  Please use the credentials below to access your dashboard and download your offer letter.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Credentials Card -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:30px;
+    background:#fffaf7;
+    border:1px solid #ffd8c2;
+    border-radius:18px;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Login Credentials
+</p>
+
+<table width="100%" style="margin-top:16px;">
+<tr>
+<td
+  style="
+    font-size:13px;
+    color:#555;
+    line-height:2;
+  "
+>
+
+<strong>Email ID:</strong> ${email}<br/>
+<strong>Intern ID:</strong> ${intern_id}<br/>
+<strong>Default Password:</strong> Your Intern ID
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- Instructions -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:24px;
+    background:#fff7f0;
+    border-radius:18px;
+    border:1px solid #ffe0c7;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#ff6600;
+  "
+>
+  🔐 How to Access Your Offer Letter
+</p>
+
+<table width="100%" style="margin-top:16px;">
+<tr>
+<td
+  style="
+    font-size:13px;
+    color:#555;
+    line-height:2;
+  "
+>
+
+1. Visit the Rixi Lab website<br/>
+2. Navigate to the Login page<br/>
+3. Login using your registered email ID<br/>
+4. Use your Intern ID as the default password<br/>
+5. Download your Offer Letter from the dashboard
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- Button -->
+<table width="100%" style="margin-top:34px;">
+<tr>
+<td align="center">
+
+<a
+  href="https://rixilab.tech"
+  class="button"
+  style="
+    background:#ff6600;
+    color:#ffffff;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:bold;
+    display:inline-block;
+    font-size:14px;
+  "
+>
+  Login & Download Offer Letter
+</a>
+
+</td>
+</tr>
+</table>
+
+<!-- Extra Info -->
+<table width="100%" style="margin-top:30px;">
+<tr>
+<td>
+
+<p
+  class="normal-text"
+  style="
+    margin:0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  Once logged in, we recommend changing your password for better security.
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:16px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  If you face any difficulties accessing your account,
+  feel free to reach out to our support team on WhatsApp.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Footer -->
+<table
+  width="100%"
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
+
+<p
+  class="footer-text"
+  style="
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab • Rethink Innovate eXecute Inspire
+</p>
+
+<p style="margin:18px 0 0;">
+
+<a href="https://www.instagram.com/rixilab.in" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a href="https://www.linkedin.com/company/rixilab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a href="https://www.facebook.com/rixilab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a href="https://www.youtube.com/@RixiLab" style="display:inline-block;margin:0 6px;">
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+    line-height:1.8;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
 </html>
       `;
 

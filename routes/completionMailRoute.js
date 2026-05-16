@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { google } = require("googleapis");
-
+const BASE_URL=process.env.BASE_URL;
 // ==============================
 // CONFIGURATION
 // ==============================
@@ -52,98 +52,454 @@ async function sendBulkCompletionMails(interns) {
 
       const subject = `Congratulations on Completing Your Internship at Rixi Lab`;
       const body = `
-       <html>
-  <body style="font-family: Arial, sans-serif; background-color: #f7f3f1; padding: 20px;">
-    <div style="max-width: 650px; margin: auto; background: #ffffff; border-radius: 10px; 
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 35px; text-align: left;">
-      
-      <!-- 🎉 Header -->
-      <h2 style="color: #2c3e50; text-align: center; margin-bottom: 10px;">
-         Congratulations, ${name}! 
-      </h2>
-      <p style="text-align: center; font-size: 15px; color: #666; margin-top: 0;">
-        Internship Completion - Rixi Lab
-      </p>
-      
-      <!-- 📝 Main Message -->
-      <p style="font-size: 15px; color: #333; line-height: 1.6;">
-        We are delighted to inform you that your internship with <b>Rixi Lab</b> in the domain of 
-        <b>${domain}</b> has been <b style="color: green;">successfully completed</b>.  
-        Congratulations on reaching this important milestone in your journey!
-      </p>
-      
-      <!-- 🎓 Certificate Block -->
-      <div style="background: #f7f3f1; border-left: 5px solid #ff6600; padding: 14px 16px; margin: 20px 0;">
-        <p style="margin: 0; font-size: 14px; color: #333;">
-          ✅ Your <b>Internship Certificate</b> is now available on your dashboard.<br>
-          🔗 Login and download it anytime.
-        </p>
-      </div>
-      
-      <!-- ⭐ Canva Premium -->
-      <p style="font-size: 15px; color: #333; line-height: 1.6;">
-        As a token of appreciation, we are excited to provide you with <b style="color:#ff6600;">Canva Premium access for 1 year</b>.  
-        Simply log in to <a href="https://www.canva.com" style="color:#3498db; text-decoration:none;">canva.com</a>  
-        using your Rixi Lab registered email ID and start enjoying all the premium features.
-      </p>
-      
-      <!-- 🔗 Button -->
-      <p style="text-align: center; margin: 25px 0;">
-        <a href="https://rixilab.tech" 
-           style="background: #ff6600; color: white; text-decoration: none; 
-                  padding: 12px 24px; border-radius: 6px; font-weight: bold; 
-                  display: inline-block;">
-          🔑 Login & Download Certificate
-        </a>
-      </p>
+       
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-      <!-- 💼 LinkedIn Encourage -->
-      <p style="font-size: 15px; color: #333; line-height: 1.6;">
-        We encourage you to <b>share your Internship Certificate on LinkedIn</b> and tag 
-        <a href="https://www.linkedin.com/company/rixilab" style="color:#3498db; text-decoration:none;">Rixi Lab</a> in your post.  
-        This will help you showcase your achievement and expand your professional network. 
-      </p>
-      
-      <!-- ❤️ Appreciation -->
-      <p style="font-size: 15px; color: #333; line-height: 1.6;">
-        We sincerely appreciate your <b>hard work, dedication, and contributions</b> during your internship.  
-        Your journey with us has been truly valuable, and we are confident you will achieve even greater milestones in the future.
-      </p>
+<style>
 
-      <p style="font-size: 15px; color: #2c3e50; font-weight: bold; margin-top: 20px;">
-        Once again, congratulations and best of luck ahead! 🌟
-      </p>
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-      <hr style="border:none; border-top:1px solid #ddd; margin:25px 0;">
-      
-      <!-- ✅ Signature -->
-      <p style="font-size: 14px; color: #333; margin-bottom: 5px;">
-        Thanks & Regards,<br>
-        <b style="font-size:16px; font-weight:700; color:#2c3e50;">Rixi Lab</b><br>
-        <i>"Rethink Innovate eXecute Inspire"</i>
-      </p>
+table{
+  border-spacing:0;
+}
 
-      <!-- ✅ Social Media -->
-      <p style="text-align: center; margin-top: 15px;">
-        <a href="https://www.instagram.com/rixilab.in" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" 
-               alt="Instagram" width="26" style="vertical-align: middle;">
-        </a>
-        <a href="https://www.linkedin.com/company/rixilab" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
-               alt="LinkedIn" width="26" style="vertical-align: middle;">
-        </a>
-        <a href="https://www.facebook.com/rixilab" target="_blank" style="margin: 0 10px;">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" 
-               alt="Facebook" width="26" style="vertical-align: middle;">
-        </a>
-      </p>
+img{
+  border:0;
+  display:block;
+}
 
-      <p style="font-size: 12px; color: #888; text-align: center; margin-top: 20px;">
-        © 2025 Rixi Lab | <a href="https://rixilab.tech" style="color:#3498db; text-decoration:none;">www.rixilab.tech</a>
-      </p>
-    </div>
-  </body>
+@media screen and (max-width:600px){
+
+  .container{
+    width:100% !important;
+  }
+
+  .content{
+    padding:24px 18px !important;
+  }
+
+  .heading{
+    font-size:26px !important;
+    line-height:1.3 !important;
+  }
+
+  .normal-text{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
+
+  .button{
+    display:block !important;
+    width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  .card-padding{
+    padding:18px !important;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center" style="padding:24px 12px;">
+
+<table
+  width="620"
+  class="container"
+  cellpadding="0"
+  cellspacing="0"
+  bgcolor="#ffffff"
+  style="
+    max-width:620px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
+>
+
+<tr>
+  <td height="6" bgcolor="#ff6600"></td>
+</tr>
+
+<tr>
+<td class="content" style="padding:42px 34px;">
+
+<!-- Logo -->
+<table width="100%">
+<tr>
+<td align="center">
+
+<table
+  width="90"
+  height="90"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
+
+<img
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="54"
+  alt="Rixi Lab"
+/>
+
+</td>
+</tr>
+</table>
+
+<h1
+  class="heading"
+  style="
+    margin:24px 0 0;
+    font-size:34px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  Congratulations
+</h1>
+
+<p
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:14px;
+    line-height:1.7;
+  "
+>
+  Internship Successfully Completed
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Greeting -->
+<table width="100%" style="margin-top:40px;">
+<tr>
+<td>
+
+<p
+  style="
+    margin:0;
+    font-size:15px;
+    color:#222;
+    font-weight:500;
+  "
+>
+  Hi <strong>${name}</strong>,
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We are delighted to inform you that your internship with
+  <strong>Rixi Lab</strong> in the domain of
+  <strong>${domain}</strong> has been successfully completed.
+  Congratulations on reaching this important milestone in your journey.
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  Your dedication, consistency, and hard work throughout the internship
+  have truly been appreciated by our team.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Certificate Card -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:30px;
+    background:#fffaf7;
+    border:1px solid #ffd8c2;
+    border-radius:18px;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Internship Completion Details
+</p>
+
+<table width="100%" style="margin-top:16px;">
+<tr>
+<td
+  style="
+    font-size:13px;
+    color:#555;
+    line-height:2;
+  "
+>
+
+<strong>Domain:</strong> ${domain}<br/>
+<strong>Status:</strong> Successfully Completed<br/>
+<strong>Certificate:</strong> Available for Download
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- Canva Premium -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:24px;
+    background:#fff7f0;
+    border-radius:18px;
+    border:1px solid #ffe0c7;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#ff6600;
+  "
+>
+  🎁 Exclusive Reward
+</p>
+
+<p
+  class="normal-text"
+  style="
+    margin:14px 0 0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  As a token of appreciation, you now have access to
+  <strong>Canva Premium for 1 Year</strong>.
+  Simply log in to Canva using your Rixi Lab registered email ID
+  and start exploring premium features.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Button -->
+<table width="100%" style="margin-top:34px;">
+<tr>
+<td align="center">
+
+<a
+  href="https://rixilab.tech"
+  class="button"
+  style="
+    background:#ff6600;
+    color:#ffffff;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:bold;
+    display:inline-block;
+    font-size:14px;
+  "
+>
+  Download Certificate
+</a>
+
+</td>
+</tr>
+</table>
+
+<!-- LinkedIn -->
+<table width="100%" style="margin-top:34px;">
+<tr>
+<td>
+
+<p
+  class="normal-text"
+  style="
+    margin:0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We encourage you to share your internship certificate on LinkedIn
+  and tag <strong>Rixi Lab</strong> in your post.
+  Celebrate your achievement and inspire others through your journey.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Appreciation -->
+<table width="100%" style="margin-top:28px;">
+<tr>
+<td>
+
+<p
+  class="normal-text"
+  style="
+    margin:0;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  Thank you for being part of the Rixi Lab community.
+  We are confident you will continue achieving greater milestones ahead.
+</p>
+
+<p
+  style="
+    margin:18px 0 0;
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Best wishes for your future journey 🌟
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Footer -->
+<table
+  width="100%"
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
+
+<p
+  style="
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab • Rethink Innovate eXecute Inspire
+</p>
+
+<p style="margin:18px 0 0;">
+
+<a href="https://www.instagram.com/rixilab.in" style="display:inline-block;margin:0 6px;">
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" 
+    width="24" 
+    alt="Instagram"
+  />
+</a>
+
+<a href="https://www.linkedin.com/company/rixilab" style="display:inline-block;margin:0 6px;">
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
+    width="24" 
+    alt="LinkedIn"
+  />
+</a>
+
+<a href="https://www.facebook.com/rixilab" style="display:inline-block;margin:0 6px;">
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png" 
+    width="24" 
+    alt="Facebook"
+  />
+</a>
+
+<a href="https://www.youtube.com/@RixiLab" style="display:inline-block;margin:0 6px;">
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" 
+    width="24" 
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
 </html>
       `;
 

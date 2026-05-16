@@ -48,6 +48,7 @@ async function sendCompletionEmail(user, bootcamp) {
   const subject = `Congratulations on Completing ${bootcamp.name} - Rixi Lab`;
 
   const body = `
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -192,7 +193,7 @@ img{
     font-weight:bold;
   "
 >
-Congratulations 
+  Congratulations 
 </h1>
 
 <p
@@ -204,7 +205,7 @@ Congratulations
     line-height:1.7;
   "
 >
-You have successfully completed your bootcamp journey
+  You have successfully completed your bootcamp journey
 </p>
 
 </td>
@@ -224,7 +225,7 @@ You have successfully completed your bootcamp journey
     font-weight:500;
   "
 >
-Hi <strong>${user.name}</strong>,
+  Hi <strong>${user.name}</strong>,
 </p>
 
 <p
@@ -236,19 +237,21 @@ Hi <strong>${user.name}</strong>,
     color:#555;
   "
 >
-This is a proud moment. Your dedication, consistency, and effort throughout the bootcamp have finally paid off. You’ve officially completed the program and your certificate is now ready to download from your dashboard.
+  You’ve officially completed the program and your certificate
+  is now ready to download from your dashboard.
 </p>
 
 <p
   class="normal-text"
   style="
-    margin:18px 0 0;
+    margin:16px 0 0;
     font-size:12px;
     line-height:1.9;
     color:#555;
   "
 >
-Keep building, keep learning, and continue creating amazing things ahead. We’re excited to see what you achieve next.
+  Keep building, keep learning, and continue creating amazing things ahead.
+  We’re excited to see what you achieve next.
 </p>
 
 </td>
@@ -279,7 +282,7 @@ Keep building, keep learning, and continue creating amazing things ahead. We’r
     color:#222;
   "
 >
-Completion Details
+  Completion Details
 </p>
 
 <ul style="padding-left:18px;margin:0;color:#555;">
@@ -358,12 +361,12 @@ Completion Details
 <table
   width="100%"
   style="
-    margin-top:38px;
+    margin-top:40px;
     border-top:1px solid #ececec;
   "
 >
 <tr>
-<td align="center" style="padding-top:20px;">
+<td align="center" style="padding-top:24px;">
 
 <p
   class="footer-text"
@@ -377,18 +380,66 @@ Completion Details
   Rixi Lab Bootcamp • Learn. Build. Grow.
 </p>
 
+<!-- Social Icons -->
+<p style="margin:18px 0 0;">
+
 <a
-  href="https://rixilab.tech"
+  href="https://www.instagram.com/rixilab.in"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a
+  href="https://www.linkedin.com/company/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a
+  href="https://www.facebook.com/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a
+  href="https://www.youtube.com/@RixiLab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
   class="footer-text"
   style="
-    color:#ff6600;
-    text-decoration:none;
-    font-size:12px;
-    font-weight:bold;
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+    line-height:1.8;
   "
 >
-  www.rixilab.tech
-</a>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
 
 </td>
 </tr>

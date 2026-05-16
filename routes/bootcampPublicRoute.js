@@ -4,7 +4,7 @@ const axios = require('axios');
 const { google } = require('googleapis');
 const Bootcamp = require('../models/Bootcamp');
 const BootcampUser = require('../models/BootcampUser');
-
+const BASE_URL=process.env.BASE_URL;
 // ==============================
 // CONFIGURATION
 // ==============================
@@ -34,86 +34,87 @@ function makeBody(to, from, subject, message) {
 }
 
 async function sendWelcomeEmail(user, bootcamp) {
-    const loginLink = `${process.env.BASE_URL || 'https://www.rixilab.tech'}/bootcamp-portal/login`;
+    const loginLink = `${BASE_URL || 'https://www.rixilab.tech'}/bootcamp-portal/login`;
     const subject = `Welcome to ${bootcamp.name} - Rixi Lab`;
     const body = `
-  <!DOCTYPE html>
+  
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
+<style>
 
-    body{
-      margin:0;
-      padding:0;
-      background:#f5f5f5;
-      font-family:Arial,sans-serif;
-    }
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-    table{
-      border-spacing:0;
-    }
+table{
+  border-spacing:0;
+}
 
-    img{
-      border:0;
-      display:block;
-    }
+img{
+  border:0;
+  display:block;
+}
 
-    @media screen and (max-width:600px){
+@media screen and (max-width:600px){
 
-      .container{
-        width:100% !important;
-      }
+  .container{
+    width:100% !important;
+  }
 
-      .content{
-        padding:24px 16px !important;
-      }
+  .content{
+    padding:24px 16px !important;
+  }
 
-      .heading{
-        font-size:24px !important;
-        line-height:1.3 !important;
-      }
+  .heading{
+    font-size:24px !important;
+    line-height:1.3 !important;
+  }
 
-      .subtext{
-        font-size:13px !important;
-        line-height:1.7 !important;
-      }
+  .subtext{
+    font-size:13px !important;
+    line-height:1.7 !important;
+  }
 
-      .normal-text{
-        font-size:13px !important;
-        line-height:1.8 !important;
-      }
+  .normal-text{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
 
-      .account-title{
-        font-size:15px !important;
-      }
+  .account-title{
+    font-size:15px !important;
+  }
 
-      .list-text{
-        font-size:13px !important;
-      }
+  .list-text{
+    font-size:13px !important;
+  }
 
-      .button{
-        display:block !important;
-        width:100% !important;
-        box-sizing:border-box !important;
-        padding:14px 18px !important;
-        font-size:14px !important;
-        border-radius:10px !important;
-      }
+  .button{
+    display:block !important;
+    width:100% !important;
+    box-sizing:border-box !important;
+    padding:14px 18px !important;
+    font-size:14px !important;
+    border-radius:10px !important;
+  }
 
-      .account-card{
-        padding:20px !important;
-      }
+  .account-card{
+    padding:20px !important;
+  }
 
-      .footer-text{
-        font-size:11px !important;
-      }
+  .footer-text{
+    font-size:11px !important;
+  }
 
-    }
+}
 
-  </style>
+</style>
 </head>
 
 <body>
@@ -143,235 +144,283 @@ async function sendWelcomeEmail(user, bootcamp) {
 <tr>
 <td class="content" style="padding:40px 30px;">
 
-  <!-- Logo -->
-  <table width="100%">
-    <tr>
-      <td align="center">
+<!-- Logo -->
+<table width="100%">
+<tr>
+<td align="center">
 
-        <table 
-          width="88"
-          height="88"
-          cellpadding="0"
-          cellspacing="0"
-          style="
-            background:#fff3eb;
-            border-radius:50%;
-          "
-        >
-          <tr>
-            <td align="center" valign="middle">
+<table 
+  width="88"
+  height="88"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
 
-              <img 
-                src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
-                width="52"
-                alt="Rixi Lab"
-              />
+<img 
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="52"
+  alt="Rixi Lab"
+/>
 
-            </td>
-          </tr>
-        </table>
+</td>
+</tr>
+</table>
 
-        <h1 
-          class="heading"
-          style="
-            margin:22px 0 0;
-            font-size:32px;
-            line-height:1.25;
-            color:#ff6600;
-            font-weight:bold;
-          "
-        >
-        ${bootcamp.name}
-        </h1>
+<h1 
+  class="heading"
+  style="
+    margin:22px 0 0;
+    font-size:32px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  ${bootcamp.name}
+</h1>
 
-        <p 
-          class="subtext"
-          style="
-            margin:12px 0 0;
-            color:#777;
-            font-size:14px;
-            line-height:1.7;
-          "
-        >
-          Your registration has been confirmed successfully
-        </p>
+<p 
+  class="subtext"
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:14px;
+    line-height:1.7;
+  "
+>
+  Your registration has been confirmed successfully
+</p>
 
-      </td>
-    </tr>
-  </table>
+</td>
+</tr>
+</table>
 
-  <!-- Greeting -->
-  <table width="100%" style="margin-top:38px;">
-    <tr>
-      <td>
+<!-- Greeting -->
+<table width="100%" style="margin-top:38px;">
+<tr>
+<td>
 
-        <p 
-          style="
-            margin:0;
-            font-size:14px;
-            color:#222;
-            font-weight:500;
-          "
-        >
-          Hi <strong>${user.name}</strong>,
-        </p>
+<p 
+  style="
+    margin:0;
+    font-size:14px;
+    color:#222;
+    font-weight:500;
+  "
+>
+  Hi <strong>${user.name}</strong>,
+</p>
 
-        <p 
-          class="normal-text"
-          style="
-            margin:18px 0 0;
-            font-size:12px;
-            line-height:1.9;
-            color:#555;
-          "
-        >
-          We're excited to have you onboard for this bootcamp journey.
-          Your dashboard is now ready where you can access sessions,
-          track progress, and download your certificate.
-        </p>
+<p 
+  class="normal-text"
+  style="
+    margin:18px 0 0;
+    font-size:12px;
+    line-height:1.9;
+    color:#555;
+  "
+>
+  We're excited to have you onboard for this bootcamp journey.
+  Your dashboard is now ready where you can access sessions,
+  track progress, and download your certificate.
+</p>
 
-      </td>
-    </tr>
-  </table>
+</td>
+</tr>
+</table>
 
-  <!-- Account Information -->
-  <table 
-    width="100%"
-    cellpadding="0"
-    cellspacing="0"
-    style="
-      margin-top:28px;
-      background:#fffaf7;
-      border:1px solid #ffd8c2;
-      border-radius:16px;
-    "
-  >
-    <tr>
-      <td class="account-card" style="padding:24px;">
+<!-- Account Information -->
+<table 
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:28px;
+    background:#fffaf7;
+    border:1px solid #ffd8c2;
+    border-radius:16px;
+  "
+>
+<tr>
+<td class="account-card" style="padding:24px;">
 
-        <p 
-          class="account-title"
-          style="
-            margin:0 0 16px;
-            font-size:12px;
-            font-weight:bold;
-            color:#222;
-          "
-        >
-          Account Information
-        </p>
+<p 
+  class="account-title"
+  style="
+    margin:0 0 16px;
+    font-size:12px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Account Information
+</p>
 
-        <ul style="padding-left:18px;margin:0;color:#555;">
+<ul style="padding-left:18px;margin:0;color:#555;">
 
-          <li 
-            class="list-text"
-            style="
-              margin-bottom:10px;
-              line-height:1.8;
-              font-size:12px;
-            "
-          >
-            <strong>Bootcamp:</strong>
-            ${bootcamp.name}
-          </li>
+<li 
+  class="list-text"
+  style="
+    margin-bottom:10px;
+    line-height:1.8;
+    font-size:12px;
+  "
+>
+  <strong>Bootcamp:</strong>
+  ${bootcamp.name}
+</li>
 
-          <li 
-            class="list-text"
-            style="
-              margin-bottom:10px;
-              line-height:1.8;
-              font-size:12px;
-            "
-          >
-            <strong>Email:</strong>
-            ${user.email}
-          </li>
+<li 
+  class="list-text"
+  style="
+    margin-bottom:10px;
+    line-height:1.8;
+    font-size:12px;
+  "
+>
+  <strong>Email:</strong>
+  ${user.email}
+</li>
 
-          <li 
-            class="list-text"
-            style="
-              line-height:1.8;
-              font-size:12px;
-            "
-          >
-            <strong>Login Method:</strong>
-            Secure OTP Verification
-          </li>
+<li 
+  class="list-text"
+  style="
+    line-height:1.8;
+    font-size:12px;
+  "
+>
+  <strong>Login Method:</strong>
+  Secure OTP Verification
+</li>
 
-        </ul>
+</ul>
 
-      </td>
-    </tr>
-  </table>
+</td>
+</tr>
+</table>
 
-  <!-- Button -->
-  <table width="100%" style="margin-top:32px;">
-    <tr>
-      <td align="center">
+<!-- Button -->
+<table width="100%" style="margin-top:32px;">
+<tr>
+<td align="center">
 
-        <a 
-          href="${loginLink}"
-          class="button"
-          style="
-            background:#ff6600;
-            color:#ffffff;
-            text-decoration:none;
-            padding:14px 24px;
-            border-radius:12px;
-            font-weight:bold;
-            display:inline-block;
-            font-size:14px;
-            line-height:1.2;
-            box-sizing:border-box;
-            max-width:100%;
-          "
-        >
-          Access Dashboard
-        </a>
+<a 
+  href="${loginLink}"
+  class="button"
+  style="
+    background:#ff6600;
+    color:#ffffff;
+    text-decoration:none;
+    padding:14px 24px;
+    border-radius:12px;
+    font-weight:bold;
+    display:inline-block;
+    font-size:14px;
+    line-height:1.2;
+    box-sizing:border-box;
+    max-width:100%;
+  "
+>
+  Access Dashboard
+</a>
 
-      </td>
-    </tr>
-  </table>
+</td>
+</tr>
+</table>
 
-  <!-- Footer -->
-  <table 
-    width="100%" 
-    style="
-      margin-top:38px;
-      border-top:1px solid #ececec;
-    "
-  >
-    <tr>
-      <td align="center" style="padding-top:20px;">
+<!-- Footer -->
+<table 
+  width="100%" 
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
 
-        <p 
-          class="footer-text"
-          style="
-            margin:0;
-            color:#888;
-            font-size:12px;
-            line-height:1.8;
-          "
-        >
-          Rixi Lab Bootcamp • Learn. Build. Grow.
-        </p>
+<p 
+  class="footer-text"
+  style="
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab Bootcamp • Learn. Build. Grow.
+</p>
 
-        <a 
-          href="https://rixilab.tech"
-          class="footer-text"
-          style="
-            color:#ff6600;
-            text-decoration:none;
-            font-size:12px;
-            font-weight:bold;
-          "
-        >
-          www.rixilab.tech
-        </a>
+<!-- Social Icons -->
+<p style="margin:18px 0 0;">
 
-      </td>
-    </tr>
-  </table>
+<a
+  href="https://www.instagram.com/rixilab.in"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a
+  href="https://www.linkedin.com/company/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a
+  href="https://www.facebook.com/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a
+  href="https://www.youtube.com/@RixiLab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+    line-height:1.8;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+</p>
+
+</td>
+</tr>
+</table>
 
 </td>
 </tr>
