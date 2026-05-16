@@ -18,7 +18,7 @@ const bootcampUserSchema = new mongoose.Schema({
       certificate_date: { type: Date, default: null },
       attendance: [
         {
-          session_id: { type: String },
+          session_id: { type: Number },
           status: { type: String, enum: ['present', 'absent', 'pending'], default: 'pending' }
         }
       ]

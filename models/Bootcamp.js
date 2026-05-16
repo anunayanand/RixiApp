@@ -13,7 +13,8 @@ const bootcampSchema = new mongoose.Schema({
   },
   sessions: [
     {
-      session_id: { type: String, required: true },
+      session_id: { type: Number, required: true },
+      session_name: { type: String, required: true },
       details: { type: String },
       time: { type: Date, required: true }, // Assumed IST
       link: { type: String, required: true },

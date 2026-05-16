@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="/css/admin.css">
   <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
 </head>
+
 <body style="background-color: #f4f6f9;">
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -59,7 +61,7 @@
     </header>
 
     <div class="content-body">
-      
+
       <div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div>
           <h4>Attendance Registry</h4>
@@ -70,41 +72,47 @@
       <!-- Filter Bar -->
       <div class="filter-bar border rounded shadow-sm mb-3">
         <div class="d-flex flex-wrap w-100 align-items-center gap-2">
-          <select id="bootcampSelect" class="form-select form-select-sm w-auto" required onchange="changeBootcamp(this.value)">
-            <option value="" disabled <%= !selectedBootcamp ? 'selected' : '' %>>All Bootcamps</option>
-            <% bootcamps.forEach(b => { %>
-              <option value="<%= b._id %>" <%= selectedBootcamp && selectedBootcamp._id.toString() === b._id.toString() ? 'selected' : '' %>><%= b.name %></option>
-            <% }) %>
-          </select>
-          
-          <% if (selectedBootcamp) { %>
-            <select id="sessionSelect" class="form-select form-select-sm w-auto" required onchange="changeSession(this.value)">
-              <option value="" disabled <%= !selectedSessionId ? 'selected' : '' %>>All Sessions</option>
-              <% selectedBootcamp.sessions.forEach(s => { %>
-                <option value="<%= s.session_id %>" <%= selectedSessionId === s.session_id ? 'selected' : '' %>>
-                  <%= s.session_id %> (<%= new Date(s.time).toLocaleString('en-IN') %>)
-                </option>
+          <select id="bootcampSelect" class="form-select form-select-sm w-auto" required
+            onchange="changeBootcamp(this.value)">
+            <option value="" disabled <%=!selectedBootcamp ? 'selected' : '' %>>All Bootcamps</option>
+            <% bootcamps.forEach(b=> { %>
+              <option value="<%= b._id %>" <%=selectedBootcamp && selectedBootcamp._id.toString()===b._id.toString()
+                ? 'selected' : '' %>><%= b.name %>
+              </option>
               <% }) %>
+          </select>
+
+          <% if (selectedBootcamp) { %>
+            <select id="sessionSelect" class="form-select form-select-sm w-auto" required
+              onchange="changeSession(this.value)">
+              <option value="" disabled <%=!selectedSessionId ? 'selected' : '' %>>All Sessions</option>
+              <% selectedBootcamp.sessions.forEach(s=> { %>
+                <option value="<%= s.session_id %>" <%=String(selectedSessionId)===String(s.session_id) ? 'selected' : '' %>>
+                  <%= s.session_name %> (<%= new Date(s.time).toLocaleString('en-IN') %>)
+                </option>
+                <% }) %>
             </select>
-          <% } %>
-          
-          <input type="text" id="attendanceSearch" class="form-control form-control-sm w-auto flex-grow-1" placeholder="Search User..." onkeyup="applyAttendanceFilters()">
-          
-          <% if (selectedBootcamp && selectedSessionId) { %>
-          <div class="border-start ps-3 ms-2 d-flex align-items-center gap-2">
-            <span class="small text-muted text-uppercase fw-bold">Bulk Action:</span>
-            <form id="bulkAttendanceForm" action="/bootcampManager/attendance/bulk-update" method="POST" class="d-flex gap-2 mb-0">
-              <input type="hidden" name="bootcamp_id" value="<%= selectedBootcamp._id %>">
-              <input type="hidden" name="session_id" value="<%= selectedSessionId %>">
-              <input type="hidden" name="users" id="bulkUsersInput">
-              <select name="status" class="form-select form-select-sm w-auto">
-                <option value="present">Mark Present</option>
-                <option value="absent">Mark Absent</option>
-              </select>
-              <button type="submit" class="btn btn-sm btn-primary">Apply</button>
-            </form>
-          </div>
-          <% } %>
+            <% } %>
+
+              <input type="text" id="attendanceSearch" class="form-control form-control-sm w-auto flex-grow-1"
+                placeholder="Search User..." onkeyup="applyAttendanceFilters()">
+
+              <% if (selectedBootcamp && selectedSessionId) { %>
+                <div class="border-start ps-3 ms-2 d-flex align-items-center gap-2">
+                  <span class="small text-muted text-uppercase fw-bold">Bulk Action:</span>
+                  <form id="bulkAttendanceForm" action="/bootcampManager/attendance/bulk-update" method="POST"
+                    class="d-flex gap-2 mb-0">
+                    <input type="hidden" name="bootcamp_id" value="<%= selectedBootcamp._id %>">
+                    <input type="hidden" name="session_id" value="<%= selectedSessionId %>">
+                    <input type="hidden" name="users" id="bulkUsersInput">
+                    <select name="status" class="form-select form-select-sm w-auto">
+                      <option value="present">Mark Present</option>
+                      <option value="absent">Mark Absent</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+                  </form>
+                </div>
+                <% } %>
         </div>
       </div>
 
@@ -122,87 +130,112 @@
                 </tr>
               </thead>
               <tbody>
-                <% enrolledUsers.forEach((u, idx) => { 
-                     const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() === selectedBootcamp._id.toString());
-                     let currentStatus = 'pending';
-                     if (enrollment) {
-                       const attRec = enrollment.attendance.find(a => a.session_id === selectedSessionId);
-                       if (attRec) currentStatus = attRec.status;
-                     }
-                %>
+                <% enrolledUsers.forEach((u, idx)=> {
+                  const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() ===
+                  selectedBootcamp._id.toString());
+                  let currentStatus = 'pending';
+                  if (enrollment) {
+                  const attRec = enrollment.attendance.find(a => String(a.session_id) === String(selectedSessionId));
+                  if (attRec) currentStatus = attRec.status;
+                  }
+                  %>
                   <tr class="attendance-row" data-user="<%= u.name.toLowerCase() %> <%= u.email.toLowerCase() %>">
-                    <td class="text-center text-muted"><%= idx + 1 %></td>
+                    <td class="text-center text-muted">
+                      <%= idx + 1 %>
+                    </td>
                     <td>
                       <div class="d-flex align-items-center gap-3">
-                        <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>" class="rounded-circle shadow-sm" width="40" height="40" style="object-fit:cover;">
+                        <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>"
+                          class="rounded-circle shadow-sm" width="40" height="40" style="object-fit:cover;">
                         <div>
-                          <div class="fw-bold"><%= u.name %></div>
-                          <div class="small text-muted font-monospace"><%= u.email %></div>
+                          <div class="fw-bold">
+                            <%= u.name %>
+                          </div>
+                          <div class="small text-muted font-monospace">
+                            <%= u.email %>
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td class="text-center">
-                      <span class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>" id="status-<%= u._id %>">
-                        <%= currentStatus === 'pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1) %>
+                      <span
+                        class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>"
+                        id="status-<%= u._id %>">
+                        <%= currentStatus==='pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() +
+                          currentStatus.slice(1) %>
                       </span>
                     </td>
                     <td class="text-center">
                       <input type="checkbox" class="row-checkbox" data-user="<%= u._id %>">
                     </td>
                   </tr>
-                <% }) %>
-                <% if (enrolledUsers.length === 0) { %>
-                  <tr><td colspan="4" class="text-center py-4 text-muted">No users enrolled in this bootcamp.</td></tr>
-                <% } %>
+                  <% }) %>
+                    <% if (enrolledUsers.length===0) { %>
+                      <tr>
+                        <td colspan="4" class="text-center py-4 text-muted">No users enrolled in this bootcamp.</td>
+                      </tr>
+                      <% } %>
               </tbody>
             </table>
           </div>
 
           <!-- Mobile Attendance Card Grid (< md) -->
           <div class="attendance-card-grid d-md-none" id="attendanceCardGrid">
-            <% enrolledUsers.forEach((u, idx) => { 
-                 const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() === selectedBootcamp._id.toString());
-                 let currentStatus = 'pending';
-                 if (enrollment) {
-                   const attRec = enrollment.attendance.find(a => a.session_id === selectedSessionId);
-                   if (attRec) currentStatus = attRec.status;
-                 }
-            %>
-              <div class="attendance-card attendance-row" data-user="<%= u.name.toLowerCase() %> <%= u.email.toLowerCase() %>">
+            <% enrolledUsers.forEach((u, idx)=> {
+              const enrollment = u.enrolledBootcamps.find(b => b.bootcamp_id.toString() ===
+              selectedBootcamp._id.toString());
+              let currentStatus = 'pending';
+              if (enrollment) {
+              const attRec = enrollment.attendance.find(a => String(a.session_id) === String(selectedSessionId));
+              if (attRec) currentStatus = attRec.status;
+              }
+              %>
+              <div class="attendance-card attendance-row"
+                data-user="<%= u.name.toLowerCase() %> <%= u.email.toLowerCase() %>">
                 <div class="attendance-card-top">
                   <div class="attendance-card-info">
                     <div class="d-flex align-items-center gap-3 mb-2">
-                       <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>" class="rounded-circle shadow-sm" width="45" height="45" style="object-fit:cover;">
-                       <div>
-                         <div class="fw-bold fs-6"><%= u.name %></div>
-                         <div class="text-muted small font-monospace"><%= u.email %></div>
-                       </div>
+                      <img src="<%= u.profile_image || '/img/default-avatar.png' %>" alt="<%= u.name %>"
+                        class="rounded-circle shadow-sm" width="45" height="45" style="object-fit:cover;">
+                      <div>
+                        <div class="fw-bold fs-6">
+                          <%= u.name %>
+                        </div>
+                        <div class="text-muted small font-monospace">
+                          <%= u.email %>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="d-flex flex-column align-items-end justify-content-between gap-2">
                     <div>
-                      <span class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>" id="status-mobile-<%= u._id %>">
-                        <%= currentStatus === 'pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1) %>
+                      <span
+                        class="badge bg-<%= currentStatus === 'present' ? 'success' : (currentStatus === 'absent' ? 'danger' : 'warning text-dark') %>"
+                        id="status-mobile-<%= u._id %>">
+                        <%= currentStatus==='pending' ? 'Pending' : currentStatus.charAt(0).toUpperCase() +
+                          currentStatus.slice(1) %>
                       </span>
                     </div>
                     <div class="form-check mt-auto pt-2">
-                      <input type="checkbox" class="form-check-input row-checkbox" data-user="<%= u._id %>" style="transform: scale(1.2);">
+                      <input type="checkbox" class="form-check-input row-checkbox" data-user="<%= u._id %>"
+                        style="transform: scale(1.2);">
                     </div>
                   </div>
                 </div>
               </div>
-            <% }) %>
+              <% }) %>
           </div>
         </div>
-      <% } else if (selectedBootcamp) { %>
-        <div class="alert alert-warning shadow-sm" style="border-radius: 10px;">
-          <i class="bi bi-exclamation-triangle me-2"></i> Please select a session from the dropdown above to view the attendance roster.
-        </div>
-      <% } else { %>
-        <div class="alert alert-info shadow-sm" style="border-radius: 10px;">
-          <i class="bi bi-info-circle me-2"></i> Please select a bootcamp to manage attendance.
-        </div>
-      <% } %>
+        <% } else if (selectedBootcamp) { %>
+          <div class="alert alert-warning shadow-sm" style="border-radius: 10px;">
+            <i class="bi bi-exclamation-triangle me-2"></i> Please select a session from the dropdown above to view the
+            attendance roster.
+          </div>
+          <% } else { %>
+            <div class="alert alert-info shadow-sm" style="border-radius: 10px;">
+              <i class="bi bi-info-circle me-2"></i> Please select a bootcamp to manage attendance.
+            </div>
+            <% } %>
     </div>
   </div>
 
@@ -283,7 +316,7 @@
             const newStatus = data.status;
             checked.forEach(cb => {
               const row = cb.closest('.attendance-row');
-              if(row) {
+              if (row) {
                 const userId = cb.dataset.user;
                 const badges = row.querySelectorAll(`[id="status-${userId}"], [id="status-mobile-${userId}"]`);
                 badges.forEach(badge => {
@@ -310,4 +343,5 @@
     }
   </script>
 </body>
+
 </html>

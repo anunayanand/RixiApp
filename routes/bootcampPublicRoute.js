@@ -37,13 +37,14 @@ async function sendWelcomeEmail(user, bootcamp) {
     const loginLink = `${process.env.BASE_URL || 'https://www.rixilab.tech'}/bootcamp-portal/login`;
     const subject = `Welcome to ${bootcamp.name} - Rixi Lab`;
     const body = `
-    <!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <style>
+
     body{
       margin:0;
       padding:0;
@@ -67,20 +68,51 @@ async function sendWelcomeEmail(user, bootcamp) {
       }
 
       .content{
-        padding:30px 20px !important;
+        padding:24px 16px !important;
       }
 
       .heading{
-        font-size:30px !important;
+        font-size:24px !important;
+        line-height:1.3 !important;
+      }
+
+      .subtext{
+        font-size:13px !important;
+        line-height:1.7 !important;
+      }
+
+      .normal-text{
+        font-size:13px !important;
+        line-height:1.8 !important;
+      }
+
+      .account-title{
+        font-size:15px !important;
+      }
+
+      .list-text{
+        font-size:13px !important;
       }
 
       .button{
-        width:100% !important;
         display:block !important;
-        text-align:center !important;
+        width:100% !important;
+        box-sizing:border-box !important;
+        padding:14px 18px !important;
+        font-size:14px !important;
+        border-radius:10px !important;
+      }
+
+      .account-card{
+        padding:20px !important;
+      }
+
+      .footer-text{
+        font-size:11px !important;
       }
 
     }
+
   </style>
 </head>
 
@@ -88,7 +120,7 @@ async function sendWelcomeEmail(user, bootcamp) {
 
 <table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
 <tr>
-<td align="center" style="padding:30px 15px;">
+<td align="center" style="padding:24px 12px;">
 
 <table 
   width="600"
@@ -96,15 +128,20 @@ async function sendWelcomeEmail(user, bootcamp) {
   cellpadding="0"
   cellspacing="0"
   bgcolor="#ffffff"
-  style="max-width:600px;border-radius:24px;overflow:hidden;border:1px solid #ececec;"
+  style="
+    max-width:600px;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
 >
 
 <tr>
-  <td height="8" bgcolor="#ff6600"></td>
+  <td height="6" bgcolor="#ff6600"></td>
 </tr>
 
 <tr>
-<td class="content" style="padding:50px 40px;">
+<td class="content" style="padding:40px 30px;">
 
   <!-- Logo -->
   <table width="100%">
@@ -112,18 +149,21 @@ async function sendWelcomeEmail(user, bootcamp) {
       <td align="center">
 
         <table 
-          width="100"
-          height="100"
+          width="88"
+          height="88"
           cellpadding="0"
           cellspacing="0"
-          style="background:#fff3eb;border-radius:50%;"
+          style="
+            background:#fff3eb;
+            border-radius:50%;
+          "
         >
           <tr>
             <td align="center" valign="middle">
 
               <img 
                 src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
-                width="60"
+                width="52"
                 alt="Rixi Lab"
               />
 
@@ -133,12 +173,26 @@ async function sendWelcomeEmail(user, bootcamp) {
 
         <h1 
           class="heading"
-          style="margin:25px 0 0;font-size:40px;line-height:1.2;color:#ff6600;"
+          style="
+            margin:22px 0 0;
+            font-size:32px;
+            line-height:1.25;
+            color:#ff6600;
+            font-weight:bold;
+          "
         >
-          Welcome to ${bootcamp.name}
+        ${bootcamp.name}
         </h1>
 
-        <p style="margin:15px 0 0;color:#777;font-size:17px;line-height:1.7;">
+        <p 
+          class="subtext"
+          style="
+            margin:12px 0 0;
+            color:#777;
+            font-size:14px;
+            line-height:1.7;
+          "
+        >
           Your registration has been confirmed successfully
         </p>
 
@@ -147,15 +201,30 @@ async function sendWelcomeEmail(user, bootcamp) {
   </table>
 
   <!-- Greeting -->
-  <table width="100%" style="margin-top:50px;">
+  <table width="100%" style="margin-top:38px;">
     <tr>
       <td>
 
-        <p style="margin:0;font-size:20px;color:#222;">
+        <p 
+          style="
+            margin:0;
+            font-size:14px;
+            color:#222;
+            font-weight:500;
+          "
+        >
           Hi <strong>${user.name}</strong>,
         </p>
 
-        <p style="margin:25px 0 0;font-size:16px;line-height:1.9;color:#555;">
+        <p 
+          class="normal-text"
+          style="
+            margin:18px 0 0;
+            font-size:12px;
+            line-height:1.9;
+            color:#555;
+          "
+        >
           We're excited to have you onboard for this bootcamp journey.
           Your dashboard is now ready where you can access sessions,
           track progress, and download your certificate.
@@ -165,33 +234,66 @@ async function sendWelcomeEmail(user, bootcamp) {
     </tr>
   </table>
 
-  <!-- Dashboard Card -->
+  <!-- Account Information -->
   <table 
     width="100%"
     cellpadding="0"
     cellspacing="0"
-    style="margin-top:35px;background:#fffaf7;border:1px solid #ffd8c2;border-radius:20px;"
+    style="
+      margin-top:28px;
+      background:#fffaf7;
+      border:1px solid #ffd8c2;
+      border-radius:16px;
+    "
   >
     <tr>
-      <td style="padding:30px;">
+      <td class="account-card" style="padding:24px;">
 
-        <p style="margin:0 0 20px;font-size:18px;font-weight:bold;color:#222;">
+        <p 
+          class="account-title"
+          style="
+            margin:0 0 16px;
+            font-size:12px;
+            font-weight:bold;
+            color:#222;
+          "
+        >
           Account Information
         </p>
 
-        <ul style="padding-left:20px;margin:0;color:#555;">
+        <ul style="padding-left:18px;margin:0;color:#555;">
 
-          <li style="margin-bottom:14px;line-height:1.8;">
+          <li 
+            class="list-text"
+            style="
+              margin-bottom:10px;
+              line-height:1.8;
+              font-size:12px;
+            "
+          >
             <strong>Bootcamp:</strong>
             ${bootcamp.name}
           </li>
 
-          <li style="margin-bottom:14px;line-height:1.8;">
+          <li 
+            class="list-text"
+            style="
+              margin-bottom:10px;
+              line-height:1.8;
+              font-size:12px;
+            "
+          >
             <strong>Email:</strong>
             ${user.email}
           </li>
 
-          <li style="line-height:1.8;">
+          <li 
+            class="list-text"
+            style="
+              line-height:1.8;
+              font-size:12px;
+            "
+          >
             <strong>Login Method:</strong>
             Secure OTP Verification
           </li>
@@ -203,7 +305,7 @@ async function sendWelcomeEmail(user, bootcamp) {
   </table>
 
   <!-- Button -->
-  <table width="100%" style="margin-top:40px;">
+  <table width="100%" style="margin-top:32px;">
     <tr>
       <td align="center">
 
@@ -214,11 +316,14 @@ async function sendWelcomeEmail(user, bootcamp) {
             background:#ff6600;
             color:#ffffff;
             text-decoration:none;
-            padding:16px 36px;
+            padding:14px 24px;
             border-radius:12px;
             font-weight:bold;
             display:inline-block;
-            font-size:16px;
+            font-size:14px;
+            line-height:1.2;
+            box-sizing:border-box;
+            max-width:100%;
           "
         >
           Access Dashboard
@@ -229,17 +334,37 @@ async function sendWelcomeEmail(user, bootcamp) {
   </table>
 
   <!-- Footer -->
-  <table width="100%" style="margin-top:50px;border-top:1px solid #ececec;">
+  <table 
+    width="100%" 
+    style="
+      margin-top:38px;
+      border-top:1px solid #ececec;
+    "
+  >
     <tr>
-      <td align="center" style="padding-top:25px;">
+      <td align="center" style="padding-top:20px;">
 
-        <p style="margin:0;color:#888;font-size:14px;line-height:1.8;">
+        <p 
+          class="footer-text"
+          style="
+            margin:0;
+            color:#888;
+            font-size:12px;
+            line-height:1.8;
+          "
+        >
           Rixi Lab Bootcamp • Learn. Build. Grow.
         </p>
 
         <a 
           href="https://rixilab.tech"
-          style="color:#ff6600;text-decoration:none;font-size:14px;font-weight:bold;"
+          class="footer-text"
+          style="
+            color:#ff6600;
+            text-decoration:none;
+            font-size:12px;
+            font-weight:bold;
+          "
         >
           www.rixilab.tech
         </a>
@@ -259,6 +384,7 @@ async function sendWelcomeEmail(user, bootcamp) {
 
 </body>
 </html>
+
     `;
     const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
     try {

@@ -223,7 +223,7 @@ async function generateBootcampCertificatePDF(data) {
       doc.font("Montserrat");
       doc.fontSize(15);
       doc.fillColor("black");
-      doc.text(`CERTIFICATE No: ${data.certificate_id}`, 830, 38); // Adjust position as needed
+      doc.text(`CERTIFICATE No: ${data.certificate_id}`, 840,38); // Adjust position as needed
 
       // Name
       doc.font("Allura");

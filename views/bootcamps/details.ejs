@@ -421,7 +421,7 @@
                     <div class="dt-session-header" onclick="this.parentElement.classList.toggle('active')">
                       <div class="dt-session-num"><%= idx + 1 %></div>
                       <div class="dt-session-info">
-                        <div class="dt-session-id"><%= s.session_id %></div>
+                        <div class="dt-session-id"><%= s.session_name %></div>
                         <div class="dt-session-meta">
                           <span class="dt-session-instructor">
                             <i class="bi bi-person-badge-fill"></i> <%= s.instructor %>
@@ -541,7 +541,7 @@
 
         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
           
-          <a href="/login" class="dt-submit-btn no-hover" style="text-decoration: none; display: inline-flex; width: auto; padding: 10px 24px; min-width: 140px; margin: 0 auto;">
+          <a href="/bootcamp-portal/login" class="dt-submit-btn no-hover" style="text-decoration: none; display: inline-flex; width: auto; padding: 10px 24px; min-width: 140px; margin: 0 auto;">
             Go to Login
           </a>
 

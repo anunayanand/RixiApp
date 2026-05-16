@@ -82,13 +82,14 @@ router.post("/send-otp", async (req, res) => {
 
     const subject = `Your Rixi Lab Bootcamp Login OTP`;
     const body = `
-   <!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <style>
+
     body{
       margin:0;
       padding:0;
@@ -112,19 +113,43 @@ router.post("/send-otp", async (req, res) => {
       }
 
       .content{
-        padding:30px 20px !important;
+        padding:24px 16px !important;
       }
 
       .heading{
-        font-size:30px !important;
+        font-size:24px !important;
+        line-height:1.3 !important;
+      }
+
+      .subtext{
+        font-size:13px !important;
+        line-height:1.7 !important;
+      }
+
+      .normal-text{
+        font-size:13px !important;
+        line-height:1.8 !important;
+      }
+
+      .otp-wrapper{
+        width:100% !important;
+      }
+
+      .otp-box{
+        padding:18px 16px !important;
       }
 
       .otp{
-        font-size:34px !important;
-        letter-spacing:6px !important;
+        font-size:28px !important;
+        letter-spacing:4px !important;
+      }
+
+      .footer-text{
+        font-size:11px !important;
       }
 
     }
+
   </style>
 </head>
 
@@ -132,7 +157,7 @@ router.post("/send-otp", async (req, res) => {
 
 <table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
 <tr>
-<td align="center" style="padding:30px 15px;">
+<td align="center" style="padding:24px 12px;">
 
 <table 
   width="600"
@@ -140,15 +165,20 @@ router.post("/send-otp", async (req, res) => {
   cellpadding="0"
   cellspacing="0"
   bgcolor="#ffffff"
-  style="max-width:600px;border-radius:24px;overflow:hidden;border:1px solid #ececec;"
+  style="
+    max-width:600px;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
 >
 
 <tr>
-  <td height="8" bgcolor="#ff6600"></td>
+  <td height="6" bgcolor="#ff6600"></td>
 </tr>
 
 <tr>
-<td class="content" style="padding:50px 40px;">
+<td class="content" style="padding:40px 30px;">
 
   <!-- Logo -->
   <table width="100%">
@@ -156,18 +186,21 @@ router.post("/send-otp", async (req, res) => {
       <td align="center">
 
         <table 
-          width="100"
-          height="100"
+          width="88"
+          height="88"
           cellpadding="0"
           cellspacing="0"
-          style="background:#fff3eb;border-radius:50%;"
+          style="
+            background:#fff3eb;
+            border-radius:50%;
+          "
         >
           <tr>
             <td align="center" valign="middle">
 
               <img 
                 src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
-                width="60"
+                width="52"
                 alt="Rixi Lab"
               />
 
@@ -177,12 +210,26 @@ router.post("/send-otp", async (req, res) => {
 
         <h1 
           class="heading"
-          style="margin:25px 0 0;font-size:42px;line-height:1.2;color:#ff6600;"
+          style="
+            margin:22px 0 0;
+            font-size:32px;
+            line-height:1.25;
+            color:#ff6600;
+            font-weight:bold;
+          "
         >
           Login Verification
         </h1>
 
-        <p style="margin:15px 0 0;color:#777;font-size:17px;line-height:1.7;">
+        <p 
+          class="subtext"
+          style="
+            margin:12px 0 0;
+            color:#777;
+            font-size:12px;
+            line-height:1.7;
+          "
+        >
           Secure OTP verification for your account
         </p>
 
@@ -191,15 +238,30 @@ router.post("/send-otp", async (req, res) => {
   </table>
 
   <!-- Greeting -->
-  <table width="100%" style="margin-top:50px;">
+  <table width="100%" style="margin-top:38px;">
     <tr>
       <td>
 
-        <p style="margin:0;font-size:20px;color:#222;">
+        <p 
+          style="
+            margin:0;
+            font-size:16px;
+            color:#222;
+            font-weight:500;
+          "
+        >
           Hello <strong>${user.name}</strong>,
         </p>
 
-        <p style="margin:25px 0 0;font-size:16px;line-height:1.9;color:#555;">
+        <p 
+          class="normal-text"
+          style="
+            margin:18px 0 0;
+            font-size:12px;
+            line-height:1.9;
+            color:#555;
+          "
+        >
           You requested to log in to your Rixi Lab Bootcamp portal.
           Please use the OTP below to continue securely.
         </p>
@@ -209,43 +271,85 @@ router.post("/send-otp", async (req, res) => {
   </table>
 
   <!-- OTP -->
-  <table width="100%" style="margin-top:40px;">
-    <tr>
-      <td align="center">
+  
+<!-- OTP -->
+<table width="100%" style="margin-top:34px;">
+  <tr>
+    <td align="center">
 
-        <table 
-          cellpadding="0"
-          cellspacing="0"
-          style="background:#fffaf7;border:2px solid #ffd8c2;border-radius:20px;"
-        >
-          <tr>
-            <td style="padding:24px 40px;">
+      <table 
+        class="otp-wrapper"
+        cellpadding="0"
+        cellspacing="0"
+        align="center"
+        style="
+          background:#fffaf7;
+          border:2px solid #ffd8c2;
+          border-radius:18px;
+          margin:0 auto;
+        "
+      >
+        <tr>
+          <td 
+            class="otp-box"
+            align="center"
+            style="
+              padding:22px 34px;
+              text-align:center;
+            "
+          >
 
-              <span 
-                class="otp"
-                style="font-size:50px;font-weight:bold;letter-spacing:12px;color:#ff6600;"
-              >
-                ${otp}
-              </span>
+            <div
+              class="otp"
+              style="
+                font-size:42px;
+                font-weight:bold;
+                letter-spacing:10px;
+                color:#ff6600;
+                line-height:1;
+                text-align:center;
+                display:block;
+                width:100%;
+              "
+            >
+              ${otp}
+            </div>
 
-            </td>
-          </tr>
-        </table>
+          </td>
+        </tr>
+      </table>
 
-      </td>
-    </tr>
-  </table>
+    </td>
+  </tr>
+</table>
+
 
   <!-- Footer -->
-  <table width="100%" style="margin-top:45px;">
+  <table width="100%" style="margin-top:38px;">
     <tr>
       <td align="center">
 
-        <p style="margin:0;color:#666;font-size:15px;line-height:1.8;">
+        <p 
+          class="normal-text"
+          style="
+            margin:0;
+            color:#666;
+            font-size:12px;
+            line-height:1.8;
+          "
+        >
           This OTP is valid for <strong>10 minutes</strong>.
         </p>
 
-        <p style="margin:10px 0 0;color:#999;font-size:14px;line-height:1.8;">
+        <p 
+          class="footer-text"
+          style="
+            margin:10px 0 0;
+            color:#999;
+            font-size:12px;
+            line-height:1.8;
+          "
+        >
           If you did not request this login, please ignore this email.
         </p>
 
@@ -263,8 +367,7 @@ router.post("/send-otp", async (req, res) => {
 </table>
 
 </body>
-</html>
-        `;
+</html> `;
 
     const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
     await gmail.users.messages.send({

@@ -48,7 +48,7 @@ router.get("/verify-bootcamp-certificate/:certificate_id", async (req, res) => {
           name: user.name,
           domain: bootcamp.name,
           starting_date: bootcamp.start_date,
-          completion_date: enrollment.certificate_date || bootcamp.end_date || new Date(),
+          completion_date: bootcamp.end_date,  
         };
 
         req.flash('success_msg', 'Certificate Verified Successfully!');
