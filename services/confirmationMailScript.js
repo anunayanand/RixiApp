@@ -1,17 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
 const { google } = require("googleapis");
 const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
-// ==============================
-// CONFIGURATION
-// ==============================
 const oAuth2Client = new google.auth.OAuth2(
   process.env.PROJECT_INFO_CLIENT_ID,
-  process.env.PROJECT_INFO_CLIENT_SECRET,
-  process.env.PROJECT_INFO_REDIRECT_URI
+  process.env.PROJECT_INFO_CLIENT_SECRET
 );
 
 oAuth2Client.setCredentials({
@@ -23,9 +16,6 @@ const gmail = google.gmail({
   auth: oAuth2Client
 });
 
-// ==============================
-// HELPER: Encode Email for Gmail API
-// ==============================
 function makeBody(to, from, subject, message) {
   const str = [
     "Content-Type: text/html; charset=\"UTF-8\"\n",
@@ -37,21 +27,31 @@ function makeBody(to, from, subject, message) {
     message
   ].join('');
 
-  const encodedMail = Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-  return encodedMail;
+  return Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
 }
 
-// ==============================
-// HELPER: Send Bulk Offer Letter Emails
-// ==============================
-async function sendBulkOfferLetterMails(interns) {
-  const sendPromises = interns.map(async (intern) => {
-    try {
-      const { name, email, intern_id } = intern;
+// 1️⃣ Decide WhatsApp group per batch
+function getWhatsappLinkByBatch(batch_no) {
+  var links = {
+    "2601": "https://chat.whatsapp.com/JFZiP7etplO3rC1w8GzdPM",
+    "2602": "https://chat.whatsapp.com/DaIgkARMuz3BDGRH363QyL",
+    "2603": "https://chat.whatsapp.com/CCUn8H4HvgD7Jqwuy6I3NS?mode=gi_t",
+    "2604": "https://chat.whatsapp.com/ICEsV5PcfirBK7DcJ22ahY?mode=gi_t",
+    "2605": "https://chat.whatsapp.com/KYesxuI7eIT8zzGjyEEYKU?mode=gi_t",
+    "2606": "https://chat.whatsapp.com/FgUkJka0h5lGZ0Y4kjUqay?mode=hqctcla",
+    "2607": "https://chat.whatsapp.com/KJYOikJIlsCCeEwWK9MRqy?mode=gi_t"
+  };
 
-      const subject = `Internship Offer Letter Available, Login to Rixi Lab Portal`;
-      const body = `
-      
+  return links[String(batch_no)] || "";
+}
+
+// 2️⃣ Send confirmation mail for ONE intern
+async function sendConfirmationMail(intern) {
+  var whatsappLink = getWhatsappLinkByBatch(intern.batch_no);
+
+  var subject = "Internship Confirmation - Welcome to Rixi Lab!";
+
+  var htmlBody = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +87,7 @@ img{
   }
 
   .heading{
-    font-size:24px !important;
+    font-size:25px !important;
     line-height:1.3 !important;
   }
 
@@ -180,7 +180,7 @@ img{
     font-weight:bold;
   "
 >
-  Offer Letter Available 
+  Internship Accepted 
 </h1>
 
 <p
@@ -191,7 +191,7 @@ img{
     line-height:1.7;
   "
 >
-  Your internship offer letter is now ready
+  Welcome to the Rixi Lab Internship Program
 </p>
 
 </td>
@@ -211,7 +211,7 @@ img{
     font-weight:500;
   "
 >
-  Dear <strong>${name}</strong>,
+  Dear <strong>${intern.name}</strong>,
 </p>
 
 <p
@@ -223,9 +223,9 @@ img{
     color:#555;
   "
 >
-  We are pleased to inform you that your
-  <strong>Internship Offer Letter</strong>
-  is now available on the official Rixi Lab portal.
+  Congratulations! We are excited to inform you that your
+  application for the internship at
+  <strong>Rixi Lab</strong> has been successfully accepted.
 </p>
 
 <p
@@ -237,14 +237,16 @@ img{
     color:#555;
   "
 >
-  Please use the credentials below to access your dashboard and download your offer letter.
+  We are thrilled to welcome you aboard and look forward to
+  supporting you through this exciting journey of learning,
+  innovation, and growth.
 </p>
 
 </td>
 </tr>
 </table>
 
-<!-- Credentials Card -->
+<!-- Internship Details -->
 <table
   width="100%"
   cellpadding="0"
@@ -267,7 +269,7 @@ img{
     color:#222;
   "
 >
-  Login Credentials
+  Internship Details
 </p>
 
 <table width="100%" style="margin-top:16px;">
@@ -280,9 +282,9 @@ img{
   "
 >
 
-<strong>Email ID:</strong> ${email}<br/>
-<strong>Intern ID:</strong> ${intern_id}<br/>
-<strong>Default Password:</strong> Your Intern ID
+<strong>Start Date:</strong> ${intern.starting_date}<br/>
+<strong>Domain:</strong> ${intern.domain}<br/>
+<strong>Duration:</strong> ${intern.duration} Weeks
 
 </td>
 </tr>
@@ -292,16 +294,16 @@ img{
 </tr>
 </table>
 
-<!-- Instructions -->
+<!-- WhatsApp Section -->
 <table
   width="100%"
   cellpadding="0"
   cellspacing="0"
   style="
     margin-top:24px;
-    background:#fff7f0;
+    background:#f7fff8;
     border-radius:18px;
-    border:1px solid #ffe0c7;
+    border:1px solid #cdeed4;
   "
 >
 <tr>
@@ -312,46 +314,35 @@ img{
     margin:0;
     font-size:13px;
     font-weight:bold;
-    color:#ff6600;
+    color:#16a34a;
   "
 >
-  How to Access Your Offer Letter
+ Next Step
 </p>
 
-<table width="100%" style="margin-top:16px;">
-<tr>
-<td
+<p
+  class="normal-text"
   style="
+    margin:14px 0 0;
     font-size:13px;
+    line-height:1.9;
     color:#555;
-    line-height:2;
   "
 >
+  To receive important announcements, internship updates,
+  resources, and communication, please join our official
+  internship WhatsApp group.
+</p>
 
-1. Visit the Rixi Lab website<br/>
-2. Navigate to the Login page<br/>
-3. Login using your registered email ID<br/>
-4. Use your Intern ID as the default password<br/>
-5. Download your Offer Letter from the dashboard
-
-</td>
-</tr>
-</table>
-
-</td>
-</tr>
-</table>
-
-<!-- Button -->
-<table width="100%" style="margin-top:34px;">
+<table width="100%" style="margin-top:22px;">
 <tr>
 <td align="center">
 
 <a
-  href="https://rixilab.tech"
+  href="${whatsappLink}"
   class="button"
   style="
-    background:#ff6600;
+    background:#22c55e;
     color:#ffffff;
     text-decoration:none;
     padding:14px 28px;
@@ -361,14 +352,32 @@ img{
     font-size:14px;
   "
 >
-  Login & Download Offer Letter
+  Join WhatsApp Group
 </a>
 
 </td>
 </tr>
 </table>
 
-<!-- Extra Info -->
+<p
+  class="normal-text"
+  style="
+    margin:20px 0 0;
+    font-size:12px;
+    line-height:1.8;
+    color:#666;
+  "
+>
+  <strong>Important:</strong>
+  Please join the group using your registered mobile number
+  to help us verify your identity and provide smooth communication.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- Appreciation -->
 <table width="100%" style="margin-top:30px;">
 <tr>
 <td>
@@ -382,20 +391,19 @@ img{
     color:#555;
   "
 >
-  Once logged in, we recommend changing your password for better security.
+  We are excited to have you as part of the Rixi Lab community.
+  Get ready to collaborate, learn new skills, and work on impactful projects.
 </p>
 
 <p
-  class="normal-text"
   style="
-    margin:16px 0 0;
-    font-size:13px;
-    line-height:1.9;
-    color:#555;
+    margin:18px 0 0;
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
   "
 >
-  If you face any difficulties accessing your account,
-  feel free to reach out to our support team on WhatsApp.
+  Best wishes for your internship journey 
 </p>
 
 </td>
@@ -425,9 +433,13 @@ img{
   Rixi Lab • Rethink Innovate eXecute Inspire
 </p>
 
+<!-- Social Icons -->
 <p style="margin:18px 0 0;">
 
-<a href="https://www.instagram.com/rixilab.in" style="display:inline-block;margin:0 6px;">
+<a
+  href="https://www.instagram.com/rixilab.in"
+  style="display:inline-block;margin:0 6px;"
+>
   <img
     src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
     width="24"
@@ -435,7 +447,10 @@ img{
   />
 </a>
 
-<a href="https://www.linkedin.com/company/rixilab" style="display:inline-block;margin:0 6px;">
+<a
+  href="https://www.linkedin.com/company/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
   <img
     src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
     width="24"
@@ -443,7 +458,10 @@ img{
   />
 </a>
 
-<a href="https://www.facebook.com/rixilab" style="display:inline-block;margin:0 6px;">
+<a
+  href="https://www.facebook.com/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
   <img
     src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
     width="24"
@@ -451,7 +469,10 @@ img{
   />
 </a>
 
-<a href="https://www.youtube.com/@RixiLab" style="display:inline-block;margin:0 6px;">
+<a
+  href="https://www.youtube.com/@RixiLab"
+  style="display:inline-block;margin:0 6px;"
+>
   <img
     src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
     width="24"
@@ -488,81 +509,16 @@ img{
 
 </body>
 </html>
-      `;
 
-      const encodedMail = makeBody(email, process.env.PROJECT_INFO_EMAIL, subject, body);
-      await gmail.users.messages.send({
-        userId: 'me',
-        resource: {
-          raw: encodedMail
-        }
-      });
+`;
 
-      await User.findOneAndUpdate({ intern_id }, { offer_letter_sent: true });
-
-      // console.log(`✅ Offer Letter sent to ${email}`);
-      return { status: "fulfilled", email, intern_id };
-    } catch (err) {
-      // console.error(`❌ Offer Letter failed for ${intern.email}:`, err.message);
-      return { status: "rejected", email: intern.email, intern_id: intern.intern_id, reason: err.message };
+  const encodedMail = makeBody(intern.email, process.env.PROJECT_INFO_EMAIL, subject, htmlBody);
+  return gmail.users.messages.send({
+    userId: 'me',
+    resource: {
+      raw: encodedMail
     }
   });
-
-  return Promise.all(sendPromises);
 }
 
-// ==============================
-// ROUTE: Send Offer Letter Mail
-// ==============================
-router.post("/send-offerletter-mail", async (req, res) => {
-  try {
-    // console.log("Offer letter mail route called with body:", req.body);
-    const { interns } = req.body;
-
-    // Normalize interns to array
-    const internIds = interns
-      ? Array.isArray(interns)
-        ? interns
-        : [interns]
-      : [];
-
-    // Validation: interns must be selected
-    if (!internIds.length) {
-      return res.status(400).json({ success: false, message: "No interns selected for offer letter mail." });
-    }
-
-    // Fetch selected interns from DB
-    const matchedInterns = await User.find({ intern_id: { $in: internIds } });
-
-    if (!matchedInterns.length) {
-      return res.status(404).json({ success: false, message: "No matching interns found in the database." });
-    }
-
-    // Send emails
-    const results = await sendBulkOfferLetterMails(matchedInterns);
-
-    // Update DB for all successful sends
-    const successfulInternIds = results
-      .filter(r => r.status === "fulfilled")
-      .map(r => r.intern_id);
-
-    if (successfulInternIds.length > 0) {
-      const updateResult = await User.updateMany(
-        { intern_id: { $in: successfulInternIds } },
-        { $set: { offer_letter_sent: true } }
-      );
-      // console.log("DB update result:", updateResult);
-    }
-
-    // Flash messages
-    const successCount = results.filter(r => r.status === "fulfilled").length;
-    const failedCount = results.filter(r => r.status === "rejected").length;
-    // console.log(`Success: ${successCount}, Failed: ${failedCount}`);
-    res.json({ success: true, sent: successCount, failed: failedCount });
-  } catch (err) {
-    // console.error("Error in offer letter route:", err);
-    res.status(500).json({ success: false, message: "Server error while sending offer letters." });
-  }
-});
-
-module.exports = router;
+module.exports = { sendConfirmationMail };

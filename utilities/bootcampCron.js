@@ -2,17 +2,18 @@ const cron = require("node-cron");
 const Bootcamp = require("../models/Bootcamp");
 const BootcampUser = require("../models/BootcampUser");
 const { google } = require("googleapis");
-const BASE_URL = process.env.BASE_URL;
+const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
 // GMAIL CONFIGURATION
 // ==============================
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI,
+  process.env.OTP_CLIENT_ID,
+  process.env.OTP_CLIENT_SECRET,
+  process.env.OTP_REDIRECT_URI,
 );
-oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+oAuth2Client.setCredentials({ refresh_token: process.env.OTP_REFRESH_TOKEN });
 const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
 function makeBody(to, from, subject, message) {
@@ -481,7 +482,7 @@ cron.schedule("* * * * *", async () => {
             line-height:1.8;
           "
         >
-          © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+          © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
         </p>
 
       </td>
@@ -504,7 +505,7 @@ cron.schedule("* * * * *", async () => {
 
               const encodedMail = makeBody(
                 user.email,
-                process.env.EMAIL,
+                process.env.OTP_EMAIL,
                 subject,
                 body,
               );

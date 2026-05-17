@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { google } = require("googleapis");
-const BASE_URL=process.env.BASE_URL;
+const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const BASE_URL = rawUrl.replace('https://', 'www.');
+
 // ==============================
 // CONFIGURATION
 // ==============================
@@ -314,7 +316,7 @@ img{
     color:#ff6600;
   "
 >
-  🎁 Exclusive Reward
+  Exclusive Reward
 </p>
 
 <p
@@ -529,11 +531,11 @@ img{
 // ==============================
 router.post("/send-completion-mail", async (req, res) => {
   try {
-    console.log("🔍 [DEBUG] Completion mail route called");
-    console.log("🔍 [DEBUG] Request body:", req.body);
+    // console.log("🔍 [DEBUG] Completion mail route called");
+    // console.log("🔍 [DEBUG] Request body:", req.body);
     
     const { interns } = req.body; // array of intern_id
-    console.log("🔍 [DEBUG] Interns to send completion mail:", interns);
+    // console.log("🔍 [DEBUG] Interns to send completion mail:", interns);
 
     // Normalize interns to array
     const internIds = interns
@@ -567,17 +569,17 @@ router.post("/send-completion-mail", async (req, res) => {
         { intern_id: { $in: successfulInternIds } },
         { $set: { completionSent: true } }
       );
-      console.log("🔍 [DEBUG] DB update result:", updateResult);
+      // console.log("🔍 [DEBUG] DB update result:", updateResult);
     }
 
     // Flash messages
     const successCount = results.filter(r => r.status === "fulfilled").length;
     const failedCount = results.filter(r => r.status === "rejected").length;
-    console.log("🔍 [DEBUG] Email send results:", { successCount, failedCount, results });
+    // console.log("🔍 [DEBUG] Email send results:", { successCount, failedCount, results });
     
     res.json({ success: true, sent: successCount, failed: failedCount });
   } catch (err) {
-    console.error("🔍 [DEBUG] Error in completion route:", err);
+    // console.error("🔍 [DEBUG] Error in completion route:", err);
     res.status(500).json({ success: false, message: "Server error while sending completion mails." });
   }
 });

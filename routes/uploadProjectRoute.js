@@ -6,7 +6,7 @@ const Admin = require("../models/Admin");
 const SuperAdmin = require("../models/SuperAdmin");
 const authRole = require('../middleware/authRole');
 const { notify } = require("../services/notificationService");
-
+const { sendProjectAssignedMail } = require("../services/projectAssignedMail");
 router.post("/admin/projects", authRole("admin"), async (req, res) => {
   try {
     const adminId = req.session.user;
@@ -51,6 +51,12 @@ router.post("/admin/projects", authRole("admin"), async (req, res) => {
         status: "pending"
       });
       await intern.save();
+
+      try {
+        await sendProjectAssignedMail(intern, newProject);
+      } catch (mailErr) {
+        console.error(`Failed to send project assigned mail to ${intern.email}:`, mailErr);
+      }
 
       notificationPayloads.push({
         recipientId: intern._id,

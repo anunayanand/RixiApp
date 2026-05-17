@@ -4,7 +4,7 @@ const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const axios = require('axios');            
 const User = require("../models/User");
-const SCRIPT_URL = process.env.OTP_SCRIPT_URL;
+const {sendResetPasswordMail} = require("../services/resetPasswordMail");
 
 const otpLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
@@ -29,12 +29,6 @@ router.post("/send-otp", otpLimiter, async (req, res) => {
     return res.status(400).json({ success: false, msg: "All fields are required", flash: req.flash("error") });
   }
 
-  if (!SCRIPT_URL) {
-    // console.error("Missing SCRIPT_URL env var!");
-    req.flash("error", "Server error: Missing SCRIPT_URL");
-    return res.status(500).json({ success: false, msg: "Server misconfiguration", flash: req.flash("error") });
-  }
-
   try {
     const user = await User.findOne({ intern_id, email });
 
@@ -51,7 +45,7 @@ router.post("/send-otp", otpLimiter, async (req, res) => {
 
     // console.log("Generated OTP:", otp);
 
-    await axios.post(SCRIPT_URL, { email, otp });
+    await sendResetPasswordMail(user, otp);
 
     req.flash("success", "OTP sent successfully!");
     return res.json({ success: true, msg: "OTP sent successfully", flash: req.flash("success") });

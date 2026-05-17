@@ -9,6 +9,9 @@ const cloudinary = require("cloudinary").v2;
 const { google } = require("googleapis");
 const mongoose = require("mongoose");
 
+const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const BASE_URL = rawUrl.replace('https://', 'www.');
+
 // ==============================
 // GMAIL API CONFIGURATION
 // ==============================

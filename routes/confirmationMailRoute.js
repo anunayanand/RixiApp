@@ -8,13 +8,13 @@ const BASE_URL=process.env.BASE_URL;
 // CONFIGURATION
 // ==============================
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI
+  process.env.PROJECT_INFO_CLIENT_ID,
+  process.env.PROJECT_INFO_CLIENT_SECRET,
+  process.env.PROJECT_INFO_REDIRECT_URI
 );
 
 oAuth2Client.setCredentials({
-  refresh_token: process.env.REFRESH_TOKEN
+  refresh_token: process.env.PROJECT_INFO_REFRESH_TOKEN
 });
 
 const gmail = google.gmail({
@@ -313,7 +313,7 @@ img{
     color:#16a34a;
   "
 >
-  📲 Next Step
+  Next Step
 </p>
 
 <p
@@ -398,7 +398,7 @@ img{
     color:#222;
   "
 >
-  Best wishes for your internship journey 🚀
+  Best wishes for your internship journey 
 </p>
 
 </td>
@@ -493,7 +493,7 @@ img{
 </html>
       `;
 
-      const encodedMail = makeBody(email, process.env.EMAIL, subject, body);
+      const encodedMail = makeBody(email, process.env.PROJECT_INFO_EMAIL, subject, body);
       await gmail.users.messages.send({
         userId: 'me',
         resource: {

@@ -4,16 +4,18 @@ const { google } = require("googleapis");
 const BootcampUser = require("../models/BootcampUser");
 const Bootcamp = require("../models/Bootcamp");
 
-const BASE_URL=process.env.BASE_URL;
+const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const BASE_URL = rawUrl.replace('https://', 'www.');
+
 // ==============================
 // GMAIL API CONFIGURATION
 // ==============================
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI,
+  process.env.OTP_CLIENT_ID,
+  process.env.OTP_CLIENT_SECRET,
+  process.env.OTP_REDIRECT_URI,
 );
-oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+oAuth2Client.setCredentials({ refresh_token: process.env.OTP_REFRESH_TOKEN });
 const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
 function makeBody(to, from, subject, message) {
@@ -457,7 +459,7 @@ img{
 </html>
  `;
 
-    const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
+    const encodedMail = makeBody(user.email, process.env.OTP_EMAIL, subject, body);
     await gmail.users.messages.send({
       userId: "me",
       resource: { raw: encodedMail },

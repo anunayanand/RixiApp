@@ -12,7 +12,7 @@ const bcrypt = require("bcrypt");
 const axios = require("axios");
 const { notify } = require("../services/notificationService");
 const Notification = require("../models/Notification");
-const GOOGLE_SCRIPT_URL = process.env.CNF_MAIL_SCRIPT_URL;
+const { sendConfirmationMail } = require("../services/confirmationMailScript");
 // Function to split intern_id into parts
 const startingDate = {
   2601: "2026-01-01T00:00:00.000+00:00",
@@ -259,33 +259,16 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
 
       return `${day}${getOrdinal(day)} ${month} ${year}`;
     }
-    //  console.log('Sending email with data:', {
-    //   intern_id: intern_id,
-    //   name: registration.name,
-    //   email: registration.email,
-    //   domain: registration.domain,
-    //   duration: registration.duration,
-    //   batch_no: batch_no,
-    //   starting_date: formatDateWithOrdinal(startDate),
-    // });
     try {
-      await axios.post(
-        GOOGLE_SCRIPT_URL,
-        {
-          intern_id: intern_id,
-          name: registration.name,
-          email: registration.email,
-          domain: registration.domain,
-          duration: registration.duration,
-          batch_no: batch_no,
-          starting_date: formatDateWithOrdinal(startDate),
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      await sendConfirmationMail({
+        intern_id: intern_id,
+        name: registration.name,
+        email: registration.email,
+        domain: registration.domain,
+        duration: registration.duration,
+        batch_no: batch_no,
+        starting_date: formatDateWithOrdinal(startDate),
+      });
       await User.findByIdAndUpdate(newUser._id, { confirmationSent: true });
     } catch (mailError) {
       console.error("Email failed:", mailError.message);

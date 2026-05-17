@@ -4,7 +4,8 @@ const axios = require('axios');
 const { google } = require('googleapis');
 const Bootcamp = require('../models/Bootcamp');
 const BootcampUser = require('../models/BootcampUser');
-const BASE_URL=process.env.BASE_URL;
+const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const BASE_URL = rawUrl.replace('https://', 'www.');
 // ==============================
 // CONFIGURATION
 // ==============================
@@ -13,11 +14,11 @@ const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
 
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI
+  process.env.PROJECT_INFO_CLIENT_ID,
+  process.env.PROJECT_INFO_CLIENT_SECRET,
+  process.env.PROJECT_INFO_REDIRECT_URI
 );
-oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+oAuth2Client.setCredentials({ refresh_token: process.env.PROJECT_INFO_REFRESH_TOKEN });
 const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
 function makeBody(to, from, subject, message) {
@@ -435,7 +436,7 @@ img{
 </html>
 
     `;
-    const encodedMail = makeBody(user.email, process.env.EMAIL, subject, body);
+    const encodedMail = makeBody(user.email, process.env.PROJECT_INFO_EMAIL, subject, body);
     try {
         await gmail.users.messages.send({ userId: 'me', resource: { raw: encodedMail } });
     } catch (err) {
