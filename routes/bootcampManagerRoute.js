@@ -863,6 +863,28 @@ router.post("/bootcamp/:id/toggle-publish", async (req, res) => {
   }
 });
 
+// ── Close / Reopen Registration Toggle ──
+router.post("/bootcamp/:id/toggle-close", async (req, res) => {
+  try {
+    const bootcamp = await Bootcamp.findById(req.params.id);
+    if (!bootcamp) {
+      req.flash("error", "Bootcamp not found");
+      return res.redirect("/bootcampManager");
+    }
+    bootcamp.status = bootcamp.status === "closed" ? "draft" : "closed";
+    await bootcamp.save();
+    req.flash(
+      "success",
+      `Bootcamp registration is now ${bootcamp.status === "closed" ? "Closed" : "Reopened (Draft)"}`,
+    );
+    res.redirect("/bootcampManager/manage");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Error toggling close status");
+    res.redirect("/bootcampManager");
+  }
+});
+
 // ── Edit Bootcamp – Render Form ──
 router.get("/edit/:id", async (req, res) => {
   try {

@@ -450,7 +450,7 @@ img{
 // Public Bootcamp Listings
 router.get('/', async (req, res) => {
     try {
-        const bootcamps = await Bootcamp.find({ status: 'live' });
+        const bootcamps = await Bootcamp.find({ status: { $in: ['live', 'closed'] } });
         res.render('bootcamps/list', { bootcamps, messages: req.flash() });
     } catch (err) {
         console.error(err);
@@ -463,7 +463,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const bootcamp = await Bootcamp.findById(req.params.id);
-        if (!bootcamp || bootcamp.status !== 'live') {
+        if (!bootcamp || (bootcamp.status !== 'live' && bootcamp.status !== 'closed')) {
             req.flash('error', 'Bootcamp not found or expired');
             return res.redirect('/bootcamps');
         }
@@ -480,8 +480,8 @@ router.post('/register/:id', async (req, res) => {
     try {
         const bootcamp = await Bootcamp.findById(req.params.id);
         if (!bootcamp || bootcamp.status !== 'live') {
-            req.flash('error', 'Bootcamp not available.');
-            return res.redirect('/bootcamps');
+            req.flash('error', bootcamp && bootcamp.status === 'closed' ? 'Registration for this bootcamp is closed.' : 'Bootcamp not available.');
+            return res.redirect(bootcamp ? `/bootcamps/${bootcamp._id}` : '/bootcamps');
         }
 
         const { name, email, phone } = req.body;

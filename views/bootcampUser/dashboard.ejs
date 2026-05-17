@@ -112,6 +112,7 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       line-height: 1.55;
+      margin-bottom: 0;
     }
 
     .bc-progress-wrap {
@@ -504,7 +505,7 @@
                           </div>
                           <div class="bc-footer">
                             <i class="bi bi-calendar-event"></i>
-                            <%= new Date(eb.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
+                            <%= new Date(bc.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
                               <span class="ms-auto" style="color:var(--primary);font-weight:600;font-size:0.78rem;">View
                                 Details →</span>
                           </div>

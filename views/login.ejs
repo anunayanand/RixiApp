@@ -67,22 +67,40 @@
       <!-- Contact Section -->
       <section id="contact" class="contact section ">
         <!-- Section Title -->
-        <div class="container  section-title" data-aos="fade-up">
-          <h2>Student Login</h2>
+        <div class="container  section-title" data-aos="fade-up" style="padding-bottom: 30px;">
+          <h2 id="login-title">Intern Login</h2>
           <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
         </div><!-- End Section Title -->
+
+        <!-- Login Type Toggle -->
+        <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
+          <div class="login-tab-switcher">
+            <button class="login-tab active" id="tab-intern" onclick="switchTab('intern')">
+              <i class="bi bi-person-badge"></i> Intern
+            </button>
+            <button class="login-tab" id="tab-ambassador" onclick="switchTab('ambassador')">
+              <i class="bi bi-star"></i> Ambassador
+            </button>
+            <!-- <button class="login-tab" id="tab-bootcamp" onclick="switchTab('bootcamp')"> -->
+            <a class="login-tab" id="tab-bootcamp" href="/bootcamp-portal/login">
+              <i class="bi bi-laptop"></i> Bootcamp
+            </a>
+          </div>
+        </div>
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="row d-flex justify-content-center">
 
-
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
               <div class="contact-form-wrapper">
                 <div class="form-header">
-                  <h3>Login With Your Email & Password</h3>
+                  <h3 id="formTitle">Login With Your Email & Password</h3>
+                  <!-- <p id="formSubtitle" class="form-subtitle">Intern Portal</p> -->
                 </div>
 
+                <!-- Intern / Ambassador Form -->
                 <form id="loginForm" class="php-email-form needs-validation" action="/login" method="POST" novalidate>
+                  <input type="hidden" name="loginType" id="loginTypeInput" value="intern">
 
                   <div class="mb-3">
                     <label for="contactEmail" class="form-label">Email Address</label>
@@ -91,18 +109,15 @@
                   </div>
                   <div class="mb-3">
                     <label for="InternID" class="form-label">Password</label>
-
                     <div class="position-relative">
                       <input type="password" name="password" class="form-control pe-5" id="InternID"
                         placeholder="Password" required>
-
                       <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3" id="toggleIcon"
                         style="cursor: pointer;" onclick="togglePassword()"></i>
                     </div>
                   </div>
                   <div class="mb-3">
                     <label for="captchaInput" class="form-label">Enter the captcha below:</label>
-
                     <div id="captcha-container" class="mb-2"
                       style="display:flex; align-items:center; justify-content:center;">
                       <div id="captcha-text" class="form-control text-center fw-bold"
@@ -113,12 +128,8 @@
                         style="background:none; border:none; margin-left:5px;margin-right: 5px; font-size:22px; color:#ff6600; cursor:pointer;">↻</button>
                       <input type="text" id="captchaInput" name="captchaInput" class="form-control"
                         placeholder="Enter captcha here" required>
-
                     </div>
-
                   </div>
-
-
 
                   <div class="mb-2 text-center" id="errorMsg"></div>
 
@@ -131,13 +142,83 @@
                       Forgot Password? Click to Reset
                     </a>
                   </div>
-                  <!-- <p class="text-center" style="color: #ff6600;"><a href="/forgot-password" style="text-decoration: none;">Forgot Password?</a> </p> -->
                 </form>
+
+                <!-- Bootcamp Panel -->
+                <div id="bootcampPanel" style="display:none;" class="text-center py-3">
+                  <div class="bootcamp-login-icon mb-3">
+                    <i class="bi bi-laptop" style="font-size:3rem; color:#ff6600;"></i>
+                  </div>
+                  <p class="mb-1" style="color:#ccc; font-size:0.95rem;">Access your bootcamp portal with OTP verification.</p>
+                  <p class="mb-4" style="color:#888; font-size:0.82rem;">You'll receive a one-time password on your registered email.</p>
+                  <a href="/bootcamp-portal/login" class="submit-btn d-inline-block text-decoration-none" style="min-width:220px;">
+                    <span>Go to Bootcamp Portal</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
 
               </div>
             </div>
           </div>
         </div>
+
+        <style>
+          .login-tab-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,102,0,0.25);
+            border-radius: 50px;
+            padding: 5px;
+            max-width: 380px;
+            margin: 0 auto;
+          }
+          .login-tab {
+            flex: 1;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 50px;
+            background: transparent;
+            color: #aaa;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.03em;
+          }
+          .login-tab i {
+            margin-right: 5px;
+          }
+          .login-tab.active {
+            background: linear-gradient(135deg, #ff6600, #ff8c00);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(255,102,0,0.4);
+          }
+          .login-tab:hover:not(.active) {
+            color: #ff6600;
+            background: rgba(255,102,0,0.08);
+          }
+          .form-subtitle {
+            color: #ff6600;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 4px 0 0;
+            font-weight: 600;
+          }
+          .bootcamp-login-icon {
+            animation: pulse-icon 2s ease-in-out infinite;
+          }
+          @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.85; }
+          }
+          #loginForm, #bootcampPanel {
+            transition: opacity 0.3s ease;
+          }
+        </style>
       </section><!-- /Contact Section -->
 
     </main>
@@ -196,6 +277,37 @@
         captchaText.addEventListener("contextmenu", e => e.preventDefault());
         captchaText.addEventListener("copy", e => e.preventDefault());
         captchaText.style.userSelect = "none";
+      </script>
+      <script>
+        function switchTab(type) {
+          // Update tab buttons
+          document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+          document.getElementById('tab-' + type).classList.add('active');
+
+          const loginForm    = document.getElementById('loginForm');
+          const bootcampPanel = document.getElementById('bootcampPanel');
+          const formTitle    = document.getElementById('formTitle');
+          const loginTitle = document.getElementById('login-title');
+          const loginTypeInput = document.getElementById('loginTypeInput');
+
+          if (type === 'bootcamp') {
+            loginForm.style.display    = 'none';
+            bootcampPanel.style.display = 'block';
+            formTitle.textContent    = 'Bootcamp Portal Login';
+            loginTitle.innerText = 'Bootcamp  Login';
+          } else {
+            loginForm.style.display    = 'block';
+            bootcampPanel.style.display = 'none';
+            loginTypeInput.value = type;
+            if (type === 'intern') {
+              formTitle.textContent    = 'Login With Your Email & Password';
+              loginTitle.innerText = 'Intern Login';
+            } else {
+              formTitle.textContent    = 'Login With Your Email & Password';
+              loginTitle.innerText = 'Ambassador Login';
+            }
+          }
+        }
       </script>
       <script>
         function togglePassword() {

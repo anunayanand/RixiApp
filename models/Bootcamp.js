@@ -28,7 +28,7 @@ const bootcampSchema = new mongoose.Schema({
       ref: "BootcampUser"
     }
   ],
-  status: { type: String, enum: ['draft', 'live', 'expired'], default: 'draft' },
+  status: { type: String, enum: ['draft', 'live', 'expired', 'closed'], default: 'draft' },
   start_date: { type: Date }, // IST
   end_date: { type: Date },   // IST
   creationDate: { type: Date, default: Date.now } // IST

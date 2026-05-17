@@ -99,6 +99,92 @@
     }
     .dt-chip i { font-size: 0.8rem; }
 
+    /* ── Share Button & Popover ── */
+    .dt-share-btn {
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #fff;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .dt-share-btn:hover {
+      background: rgba(255,255,255,0.32);
+      border-color: rgba(255,255,255,0.55);
+    }
+    .dt-share-popover {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 0;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+      padding: 1rem 1.1rem 0.8rem;
+      min-width: 210px;
+      z-index: 200;
+      animation: popIn .2s cubic-bezier(.4,0,.2,1);
+    }
+    .dt-share-popover.show { display: block; }
+    @keyframes popIn {
+      from { opacity:0; transform: translateY(8px) scale(.97); }
+      to   { opacity:1; transform: translateY(0)  scale(1); }
+    }
+    .dt-share-popover-arrow {
+      position: absolute;
+      bottom: -7px;
+      left: 22px;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
+    }
+    .dt-share-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin: 0 0 0.7rem;
+    }
+    .dt-share-options {
+      display: flex;
+      gap: 8px;
+    }
+    .dt-share-opt {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: #f8f9fc;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .18s, border-color .18s, color .18s;
+    }
+    .dt-share-opt i { font-size: 1.15rem; }
+    .dt-share-opt:hover { background: rgba(255,102,0,.08); border-color: rgba(255,102,0,.3); color: #ff6600; }
+    #whatsappShare:hover { background: rgba(37,211,102,.08); border-color: rgba(37,211,102,.35); color: #25d366; }
+    #twitterShare:hover  { background: rgba(0,0,0,.06);      border-color: rgba(0,0,0,.2);       color: #000; }
+    .dt-copy-feedback {
+      display: none;
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #10b981;
+      text-align: center;
+    }
+
     /* ── Layout ── */
     .dt-body { padding: 2.5rem 0 5rem; }
 
@@ -378,7 +464,7 @@
             <i class="bi bi-arrow-left"></i> All Bootcamps
           </a>
           <h1 class="dt-hero-title"><%= bootcamp.name %></h1>
-          <div class="dt-hero-chips">
+          <div class="dt-hero-chips" style="position:relative;">
             <span class="dt-chip"><i class="bi bi-people-fill"></i> <%= bootcamp.usersEnrolled.length %> Enrolled</span>
             <span class="dt-chip"><i class="bi bi-camera-video-fill"></i> <%= bootcamp.sessions.length %> Sessions</span>
             <% if (bootcamp.isPaid) { %>
@@ -386,6 +472,30 @@
             <% } else { %>
               <span class="dt-chip"><i class="bi bi-lightning-charge-fill"></i> FREE</span>
             <% } %>
+            <!-- Share Button -->
+            <button class="dt-chip dt-share-btn" id="shareBtn" title="Share this bootcamp">
+              <i class="bi bi-share-fill"></i> Share
+            </button>
+            <!-- Share Popover -->
+            <div class="dt-share-popover" id="sharePopover">
+              <div class="dt-share-popover-arrow"></div>
+              <p class="dt-share-title">Share this Bootcamp</p>
+              <div class="dt-share-options">
+                <button class="dt-share-opt" id="copyLinkBtn" title="Copy link">
+                  <i class="bi bi-link-45deg"></i>
+                  <span>Copy Link</span>
+                </button>
+                <a class="dt-share-opt" id="whatsappShare" href="#" target="_blank" rel="noopener" title="Share on WhatsApp">
+                  <i class="bi bi-whatsapp"></i>
+                  <span>WhatsApp</span>
+                </a>
+                <a class="dt-share-opt" id="twitterShare" href="#" target="_blank" rel="noopener" title="Share on X/Twitter">
+                  <i class="bi bi-twitter-x"></i>
+                  <span>X / Twitter</span>
+                </a>
+              </div>
+              <div class="dt-copy-feedback" id="copyFeedback">Link copied!</div>
+            </div>
           </div>
         </div>
       </div>
@@ -457,50 +567,70 @@
             <div class="dt-register-wrap animate-up" style="animation-delay:0.08s">
               <div class="dt-register-card">
 
-                <!-- Header -->
-                <div class="dt-register-header">
-                  <h4>Ready to Start?</h4>
-                  <p>Secure your spot in this bootcamp</p>
-                  <% if (bootcamp.isPaid) { %>
-                    <span class="dt-price"><small><i class="bi bi-currency-rupee"></i></small><%= bootcamp.payment.amount %></span>
-                  <% } else { %>
-                    <span class="dt-price">FREE</span>
-                  <% } %>
-                </div>
-
-                <!-- Form -->
-                <div class="dt-register-body">
-                  <form action="/bootcamps/register/<%= bootcamp._id %>" method="POST">
-
-                    <div class="mb-3">
-                      <label class="dt-form-label">Full Name</label>
-                      <input type="text" name="name" class="dt-form-input" required placeholder="John Doe">
+                <% if (bootcamp.status === 'closed') { %>
+                  <!-- Closed State -->
+                  <div class="dt-register-header" style="background: linear-gradient(135deg, #475569 0%, #64748b 100%);">
+                    <h4><i class="bi bi-lock-fill me-2"></i>Registration Closed</h4>
+                    <p>This bootcamp is no longer accepting registrations</p>
+                  </div>
+                  <div class="dt-register-body" style="text-align:center; padding: 2rem 1.8rem;">
+                    <div style="width:64px;height:64px;background:rgba(100,116,139,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#64748b;margin:0 auto 1.2rem;">
+                      <i class="bi bi-lock-fill"></i>
                     </div>
+                    <p style="font-size:0.92rem;color:var(--text);line-height:1.7;margin-bottom:1.2rem;">
+                      Registrations for <strong><%= bootcamp.name %></strong> are currently closed. Check back later or explore other bootcamps.
+                    </p>
+                    <a href="/bootcamps" class="dt-submit-btn" style="background:linear-gradient(135deg,#475569,#64748b);text-decoration:none;">
+                      <i class="bi bi-arrow-left"></i> Browse Bootcamps
+                    </a>
+                  </div>
 
-                    <div class="mb-3">
-                      <label class="dt-form-label">Email Address</label>
-                      <input type="email" name="email" class="dt-form-input" required placeholder="john@example.com">
-                    </div>
+                <% } else { %>
+                  <!-- Header -->
+                  <div class="dt-register-header">
+                    <h4>Ready to Start?</h4>
+                    <p>Secure your spot in this bootcamp</p>
+                    <% if (bootcamp.isPaid) { %>
+                      <span class="dt-price"><small><i class="bi bi-currency-rupee"></i></small><%= bootcamp.payment.amount %></span>
+                    <% } else { %>
+                      <span class="dt-price">FREE</span>
+                    <% } %>
+                  </div>
 
-                    <div class="mb-4">
-                      <label class="dt-form-label">Phone Number</label>
-                      <input type="text" name="phone" class="dt-form-input" required placeholder="+91 98765 43210">
-                    </div>
+                  <!-- Form -->
+                  <div class="dt-register-body">
+                    <form action="/bootcamps/register/<%= bootcamp._id %>" method="POST">
 
-                    <button type="submit" class="dt-submit-btn">
-                      <% if (bootcamp.isPaid) { %>
-                        <i class="bi bi-shield-lock-fill"></i> Proceed to Pay
-                      <% } else { %>
-                        <i class="bi bi-rocket-takeoff-fill"></i> Register Now — Free
-                      <% } %>
-                    </button>
+                      <div class="mb-3">
+                        <label class="dt-form-label">Full Name</label>
+                        <input type="text" name="name" class="dt-form-input" required placeholder="John Doe">
+                      </div>
 
-                    <div class="dt-trust">
-                      <i class="bi bi-shield-check"></i>
-                      Secure &amp; encrypted registration
-                    </div>
-                  </form>
-                </div>
+                      <div class="mb-3">
+                        <label class="dt-form-label">Email Address</label>
+                        <input type="email" name="email" class="dt-form-input" required placeholder="john@example.com">
+                      </div>
+
+                      <div class="mb-4">
+                        <label class="dt-form-label">Phone Number</label>
+                        <input type="text" name="phone" class="dt-form-input" required placeholder="+91 98765 43210">
+                      </div>
+
+                      <button type="submit" class="dt-submit-btn">
+                        <% if (bootcamp.isPaid) { %>
+                          <i class="bi bi-shield-lock-fill"></i> Proceed to Pay
+                        <% } else { %>
+                          <i class="bi bi-rocket-takeoff-fill"></i> Register Now — Free
+                        <% } %>
+                      </button>
+
+                      <div class="dt-trust">
+                        <i class="bi bi-shield-check"></i>
+                        Secure &amp; encrypted registration
+                      </div>
+                    </form>
+                  </div>
+                <% } %>
 
               </div>
             </div>
@@ -571,15 +701,77 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // ── Registration modal ──
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('registered') === 'true') {
         const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
         confirmationModal.show();
-        
-        // Remove the query parameter from URL so it doesn't show again on refresh
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
       }
+
+      // ── Share button ──
+      const shareBtn    = document.getElementById('shareBtn');
+      const sharePopover = document.getElementById('sharePopover');
+      const copyLinkBtn = document.getElementById('copyLinkBtn');
+      const copyFeedback = document.getElementById('copyFeedback');
+      const whatsappShare = document.getElementById('whatsappShare');
+      const twitterShare  = document.getElementById('twitterShare');
+
+      const pageUrl   = window.location.href;
+      const pageTitle = '<%= bootcamp.name %> — Rixi Lab Bootcamp';
+
+      // Set dynamic share URLs
+      if (whatsappShare) {
+        whatsappShare.href = `https://wa.me/?text=${encodeURIComponent(pageTitle + '\n' + pageUrl)}`;
+      }
+      if (twitterShare) {
+        twitterShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+      }
+
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async function (e) {
+          e.stopPropagation();
+
+          // Try native share (mobile)
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: pageTitle, url: pageUrl });
+              return;
+            } catch (_) { /* user cancelled */ }
+          }
+
+          // Fallback: toggle popover
+          sharePopover.classList.toggle('show');
+        });
+      }
+
+      // Copy link
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', async function () {
+          try {
+            await navigator.clipboard.writeText(pageUrl);
+          } catch (_) {
+            const ta = document.createElement('textarea');
+            ta.value = pageUrl;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          copyFeedback.style.display = 'block';
+          setTimeout(() => { copyFeedback.style.display = 'none'; }, 2000);
+        });
+      }
+
+      // Close popover on outside click
+      document.addEventListener('click', function (e) {
+        if (sharePopover && sharePopover.classList.contains('show')) {
+          if (!sharePopover.contains(e.target) && e.target !== shareBtn) {
+            sharePopover.classList.remove('show');
+          }
+        }
+      });
     });
   </script>
 </body>

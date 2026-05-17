@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Live Bootcamps | Rixi Lab</title>
-  <meta name="description" content="Explore live bootcamps by Rixi Lab. Learn cutting-edge tech skills with expert instructors through hands-on sessions.">
+  <meta name="description"
+    content="Explore live bootcamps by Rixi Lab. Learn cutting-edge tech skills with expert instructors through hands-on sessions.">
 
   <!-- Favicons -->
   <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
@@ -13,7 +15,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Raleway:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
 
   <!-- Vendor CSS Files -->
   <link href="/js/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -31,14 +35,16 @@
       --surface: var(--surface-color, #ffffff);
       --heading: var(--heading-color, #212529);
       --text: var(--default-color, #444444);
-      --border: rgba(0,0,0,0.07);
-      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
-      --shadow-md: 0 8px 32px rgba(0,0,0,0.1);
+      --border: rgba(0, 0, 0, 0.07);
+      --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.1);
       --radius: 16px;
       --radius-sm: 10px;
     }
 
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
 
     /* ── Hero ── */
     .bc-hero {
@@ -47,13 +53,15 @@
       position: relative;
       overflow: hidden;
     }
+
     .bc-hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,102,0,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 102, 0, 0.07) 0%, transparent 70%);
       pointer-events: none;
     }
+
     .bc-hero-eyebrow {
       display: inline-flex;
       align-items: center;
@@ -66,9 +74,10 @@
       text-transform: uppercase;
       padding: 6px 16px;
       border-radius: 50px;
-      border: 1px solid rgba(255,102,0,0.15);
+      border: 1px solid rgba(255, 102, 0, 0.15);
       margin-bottom: 1.2rem;
     }
+
     .bc-hero-title {
       font-family: 'Raleway', sans-serif;
       font-size: clamp(2rem, 5vw, 3.2rem);
@@ -77,7 +86,11 @@
       line-height: 1.15;
       margin-bottom: 0.8rem;
     }
-    .bc-hero-title span { color: var(--accent); }
+
+    .bc-hero-title span {
+      color: var(--accent);
+    }
+
     .bc-hero-sub {
       font-size: 1rem;
       color: var(--text);
@@ -85,22 +98,26 @@
       max-width: 480px;
       margin: 0 auto 1.8rem;
     }
+
     .bc-hero-stats {
       display: inline-flex;
       gap: 2rem;
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .bc-stat {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .bc-stat-num {
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--heading);
     }
+
     .bc-stat-label {
       font-size: 0.75rem;
       color: var(--text);
@@ -119,7 +136,9 @@
     }
 
     /* ── Grid ── */
-    .bc-grid-section { padding-bottom: 5rem; }
+    .bc-grid-section {
+      padding-bottom: 5rem;
+    }
 
     /* ── Card ── */
     .bc-card {
@@ -133,10 +152,11 @@
       display: flex;
       flex-direction: column;
     }
+
     .bc-card:hover {
       transform: translateY(-6px);
       box-shadow: var(--shadow-md);
-      border-color: rgba(255,102,0,0.2);
+      border-color: rgba(255, 102, 0, 0.2);
     }
 
     /* Banner */
@@ -146,20 +166,24 @@
       overflow: hidden;
       flex-shrink: 0;
     }
+
     .bc-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
-    .bc-card:hover .bc-card-img { transform: scale(1.06); }
+
+    .bc-card:hover .bc-card-img {
+      transform: scale(1.06);
+    }
 
     /* Overlay gradient on image */
     .bc-card-img-wrap::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.18) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.18) 0%, transparent 60%);
     }
 
     /* Price badge */
@@ -168,7 +192,7 @@
       top: 14px;
       right: 14px;
       z-index: 2;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(8px);
       color: var(--heading);
       padding: 5px 13px;
@@ -176,10 +200,11 @@
       font-weight: 700;
       font-size: 0.82rem;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
+
     .bc-price-badge.free {
-      background: rgba(255,102,0,0.9);
+      background: rgba(255, 102, 0, 0.9);
       color: #fff;
       border-color: transparent;
     }
@@ -191,6 +216,7 @@
       flex-direction: column;
       flex-grow: 1;
     }
+
     .bc-card-category {
       font-size: 0.72rem;
       font-weight: 600;
@@ -199,6 +225,7 @@
       color: var(--accent);
       margin-bottom: 0.5rem;
     }
+
     .bc-card-title {
       font-family: 'Raleway', sans-serif;
       font-size: 1.15rem;
@@ -207,6 +234,7 @@
       margin-bottom: 0.6rem;
       line-height: 1.35;
     }
+
     .bc-card-desc {
       font-size: 0.9rem;
       color: var(--text);
@@ -225,6 +253,7 @@
       border-top: 1px solid var(--border);
       gap: 0.75rem;
     }
+
     .bc-meta-pill {
       display: inline-flex;
       align-items: center;
@@ -234,7 +263,10 @@
       color: var(--text);
       opacity: 0.7;
     }
-    .bc-meta-pill i { color: var(--accent); }
+
+    .bc-meta-pill i {
+      color: var(--accent);
+    }
 
     /* CTA button */
     .bc-btn {
@@ -252,18 +284,23 @@
       white-space: nowrap;
       border: none;
     }
+
     .bc-btn:hover {
       background: #e55a00;
       color: #fff;
       transform: translateX(2px);
     }
-    .bc-btn i { font-size: 0.9rem; }
+
+    .bc-btn i {
+      font-size: 0.9rem;
+    }
 
     /* ── Empty State ── */
     .bc-empty {
       text-align: center;
       padding: 5rem 1rem;
     }
+
     .bc-empty-icon {
       width: 80px;
       height: 80px;
@@ -276,14 +313,71 @@
       font-size: 2rem;
       color: var(--accent);
     }
-    .bc-empty h3 { font-size: 1.3rem; font-weight: 700; color: var(--heading); margin-bottom: 0.5rem; }
-    .bc-empty p { color: var(--text); opacity: 0.65; font-size: 0.95rem; }
+
+    .bc-empty h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+
+    .bc-empty p {
+      color: var(--text);
+      opacity: 0.65;
+      font-size: 0.95rem;
+    }
+
+    /* ── Closed card (grayscale) ── */
+    .bc-card.bc-closed {
+      filter: grayscale(1) brightness(0.85);
+      opacity: 0.85;
+    }
+
+    .bc-card.bc-closed:hover {
+      filter: grayscale(0.5) brightness(0.9);
+    }
+
+    .bc-closed-ribbon {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 3;
+      background: rgba(30, 30, 30, 0.80);
+      backdrop-filter: blur(6px);
+      color: #e2e8f0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .bc-btn-disabled {
+      background: #9ca3af;
+      color: #fff;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.7;
+    }
 
     /* ── Fade-up animation ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .animate-up {
       animation: fadeUp 0.55s ease both;
     }
@@ -293,47 +387,47 @@
 <body class="index-page">
   <%- include('../partials/loader') %>
 
-  <!-- ── Rixi Lab Header (theme-consistent) ── -->
-  <header id="header" class="header d-flex align-items-center fixed-top ">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
-      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
-        <h1 class="sitename">Rixi Lab</h1>
-      </a>
+    <!-- ── Rixi Lab Header (theme-consistent) ── -->
+    <header id="header" class="header d-flex align-items-center fixed-top ">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+          <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
+          <h1 class="sitename">Rixi Lab</h1>
+        </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/internship">Internship</a></li>
-          <li><a href="/cap">CAP</a></li>
-          <li><a href="/#about">About</a></li>
-          <li><a href="/#services">Services</a></li>
-          <li><a href="/bootcamps" class="active">Bootcamps</a></li>
-          <li><a href="/certificate">Certificate</a></li>
-          <li><a href="/#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/internship">Internship</a></li>
+            <li><a href="/cap">CAP</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/bootcamps" class="active">Bootcamps</a></li>
+            <li><a href="/certificate">Certificate</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
-      <a class="btn-getstarted" href="/login">Login</a>
-    </div>
-  </header>
+        <a class="btn-getstarted" href="/login">Login</a>
+      </div>
+    </header>
 
-  <main class="main">
+    <main class="main">
 
-    <!-- ── Hero ── -->
-    <section class="bc-hero">
-      <div class="container">
-        <div class="bc-hero-eyebrow animate-up">
-          <i class="bi bi-lightning-charge-fill"></i> Live & Upcoming
-        </div>
-        <h1 class="bc-hero-title animate-up" style="animation-delay:0.05s">
-          Skill-Up with Rixi Lab <span>Bootcamps</span>
-        </h1>
-        <!-- <p class="bc-hero-sub animate-up" style="animation-delay:0.1s">
+      <!-- ── Hero ── -->
+      <section class="bc-hero">
+        <div class="container">
+          <div class="bc-hero-eyebrow animate-up">
+            <i class="bi bi-lightning-charge-fill"></i> Live & Upcoming
+          </div>
+          <h1 class="bc-hero-title animate-up" style="animation-delay:0.05s">
+            Skill-Up with Rixi Lab <span>Bootcamps</span>
+          </h1>
+          <!-- <p class="bc-hero-sub animate-up" style="animation-delay:0.1s">
           Hands-on, instructor-led programs designed to take you from zero to job-ready in weeks.
         </p> -->
-        <!-- <div class="bc-hero-stats animate-up" style="animation-delay:0.15s">
+          <!-- <div class="bc-hero-stats animate-up" style="animation-delay:0.15s">
           <div class="bc-stat">
             <span class="bc-stat-num"><%= bootcamps.length %></span>
             <span class="bc-stat-label">Bootcamps</span>
@@ -347,85 +441,103 @@
             <span class="bc-stat-label">Enrolled</span>
           </div>
         </div> -->
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <!-- <div class="bc-divider"></div> -->
+      <!-- <div class="bc-divider"></div> -->
 
-    <!-- ── Bootcamps Grid ── -->
-    <section class="bc-grid-section">
-      <div class="container">
-        <div class="row g-4">
-          <% if (bootcamps.length === 0) { %>
-            <div class="col-12">
-              <div class="bc-empty animate-up">
-                <div class="bc-empty-icon"><i class="bi bi-stars"></i></div>
-                <h3>No Live Bootcamps Right Now</h3>
-                <p>We're crafting something amazing — check back soon!</p>
-              </div>
-            </div>
-          <% } else { %>
-            <% bootcamps.forEach((b, i) => { %>
-              <div class="col-12 col-md-6 col-lg-4 animate-up" style="animation-delay: <%= 0.05 + (i * 0.07) %>s;">
-                <div class="bc-card">
-                  <!-- Image -->
-                  <div class="bc-card-img-wrap">
-                    <img src="<%= b.banner_img %>" alt="<%= b.name %>" class="bc-card-img">
-                    <% if (b.isPaid) { %>
-                      <span class="bc-price-badge">
-                        <i class="bi bi-currency-rupee"></i><%= b.payment.amount %>
-                      </span>
-                    <% } else { %>
-                      <span class="bc-price-badge free">
-                        <i class="bi bi-lightning-charge-fill"></i> FREE
-                      </span>
-                    <% } %>
-                  </div>
-
-                  <!-- Body -->
-                  <div class="bc-card-body">
-                    <div class="bc-card-category">Bootcamp</div>
-                    <h3 class="bc-card-title"><%= b.name %></h3>
-                    <p class="bc-card-desc"><%= b.description.substring(0, 115) %>...</p>
-
-                    <div class="bc-card-footer">
-                      <span class="bc-meta-pill">
-                        <i class="bi bi-calendar-event"></i>
-                            <%= new Date(b.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
-                      </span>
-                      <span class="bc-meta-pill">
-                        <i class="bi bi-people-fill"></i> <%= b.usersEnrolled.length %> Enrolled
-                      </span>
-                      <a href="/bootcamps/<%= b._id %>" class="bc-btn">
-                        Details <i class="bi bi-arrow-right"></i>
-                      </a>
-                    </div>
-                  </div>
+      <!-- ── Bootcamps Grid ── -->
+      <section class="bc-grid-section">
+        <div class="container">
+          <div class="row g-4">
+            <% if (bootcamps.length===0) { %>
+              <div class="col-12">
+                <div class="bc-empty animate-up">
+                  <div class="bc-empty-icon"><i class="bi bi-stars"></i></div>
+                  <h3>No Live Bootcamps Right Now</h3>
+                  <p>We're crafting something amazing — check back soon!</p>
                 </div>
               </div>
-            <% }) %>
-          <% } %>
+              <% } else { %>
+                <% const reversedBootcamps=[...bootcamps].reverse(); %>
+                  <% reversedBootcamps.forEach((b, i)=> { %>
+                    <div class="col-12 col-md-6 col-lg-4 animate-up"
+                      style="animation-delay: <%= 0.05 + (i * 0.07) %>s;">
+                      <div class="bc-card<%= b.status === 'closed' ? ' bc-closed' : '' %>">
+                        <!-- Image -->
+                        <div class="bc-card-img-wrap">
+                          <img src="<%= b.banner_img %>" alt="<%= b.name %>" class="bc-card-img">
+                          <% if (b.status==='closed' ) { %>
+                            <span class="bc-closed-ribbon"><i class="bi bi-lock-fill"></i> Registration Closed</span>
+                            <% } %>
+                              <% if (b.isPaid) { %>
+                                <span class="bc-price-badge">
+                                  <i class="bi bi-currency-rupee"></i>
+                                  <%= b.payment.amount %>
+                                </span>
+                                <% } else { %>
+                                  <span class="bc-price-badge free">
+                                    <i class="bi bi-lightning-charge-fill"></i> FREE
+                                  </span>
+                                  <% } %>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="bc-card-body">
+                          <div class="bc-card-category">Bootcamp</div>
+                          <h3 class="bc-card-title">
+                            <%= b.name %>
+                          </h3>
+                          <p class="bc-card-desc">
+                            <%= b.description.substring(0, 115) %>...
+                          </p>
+
+                          <div class="bc-card-footer">
+                            <span class="bc-meta-pill">
+                              <i class="bi bi-calendar-event"></i>
+                              <%= new Date(b.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
+                            </span>
+                            <span class="bc-meta-pill">
+                              <i class="bi bi-people-fill"></i>
+                              <%= b.usersEnrolled.length %> Enrolled
+                            </span>
+                            <% if (b.status==='closed' ) { %>
+                              <a href="/bootcamps/<%= b._id %>" class="bc-btn bc-btn-disabled">
+                                Closed <i class="bi bi-lock-fill"></i>
+                              </a>
+                              <% } else { %>
+                                <a href="/bootcamps/<%= b._id %>" class="bc-btn">
+                                  Details <i class="bi bi-arrow-right"></i>
+                                </a>
+                                <% } %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% }) %>
+                      <% } %>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <%- include('../partials/toaster') %>
-  <%- include('../partials/footer') %>
+    <%- include('../partials/toaster') %>
+      <%- include('../partials/footer') %>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-  </a>
+        <!-- Scroll Top -->
+        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+          <i class="bi bi-arrow-up-short"></i>
+        </a>
 
-  <!-- Vendor JS Files -->
-  <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/vendor/aos/aos.js"></script>
-  <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
+        <!-- Vendor JS Files -->
+        <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/vendor/aos/aos.js"></script>
+        <script src="/js/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="/js/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="/js/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
-  <script src="/js/main.js"></script>
+        <!-- Main JS File -->
+        <script src="/js/main.js"></script>
 </body>
+
 </html>

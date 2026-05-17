@@ -92,7 +92,7 @@
         <% const reversedBootcamps=[...bootcamps].reverse(); %>
         <% reversedBootcamps.forEach(bootcamp => { %>
           <div class="col-12 col-md-6 col-xl-4">
-            <div class="bc-card">
+            <div class="bc-card<%= bootcamp.status === 'closed' ? ' bc-card-closed' : '' %>">
 
               <!-- Banner with accent overlay -->
               <div class="bc-card-banner">
@@ -100,8 +100,8 @@
                 <div class="bc-card-banner-overlay"></div>
                 <!-- Status Pill -->
                 <span class="bc-status-pill bc-status-<%= bootcamp.status %>">
-                  <i class="bi bi-<%= bootcamp.status === 'live' ? 'broadcast' : 'pencil-square' %>"></i>
-                  <%= bootcamp.status === 'live' ? 'Live' : 'Draft' %>
+                  <i class="bi bi-<%= bootcamp.status === 'live' ? 'broadcast' : bootcamp.status === 'closed' ? 'lock-fill' : 'pencil-square' %>"></i>
+                  <%= bootcamp.status === 'live' ? 'Live' : bootcamp.status === 'closed' ? 'Closed' : 'Draft' %>
                 </span>
               </div>
 
@@ -126,14 +126,29 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="bc-actions">
+                <div class="bc-actions" style="flex-wrap:wrap;">
                   <a href="/bootcampManager/edit/<%= bootcamp._id %>" class="bc-btn bc-btn-edit">
                     <i class="bi bi-pencil-fill"></i> Edit
                   </a>
+                  <form method="POST" action="/bootcampManager/bootcamp/<%= bootcamp._id %>/toggle-close" style="margin:0;">
+                    <% if (bootcamp.status === 'closed') { %>
+                      <button type="submit" class="bc-btn bc-btn-reopen">
+                        <i class="bi bi-lock-fill"></i> Reopen
+                      </button>
+                    <% } else { %>
+                      <button type="submit" class="bc-btn bc-btn-close">
+                        <i class="bi bi-lock"></i> Close
+                      </button>
+                    <% } %>
+                  </form>
                   <form method="POST" action="/bootcampManager/bootcamp/<%= bootcamp._id %>/toggle-publish" style="flex:1; margin:0;">
                     <% if (bootcamp.status === 'live') { %>
                       <button type="submit" class="bc-btn bc-btn-unpublish w-100">
                         <i class="bi bi-eye-slash-fill"></i> Unpublish
+                      </button>
+                    <% } else if (bootcamp.status === 'closed') { %>
+                      <button type="submit" class="bc-btn bc-btn-publish w-100" disabled style="opacity:0.45;cursor:not-allowed;">
+                        <i class="bi bi-globe"></i> Publish
                       </button>
                     <% } else { %>
                       <button type="submit" class="bc-btn bc-btn-publish w-100">
@@ -229,6 +244,20 @@
           background: rgba(245, 158, 11, 0.18);
           border: 1px solid rgba(245, 158, 11, 0.45);
           color: #fef3c7;
+        }
+        .bc-status-closed {
+          background: rgba(100, 116, 139, 0.25);
+          border: 1px solid rgba(100, 116, 139, 0.5);
+          color: #e2e8f0;
+        }
+
+        /* Closed card — grayscale */
+        .bc-card-closed {
+          filter: grayscale(1) brightness(0.88);
+          opacity: 0.82;
+        }
+        .bc-card-closed:hover {
+          filter: grayscale(0.6) brightness(0.92);
         }
 
         /* Body */
@@ -346,6 +375,27 @@
         .bc-btn-unpublish:hover {
           background: #fef3c7;
           border-color: #f59e0b;
+        }
+        .bc-btn-close {
+          background: var(--surface-alt, #f8f9fc);
+          border: 1px solid #94a3b8;
+          color: #475569;
+          flex: none;
+        }
+        .bc-btn-close:hover {
+          background: #f1f5f9;
+          border-color: #64748b;
+          color: #1e293b;
+        }
+        .bc-btn-reopen {
+          background: #f1f5f9;
+          border: 1px solid #6366f1;
+          color: #4338ca;
+          flex: none;
+        }
+        .bc-btn-reopen:hover {
+          background: #ede9fe;
+          border-color: #4f46e5;
         }
 
         /* Empty State */
