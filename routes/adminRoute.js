@@ -7,6 +7,7 @@ const Project = require("../models/Project");
 const Quiz = require("../models/Quiz");
 const NewRegistration = require("../models/NewRegistration");
 const Lecture = require("../models/Lecture");
+const Ambassador = require("../models/Ambassador");
 const authRole = require("../middleware/authRole");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -214,6 +215,41 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     });
 
     await newUser.save();
+
+    // ✅ Update Ambassador if referral code exists
+    if (registration.referral_code && registration.referral_code.trim() !== "") {
+      try {
+        const ambassador = await Ambassador.findOne({ referralId: registration.referral_code.trim() });
+        if (ambassador) {
+          const existingInternIndex = ambassador.referred_interns.findIndex(i => i.email === registration.email);
+          
+          if (existingInternIndex === -1) {
+            const amountPaid = registration.final_amount || 0;
+            const equityEarned = parseFloat(((amountPaid * (ambassador.equity || 0)) / 100).toFixed(2));
+
+            ambassador.referred_interns.push({
+              name: registration.name,
+              email: registration.email,
+              phone: registration.phone,
+              domain: registration.domain,
+              duration: registration.duration,
+              batch_no: batch_no,
+              amount_paid: amountPaid,
+              equity_earned: equityEarned,
+              joining_date: new Date(),
+            });
+
+            ambassador.total_earnings = parseFloat(((ambassador.total_earnings || 0) + equityEarned).toFixed(2));
+            ambassador.internCount = (ambassador.internCount || 0) + 1;
+          } else {
+            ambassador.referred_interns[existingInternIndex].batch_no = batch_no;
+          }
+          await ambassador.save();
+        }
+      } catch (ambErr) {
+        console.error("Failed to update ambassador on accept:", ambErr.message);
+      }
+    }
 
     // ✅ Assign eligible projects based on batch + domain + duration
     const projects = await Project.find({
