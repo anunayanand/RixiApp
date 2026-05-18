@@ -495,7 +495,7 @@
                           <div class="bc-card-footer">
                             <span class="bc-meta-pill">
                               <i class="bi bi-calendar-event"></i>
-                              <%= new Date(b.start_date).toLocaleString('en-IN', { dateStyle: 'medium' }) %>
+                              <%= new Date(b.start_date).toLocaleString('en-IN', { dateStyle: 'medium', timeZone: 'UTC' }) %>
                             </span>
                             <span class="bc-meta-pill">
                               <i class="bi bi-people-fill"></i>

@@ -28,6 +28,7 @@ const path = require("path");
 require('dotenv').config();
 const flash = require('connect-flash');
 require("./db"); // Mongoose connection
+require("./utilities/bootcampCron"); // Initialize bootcamp cron jobs
 const User = require("./models/User");
 const Admin = require("./models/Admin");
 const Ambassador = require("./models/Ambassador");

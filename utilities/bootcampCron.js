@@ -44,7 +44,10 @@ function makeBody(to, from, subject, message) {
 // Runs every minute to check if any session starts in exactly 30 minutes.
 cron.schedule("* * * * *", async () => {
   try {
-    const now = new Date();
+    // The DB now stores times as 'fake UTC' (exact numbers typed in by user, e.g., 14:30 IST is saved as 14:30 UTC).
+    // Therefore, we must convert 'now' to IST and pretend it's UTC for an accurate comparison.
+    const trueNow = new Date();
+    const now = new Date(trueNow.getTime() + (5 * 60 + 30) * 60 * 1000);
 
     // Find bootcamps that are live
     const bootcamps = await Bootcamp.find({ status: "live" });

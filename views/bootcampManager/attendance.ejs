@@ -88,7 +88,7 @@
               <option value="" disabled <%=!selectedSessionId ? 'selected' : '' %>>All Sessions</option>
               <% selectedBootcamp.sessions.forEach(s=> { %>
                 <option value="<%= s.session_id %>" <%=String(selectedSessionId)===String(s.session_id) ? 'selected' : '' %>>
-                  <%= s.session_name %> (<%= new Date(s.time).toLocaleString('en-IN') %>)
+                  <%= s.session_name %> (<%= new Date(s.time).toLocaleString('en-IN', { timeZone: 'UTC' }) %>)
                 </option>
                 <% }) %>
             </select>

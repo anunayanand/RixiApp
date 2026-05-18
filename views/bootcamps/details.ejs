@@ -540,7 +540,7 @@
                           </span>
                           <span class="dt-session-tag">
                             <i class="bi bi-calendar-event"></i>
-                            <%= new Date(s.time).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %>
+                            <%= new Date(s.time).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }) %>
                           </span>
                         </div>
                       </div>

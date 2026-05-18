@@ -575,8 +575,8 @@ router.post("/create", upload.single("banner_img"), async (req, res) => {
             session_name: session_name[i],
             instructor: session_instructor[i],
             link: session_link[i],
-            time: new Date(session_time[i] + " GMT+0530"),
-            expiryTime: new Date(session_expiryTime[i] + " GMT+0530"),
+            time: new Date(session_time[i] + "Z"),
+            expiryTime: new Date(session_expiryTime[i] + "Z"),
             details: session_details[i] || "",
           });
         }
@@ -586,8 +586,8 @@ router.post("/create", upload.single("banner_img"), async (req, res) => {
           session_name: session_name,
           instructor: session_instructor,
           link: session_link,
-          time: new Date(session_time + " GMT+0530"),
-          expiryTime: new Date(session_expiryTime + " GMT+0530"),
+          time: new Date(session_time + "Z"),
+          expiryTime: new Date(session_expiryTime + "Z"),
           details: session_details || "",
         });
       }
@@ -604,8 +604,8 @@ router.post("/create", upload.single("banner_img"), async (req, res) => {
         amount: amount ? Number(amount) : 0,
         currency: "INR",
       },
-      start_date: start_date ? new Date(start_date + " GMT+0530") : undefined,
-      end_date: end_date ? new Date(end_date + " GMT+0530") : undefined,
+      start_date: start_date ? new Date(start_date + "Z") : undefined,
+      end_date: end_date ? new Date(end_date + "Z") : undefined,
       sessions: formattedSessions,
       usersEnrolled: [],
       status: "draft", // saved as draft; manager publishes explicitly
@@ -999,9 +999,9 @@ router.post("/edit/:id", upload.single("banner_img"), async (req, res) => {
         minute = min;
       }
 
-      // Total minutes since epoch in IST, then subtract 330 min (5h30m) for UTC
+      // Return exact time as UTC without offset
       const istMs = Date.UTC(year, month - 1, day, hour, minute);
-      return new Date(istMs - (5 * 60 + 30) * 60 * 1000);
+      return new Date(istMs);
     }
 
     let formattedSessions = [];
