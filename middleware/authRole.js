@@ -28,7 +28,6 @@ function authRole(roles) {
       } else {
         user = await User.findById(req.session.user);
       }
-
       if (!user) {
         if (req.headers.accept && req.headers.accept.includes('application/json')) {
           return res.status(401).json({ success: false, message: "User not found." });

@@ -21,6 +21,13 @@ router.get("/superAdmin/ambassador/:ambassadorId", authRole("superAdmin"), async
     const totalReferred = ambassador.internCount;
     const earnings = ambassador.total_earnings || 0;
 
+    // Calculate withdrawal stats
+    const withdrawals = ambassador.withdrawals || [];
+    const totalWithdrawn = withdrawals
+      .filter(w => w.status !== "Rejected")
+      .reduce((sum, w) => sum + w.amount, 0);
+    const availableBalance = Math.max(0, earnings - totalWithdrawn);
+
     const badge = ambassador.badge;
     const leaderboard = await Ambassador.find({}, { name: 1, email: 1, internCount: 1, _id: 0 })
         .sort({ internCount: -1 })
@@ -32,6 +39,8 @@ router.get("/superAdmin/ambassador/:ambassadorId", authRole("superAdmin"), async
       totalReferred ,
       referredInterns,
       earnings, 
+      availableBalance,
+      totalWithdrawn,
       badge ,
       leaderboard,
       showPasswordPopup,

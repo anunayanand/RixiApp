@@ -55,6 +55,16 @@ const ambassadorSchema = new mongoose.Schema({
       joining_date: { type: Date, default: Date.now },
     }
   ],
+  withdrawals: [
+    {
+      amount: { type: Number, required: true },
+      date: { type: Date, default: Date.now },
+      status: { type: String, enum: ["Pending", "Approved", "Rejected"], default: "Pending" },
+      paymentDetails: { type: String, required: true },
+      title: { type: String },
+      transactionId: { type: String },
+    }
+  ],
 }, { timestamps: true });
 
 // 🏅 Badge updater method

@@ -571,8 +571,10 @@
                                   else { sCls='status-absent'; sTxt='Absent'; sIcon='bi-x-circle-fill'; }
                                   } else {
                                   const now = new Date();
-                                  const sessionTime = new Date(s.time);
-                                  const expiryTime = new Date(s.expiryTime);
+                                  // DB stores IST time as UTC (e.g., 6 PM IST is stored as 18:00:00Z).
+                                  // We subtract 5.5 hours to convert it back to the true UTC epoch for accurate comparison with 'now'.
+                                  const sessionTime = new Date(new Date(s.time).getTime() - 5.5 * 60 * 60 * 1000);
+                                  const expiryTime = new Date(new Date(s.expiryTime).getTime() - 5.5 * 60 * 60 * 1000);
                                   const tenMinsBefore = new Date(sessionTime.getTime() - 10 * 60000);
 
                                   if (now >= tenMinsBefore && now <= expiryTime) { isJoinable=true;

@@ -237,6 +237,30 @@
         margin-left: 5px;
         }
       }
+      /* Target the specific ID and its placeholder pseudo-elements */
+      #withdrawPaymentDetails::placeholder {
+          color: #ffffff;
+          opacity: 0.5; /* Overrides default browser transparency */
+          font-size: small;
+      }
+
+      /* Optional: Ensures compatibility with older browsers */
+      #withdrawPaymentDetails::-webkit-input-placeholder {
+          color: #ffffff;
+          opacity: 0.5;
+          font-size: small;
+      }
+      #withdrawPaymentDetails::-moz-placeholder {
+          color: #ffffff;
+          opacity: 0.5;
+          font-size: small;
+      }
+      #withdrawPaymentDetails:-ms-input-placeholder {
+          color: #ffffff;
+          opacity: 1;
+          font-size: small;
+      }
+
     </style>
   </head>
 
@@ -653,216 +677,144 @@
         </section>
 
         <section id="rewards" class="p-1">
-          <h2 class="fw-bold">Rewards</h2>
-          <p class="text-secondary">
-            Fill this form once after reaching the Bronze level. As your level
-            increases, the amount will be credited directly to your account — no
-            need to submit it again.
-          </p>
-          <div class="row g-3">
-            <% if (badge === "Bronze" || badge === "None") { %>
-            <!-- 🟠 Bronze / None -->
-            <div class="col-12 mb-3">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i class="bi bi-wallet2 fs-3" style="color: #ff6600"></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      Request for Withdrawal
-                    </h5>
-                    <% if (badge === "None") { %>
-                    <p class="mb-0 text-white">
-                      Fill this form once after reaching the
-                      <b>Bronze</b> level.
+          <h2 class="fw-bold mt-2">Rewards & Withdrawals</h2>
+          <!-- <p class="text-secondary mb-4">
+            Track your Campus Ambassador program earnings, request cashouts, and view your transaction history.
+          </p> -->
+
+          <!-- 📈 Financial Statistics Grid -->
+          <div class="row g-3 mb-4 text-center text-md-start">
+            <div class="col-md-4">
+              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
+                <span class="text-white small text-uppercase fw-semibold">Available Balance</span>
+                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= availableBalance.toFixed(2) %></h2>
+                <small class="text-white">Earnings minus withdrawals</small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
+                <span class="text-white small text-uppercase fw-semibold">Total Earnings</span>
+                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= earnings.toFixed(2) %></h2>
+                <small class="text-white">Cumulative commission earned</small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
+                <span class="text-white small text-uppercase fw-semibold">Total Withdrawn</span>
+                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= totalWithdrawn.toFixed(2) %></h2>
+                <small class="text-white">Approved payouts</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- 💸 Left Column: Request Withdrawal Form -->
+            <div class="col-lg-5">
+              <div class="card p-4 h-100 border-0 rounded-3" style="background-color: #1a1a1a; border: 1px solid rgba(255, 102, 0, 0.15) !important;">
+                <h5 class="fw-bold text-white mb-3">Request Cashout</h5>
+                
+                <% if (badge === "None") { %>
+                  <!-- 🔒 Locked State -->
+                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 h-100">
+                    <div class="p-3 bg-dark rounded-circle mb-3 border border-secondary" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                      <i class="bi bi-lock-fill fs-2 text-muted"></i>
+                    </div>
+                    <h6 class="fw-bold text-white mb-2">Withdrawals Locked</h6>
+                    <p class="text-secondary small px-3">
+                      Withdrawals are unlocked once you achieve at least the <span class="text-warning fw-semibold">Bronze</span> badge level (minimum 10 referred students). Keep referring to unlock your rewards!
                     </p>
-                    <% } else if (badge === "Bronze") { %>
-                    <p class="mb-0 text-white">
-                      Congratulations! You’re now at <b>Bronze</b>. Fill this
-                      form.
-                    </p>
-                    <% } %>
+                    <div class="w-100 mt-3 p-2 bg-dark rounded text-start small border border-secondary">
+                      <div class="d-flex justify-content-between mb-1">
+                        <span>Current Referrals:</span>
+                        <span class="fw-bold text-warning"><%= ambassador.internCount %> / 10</span>
+                      </div>
+                      <div class="progress" style="height: 6px; background-color: #333;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: <%= Math.min(100, (ambassador.internCount / 10) * 100) %>%"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <% if (badge === "Bronze") { %>
-                <a
-                  href="https://forms.gle/bTro6nspxr1ZmWrF8"
-                  target="_blank"
-                  class="btn btn-outline"
-                  style="color: #ff6600; border: 1px solid #ff6600 ;cursor: pointer;"
-                >
-                  <i class="bi bi-arrow-up-right"></i>
-                </a>
                 <% } else { %>
-                <a
-                  href="#"
-                  class="btn btn-outline-secondary disabled"
-                  tabindex="-1"
-                  aria-disabled="true"
-                >
-                  <i class="bi bi-arrow-up-right"></i>
-                </a>
+                  <!-- 🔓 Form State -->
+                  <form id="withdrawalForm" onsubmit="submitWithdrawalRequest(event)">
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold text-white">Withdrawal Amount (₹) <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-dark border-secondary text-white">₹</span>
+                        <input type="number" name="amount" id="withdrawAmount" class="form-control bg-dark text-white border-secondary" placeholder="Enter amount" min="1" max="<%= availableBalance %>" required>
+                      </div>
+                      <div class="d-flex justify-content-between mt-1">
+                        <small class="text-white-50">Min: ₹1</small>
+                        <small class="text-white-50 cursor-pointer fw-semibold" style="cursor: pointer;" onclick="setMaxWithdrawal()">Max: ₹<%= availableBalance.toFixed(2) %></small>
+                      </div>
+                    </div>
+
+                    <div class="mb-4">
+                      <label class="form-label small fw-semibold text-white">Payment Details <span class="text-danger">*</span></label>
+                      <textarea name="paymentDetails" id="withdrawPaymentDetails" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Enter UPI ID (e.g., username@ybl) or Bank Details (Name, A/C Number, IFSC Code)" required></textarea>
+                    </div>
+
+                    <button type="submit" id="submitWithdrawBtn" class="btn w-100 text-white fw-bold d-flex align-items-center justify-content-center gap-2 py-2" style="background: linear-gradient(135deg, #ff6600, #ff8533); border: none; border-radius: 6px;">
+                      <i class="bi bi-send-fill"></i> Submit Request
+                    </button>
+                  </form>
                 <% } %>
               </div>
             </div>
-            <% } else if (badge === "Silver") { %>
-            <!-- ⚪ Silver -->
-            <div class="col-12 mb-3">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #c0c0c0; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i class="bi bi-star-fill fs-3" style="color: #c0c0c0"></i>
+
+            <!-- 🧾 Right Column: Timeline / Table of past withdrawals -->
+            <div class="col-lg-7">
+              <div class="card p-4 h-100 border-0 rounded-3" style="background-color: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.05) !important;">
+                <h5 class="fw-bold text-white mb-3">Withdrawal History</h5>
+                
+                <% const ambassadorWithdrawals = ambassador.withdrawals || []; %>
+                <% if (ambassadorWithdrawals.length === 0) { %>
+                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 h-100 text-white">
+                    <i class="bi bi-inbox display-5 mb-3 opacity-25"></i>
+                    <p class="small mb-0">No withdrawal requests found.</p>
                   </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      Silver Level Rewards
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Congratulations! You’re now at <b>Silver</b> level. Fill
-                      this form
-                    </p>
+                <% } else { %>
+                  <div class="table-responsive rounded border border-secondary" style="max-height: 380px; overflow-y: auto;">
+                    <table class="table table-dark table-striped align-middle mb-0" style="font-size: 0.85rem;">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Transaction Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% ambassadorWithdrawals.slice().reverse().forEach(w => { %>
+                          <tr>
+                            <td><%= new Date(w.date).toLocaleDateString("en-GB") %></td>
+                            <td class="fw-bold">₹<%= w.amount %></td>
+                            <td>
+                              <% if (w.status === 'Approved') { %>
+                                <span class="badge bg-success shadow-sm px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i>Done</span>
+                              <% } else if (w.status === 'Rejected') { %>
+                                <span class="badge bg-danger shadow-sm px-2 py-1"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
+                              <% } else { %>
+                                <span class="badge bg-warning text-dark shadow-sm px-2 py-1"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+                              <% } %>
+                            </td>
+                            <td>
+                              <% if (w.status === 'Approved') { %>
+                                <div class="text-truncate fw-semibold text-white-50" style="max-width: 150px;" title="<%= w.title %>"><%= w.title %></div>
+                                <div class="font-monospace text-white small" style="font-size: 0.72rem;" title="<%= w.transactionId %>">ID: <%= w.transactionId %></div>
+                              <% } else if (w.status === 'Rejected') { %>
+                                <span class="text-muted small">—</span>
+                              <% } else { %>
+                                <div class="text-truncate text-muted small" style="max-width: 150px;" title="Details: <%= w.paymentDetails %>">Details: <%= w.paymentDetails %></div>
+                              <% } %>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
                   </div>
-                </div>
-                <a
-                  href="#"
-                  target="_blank"
-                  class="btn btn-outline"
-                  style="color: silver; border: 1px solid silver"
-                >
-                  <i class="bi bi-arrow-up-right"></i>
-                </a>
+                <% } %>
               </div>
             </div>
-            <% } else if (badge === "Gold") { %>
-            <!-- 🟡 Gold -->
-            <div class="col-12 mb-3">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid goldenrod; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-trophy-fill fs-3"
-                      style="color: goldenrod"
-                    ></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">Gold Level Achieved</h5>
-                    <p class="mb-0 text-white">
-                      Amazing work! You’ve reached <b>Gold</b> level. Fill this
-                      form
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  target="_blank"
-                  class="btn btn-outline"
-                  style="color: goldenrod; border: 1px solid goldenrod"
-                >
-                  <i class="bi bi-arrow-up-right"></i>
-                </a>
-              </div>
-            </div>
-            <% } %> <% if (bronzeMail) { %>
-            <!-- 🥉 Bronze Mail -->
-            <div class="col-12">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #cd7f32; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-success">
-                    <i class="bi bi-cash-coin fs-3" style="color: #cd7f32"></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      ₹200 Credited (Bronze)
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Amount successfully added to your account.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="text-end">
-                  <h3 style="color: #cd7f32; margin: 0">
-                    <i class="bi bi-award-fill"></i>
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            <% } %> <% if (silverMail) { %>
-            <!-- 🥈 Silver Mail -->
-            <div class="col-12 mt-3">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #c0c0c0; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-secondary">
-                    <i class="bi bi-cash-coin fs-3" style="color: #c0c0c0"></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      ₹300 Credited (Silver)
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Amount successfully added to your account.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="text-end">
-                  <h3 style="color: silver; margin: 0">
-                    <i class="bi bi-award-fill"></i>
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            <% } %> <% if (goldMail) { %>
-            <!-- 🥇 Gold Mail -->
-            <div class="col-12 mb-3">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid goldenrod; background-color: #1e1e1e"
-              >
-                <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-cash-coin fs-3"
-                      style="color: goldenrod"
-                    ></i>
-                  </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      ₹500 Credited (Gold)
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Amount successfully added to your account.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="text-end">
-                  <h3 style="color: goldenrod; margin: 0">
-                    <i class="bi bi-award-fill"></i>
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            <% } %>
           </div>
         </section>
 
@@ -1190,8 +1142,68 @@
   }
 }
 
+function setMaxWithdrawal() {
+  const available = parseFloat('<%= availableBalance %>') || 0;
+  const amountInput = document.getElementById("withdrawAmount");
+  if (amountInput) {
+    amountInput.value = available;
+  }
+}
 
-    </script>
+async function submitWithdrawalRequest(event) {
+  event.preventDefault();
+  const amount = parseFloat(document.getElementById("withdrawAmount").value) || 0;
+  const paymentDetails = document.getElementById("withdrawPaymentDetails").value.trim();
+  const available = parseFloat('<%= availableBalance %>') || 0;
+
+  if (amount <= 0) {
+    showToast("Please enter a valid positive amount.", "error");
+    return;
+  }
+
+  if (amount > available) {
+    showToast("Insufficient balance. Your available balance is ₹" + available, "error");
+    return;
+  }
+
+  if (!paymentDetails) {
+    showToast("Please enter your payment details.", "error");
+    return;
+  }
+
+  const submitBtn = document.getElementById("submitWithdrawBtn");
+  const originalContent = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+
+  try {
+    const response = await fetch("/ambassador/withdraw", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ amount, paymentDetails })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      showToast(data.message || "Withdrawal request submitted successfully!", "success");
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
+    } else {
+      showToast(data.message || "Failed to submit request. Please try again.", "error");
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalContent;
+    }
+  } catch (err) {
+    console.error("Withdrawal error:", err);
+    showToast("An error occurred. Please try again.", "error");
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalContent;
+  }
+}
+</script>
 
     <!-- Vendor JS Files -->
     <script src="/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, BSON } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
@@ -112,7 +112,7 @@ async function exportData() {
             const data = await db.collection(collectionName).find({}).toArray();
 
             const filePath = path.join(folderPath, `${collectionName}.json`);
-            fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+            fs.writeFileSync(filePath, BSON.EJSON.stringify(data, null, 2));
 
             attachments.push({
                 name: `${collectionName}.json`,

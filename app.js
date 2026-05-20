@@ -277,7 +277,7 @@ app.use('/superAdmin', deleteNoticeRoute);
 // Ambassador Routes 
 
 const ambassadorRoute = require('./routes/ambassadorRoute');
-app.get('/ambassador',ambassadorRoute);
+app.use('/', ambassadorRoute);
 // Create Ambassador
 const createAmbassdorRoute = require('./routes/createAmbassedorRoute');
 app.post('/create-ambassador', createAmbassdorRoute);

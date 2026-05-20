@@ -55,6 +55,11 @@ cron.schedule("* * * * *", async () => {
     for (const bootcamp of bootcamps) {
       for (const session of bootcamp.sessions) {
         const sessionTime = new Date(session.time);
+        const formattedTime = sessionTime.toLocaleTimeString('en-IN', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        });
 
         // Check if session starts exactly within the next 30 minutes
         const timeDiffMinutes = (sessionTime.getTime() - now.getTime()) / 60000;
@@ -327,7 +332,7 @@ cron.schedule("* * * * *", async () => {
             "
           >
             <strong>Time:</strong>
-            ${sessionTime}
+            ${formattedTime} IST
           </li>
 
           <li 
@@ -341,32 +346,6 @@ cron.schedule("* * * * *", async () => {
             <strong>Instructor:</strong>
             ${session.instructor || "TBA"}
           </li>
-
-          <li 
-            class="list-text"
-            style="
-              line-height:1.8;
-              font-size:14px;
-            "
-          >
-            <strong>Details:</strong>
-
-            <ul style="padding-left:18px;margin-top:10px;">
-
-              ${(session.details || "")
-                .split("\\n")
-                .filter((d) => d.trim().length > 0)
-                .map(
-                  (point) => `
-                  <li style="margin-bottom:8px;line-height:1.7;">
-                    ${point.replace(/^-/, "").trim()}
-                  </li>
-                `,
-                )
-                .join("")}
-
-            </ul>
-
           </li>
 
         </ul>
