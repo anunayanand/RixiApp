@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Ambassador Dashboard</title>
+    <title>Ambassador Dashboard | Rixi Lab</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
 
@@ -18,717 +18,688 @@
     <link href="/img/Rixi Lab New Logo PNG.png" rel="icon" />
     <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <!-- Fonts -->
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
-    <!-- Vendor CSS Files -->
-    <link href="/js//vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="/js//vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="/js//vendor/aos/aos.css" rel="stylesheet" />
-    <link href="/js//vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
-    <link href="/js//vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-
-    <!-- Main CSS File -->
-    <link href="/css/main.css" rel="stylesheet" />
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- <link href="intern.css" rel="stylesheet"> -->
+    <!-- Main CSS -->
+    <link href="/css/intern.css" rel="stylesheet" />
 
     <style>
-      * {
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-      }
-      body {
-        background-color: #121212;
-        color: #fff;
-      }
-      body::-webkit-scrollbar {
-        display: none;
+      /* Ambassador Specific Overrides */
+      .amb-badge-gold {
+        color: #ffb347;
       }
 
-      .card-custom,
-      .doc-card {
-        background-color: #121212;
-        border-radius: 1rem;
-        border: none;
-        color: #fff;
-      }
-      .card-custom h1 {
-        color: #ff6600;
-      }
-      .sidebar {
-        background-color: #1e1e1e;
-        border-radius: 1rem;
-        padding: 1rem 1rem;
-        height: 93vh;
-        overflow-y: auto;
-      }
-      section {
-        background-color: #1e1e1e;
+      .amb-badge-silver {
+        color: #c7cedb;
       }
 
-      .sidebar::-webkit-scrollbar {
-        display: none;
-      }
-      .sidebar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .amb-badge-bronze {
+        color: #d17a3f;
       }
 
-      main {
-        height: 93vh;
-        overflow-y: auto;
-        padding: 2rem;
-        background-color: #1e1e1e;
-        border-radius: 1rem;
-        padding: 2rem;
+      .amb-badge-none {
+        color: #6b7280;
       }
-      .onMobile {
-        display: none;
-      }
-      .bigCentre {
+      
+      .amb-referral-card {
+        background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(0,0,0,0));
+        border: 1px dashed var(--primary);
+        border-radius: var(--radius-lg);
+        padding: 20px;
         text-align: center;
-        flex : 1;
       }
-
-      main::-webkit-scrollbar {
-        display: none;
-      }
-      main {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-
-      .nav-pills .nav-link.active {
-        background-color: #ff6600;
-        color: #fff;
-      }
-
-      .nav-pills .nav-link {
-        color: #fff;
-      }
-
-      main section {
-        display: none;
-      }
-      main section.active {
-        display: block;
-      }
-      #showDetails {
-        display: none;
-        background: none;
-        border: none;
-        color: #ff6600;
+      .amb-referral-code {
+        font-family: monospace;
         font-size: 1.5rem;
-        cursor: pointer;
+        color: var(--primary);
+        font-weight: bold;
+        letter-spacing: 2px;
+        padding: 10px;
+        background: rgba(0,0,0,0.3);
+        border-radius: var(--radius-sm);
+        display: inline-block;
+        margin: 10px 0;
       }
-      progress::-webkit-progress-bar {
-        background-color: #ddd;
-        border-radius: 10px;
+      .amb-copy-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        transition: var(--transition);
+      }
+      .amb-copy-btn:hover {
+        background: var(--primary);
+        color: white;
+      }
+      .amb-copy-btn.copied {
+        background: #10b981;
+        color: white;
+        border-color: #10b981;
+      }
+      
+      .amb-intern-row {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 16px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        border-left: 4px solid var(--primary);
+        box-shadow: var(--shadow-sm);
+      }
+      .amb-intern-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--primary-glow);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-right: 16px;
+      }
+      
+      /* Ambassador Table Styles */
+      .amb-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .amb-table th {
+        padding: 16px 20px;
+        text-align: left;
+        color: var(--text-muted, #9ca3af);
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid rgba(255, 102, 0, 0.2);
+        white-space: nowrap;
+      }
+      .amb-table td {
+        padding: 10px 20px;
+        vertical-align: middle;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text-primary, #ffffff);
+      }
+      .amb-table tbody tr {
+        transition: background-color 0.2s ease;
+      }
+      .amb-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+      }
+      .amb-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      
+
+      /* Badge Progress Steps */
+      .amb-badge-steps {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin: 40px 0;
+        padding: 0 20px;
+      }
+      .amb-badge-step-line {
+        position: absolute;
+        top: 15px;
+        left: 30px;
+        right: 30px;
+        height: 4px;
+        background: var(--surface-alt);
+        z-index: 1;
+      }
+      .amb-badge-step-progress {
+        position: absolute;
+        top: 15px;
+        left: 30px;
+        height: 4px;
+        background: var(--primary);
+        z-index: 2;
+        transition: width 0.5s ease;
+      }
+      .amb-badge-step {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        width: 60px;
+      }
+      .amb-badge-step-dot {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--surface-alt);
+        border: 4px solid var(--body-bg);
+        margin: 0 auto 10px;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .amb-badge-step.active .amb-badge-step-dot,
+      .amb-badge-step.completed .amb-badge-step-dot {
+        background: var(--primary);
+        box-shadow: 0 0 15px var(--primary-glow);
+      }
+      .amb-badge-step-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .amb-badge-step.active .amb-badge-step-label {
+        color: var(--primary);
+      }
+      .amb-badge-step.completed .amb-badge-step-label {
+        color: var(--text-primary);
+      }
+
+      .section-eyebrow {
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+      .section-heading {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 25px;
+      }
+      
+      /* Dark Forms */
+      .dark-form-input {
+        background-color: #1e1e1e !important;
+        border: 1px solid #27272a !important;
+        color: #fff !important;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        box-shadow: none !important;
+        transition: border-color 0.2s;
+      }
+      .dark-form-input:focus {
+        border-color: #ff6600 !important;
+        outline: none !important;
+      }
+      .dark-form-input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .dark-input-group {
+        display: flex;
+        background-color: #1e1e1e;
+        border: 1px solid #27272a;
+        border-radius: 12px;
         overflow: hidden;
+        transition: border-color 0.2s;
       }
-
-      progress::-webkit-progress-value {
+      .dark-input-group:focus-within {
+        border-color: #ff6600;
+      }
+      .dark-input-group .dark-input {
+        border: none !important;
+        border-radius: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        color: #fff !important;
+        flex-grow: 1;
+        padding: 0.75rem 1rem;
+      }
+      .dark-input-group .dark-input:focus {
+        outline: none !important;
+      }
+      .dark-input-group-text {
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        border-right: 1px solid #27272a;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+      .dark-submit-btn {
         background-color: #ff6600;
-        border-radius: 10px;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.2s, transform 0.1s;
       }
-
-      /* For Firefox */
-      progress::-moz-progress-bar {
-        background-color: #ff6600;
-        border-radius: 10px;
+      .dark-submit-btn:hover {
+        background-color: #e65c00;
+        color: #fff;
       }
-
-      @media (max-width: 768px) {
-        .sidebar {
-          height: auto;
-          margin-top: 0px !important;
-        }
-        main {
-          padding: 1rem;
-        }
-        .nav-pills {
-          justify-content: start !important;
-          flex-wrap: wrap;
-          font-size: smaller;
-          gap: 1rem !important;
-        }
-        .details {
-          display: none;
-        }
-        .card-custom h1 {
-          color: #ff6600;
-          font-weight: 700;
-        }
-        #showDetails {
-          display: block;
-        }
-        .showOnPhone {
-          display: none;
-        }
-        .card-custom {
-          flex-direction: column !important;
-          align-items: start !important;
-        }
-        .onMobile {
-          display: inline-block;
-        }
-        .onBigScreen {
-          display: none;
-        }
-        .phone {
-          margin-top: 8px;
-        }
-        .doc-card {
-          background-color: #121212;
-          border-radius: 1rem;
-          border: none;
-          color: #fff;
-        }
-        .bigCentre {
-        text-align: unset;
-        flex : unset;
-        margin-left: 5px;
-        }
+      .dark-submit-btn:active {
+        transform: scale(0.98);
       }
-      @media (max-width: 460px) {
-        .nav-pills {
-          justify-content: start !important;
-          flex-wrap: nowrap;
-          font-size: 0.6rem !important;
-          gap: 0.1rem !important;
-        }
-        #showDetails {
-          display: block;
-        }
-        .showOnPhone {
-          display: none;
-        }
-        .onBigScreen {
-          display: none;
-        }
-        .phone {
-          margin-top: 8px;
-        }
-        .card-custom {
-          flex-direction: column !important;
-          align-items: start !important;
-        }
-        .doc-card {
-          background-color: #121212;
-          border-radius: 1rem;
-          border: none;
-          color: #fff;
-        }
-        .bigCentre {
-        text-align: unset;
-        flex : unset;
-        margin-left: 5px;
-        }
-      }
-      /* Target the specific ID and its placeholder pseudo-elements */
-      #withdrawPaymentDetails::placeholder {
-          color: #ffffff;
-          opacity: 0.5; /* Overrides default browser transparency */
-          font-size: small;
-      }
-
-      /* Optional: Ensures compatibility with older browsers */
-      #withdrawPaymentDetails::-webkit-input-placeholder {
-          color: #ffffff;
-          opacity: 0.5;
-          font-size: small;
-      }
-      #withdrawPaymentDetails::-moz-placeholder {
-          color: #ffffff;
-          opacity: 0.5;
-          font-size: small;
-      }
-      #withdrawPaymentDetails:-ms-input-placeholder {
-          color: #ffffff;
-          opacity: 1;
-          font-size: small;
-      }
-
     </style>
   </head>
 
-  <body class="index-page">
-     <%- include('partials/loader') %>
-    <header id="header" class="header d-flex align-items-center fixed-top">
-      <div
-        class="container position-relative d-flex align-items-center justify-content-between"
-      >
-        <a
-          style="text-decoration: none"
-          href="/"
-          class="logo d-flex align-items-center me-auto me-xl-0"
-        >
-          <img src="/img/Rixi Lab New Logo PNG.png" alt="" />
-          <h1 class="sitename">Rixi Lab</h1>
-        </a>
+  <body>
+    <%- include('partials/loader') %>
+    <div class="id-sidebar-overlay" id="sidebarOverlay"></div>
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li>
-              <a style="text-decoration: none" href="/" class="active">Home</a>
-            </li>
-            <li><a style="text-decoration: none" href="/#about">About</a></li>
-            <li>
-              <a style="text-decoration: none" href="/#services">Services</a>
-            </li>
-            <li>
-              <a style="text-decoration: none" href="/#contact">Contact</a>
-            </li>
-          </ul>
-          <!-- <i class="mobile-nav-toggle d-xl-none bi bi-list"></i> -->
-        </nav>
-
-        <a class="btn-getstarted" style="text-decoration: none" href="/logout"
-          >Logout</a
-        >
+    <aside class="id-sidebar" id="sidebar">
+      <div class="id-sidebar-brand">
+        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab" />
+        <div class="id-sidebar-brand-text">
+          <h2>Rixi Lab</h2>
+          <span class="id-sidebar-badge">AMBASSADOR</span>
+        </div>
       </div>
-    </header>
 
-    <div
-      class="row g-4 justify-content-center m-2"
-      style="margin-top: 4rem !important"
-    >
-      <!-- Sidebar -->
-      <nav
-        class="col-md-3 d-md-block collapse show sidebar"
-        id="sidebarMenu"
-        style="border: 1px solid #ff6600"
-      >
-        <div class="text-center mb-4">
-          <!-- Circular Profile Image -->
-          <div
-            class="rounded-circle overflow-hidden mx-auto mb-2"
-            style="width: 120px; height: 120px; cursor: pointer"
-            data-bs-toggle="modal"
-            data-bs-target="#updateProfileModal"
-          >
-            <img
-              src="<%= ambassador.img_url %>"
-              alt="Profile"
-              class="img-fluid"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
-          </div>
-
-          <!-- Name & Intern ID -->
-          <h3 class="fw-bold">
-            <%= ambassador.name %>
-            <i
-              class="bi bi-patch-check"
-              style="color: #ff6600; font-size: 1.5rem"
-            ></i>
-          </h3>
-          <h5><%= ambassador.designation %></h5>
-          <h5 style="color: #ff6600"><%= ambassador.ambassador_id %></h5>
+      <div class="id-sidebar-profile">
+        <div class="id-profile-img-wrap" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+          <img src="<%= ambassador.img_url %>" alt="Profile" />
         </div>
-
-        <!-- Update Profile Image Modal -->
-        <div
-          class="modal fade"
-          id="updateProfileModal"
-          tabindex="-1"
-          aria-labelledby="updateProfileLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div
-              class="modal-content"
-              style="background-color: #1e1e1e; border: 1px solid #ff6600"
-            >
-              <div class="modal-header">
-                <h5 class="modal-title text-white" id="updateProfileLabel">
-                  Update Profile Picture
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body text-center">
-                <!-- Image Preview -->
-                <div class="mb-3">
-                  <img
-                    id="previewImage"
-                    src="<%= ambassador.img_url %>"
-                    style="
-                      width: 120px;
-                      height: 120px;
-                      border-radius: 50%;
-                      object-fit: cover;
-                    "
-                    alt="Preview"
-                  />
-                </div>
-
-                <!-- Upload Form -->
-                <form
-                  action="/ambassador/update-image"
-                  method="POST"
-                  enctype="multipart/form-data"
-                  id="updateImageForm"
-                >
-                  <input
-                    type="file"
-                    name="image"
-                    id="imageInput"
-                    class="form-control mb-3"
-                    accept="image/*"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    class="btn w-100 text-white"
-                    style="background-color: #ff6600"
-                  >
-                    Update Picture
-                  </button>
-                </form>
-              </div>
-            </div>
+        <h4><%= ambassador.name %></h4>
+        <p><%= ambassador.ambassador_id %></p>
+        <div class="id-sidebar-profile-stats">
+          <div>
+            <span>Referred</span>
+            <strong><%= ambassador.internCount %></strong>
+          </div>
+          <div>
+            <span>Badge</span>
+            <strong class="amb-badge-<%= (badge || 'none').toLowerCase() %>"><%= badge %></strong>
           </div>
         </div>
+      </div>
 
-        <hr />
-        <div style="display: flex; justify-content: space-between">
-          <h3 class="bigCentre">Personal Details</h3>
-          <button id="showDetails">
-            <i class="bi bi-arrow-down-square-fill"></i>
-          </button>
-        </div>
-        <hr class="onBigScreen" />
-        <div class="text-start small row row-cols-1 g-2 details">
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-envelope-at-fill" style="color: #ff6600"></i
-                >&nbsp; Email: <%= ambassador.email %></strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong>
-                <i class="bi bi-telephone-fill" style="color: #ff6600"></i
-                >&nbsp; Mobile No: +91 <%= ambassador.phone %></strong
-              >
-            </div>
-          </div>
-          <!-- <div class="col">
-              <div class="card card-custom p-2 px-3">
-                  <strong><i class="bi bi-clock-fill" style="color: #ff6600"></i>&nbsp; Gender: Male</strong>
-                </div>
-            </div> -->
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-briefcase-fill" style="color: #ff6600"></i
-                >&nbsp; Referal Code: <%= ambassador.referralId %></strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-briefcase-fill" style="color: #ff6600"></i
-                >&nbsp; Refferal Code Discount: <%= ambassador.discountPercent %>%</strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-briefcase-fill" style="color: #ff6600"></i
-                >&nbsp; Commission: <%= ambassador.equity %>%</strong
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="card card-custom p-2 px-3">
-              <strong
-                ><i class="bi bi-bookmark-check-fill" style="color: #ff6600"></i
-                >&nbsp; Joining Date: <% const d = new
-                Date(ambassador.joining_date); const formattedDate =
-                d.toLocaleString("en-US", { month: "short", day: "2-digit",
-                year: "numeric" }) .replace(/,/g, ""); %> <%= formattedDate %>
-              </strong>
-            </div>
-          </div>
-          <div class="col d-flex align-items-center justify-content-center">
-            <a
-              href="<%= ambassador.insta_profile_url %>"
-              target="_blank"
-              style="text-decoration: none; color: inherit"
-            >
-              <div class="card card-custom p-2 px-3 mx-2">
-                <strong class="text-center"
-                  ><i class="bi bi-instagram" style="color: #ff6600"></i>&nbsp;
-                  Instagram
-                </strong>
-              </div>
-            </a>
-            <a
-              href="<%= ambassador.linkedin_profile_url %>"
-              target="_blank"
-              style="text-decoration: none; color: inherit"
-            >
-              <div class="card card-custom p-2 px-3">
-                <strong class="text-center"
-                  ><i class="bi bi-linkedin" style="color: #ff6600"></i>&nbsp;
-                  Linkedin
-                </strong>
-              </div>
-            </a>
-          </div>
-          <div class="col showOnPhone" style="visibility: hidden">
-            <div class="card card-custom p-2 px-3">
-              <strong class="text-center"
-                ><i class="bi bi-linkedin" style="color: #ff6600"></i>&nbsp;
-                Linkedin
-              </strong>
-            </div>
-          </div>
-          <div class="col showOnPhone" style="visibility: hidden">
-            <div class="card card-custom p-2 px-3">
-              <strong class="text-center"
-                ><i class="bi bi-linkedin" style="color: #ff6600"></i>&nbsp;
-                Linkedin
-              </strong>
-            </div>
-          </div>
-
-          <div class="col mt-3">
-            <div class="px-3 text-center" style="line-height: 1.5rem">
-              <span
-                >For Technical Support:
-                <strong style="color: #ff6600"
-                  >support@rixilab.tech</strong
-                ></span
-              ><br />
-            </div>
-          </div>
+      <nav class="id-sidebar-nav">
+        <div class="id-sidebar-nav-label">Menu</div>
+        <a href="#dashboard" class="active" onclick="switchSection('dashboard', this)">
+          <i class="bi bi-grid-1x2-fill"></i> Dashboard
+        </a>
+        <a href="#interns" onclick="switchSection('interns', this)">
+          <i class="bi bi-people-fill"></i> Interns
+        </a>
+        <a href="#rewards" onclick="switchSection('rewards', this)">
+          <i class="bi bi-trophy-fill"></i> Rewards
+        </a>
+        <a href="#documents" onclick="switchSection('documents', this)">
+          <i class="bi bi-file-earmark-text-fill"></i> Documents
+        </a>
+        
+        <div class="d-md-none mt-4">
+          <div class="id-sidebar-nav-label">Account</div>
+          <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
         </div>
       </nav>
 
-      <!-- Main Content -->
-      <main
-        class="col-md-8 m-4 p-3"
-        style="border: 1px solid #ff6600; background-color: #1e1e1e"
-      >
-        <!-- Navigation Tabs -->
-        <ul class="nav nav-pills flex-nowrap mb-1 gap-2 justify-content-end">
-          <li class="nav-item">
-            <a class="nav-link active" href="#dashboard">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#interns">Interns</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#rewards">Rewards</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#documents">Documents</a>
-          </li>
-          <!-- <li class="nav-item"><a class="nav-link" href="#setting">Setting</a></li> -->
-        </ul>
+      <div class="id-sidebar-footer">
+        Technical Support<br>
+        <a href="mailto:support@rixilab.tech" style="color: var(--primary);">support@rixilab.tech</a><br>
+        &copy; 2025 Rixi Lab
+      </div>
+    </aside>
 
-        <!-- Sections -->
-        <section id="dashboard" class="active p-1">
-          <h2 class="fw-bold mt-2">
-            Welcome, <%= ambassador.name.trim().split(" ")[0] %>
-          </h2>
-          <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Students Referred</h5>
-                <h1><i class="bi bi-people"></i> <%= ambassador.internCount %></h1>
+    <main class="id-main-content">
+      <header class="id-topbar">
+        <div class="id-topbar-left">
+          <button class="id-sidebar-toggle d-md-none" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+          </button>
+          <div>
+            <h4 id="topbarTitle">Dashboard</h4>
+            <p>Welcome , <%= ambassador.name.trim() %></p>
+          </div>
+        </div>
+        <div class="id-topbar-right">
+          <div class="dropdown" >
+            <button class="id-topbar-btn" type="button" data-bs-toggle="dropdown">
+              <img src="<%= ambassador.img_url %>" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end profile-dropdown-menu bg-dark" >
+              <li class="text-white"><a class="dropdown-item text-white" href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"><i class="bi bi-person-badge"></i> Update Photo</a></li>
+              <li class="text-white"><a class="dropdown-item text-white" href="#" data-bs-toggle="modal" data-bs-target="#passwordModal"><i class="bi bi-shield-lock"></i> Change Password</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="text-white"><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="id-content-body">
+        <section id="dashboard" class="id-section active">
+          <div class="row g-4 mb-4">
+            <div class="col-md-4">
+              <div class="id-stat-card">
+                <div class="id-stat-icon"><i class="bi bi-people-fill"></i></div>
+                <div class="id-stat-title">Interns Referred</div>
+                <div class="id-stat-value"><%= ambassador.internCount %></div>
               </div>
             </div>
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Total Earnings</h5>
-                <h1>&#8377;<%= earnings %></h1>
+            <div class="col-md-4">
+              <div class="id-stat-card">
+                <div class="id-stat-icon"><i class="bi bi-currency-rupee"></i></div>
+                <div class="id-stat-title">Total Earnings</div>
+                <div class="id-stat-value">₹<%= earnings %></div>
               </div>
             </div>
-            <div class="col">
-              <div class="card card-custom p-3">
-                <h5>Badge</h5>
-                <% if (badge === "Gold") { %>
-                <h1 style="color: goldenrod">
-                  <i class="bi bi-award-fill"></i> <%= badge %>
-                </h1>
-                <% } else if (badge === "Silver") { %>
-                <h1 style="color: #c0c0c0">
-                  <i class="bi bi-award-fill"></i> <%= badge %>
-                </h1>
-                <% } else if (badge === "Bronze") { %>
-                <h1 style="color: #cd7f32">
-                  <i class="bi bi-award-fill"></i> <%= badge %>
-                </h1>
-                <% } else { %>
-                <h1 style="color: white">
-                  <i class="bi bi-award-fill"></i> <%= badge %>
-                </h1>
-                <% } %>
+            <div class="col-md-4">
+              <div class="id-stat-card ">
+                <div class="id-stat-icon"><i class="bi bi-award-fill"></i></div>
+                <div class="id-stat-title">Badge</div>
+                <div class="id-stat-value amb-badge-<%= (badge || 'none').toLowerCase() %>"><%= badge %></div>
               </div>
             </div>
           </div>
-          <hr />
-          <h3>College Details</h3>
-          <hr />
-          <h5>College : <%= ambassador.college %></h5>
-          <h5>University :<%= ambassador.university %></h5>
-          <hr />
-          <h3>Basic Details</h3>
-          <hr />
-          <h5>Name : <%= ambassador.name %></h5>
-          <h5>Gender : <%= ambassador.gender %></h5>
-          <h5>
-            Adreess : <%= ambassador.address.street %>, <%=
-            ambassador.address.city %>, <%= ambassador.address.state %> <%=
-            ambassador.address.country %> - <%= ambassador.address.pincode %>
-          </h5>
-          <hr />
-          <div
-            class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600; background-color: #1e1e1e"
-          >
-            <div class="d-flex align-items-center gap-3">
-              <div class="info-icon text-warning">
-                <i
-                  class="bi bi-file-earmark-medical-fill fs-3"
-                  style="color: #ff6600"
-                ></i>
-              </div>
-              <div class="info-content">
-                <h5 class="fw-bold mb-1 text-white">
-                  Internship Registration Form - Referal Code: <%=
-                  ambassador.referralId %>
-                </h5>
+
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <div class="id-glass-panel h-100">
+                <div class="id-panel-title">
+                  <i class="bi bi-bank"></i> Ambassador Details
+                </div>
+                <ul class="id-info-list">
+                  <li>
+                    <span class="id-info-label">University</span>
+                    <span class="id-info-value"><%= ambassador.university %></span>
+                  </li>
+                   <li>
+                    <span class="id-info-label">Joining Date</span>
+                    <span class="id-info-value">
+                      <% const d = new Date(ambassador.joining_date); const formattedDate = d.toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }).replace(/,/g, ""); %>
+                      <%= formattedDate %>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="id-info-label">Discount %</span>
+                    <span class="id-info-value"><%= ambassador.discountPercent %>%</span>
+                  </li>
+                  <li>
+                    <span class="id-info-label">Commission %</span>
+                    <span class="id-info-value"><%= ambassador.equity %>%</span>
+                  </li>
+                </ul>
               </div>
             </div>
-            <a
-              href="javascript:void(0)"
-              onclick="shareReferral('<%= ambassador.referralId %>')"
-              class="btn btn-outline-success"
-            >
-              <span>Share &nbsp;</span>
-              <i class="bi bi-share-fill"></i>
-            </a>
+            <div class="col-md-6">
+              <div class="id-glass-panel h-100">
+                <div class="id-panel-title">
+                  <i class="bi bi-person-lines-fill"></i> Personal Details
+                </div>
+                <ul class="id-info-list">
+                  <li>
+                    <span class="id-info-label">Name</span>
+                    <span class="id-info-value"><%= ambassador.name %></span>
+                  </li>
+                  <li>
+                    <span class="id-info-label">Gender</span>
+                    <span class="id-info-value"><%= ambassador.gender %></span>
+                  </li>
+                  <li>
+                    <span class="id-info-label">College</span>
+                    <span class="id-info-value"><%= ambassador.college %></span>
+                  </li>
+                  <li>
+                    <span class="id-info-label">Address</span>
+                    <span class="id-info-value"><%= ambassador.address.street %>, <%= ambassador.address.city %>, <%= ambassador.address.state %> <%= ambassador.address.country %> - <%= ambassador.address.pincode %></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="id-glass-panel mb-0 p-4 position-relative overflow-hidden" style="border: 1px solid rgba(173, 250, 80, 0.422); border-radius: 16px;">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
+              <!-- Left: Text Info -->
+              <div class="text-center text-md-start">
+                <h5 class="fw-bold text-white mb-2">
+                  Internship Registration Form
+                </h5>
+                <p class="text-white-50 small mb-0" style="max-width: 400px; line-height: 1.5;">
+                  Invite your friends to join using your unique referral code. Earn <%= ambassador.equity %>% commission when they successfully register.
+                </p>
+              </div>
+
+              <!-- Right: Referral Actions -->
+              <div class="d-flex flex-column flex-sm-row align-items-center gap-3 w-100 justify-content-md-end" style="max-width: 450px; z-index: 1;">
+                <!-- Code Box -->
+                <div class="d-flex align-items-center rounded-pill" style="background-color: #161616; padding: 1px 1rem;">
+                  <span class="text-white-50 me-3" style="font-size: 1rem;">Refferal Code : </span>
+                  <span class="fw-bold text-white font-monospace" id="referralCodeText" style="letter-spacing: 1px; font-size: 1.25rem;"><%= ambassador.referralId %></span>
+                </div>
+                <!-- Actions -->
+                <button class="btn btn-primary-custom rounded-pill px-4 py-2 d-flex align-items-center flex-shrink-0 bg-success" onclick="shareReferral('<%= ambassador.referralId %>')" style="font-weight: 600;">
+                  <i class="bi bi-share-fill me-2"></i> Share
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="interns" class="p-1">
-          <h2 class="fw-bold">Total Interns</h2>
-          <p class="text-secondary">Interns referd</p>
+        <section id="interns" class="id-section">
+          <p class="section-eyebrow">Your Network</p>
+          <h2 class="section-heading">Referred Interns</h2>
 
           <% if (referredInterns && referredInterns.length > 0) { %>
-          <div class="table-responsive">
-            <table class="table table-dark table-striped align-middle mb-0">
-              <thead>
-                <tr>
-                  <th scope="col">S.No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Domain</th>
-                  <th scope="col">Earned</th>
-                  <th scope="col">Joined</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% referredInterns.forEach((intern, index) => { %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= intern.name %></td>
-                  <td><%= intern.email %></td>
-                  <td><%= intern.domain %></td>
-                  <td>₹<%= intern.equity_earned || 0%></td>
-                  <td>
-                    <%= new Date(intern.joining_date).toLocaleString("en-US", {
-                    month: "short", day: "2-digit", year: "numeric"
-                    }).replace(/,/g, "") %>
-                  </td>
-                </tr>
+            <!-- Desktop Table View -->
+            <div class="id-glass-panel p-0 overflow-hidden d-none d-md-block">
+              <div class="table-responsive">
+                <table class="amb-table">
+                  <thead>
+                    <tr>
+                      <th>Intern</th>
+                      <th class="d-none d-md-table-cell">Domain</th>
+                      <th class="d-none d-sm-table-cell">Joining Date</th>
+                      <th class="text-end">Earned</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% referredInterns.forEach((intern) => { %>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <% if (intern.img_url) { %>
+                              <img src="<%= intern.img_url %>" alt="<%= intern.name %>" class="rounded-circle me-3 flex-shrink-0" style="width: 48px; height: 48px; object-fit: cover; border: 2px solid rgba(255,102,0,0.3);">
+                            <% } else { %>
+                              <div class="amb-intern-avatar me-3 flex-shrink-0" style="margin-right: 16px !important;">
+                                <%= intern.name.charAt(0).toUpperCase() %>
+                              </div>
+                            <% } %>
+                            <div>
+                              <h6 class="mb-1 text-white fw-bold"><%= intern.name %></h6>
+                              <p class="mb-0 text-secondary small"><%= intern.email %></p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                          <span class="text-white-50"><%= intern.domain %></span>
+                        </td>
+                        <td class="d-none d-sm-table-cell text-white-50 small">
+                          <%= new Date(intern.joining_date).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %>
+                        </td>
+                        <td class="text-end">
+                          <h6 class="mb-1 text-success fw-bold">₹<%= intern.equity_earned || 0 %></h6>
+                          <!-- <small class="text-muted" style="font-size: 0.75rem;">Earned</small> -->
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="d-block d-md-none">
+              <div class="row g-3">
+                <% referredInterns.forEach((intern) => { %>
+                  <div class="col-12">
+                    <div class="id-glass-panel p-3 d-flex flex-column gap-2" style="background: rgba(0,0,0,0.2);">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="d-flex align-items-center">
+                          <% if (intern.img_url) { %>
+                            <img src="<%= intern.img_url %>" alt="<%= intern.name %>" class="rounded-circle me-3 flex-shrink-0" style="width: 48px; height: 48px; object-fit: cover; border: 2px solid rgba(255,102,0,0.3);">
+                          <% } else { %>
+                            <div class="amb-intern-avatar me-3 flex-shrink-0" style="margin-right: 16px !important;">
+                              <%= intern.name.charAt(0).toUpperCase() %>
+                            </div>
+                          <% } %>
+                          <div>
+                            <h6 class="mb-1 text-white fw-bold text-truncate" style="max-width: 150px;"><%= intern.name %></h6>
+                            <p class="mb-0 text-secondary small text-truncate" style="max-width: 150px;"><%= intern.email %></p>
+                          </div>
+                        </div>
+                        <div class="text-end ps-2 flex-shrink-0">
+                          <h6 class="mb-1 text-success fw-bold">₹<%= intern.equity_earned || 0 %></h6>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between mt-2 pt-2 border-top border-secondary border-opacity-25">
+                        <span class="text-white-50 small"><i class="bi bi-briefcase me-1"></i><%= intern.domain %></span>
+                        <span class="text-white-50 small"><i class="bi bi-calendar-event me-1"></i><%= new Date(intern.joining_date).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %></span>
+                      </div>
+                    </div>
+                  </div>
                 <% }) %>
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
           <% } else { %>
-          <p class="text-secondary mb-0">No interns have been referred yet.</p>
+            <div class="text-center py-5">
+              <i class="bi bi-people display-1 text-muted mb-3 opacity-25"></i>
+              <p class="text-secondary mb-0">No interns have been referred yet.</p>
+            </div>
           <% } %>
         </section>
 
-        <section id="rewards" class="p-1">
-          <h2 class="fw-bold mt-2">Rewards & Withdrawals</h2>
-          <!-- <p class="text-secondary mb-4">
-            Track your Campus Ambassador program earnings, request cashouts, and view your transaction history.
-          </p> -->
+        <section id="rewards" class="id-section">
+          <p class="section-eyebrow">Your Earnings</p>
+          <h2 class="section-heading">Rewards & Withdrawals</h2>
+
+          <!-- Badge Progress -->
+          <div class="amb-badge-steps">
+            <div class="amb-badge-step-line"></div>
+            <% 
+              const badges = ["None", "Bronze", "Silver", "Gold"];
+              let badgeIndex = badges.indexOf(badge);
+              if (badgeIndex === -1) badgeIndex = 0;
+              const progressWidth = badgeIndex === 0 ? 0 : (badgeIndex / 3) * 100;
+            %>
+            <div class="amb-badge-step-progress" style="width: <%= progressWidth %>%;"></div>
+            
+            <% badges.forEach((b, i) => { 
+                let stateClass = "";
+                if (i < badgeIndex) stateClass = "completed";
+                else if (i === badgeIndex) stateClass = "active";
+            %>
+            <div class="amb-badge-step <%= stateClass %>">
+              <div class="amb-badge-step-dot">
+                <% if (i < badgeIndex) { %>
+                  <i class="bi bi-check-lg text-white"></i>
+                <% } else if (i === badgeIndex && i !== 0) { %>
+                  <i class="bi bi-star-fill text-white"></i>
+                <% } else if (i === 0) { %>
+                  <i class="bi bi-circle"></i>
+                <% } %>
+              </div>
+              <div class="amb-badge-step-label"><%= b %></div>
+            </div>
+            <% }); %>
+          </div>
 
           <!-- 📈 Financial Statistics Grid -->
-          <div class="row g-3 mb-4 text-center text-md-start">
+          <div class="row g-4 mb-4">
             <div class="col-md-4">
-              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
-                <span class="text-white small text-uppercase fw-semibold">Available Balance</span>
-                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= availableBalance.toFixed(2) %></h2>
-                <small class="text-white">Earnings minus withdrawals</small>
+              <div class="id-stat-card">
+                <div class="id-stat-icon"><i class="bi bi-wallet2"></i></div>
+                <div class="id-stat-title">Available Balance</div>
+                <div class="id-stat-value" style="color: #ff6600;">₹<%= availableBalance.toFixed(2) %></div>
+                <small class="text-secondary d-block mt-2" style="font-size: 0.75rem;">Earnings minus withdrawals</small>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
-                <span class="text-white small text-uppercase fw-semibold">Total Earnings</span>
-                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= earnings.toFixed(2) %></h2>
-                <small class="text-white">Cumulative commission earned</small>
+              <div class="id-stat-card">
+                <div class="id-stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                <div class="id-stat-title">Total Earnings</div>
+                <div class="id-stat-value">₹<%= earnings.toFixed(2) %></div>
+                <small class="text-secondary d-block mt-2" style="font-size: 0.75rem;">Cumulative commission</small>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card p-3  rounded-3 h-100" style="background-color: #1e1e1e; border: 1px solid #ff6600; ">
-                <span class="text-white small text-uppercase fw-semibold">Total Withdrawn</span>
-                <h2 class="fw-bold mt-2 " style="color: #ff6600;">₹<%= totalWithdrawn.toFixed(2) %></h2>
-                <small class="text-white">Approved payouts</small>
+              <div class="id-stat-card">
+                <div class="id-stat-icon"><i class="bi bi-cash-stack"></i></div>
+                <div class="id-stat-title">Total Withdrawn</div>
+                <div class="id-stat-value">₹<%= totalWithdrawn.toFixed(2) %></div>
+                <small class="text-secondary d-block mt-2" style="font-size: 0.75rem;">Approved payouts</small>
               </div>
             </div>
           </div>
+
+          <!-- Milestone Notifications -->
+          <% if (bronzeMail || silverMail || goldMail) { %>
+            <div class="row g-3 mb-4">
+              <% if (bronzeMail) { %>
+              <div class="col-12">
+                <div class="alert alert-warning border-warning bg-dark text-white d-flex align-items-center mb-0" style="border-left: 4px solid #cd7f32 !important;">
+                  <i class="bi bi-trophy-fill fs-4 me-3" style="color: #cd7f32;"></i>
+                  <div>
+                    <strong>Bronze Milestone Reached!</strong>
+                    <p class="mb-0 small text-secondary">Congratulations! You've referred 10 interns. Withdrawals are now unlocked.</p>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+              <% if (silverMail) { %>
+              <div class="col-12">
+                <div class="alert alert-secondary border-secondary bg-dark text-white d-flex align-items-center mb-0" style="border-left: 4px solid #c0c0c0 !important;">
+                  <i class="bi bi-trophy-fill fs-4 me-3" style="color: #c0c0c0;"></i>
+                  <div>
+                    <strong>Silver Milestone Reached!</strong>
+                    <p class="mb-0 small text-secondary">Outstanding work! You've referred 25 interns.</p>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+              <% if (goldMail) { %>
+              <div class="col-12">
+                <div class="alert alert-warning border-warning bg-dark text-white d-flex align-items-center mb-0" style="border-left: 4px solid #ffd700 !important;">
+                  <i class="bi bi-trophy-fill fs-4 me-3" style="color: #ffd700;"></i>
+                  <div>
+                    <strong>Gold Milestone Reached!</strong>
+                    <p class="mb-0 small text-secondary">Incredible! You've referred 50 interns. You are a top ambassador.</p>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          <% } %>
 
           <div class="row g-4">
             <!-- 💸 Left Column: Request Withdrawal Form -->
             <div class="col-lg-5">
-              <div class="card p-4 h-100 border-0 rounded-3" style="background-color: #1a1a1a; border: 1px solid rgba(255, 102, 0, 0.15) !important;">
-                <h5 class="fw-bold text-white mb-3">Request Cashout</h5>
-                
+              <div class="card p-4 h-100 border-0 rounded-4" style="background-color: #161616; border: 1px solid rgba(255,255,255,0.05) !important;">
+                <div class="d-flex align-items-center mb-4 ">
+                  <h4 class="fw-bold text-white mb-0">Request Cashout</h4>
+                  
+                </div>
+                <hr class="border-secondary mb-4 mt-0 opacity-25">
                 <% if (badge === "None") { %>
                   <!-- 🔒 Locked State -->
-                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 h-100">
-                    <div class="p-3 bg-dark rounded-circle mb-3 border border-secondary" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
-                      <i class="bi bi-lock-fill fs-2 text-muted"></i>
+                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-4 h-100 opacity-75">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="background: rgba(255,255,255,0.05); color: #666; width: 64px; height: 64px; font-size: 1.5rem;">
+                      <i class="bi bi-lock-fill"></i>
                     </div>
                     <h6 class="fw-bold text-white mb-2">Withdrawals Locked</h6>
-                    <p class="text-secondary small px-3">
-                      Withdrawals are unlocked once you achieve at least the <span class="text-warning fw-semibold">Bronze</span> badge level (minimum 10 referred students). Keep referring to unlock your rewards!
+                    <p class="text-secondary small px-2">
+                      Withdrawals unlock at <span class="text-warning fw-semibold">Bronze</span> tier (10 referrals).
                     </p>
-                    <div class="w-100 mt-3 p-2 bg-dark rounded text-start small border border-secondary">
-                      <div class="d-flex justify-content-between mb-1">
-                        <span>Current Referrals:</span>
-                        <span class="fw-bold text-warning"><%= ambassador.internCount %> / 10</span>
+                    <div class="w-100 mt-3 p-3 rounded" style="background: rgba(0,0,0,0.2);">
+                      <div class="d-flex justify-content-between mb-2 small">
+                         <span class="text-secondary">Progress</span>
+                         <span class="fw-bold text-warning"><%= ambassador.internCount %> / 10</span>
                       </div>
-                      <div class="progress" style="height: 6px; background-color: #333;">
+                      <div class="progress" style="height: 6px; background-color: rgba(255,255,255,0.1);">
                         <div class="progress-bar bg-warning" role="progressbar" style="width: <%= Math.min(100, (ambassador.internCount / 10) * 100) %>%"></div>
                       </div>
                     </div>
@@ -736,25 +707,25 @@
                 <% } else { %>
                   <!-- 🔓 Form State -->
                   <form id="withdrawalForm" onsubmit="submitWithdrawalRequest(event)">
-                    <div class="mb-3">
-                      <label class="form-label small fw-semibold text-white">Withdrawal Amount (₹) <span class="text-danger">*</span></label>
-                      <div class="input-group">
-                        <span class="input-group-text bg-dark border-secondary text-white">₹</span>
-                        <input type="number" name="amount" id="withdrawAmount" class="form-control bg-dark text-white border-secondary" placeholder="Enter amount" min="1" max="<%= availableBalance %>" required>
+                    <div class="mb-4">
+                      <label class="form-label fw-bold" style="color: #94a3b8; font-size: 0.95rem;">Withdrawal Amount (₹) <span class="text-danger">*</span></label>
+                      <div class="dark-input-group">
+                        <span class="dark-input-group-text">₹</span>
+                        <input type="number" name="amount" id="withdrawAmount" class="dark-input" placeholder="Enter amount" min="1" max="<%= availableBalance %>" required>
                       </div>
-                      <div class="d-flex justify-content-between mt-1">
-                        <small class="text-white-50">Min: ₹1</small>
-                        <small class="text-white-50 cursor-pointer fw-semibold" style="cursor: pointer;" onclick="setMaxWithdrawal()">Max: ₹<%= availableBalance.toFixed(2) %></small>
+                      <div class="d-flex justify-content-between mt-2 px-1">
+                        <small style="color: #64748b; font-weight: 500;">Min: ₹1</small>
+                        <small class="cursor-pointer fw-bold text-white-50"  onclick="setMaxWithdrawal()">Max: ₹<%= availableBalance.toFixed(2) %></small>
                       </div>
                     </div>
 
                     <div class="mb-4">
-                      <label class="form-label small fw-semibold text-white">Payment Details <span class="text-danger">*</span></label>
-                      <textarea name="paymentDetails" id="withdrawPaymentDetails" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Enter UPI ID (e.g., username@ybl) or Bank Details (Name, A/C Number, IFSC Code)" required></textarea>
+                      <label class="form-label fw-bold" style="color: #94a3b8; font-size: 0.95rem;">Payment Details <span class="text-danger">*</span></label>
+                      <textarea name="paymentDetails" id="withdrawPaymentDetails" class="dark-form-input w-100" style="resize: none;" rows="3" placeholder="UPI ID or Bank Details (A/C No, IFSC)" required></textarea>
                     </div>
 
-                    <button type="submit" id="submitWithdrawBtn" class="btn w-100 text-white fw-bold d-flex align-items-center justify-content-center gap-2 py-2" style="background: linear-gradient(135deg, #ff6600, #ff8533); border: none; border-radius: 6px;">
-                      <i class="bi bi-send-fill"></i> Submit Request
+                    <button type="submit" id="submitWithdrawBtn" class="btn dark-submit-btn w-100 mt-2">
+                      <i class="bi bi-send-fill me-2" style="transform: rotate(-90deg); display: inline-block;"></i> Submit Request
                     </button>
                   </form>
                 <% } %>
@@ -763,54 +734,53 @@
 
             <!-- 🧾 Right Column: Timeline / Table of past withdrawals -->
             <div class="col-lg-7">
-              <div class="card p-4 h-100 border-0 rounded-3" style="background-color: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.05) !important;">
-                <h5 class="fw-bold text-white mb-3">Withdrawal History</h5>
+              <div class="card p-4 h-100 border-0 rounded-4" style="background-color: #161616; border: 1px solid rgba(255,255,255,0.05) !important;">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="bi bi-clock-history text-white fs-5 me-2"></i>
+                  <h5 class="fw-bold text-white mb-0">Withdrawal History</h5>
+                </div>
+                <hr class="border-secondary mb-4 mt-0 opacity-25">
                 
                 <% const ambassadorWithdrawals = ambassador.withdrawals || []; %>
                 <% if (ambassadorWithdrawals.length === 0) { %>
-                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 h-100 text-white">
-                    <i class="bi bi-inbox display-5 mb-3 opacity-25"></i>
-                    <p class="small mb-0">No withdrawal requests found.</p>
+                  <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 h-100">
+                    <i class="bi bi-inbox display-1 text-muted mb-3 opacity-25"></i>
+                    <p class="text-secondary mb-0">No withdrawal requests found.</p>
                   </div>
                 <% } else { %>
-                  <div class="table-responsive rounded border border-secondary" style="max-height: 380px; overflow-y: auto;">
-                    <table class="table table-dark table-striped align-middle mb-0" style="font-size: 0.85rem;">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Amount</th>
-                          <th>Status</th>
-                          <th>Transaction Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% ambassadorWithdrawals.slice().reverse().forEach(w => { %>
-                          <tr>
-                            <td><%= new Date(w.date).toLocaleDateString("en-GB") %></td>
-                            <td class="fw-bold">₹<%= w.amount %></td>
-                            <td>
-                              <% if (w.status === 'Approved') { %>
-                                <span class="badge bg-success shadow-sm px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i>Done</span>
-                              <% } else if (w.status === 'Rejected') { %>
-                                <span class="badge bg-danger shadow-sm px-2 py-1"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
-                              <% } else { %>
-                                <span class="badge bg-warning text-dark shadow-sm px-2 py-1"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
-                              <% } %>
-                            </td>
-                            <td>
-                              <% if (w.status === 'Approved') { %>
-                                <div class="text-truncate fw-semibold text-white-50" style="max-width: 150px;" title="<%= w.title %>"><%= w.title %></div>
-                                <div class="font-monospace text-white small" style="font-size: 0.72rem;" title="<%= w.transactionId %>">ID: <%= w.transactionId %></div>
-                              <% } else if (w.status === 'Rejected') { %>
-                                <span class="text-muted small">—</span>
-                              <% } else { %>
-                                <div class="text-truncate text-muted small" style="max-width: 150px;" title="Details: <%= w.paymentDetails %>">Details: <%= w.paymentDetails %></div>
-                              <% } %>
-                            </td>
-                          </tr>
-                        <% }) %>
-                      </tbody>
-                    </table>
+                  <div class="withdrawal-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                    <% ambassadorWithdrawals.slice().reverse().forEach(w => { %>
+                      <div class="d-flex align-items-center p-3 mb-3 rounded-4 shadow-sm" style="background-color: #1c1c1c; border-left: 3px solid #ff6600; border-top: 1px solid rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width: 48px; height: 48px; background-color: rgba(255, 102, 0, 0.1);">
+                          <i class="bi bi-cash-stack" style="color: #ff6600; font-size: 1.25rem;"></i>
+                        </div>
+                        <div class="flex-grow-1 row align-items-center m-0">
+                          <div class="col-12 col-sm-4 p-0 mb-2 mb-sm-0">
+                            <h4 class="mb-0 text-white fw-bold">₹<%= w.amount %></h4>
+                            <small class="text-secondary" style="font-size: 0.8rem;"><%= new Date(w.date).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %></small>
+                          </div>
+                          <div class="col-12 col-sm-5 p-0 mb-2 mb-sm-0">
+                            <% if (w.status === 'Approved') { %>
+                              <div class="text-white-50 text-truncate" style="font-size: 0.85rem;" title="<%= w.title %>"><%= w.title %></div>
+                              <div class="text-white-50" style="font-size: 0.75rem;">Payment ID: <%= w.transactionId %></div>
+                            <% } else if (w.status === 'Rejected') { %>
+                              <span class="text-white-50 small">—</span>
+                            <% } else { %>
+                              <div class="text-white-50 text-truncate" style="font-size: 0.85rem;" title="Details: <%= w.paymentDetails %>">Details: <%= w.paymentDetails %></div>
+                            <% } %>
+                          </div>
+                          <div class="col-12 col-sm-3 p-0 text-sm-end text-start">
+                            <% if (w.status === 'Approved') { %>
+                              <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-1 fw-normal"><i class="bi bi-check-circle-fill me-1"></i>Done</span>
+                            <% } else if (w.status === 'Rejected') { %>
+                              <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-1 fw-normal"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
+                            <% } else { %>
+                              <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-1 fw-normal"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+                            <% } %>
+                          </div>
+                        </div>
+                      </div>
+                    <% }) %>
                   </div>
                 <% } %>
               </div>
@@ -818,148 +788,121 @@
           </div>
         </section>
 
-        <section id="documents" class="p-1">
-          <h2 class="fw-bold mt-2">Internship Documents</h2>
-          <p class="text-white">
-            Your can download your internship documents here...
-          </p>
-          <div class="row g-3">
+        <section id="documents" class="id-section">
+          <p class="section-eyebrow">Your Assets</p>
+          <h2 class="section-heading">Internship Documents</h2>
+          
+          <div class="row g-4">
             <!-- Offer Letter -->
             <div class="col-12">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600"
-              >
+              <div class="id-project-card" style="margin-bottom: 0px !important;">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-file-earmark-text-fill fs-3"
-                      style="color: #ff6600"
-                    ></i>
+                  <div class="id-quiz-icon" style="background: rgba(255,102,0,0.1); color: var(--primary);">
+                    <i class="bi bi-file-earmark-text-fill"></i>
                   </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">Offer Letter</h5>
-                    <p class="mb-0 text-white">
-                      Download your offer letter from here
-                    </p>
+                  <div class="id-project-info">
+                    <h5>Offer Letter</h5>
+                    <p>Official document of your Campus Ambassador offer.</p>
                   </div>
                 </div>
-                <a
-                  href="<%= ambassador.offer_letter_link %>"
-                  target="_blank"
-                  class="btn btn-outline-success"
-                >
-                  <i class="bi bi-download"></i>
-                </a>
+                <div class="id-project-actions">
+                  <a href="<%= ambassador.offer_letter_link %>" target="_blank" class="btn btn-primary-custom">
+                    <i class="bi bi-download"></i> Download
+                  </a>
+                </div>
               </div>
             </div>
 
             <!-- Certificate -->
             <div class="col-12">
-              <div
-                class="card doc-card d-flex flex-row align-items-center justify-content-between p-3"
-                style="border: 1px solid #ff6600"
-              >
+              <div class="id-project-card" style="margin-bottom: 0px !important;">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="info-icon text-warning">
-                    <i
-                      class="bi bi-file-earmark-medical-fill fs-3"
-                      style="color: #ff6600"
-                    ></i>
+                  <div class="id-quiz-icon" style="background: rgba(255,102,0,0.1); color: var(--primary);">
+                    <i class="bi bi-file-earmark-medical-fill"></i>
                   </div>
-                  <div class="info-content">
-                    <h5 class="fw-bold mb-1 text-white">
-                      Ambassador Certificate
-                    </h5>
-                    <p class="mb-0 text-white">
-                      Download your <% if (badge === "Gold") { %> Gold <% } else
-                      if (badge === "Silver") { %> Silver <% } else if (badge
-                      === "Bronze") { %> Bronze <% } else { %> <% } %> Campus
-                      Ambassador Certificate
+                  <div class="id-project-info">
+                    <h5>Ambassador Certificate</h5>
+                    <p>
+                      Download your <% if (badge === "Gold") { %> Gold <% } else if (badge === "Silver") { %> Silver <% } else if (badge === "Bronze") { %> Bronze <% } %> Campus Ambassador Certificate.
                     </p>
                   </div>
                 </div>
-                <% if (badge === "None") { %>
-                <a
-                  href="#"
-                  class="btn btn-outline-secondary disabled"
-                  tabindex="-1"
-                  aria-disabled="true"
-                >
-                  <i class="bi bi-download"></i>
-                </a>
-                <% } else { %>
-                <a
-                  href="<%= ambassador.certificate_link %>"
-                  target="_blank"
-                  class="btn btn-outline-success"
-                >
-                  <i class="bi bi-download"></i>
-                </a>
-                <% } %>
+                <div class="id-project-actions">
+                  <% if (badge === "None") { %>
+                  <button class="btn btn-secondary disabled">
+                    <i class="bi bi-lock-fill"></i> Locked
+                  </button>
+                  <% } else { %>
+                  <a href="<%= ambassador.certificate_link %>" target="_blank" class="btn btn-primary-custom">
+                    <i class="bi bi-download"></i> Download
+                  </a>
+                  <% } %>
+                </div>
               </div>
             </div>
           </div>
         </section>
-      </main>
+      </div> <!-- /id-content-body -->
+    </main> <!-- /id-main-content -->
+
+    <%- include("partials/toaster") %>
+
+    <!-- Update Profile Picture Modal -->
+    <div class="modal fade id-modal" id="updateProfileModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Profile Picture</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="mb-4">
+              <img id="previewImage" src="<%= ambassador.img_url %>" alt="Preview" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);">
+            </div>
+            <form action="/ambassador/update-image" method="POST" enctype="multipart/form-data" id="updateImageForm">
+              <input type="file" name="image" id="imageInput" class="dark-form-input w-100 mb-4" accept="image/*" required />
+              <button type="submit" class="btn dark-submit-btn w-100">Update Picture</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade id-modal" id="logoutModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-body text-center p-4">
+            <i class="bi bi-box-arrow-right text-danger display-4 mb-3"></i>
+            <h5 class="text-white mb-3">Ready to leave?</h5>
+            <div class="d-flex gap-2 justify-content-center mt-4">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <a href="/logout" class="btn btn-danger">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Password Change Modal -->
     <% if (showPasswordPopup) { %>
-    <div
-      class="modal fade"
-      id="passwordModal"
-      tabindex="-1"
-      aria-labelledby="passwordModalLabel"
-      aria-hidden="true"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-    >
+    <div class="modal fade id-modal" id="passwordModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-centered">
-        <div
-          class="modal-content shadow-lg"
-          style="background-color: #1e1e1e; border: 1px solid #ff6600"
-        >
+        <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-white" id="passwordModalLabel">
-              Change Your Password
-            </h5>
+            <h5 class="modal-title text-white">Change Your Password</h5>
           </div>
           <div class="modal-body">
-            <form
-              action="/ambassador/change-password"
-              method="POST"
-              id="passwordForm"
-              novalidate
-            >
-              <div class="mb-3">
-                <label class="form-label text-white">New Password</label>
-                <input
-                  type="password"
-                  name="newPassword"
-                  class="form-control"
-                  placeholder="Enter new Password"
-                  minlength="6"
-                />
+            <form action="/ambassador/change-password" method="POST" id="passwordForm" novalidate>
+              <div class="mb-3 text-start">
+                <label class="form-label text-white fw-bold" style="font-size: 0.95rem;">New Password</label>
+                <input type="password" name="newPassword" class="dark-form-input w-100" placeholder="Enter new Password" minlength="6" />
               </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  required
-                  minlength="6"
-                />
+              <div class="mb-4 text-start">
+                <label class="form-label text-white fw-bold" style="font-size: 0.95rem;">Confirm Password</label>
+                <input type="password" name="confirmPassword" class="dark-form-input w-100" placeholder="Confirm Password" required minlength="6" />
               </div>
-              <button
-                type="submit"
-                class="btn w-100 text-white"
-                style="background-color: #ff6600; font-weight: 500"
-              >
-                Update Password
-              </button>
+              <button type="submit" class="btn dark-submit-btn w-100 mt-2">Update Password</button>
             </form>
           </div>
         </div>
@@ -977,112 +920,65 @@
     </script>
     <% } %>
 
-    <footer id="footer" class="footer light-background">
-      <div class="copyright text-center">
-        <div
-          class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center"
-        >
-          <div
-            class="d-flex flex-column align-items-center align-items-lg-start"
-          >
-            <div>
-              © Copyright 2025 <strong><span>Rixi Lab</span></strong
-              >. All Rights Reserved
-            </div>
-            <div class="credits">
-              Designed by
-              <a
-                style="text-decoration: none; color: #ff6600"
-                href="https://www.rixilab.tech"
-                ><b>Rixi Lab</b></a
-              >
-            </div>
-          </div>
-
-          <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-            <a href="https://www.linkedin.com/company/rixilab"
-              ><i class="bi bi-linkedin"></i
-            ></a>
-            <a href="https://www.facebook.com/rixilab"
-              ><i class="bi bi-facebook"></i
-            ></a>
-            <a href="https://www.instagram.com/rixilab.in"
-              ><i class="bi bi-instagram"></i
-            ></a>
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <%- include("partials/toaster") %>
-
-    <!-- Scroll Top -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
-
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const navLinks = document.querySelectorAll(".nav-link");
-        const sections = document.querySelectorAll("main section");
+      // Sidebar Toggle
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      
+      function toggleSidebar() {
+        sidebar.classList.toggle('show');
+        sidebarOverlay.classList.toggle('show');
+      }
+      
+      sidebarOverlay.addEventListener('click', toggleSidebar);
 
-        navLinks.forEach((link) => {
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            navLinks.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-            sections.forEach((s) => s.classList.remove("active"));
-            const target = this.getAttribute("href").substring(1);
-            document.getElementById(target).classList.add("active");
-          });
+      // Section Switching Logic
+      function switchSection(sectionId, element) {
+        if (window.event && window.event.type === 'click') {
+          window.event.preventDefault();
+          history.pushState(null, null, '#' + sectionId);
+        }
+        // Update active class on nav links
+        document.querySelectorAll('.id-sidebar-nav a').forEach(el => {
+          el.classList.remove('active');
         });
-      });
-
-      let showDetailsBtn = document.getElementById("showDetails");
-      let detailsSection = document.querySelector(".details");
-      let detailsVisible = false;
-      showDetailsBtn.addEventListener("click", function () {
-        detailsVisible = !detailsVisible;
-        if (detailsVisible) {
-          detailsSection.style.display = "block";
-          showDetailsBtn.innerHTML =
-            '<i class="bi bi-arrow-up-square-fill"></i>';
+        if (element) {
+          element.classList.add('active');
         } else {
-          detailsSection.style.display = "none";
-          showDetailsBtn.innerHTML =
-            '<i class="bi bi-arrow-down-square-fill"></i>';
+          // If called without element (e.g. from hash), find the link
+          const link = document.querySelector(`.id-sidebar-nav a[href="#${sectionId}"]`);
+          if (link) link.classList.add('active');
         }
 
-        gsap.registerPlugin(ScrollTrigger);
-
-        const header = document.getElementById("header");
-        let lastScroll = 0;
-
-        ScrollTrigger.create({
-          start: 0,
-          end: "max",
-          onUpdate: (self) => {
-            const currentScroll = self.scroll();
-
-            if (currentScroll > lastScroll && currentScroll > 50) {
-              // Scrolling down -> hide header
-              gsap.to(header, {
-                y: "-100%",
-                duration: 0.3,
-                ease: "power2.out",
-              });
-            } else {
-              // Scrolling up -> show header
-              gsap.to(header, { y: "0%", duration: 0.3, ease: "power2.out" });
-            }
-
-            lastScroll = currentScroll;
-          },
+        // Update active class on sections
+        document.querySelectorAll('.id-section').forEach(el => {
+          el.classList.remove('active');
         });
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+          // Update topbar title
+          const titleMap = {
+            'dashboard': 'Dashboard',
+            'interns': 'Campus Ambassador',
+            'rewards': 'Campus Ambassador',
+            'documents': 'Campus Ambassador'
+          };
+          document.getElementById('topbarTitle').textContent = titleMap[sectionId] || 'Dashboard';
+        }
+
+        // Close sidebar on mobile after clicking
+        if (window.innerWidth < 768 && sidebar.classList.contains('show')) {
+          toggleSidebar();
+        }
+      }
+
+      // Handle direct links with hash
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.location.hash) {
+          const sectionId = window.location.hash.substring(1);
+          switchSection(sectionId);
+        }
       });
 
       // Image Preview
@@ -1174,7 +1070,7 @@ async function submitWithdrawalRequest(event) {
   const submitBtn = document.getElementById("submitWithdrawBtn");
   const originalContent = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+  submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 
   try {
     const response = await fetch("/ambassador/withdraw", {
