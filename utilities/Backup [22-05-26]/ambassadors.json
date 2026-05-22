@@ -1,0 +1,1819 @@
+[
+  {
+    "_id": {
+      "$oid": "690b46bbfa6d2c8277c4d44d"
+    },
+    "referralId": "MR1101",
+    "ambassador_id": "RLCA251101",
+    "name": "Maram Reddy Sathvika Reddy",
+    "email": "mmsathvikareddy@gmail.com",
+    "phone": "9515649740",
+    "password": "$2b$10$vGUFSkAOpJWcAAux6rct3eQPhRjHcHUP7rzvIPCTNkB5pk/CBrzTO",
+    "isFirstLogin": true,
+    "college": "Ashoka womens engineering college",
+    "university": "Jawaharlal Nehru University anthapure",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Chinnatekkur,smart campus Ashoka womens engineering college",
+      "city": "Kurnool, Andhra Pradesh, India",
+      "state": "ANDHRA PRADESH",
+      "country": "India",
+      "pincode": "518218"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/m-sathvika-reddy-2974532b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/sathvika__1001?igsh=MWlpeHN4cHN3a21xbw==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T12:44:43.607Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T12:44:43.607Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:50.213Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=17v9Z54qY2_vNxej_xqZgEQWf7fIiIy9M&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b47f4fa6d2c8277c4d8f6"
+    },
+    "referralId": "AS1102",
+    "ambassador_id": "RLCA251102",
+    "name": "Aniket Singh",
+    "email": "singh.aniket264538@gmail.com",
+    "phone": "8948417922",
+    "password": "$2b$10$Hxhz3yb/F0ALpW.hr6ytKeL58wjVN8K7btV14l1ZzmyIoe/TpG.ru",
+    "isFirstLogin": false,
+    "college": "Rama University",
+    "university": "Rama University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "NH-91, Near Mandhana Railway Station, Rama City, Mandhana, Bithoor Road",
+      "city": "Mandhana, Kanpur",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "pincode": "209217"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/aniketsingh26/",
+    "insta_profile_url": "https://www.instagram.com/itss_aniket_singh",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T12:49:56.507Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T12:49:56.508Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:50.392Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1QD_ZX5E3vkUCzrWbQ_YSKH53tAIf5J6A&export=download",
+    "discountPercent": 10,
+    "isOnline": false,
+    "equity": 20,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b554e9e5a7c0c1f87e1ce"
+    },
+    "referralId": "KP1103",
+    "ambassador_id": "RLCA251103",
+    "name": "Kandeykari Poojitha",
+    "email": "kpoojitha285@gmail.com",
+    "phone": "7396654403",
+    "password": "$2b$10$8Xfg0NFC337EIPKWR50RZOCzQfCSwXVV4SrQmjfrqJaGrcWAtN06C",
+    "isFirstLogin": false,
+    "college": "Sanskrithi school of engineering",
+    "university": "Jawaharlal Nehru University anthapure",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "12/102,MB.church near chakali street, Yemmiganur",
+      "city": "Kurnool",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "518360"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/kandekari-poojitha-38a042257?trk=contact-info",
+    "insta_profile_url": "https://www.instagram.com/accounts/settings/?entrypoint=profile&hl=en",
+    "internCount": 3,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:46:54.394Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:46:54.396Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:31:26.190Z"
+    },
+    "__v": 2,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1owN3e05yzLa-Ah-k5wleGPn9mgEB_cyI&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "total_earnings": 0,
+    "referred_interns": [
+      {
+        "name": "Konreddy Vani",
+        "email": "kondreddygarivani@gmail.com",
+        "phone": "9154208528",
+        "domain": "Data Analytics",
+        "duration": 8,
+        "batch_no": "2601",
+        "joining_date": {
+          "$date": "2025-12-25T09:19:30.772Z"
+        },
+        "_id": {
+          "$oid": "69f39ffe40377db2f6a04022"
+        }
+      },
+      {
+        "name": "S R Harshad",
+        "email": "harshadsr78@gmail.com",
+        "phone": "9390299475",
+        "domain": "Python Programming",
+        "duration": 4,
+        "batch_no": "2601",
+        "joining_date": {
+          "$date": "2025-12-28T06:48:40.237Z"
+        },
+        "_id": {
+          "$oid": "69f39ffe40377db2f6a04023"
+        }
+      },
+      {
+        "name": "Pugyala Reshma",
+        "email": "reshushaik0726@gmail.com",
+        "phone": "6304072358",
+        "domain": "Web Development",
+        "duration": 6,
+        "batch_no": "2601",
+        "joining_date": {
+          "$date": "2025-12-29T13:43:09.842Z"
+        },
+        "_id": {
+          "$oid": "69f39ffe40377db2f6a04024"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "690b55ca9e5a7c0c1f87e652"
+    },
+    "referralId": "SS1104",
+    "ambassador_id": "RLCA251104",
+    "name": "Sindhe Sravanthi",
+    "email": "sindhesravanthi1904@gmail.com",
+    "phone": "7416233922",
+    "password": "$2b$10$f9f3hxaKTB5GDfxn.k0BVu5GJsQNScl/NrnUFS4VtCIVqLSgFo5Zu",
+    "isFirstLogin": false,
+    "college": "Sanskrithi school of engineering",
+    "university": "JNTUA",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Nimmalakunta",
+      "city": "Dharmavaram",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "515671"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/sindhesravanthi24",
+    "insta_profile_url": "https://www.instagram.com/sinde_sravanthi_24?igsh=bjVhbmd6c3MyOHgz",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:48:58.404Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:48:58.404Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:50.851Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1YvcvrAUqpMNwyrI-XT_kkCdZBivUVU_k&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b56279e5a7c0c1f87ead6"
+    },
+    "referralId": "HR1105",
+    "ambassador_id": "RLCA251105",
+    "name": "H.Rajesh Kumar",
+    "email": "rajesh230804@gmail.com",
+    "phone": "9100374764",
+    "password": "$2b$10$qgGYE.c7u.SazuPLwhJWw.Z0h2YJHr3Qv82hpIoZnru21tBQ5c28C",
+    "isFirstLogin": true,
+    "college": "CMR COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "university": "CMR COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Near Oxygen Park",
+      "city": "Kandlakoya",
+      "state": "Telangana",
+      "country": "India",
+      "pincode": "501401"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/rajesh-kumar-houdekari-5442a02a7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/rajesh_houdekari/",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:50:31.504Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:50:31.504Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:51.149Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1ICwBUSDROOicCohez5p7TnSbeZEebUI4&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b56999e5a7c0c1f87ef56"
+    },
+    "referralId": "BP1106",
+    "ambassador_id": "RLCA251106",
+    "name": "B.Parsharamulu",
+    "email": "bodduparsharamulu524136@gmail.com",
+    "phone": "6303450428",
+    "password": "$2b$10$WyXAPWJBf6BoQoD.zuSDf.0QDCXFX8eJjbevhk.PFyCaL9zTtIviq",
+    "isFirstLogin": true,
+    "college": "CMR college of engineering and technology",
+    "university": "CMR college of engineering and technology",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Kandlakoya",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "country": "India",
+      "pincode": "501401"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/boddu-parsharamulu/",
+    "insta_profile_url": "https://www.instagram.com/b.parsharamulu03/",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:52:25.701Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:52:25.702Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:51.315Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=10381aPEE7KJvTo2dNP31CrS5Ttvq7blk&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b57149e5a7c0c1f87f3da"
+    },
+    "referralId": "RK1107",
+    "ambassador_id": "RLCA251107",
+    "name": "Rahul Kumar Patel",
+    "email": "rahulpatels0403@gmail.com",
+    "phone": "8532896402",
+    "password": "$2b$10$USpjr8bBS/XXfpyaM87xsexhiLkR6bGfmgKn/iaBo.gQiCghwTTxG",
+    "isFirstLogin": false,
+    "college": "Quantum university roorkee",
+    "university": "Quantum university",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Near mandawar",
+      "city": "Roorkee",
+      "state": "Uttarakhand",
+      "country": "India",
+      "pincode": "247667"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/rahulpatel026",
+    "insta_profile_url": "https://www.linkedin.com/in/rahulpatel026",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:54:28.102Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:54:28.103Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:51.510Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1sywbXGFhfOD4Iy_Yv2ucQ_RCjkmt4Yow&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b57719e5a7c0c1f87f85e"
+    },
+    "referralId": "SK1108",
+    "ambassador_id": "RLCA251108",
+    "name": "Sagar Kapoor",
+    "email": "kapoorsagar594@gmail.com",
+    "phone": "7906514043",
+    "password": "$2b$10$A.FaMFFNH8rw.SmDA.hjV.VcXpZikA9SzxWYcnpY9mosABS4e4CRC",
+    "isFirstLogin": false,
+    "college": "Quantum University",
+    "university": "Quantum University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "6/1635, Ram vihar colony",
+      "city": "Saharanpur",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "pincode": "247001"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/sagar-kapoor-2b1775324?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/its_sagar_kapoor16?igsh=MW80a2h5ZTl2ZnFrcw==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T13:56:01.703Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T13:56:01.704Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:51.690Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1D2J2_Ev0vEsQm_mQ0klPFNMJI4CefnRe&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690b77099e5a7c0c1f88037f"
+    },
+    "referralId": "KS1109",
+    "ambassador_id": "RLCA251109",
+    "name": "Kavya Sri Yadlapati",
+    "email": "kavyasriyadlapati@gmail.com",
+    "phone": "7207324249",
+    "password": "$2b$10$TrxDb0stU7WHXd56hoh7Peq7CDQqgztbkrYnrwQO4LBSkj9YDiKKe",
+    "isFirstLogin": true,
+    "college": "CMR COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "university": "CMR COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Kandlakoya",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "country": "India",
+      "pincode": "501401"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/kavya-sri-yadlapati-0433502a9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/?hl=en&deoia=1",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-05T16:10:49.505Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-05T16:10:49.593Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:51.870Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1Zo2x6answ_6dpOyOU38H3W4O-zAmbbIq&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690ded56f2481741627b2d99"
+    },
+    "referralId": "NN1110",
+    "ambassador_id": "RLCA251110",
+    "name": "Nannuru Narasimha Rao",
+    "email": "nannurunarasimharao@gmai.com",
+    "phone": "6301329002",
+    "password": "$2b$10$fM5qnDQPma7O5FgmlZDHeee0rcBHWrTUhQRcJKCI80qUs0S6nUxSa",
+    "isFirstLogin": true,
+    "college": "sanskrithi School Of Enginnering",
+    "university": "JNTUA",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "puttaparthi",
+      "city": "Kadiri",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "515591"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/nannuru-narasimha-rao-067669310",
+    "insta_profile_url": "https://www.instagram.com/itz_narasimha46?igsh=YzM2cTR6ZzRod211",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:00:06.999Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:00:07.002Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.049Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1YTHvHsP8DSsqfVam9YSkTvm2IihGHfS6&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690dee0cf2481741627b3221"
+    },
+    "referralId": "AT1111",
+    "ambassador_id": "RLCA251111",
+    "name": "Abel Tariku",
+    "email": "abeltariku43@gmail.com",
+    "phone": "251988747980",
+    "password": "$2b$10$DzvAtF75tYvjnENzVtSJhum7J9kCwEsB.bzweuapX7L5B5WzqH81m",
+    "isFirstLogin": true,
+    "college": "CBTA",
+    "university": "Addis Ababa University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "1000",
+      "city": "Addis Ababa",
+      "state": "Addis Ababa",
+      "country": "Ethiopia",
+      "pincode": "1000"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/abeltariku/",
+    "insta_profile_url": "https://www.linkedin.com/in/abeltariku/",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:03:08.207Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:03:08.208Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.215Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1B5f7eoxpNk7HbQlrEJ3rDkLo15eZ-Ous&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690dee81f2481741627b36a5"
+    },
+    "referralId": "PK1112",
+    "ambassador_id": "RLCA251112",
+    "name": "Prakhar Kapoor",
+    "email": "prakharkapoor09@gmail.com",
+    "phone": "8769659879",
+    "password": "$2b$10$ADAICKgriE9ZdkQzECu0jeQIiBT2n3G6YCTbEhngGTiO7HsKkv/ou",
+    "isFirstLogin": true,
+    "college": "CTAE Udaipur",
+    "university": "MPUAT",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Mv hostel ctae",
+      "city": "Udaipur",
+      "state": "Rajasthan",
+      "country": "India",
+      "pincode": "313001"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/prakhar-kapoor-4651b8373?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/prakhar.kapoor.32?igsh=NTN2dmF2cWt6cXJs",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:05:05.910Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:05:05.910Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.396Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1lY66_ioR_JufdcBbGhlCgs-3adb_7EAN&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690deef2f2481741627b3b29"
+    },
+    "referralId": "SS1113",
+    "ambassador_id": "RLCA251113",
+    "name": "Sibsankar Samal",
+    "email": "sibsankar2727@gmail.com",
+    "phone": "8144258284",
+    "password": "$2b$10$yF3zYiFyWsQEM9vjwqIHLO.0WqpYEAygCEu86vLHdqj02fs.2kZmi",
+    "isFirstLogin": true,
+    "college": "GITA Autonomous College",
+    "university": "BPUT",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Bhubaneswara",
+      "city": "Bhubaneswar, Odisha",
+      "state": "Odisha",
+      "country": "India",
+      "pincode": "752054"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/sibsankarsamal",
+    "insta_profile_url": "https://www.instagram.com/ft.shivv/",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:06:58.710Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:06:58.710Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.532Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1gF-JD_cNHUZdyeuhRmEqpg9rzWxpe_CK&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690def90f2481741627b3fc6"
+    },
+    "referralId": "MR1114",
+    "ambassador_id": "RLCA251114",
+    "name": "Madhabattula Rameswar Narayana Manikanta Vinay",
+    "email": "tarakrammadhabattula@gmail.com",
+    "phone": "9494406660",
+    "password": "$2b$10$xST8flNQlvEXhuO733lgDOWRc.b7g1eQYNuSZfeX4YVqu1sTuM7N6",
+    "isFirstLogin": true,
+    "college": "ELURU COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "university": "Jawaharlal Nehru University Kakinada",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "R.R.PETA",
+      "city": "ELURU",
+      "state": "ANDHRA PRADESH",
+      "country": "INDIA",
+      "pincode": "534002"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/tarakram-madhabattula-644337307?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/tarakram._.7?igsh=dDhjejNrMDkwc3Zp",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:09:36.908Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:09:36.908Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.700Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1oAurdOjWmZOcrIuHbai8f7wBc2UaYsIL&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690df070f2481741627b4452"
+    },
+    "referralId": "DS1115",
+    "ambassador_id": "RLCA251115",
+    "name": "Devesh Sahu",
+    "email": "deveshsahu567@gmail.com",
+    "phone": "7607997416",
+    "password": "$2b$10$DinNv9VIyzbaphgVuE0gm.tkZJbkpWLr7ox1DdJYLhE23LI/zeTWS",
+    "isFirstLogin": false,
+    "college": "Kanpur institute of technology",
+    "university": "Dr.APJ Abdul Kalam technical university lucknow",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Rooma",
+      "city": "Kanpur",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "pincode": "208001"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/devesh-sahu-560608270?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/devesh_0075?igsh=enpzZDY4Y3ZqbnBz",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://res.cloudinary.com/dypyscar8/image/upload/v1762593138/admins/cmrhekcqpok6qkq0zaji.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:13:20.511Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:13:20.511Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:52.853Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1M0mzFxDUAQW0EVXXD2rHlOQDH2V17AL1&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690df0ebf2481741627b48da"
+    },
+    "referralId": "SG1116",
+    "ambassador_id": "RLCA251116",
+    "name": "Sanjana Gaurishankar Bammange",
+    "email": "sanjanabammange25@gmail.com",
+    "phone": "9405470110",
+    "password": "$2b$10$YRvLdRntV8ElZMRPupnicOuLm90fXnXyXxwFc9VnHNuABMFHeK3Ba",
+    "isFirstLogin": true,
+    "college": "Vidya Vikas Pratishthan Institute of Engineering and Technology",
+    "university": "Dr.Babasaheb Ambedkar(DBATU)",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Solapur",
+      "city": "Solapur",
+      "state": "Maharashtra",
+      "country": "India",
+      "pincode": "413008"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/feed/update/urn:li:groupPost:6610234-7358832292888268801?utm_source=social_share_send&utm_medium=android_app&rcm=ACoAAFte4TIBVjCiWt-3OqQOBab_GBvqHs-tmSI&utm_campaign=whatsapp",
+    "insta_profile_url": "https://www.linkedin.com/feed/update/urn:li:groupPost:6610234-7358832292888268801?utm_source=social_share_send&utm_medium=android_app&rcm=ACoAAFte4TIBVjCiWt-3OqQOBab_GBvqHs-tmSI&utm_campaign=whatsapp",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:15:23.099Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:15:23.099Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.018Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1z-OXS_v8a1PmofFIe9iSzCjzUgzs8yv4&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690df136f2481741627b4d5a"
+    },
+    "referralId": "NM1117",
+    "ambassador_id": "RLCA251117",
+    "name": "NIRANJANA M R",
+    "email": "mrniranjana.it@gmail.com",
+    "phone": "9363641657",
+    "password": "$2b$10$0jReXIPB6bjdNlSP4LxjPu0MYAaif7R92vKhAeQcwWepeTzd7ZMwe",
+    "isFirstLogin": false,
+    "college": "PSNA College of Engineering and Technology",
+    "university": "Anna University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Kothandaraman Nagar",
+      "city": "Dindigul",
+      "state": "Tamil Nadu",
+      "country": "India",
+      "pincode": "624622"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/niranjana-m-r-791936294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/m_r_niranjana?igsh=OXFpeWthdGJsbzho",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:16:38.111Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:16:38.112Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.166Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1U5KYan4vi-KE0HQo29HRKQQYkozZ4tUh&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690df17ff2481741627b51da"
+    },
+    "referralId": "AP1118",
+    "ambassador_id": "RLCA251118",
+    "name": "Aryan Pandey",
+    "email": "aryanpandey52355@gmail.com",
+    "phone": "8601747708",
+    "password": "$2b$10$MIYG3HZxtngLl5r.Ch4eNuSUW0txki6Tt6.Drzill0gprKDWUJdz6",
+    "isFirstLogin": true,
+    "college": "Ambalika Institute of Management and Technology",
+    "university": "Dr. A.P.J Abdul Kalam Technical University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Shahzadaypur",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "pincode": "226501"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/aryan-pandey-pyx/",
+    "insta_profile_url": "https://www.instagram.com/aryan.pyx?igsh=MXU0anQxYnp3ZHlxdA==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:17:51.408Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:17:51.409Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.366Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1l7CtcVRZ84yTZhkad9x0h7VswTRajg9Q&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "690df1d3f2481741627b5662"
+    },
+    "referralId": "MH1119",
+    "ambassador_id": "RLCA251119",
+    "name": "MANDAPAM HARISH",
+    "email": "mandapamharish04@gmail.com",
+    "phone": "6301192375",
+    "password": "$2b$10$758QhJheZFRzIP.steWb2eEbWPeYh6ZQ6nlYyN60ZF/ny1X.cwFcC",
+    "isFirstLogin": false,
+    "college": "Sathyabama University",
+    "university": "Sathyabama University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Jeppair nagar",
+      "city": "Chennai",
+      "state": "Tamilnadu",
+      "country": "India",
+      "pincode": "600119"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/harish-mandapam-16a65733b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/hari.sh_285/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-07T13:19:15.509Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-07T13:19:15.509Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.518Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/uc?id=1GSTZqoTYfVhPv2iy97rBExdEWWy31FrC&export=download",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69103a9dd5a216fdb446a640"
+    },
+    "referralId": "SS1120",
+    "ambassador_id": "RLCA251120",
+    "name": "Saksham Singh",
+    "email": "sakshamsingh2788@gmail.com",
+    "phone": "9219242788",
+    "password": "$2b$10$NievFl8aFRqh4j03V8.ScuD.ICDKwI0Ig3J47rULg00tAENeB97xm",
+    "isFirstLogin": true,
+    "college": "Kanpur institute of technology",
+    "university": "Dr. APJ Abdul Kalam Technical university",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "naubasta",
+      "city": "Kanpur",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "pincode": "208021"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/saksham-singh-7671a12a7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/thakur_saksham_222?igsh=MXZpMG5vM283ZGVzNw==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-09T06:54:21.302Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-09T06:54:21.306Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.681Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/1kwT3MEGTdnHjWkyA60hyC1CJOtjvaJBD/view?usp=drive_link",
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "691303059d20ef566ad3f524"
+    },
+    "referralId": "AJ1121",
+    "ambassador_id": "RLCA251121",
+    "name": "Abhishek Jadhav",
+    "email": "oshaxwott@gmail.com",
+    "phone": "8839898629",
+    "password": "$2b$10$u/y2wMef.zCxQeQ/3H87t.WXLFjoviggSOzZ3mxk4eRMfV63vQcyS",
+    "isFirstLogin": true,
+    "college": "Government engineering College bilaspur",
+    "university": "Government engineering College bilaspur",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Deendayal Colony",
+      "city": "Bilaspur",
+      "state": "Chhattisgarh",
+      "country": "India",
+      "pincode": "495001"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/abhishek-jadhav-37483b359?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "insta_profile_url": "https://www.instagram.com/abhishek_jadhav._?igsh=emxjcWI5ZnJzaDE0",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-11T09:33:57.477Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-11T09:33:57.564Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.835Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/12EvIYFu9PCfdQv3LRHFBC4AsOFKJN9I7/view?usp=drive_link",
+    "mailSent": true,
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "6922b88a7f6ddaad6a2da35f"
+    },
+    "referralId": "YB1122",
+    "ambassador_id": "RLCA251122",
+    "name": "Yadiki Blessee Devamani",
+    "email": "22kf1a05c9@sseptp.org",
+    "phone": "9849822751",
+    "password": "$2b$10$D.THbySZcxseHuSoIVdNKOxkWZMetgFq0CjWwFLYBzi5htlW.upmK",
+    "isFirstLogin": false,
+    "college": "Sanskrithi School of Engineering",
+    "university": "Jawaharlal Nehru Technological University Ananthapur",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Market street",
+      "city": "Dharmavaram",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "515671"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/yadikiblesseedevamani751",
+    "insta_profile_url": "https://www.instagram.com/miss_sunshine751_?igsh=MTVrbDJ1N2k4NGd5MQ==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-11-23T07:32:26.181Z"
+    },
+    "createdAt": {
+      "$date": "2025-11-23T07:32:26.182Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:53.999Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/16J4um0JwIf2FEqvxUp-9zGkBAwG4V45c/view?usp=drive_link",
+    "mailSent": true,
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69303e32144148ab03595d09"
+    },
+    "referralId": "TN1123",
+    "ambassador_id": "RLCA251123",
+    "name": "Tallam Nishanth",
+    "email": "tallamnishanth@gmail.com",
+    "phone": "7989102722",
+    "password": "$2b$10$OO/eoar62nBMEZAGl940WeriCznW6VJC/DydGYGy5iekFSgqZaDZy",
+    "isFirstLogin": true,
+    "college": "JNTU Anantapur",
+    "university": "JNTU Anantapur",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Main Road Bukkpatanam",
+      "city": "Anthapuram",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "515144"
+    },
+    "gender": "Male",
+    "linkedin_profile_url": "https://www.linkedin.com/in/tallam-nishanth-1292a02a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/nishu_x15_?igsh=MXN4OG01MTNydGNhNg==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-12-03T13:42:10.206Z"
+    },
+    "createdAt": {
+      "$date": "2025-12-03T13:42:10.208Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:54.271Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/18tOTlIXgPJpGo98BF8wqoMMikMmpKXne/view?usp=drive_link",
+    "mailSent": true,
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69303e90144148ab035961e9"
+    },
+    "referralId": "TP1124",
+    "ambassador_id": "RLCA251124",
+    "name": "Thotavari Pavani",
+    "email": "pp8885581@gmail.com",
+    "phone": "7993401847",
+    "password": "$2b$10$7Sp6VdboJjuSYYGy71G2Pezhn5EBJPJa7LeOtDX2xysOil..EzS/O",
+    "isFirstLogin": false,
+    "college": "Sanskrithi School of Engineering",
+    "university": "JNTUA",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Sanskrithi school of engineering",
+      "city": "Puttaparthi",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "515134"
+    },
+    "gender": "Female",
+    "linkedin_profile_url": "https://www.linkedin.com/in/pavani-ravichandra-02606a32b?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "insta_profile_url": "https://www.instagram.com/pavani_ravichandra",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "joining_date": {
+      "$date": "2025-12-03T13:43:44.896Z"
+    },
+    "createdAt": {
+      "$date": "2025-12-03T13:43:44.897Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:54.444Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/1Tpo7tVwPfUqs5vuJa8vys2I1xv6bWKpb/view?usp=drive_link",
+    "mailSent": true,
+    "discountPercent": 10,
+    "equity": 20,
+    "isOnline": false,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ce7b6ee1bc60526089009c"
+    },
+    "referralId": "YASH20",
+    "ambassador_id": "RL26020102",
+    "name": "Yash Raj",
+    "email": "yashraj7481@gmail.com",
+    "phone": "9294921962",
+    "password": "$2b$10$7orJjcBSFwAjcK6ASr3t8e0WagaaiHetNrfyYbTw/WlHv.ZekP5u2",
+    "isFirstLogin": true,
+    "isOnline": false,
+    "college": "Quantum University",
+    "university": "Quantum University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Bhagwanpur",
+      "city": "Roorkee",
+      "state": "Uttarakhand",
+      "country": "India",
+      "pincode": "247661"
+    },
+    "gender": "Male",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://www.mp4moviez.date/dl.php?id=54519&q=720&title=Dhurandhar-The-Revenge-(2026)-V2-Movie",
+    "insta_profile_url": "https://www.mp4moviez.date/dl.php?id=54519&q=720&title=Dhurandhar-The-Revenge-(2026)-V2-Movie",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "discountPercent": 10,
+    "joining_date": {
+      "$date": "2026-04-02T14:21:34.779Z"
+    },
+    "createdAt": {
+      "$date": "2026-04-02T14:21:34.780Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:54.621Z"
+    },
+    "__v": 1,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/1-ADcNRc67asNtyBVkzy23o3m2db42DP6/view?usp=drive_link",
+    "equity": 20,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d226b2cdee435486726a49"
+    },
+    "referralId": "PK7911",
+    "ambassador_id": "RLCA260401",
+    "name": "Pushpendra Kumar",
+    "email": "pk656290@gmail.com",
+    "phone": "9301817911",
+    "password": "$2b$10$y.Zi.8YA08Csjkf.795Uve9ex6yL7reprMB5nGBzJY7e.5o/7Osgq",
+    "isFirstLogin": false,
+    "isOnline": true,
+    "college": "Quantum University",
+    "university": "Quantum University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Bhagwanpur",
+      "city": "Roorkee",
+      "state": "Uttarakhand",
+      "country": "India",
+      "pincode": "247667"
+    },
+    "gender": "Male",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/m-sathvika-reddy-2974532b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/roh_chdry?igsh=MWg0cTNwcTFsYzcxNQ==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "discountPercent": 10,
+    "joining_date": {
+      "$date": "2026-04-05T09:09:06.566Z"
+    },
+    "createdAt": {
+      "$date": "2026-04-05T09:09:06.652Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-30T18:24:54.819Z"
+    },
+    "__v": 1,
+    "equity": 20,
+    "referred_interns": [],
+    "total_earnings": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3e9c64705a3d03c86aba"
+    },
+    "referralId": "SUMMER20",
+    "ambassador_id": "RLCC2604",
+    "name": "Summer Internship",
+    "email": "summer@rixilab.tech",
+    "phone": "7617803891",
+    "password": "$2b$10$SycHVvcqLYO4p73C0.Ias.j2aows8QI5rAC3qFwNWqI2CJNruy93C",
+    "isFirstLogin": false,
+    "isOnline": true,
+    "college": "NA",
+    "university": "NA",
+    "designation": "Coupon Code",
+    "role": "ambassador",
+    "address": {
+      "street": "NA",
+      "city": "NA",
+      "state": "NA",
+      "country": "NA",
+      "pincode": "00"
+    },
+    "gender": "Other",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://in.linkedin.com/",
+    "insta_profile_url": "https://in.linkedin.com/",
+    "internCount": 4,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "discountPercent": 20,
+    "joining_date": {
+      "$date": "2026-04-25T04:10:04.304Z"
+    },
+    "createdAt": {
+      "$date": "2026-04-25T04:10:04.305Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-19T15:31:20.453Z"
+    },
+    "__v": 5,
+    "certificate_link": "",
+    "offer_letter_link": "",
+    "equity": 20,
+    "total_earnings": 107.86,
+    "referred_interns": [
+      {
+        "name": "K Jeevan",
+        "email": "jeevankuppu12@gmail.com",
+        "phone": "7013097715",
+        "domain": "Java Programming",
+        "duration": 8,
+        "batch_no": "2605",
+        "amount_paid": 142.5,
+        "equity_earned": 28.5,
+        "joining_date": {
+          "$date": "2026-04-27T06:07:24.259Z"
+        },
+        "_id": {
+          "$oid": "69f3a6be4e9a1e1e282edabd"
+        }
+      },
+      {
+        "name": "Kogila Sravan Kumar",
+        "email": "SRAVANKOGILA2003@GMAIL.COM",
+        "phone": "7660095445",
+        "domain": "Java Programming",
+        "duration": 8,
+        "batch_no": "2605",
+        "amount_paid": 142.5,
+        "equity_earned": 28.5,
+        "joining_date": {
+          "$date": "2026-04-27T07:36:55.060Z"
+        },
+        "_id": {
+          "$oid": "69f3a6be4e9a1e1e282edabe"
+        }
+      },
+      {
+        "name": "B.vijayshali",
+        "email": "jayashalijayashali01@gmail.com",
+        "phone": "8688301660",
+        "domain": "Java Programming",
+        "duration": 8,
+        "batch_no": "2605",
+        "amount_paid": 142.5,
+        "equity_earned": 28.5,
+        "joining_date": {
+          "$date": "2026-04-29T07:32:04.230Z"
+        },
+        "_id": {
+          "$oid": "69f3a6be4e9a1e1e282edabf"
+        }
+      },
+      {
+        "name": "Madduru Aakash",
+        "email": "aakashmadduru811@gmail.com",
+        "phone": "9866251268",
+        "domain": "Full Stack Development",
+        "duration": 8,
+        "batch_no": "2605",
+        "amount_paid": 101.55,
+        "equity_earned": 20.31,
+        "joining_date": {
+          "$date": "2026-04-30T05:10:15.828Z"
+        },
+        "_id": {
+          "$oid": "69f3a6be4e9a1e1e282edac0"
+        }
+      }
+    ],
+    "withdrawals": []
+  },
+  {
+    "_id": {
+      "$oid": "69f48a0b58c089421556362b"
+    },
+    "referralId": "PM0501",
+    "ambassador_id": "RLCA260501",
+    "name": "Ponnala Mounika",
+    "email": "ponnalamounika53@gmail.com",
+    "phone": "9014293326",
+    "password": "$2b$10$mDtWCkRxK8ok6npaQ/miMOfp99WXolZq6nZxWshBln2JjOmCzFhzq",
+    "isFirstLogin": false,
+    "isOnline": true,
+    "college": "Annamacharya institution of technology and science Tirupati",
+    "university": "JNTUA anthapur",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Pachikapallam",
+      "city": "Tirupati",
+      "state": "Andhra Pradesh",
+      "country": "India",
+      "pincode": "517520"
+    },
+    "gender": "Female",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/p-mounika-949538323",
+    "insta_profile_url": "https://www.instagram.com/balakrishna_reddy_o5?igsh=MTczcG50bGhieGdmYQ==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "discountPercent": 10,
+    "equity": 20,
+    "total_earnings": 0,
+    "joining_date": {
+      "$date": "2026-05-01T11:10:03.291Z"
+    },
+    "referred_interns": [],
+    "createdAt": {
+      "$date": "2026-05-01T11:10:03.292Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-04T13:56:08.827Z"
+    },
+    "__v": 0,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/1O71XRiAkf1vu7UJtEE4CTKq8DcQHB6U3/view?usp=drive_link"
+  },
+  {
+    "_id": {
+      "$oid": "69f48a5d58c0894215563d26"
+    },
+    "referralId": "AM0502",
+    "ambassador_id": "RLCA260502",
+    "name": "Anchal Maurya",
+    "email": "nchmaurya@gmail.com",
+    "phone": "9161525550",
+    "password": "$2b$10$.n89O7rI8vdoq5gR2Blfyuz09XkHqaoh7c0ywSUoUprQCfzWM5wY.",
+    "isFirstLogin": false,
+    "isOnline": true,
+    "college": "Quantum university",
+    "university": "Quantum university",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "Roorkee",
+      "city": "Haridwar",
+      "state": "Uttarakhand",
+      "country": "India",
+      "pincode": "247167"
+    },
+    "gender": "Female",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/anchal-maurya-653651384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/aanchalssmaurya?igsh=MTM0M3VnbGRwYXZsNg==",
+    "internCount": 0,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "None",
+    "img_url": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "discountPercent": 10,
+    "equity": 20,
+    "total_earnings": 0,
+    "joining_date": {
+      "$date": "2026-05-01T11:11:25.295Z"
+    },
+    "referred_interns": [],
+    "createdAt": {
+      "$date": "2026-05-01T11:11:25.296Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-04T19:53:03.894Z"
+    },
+    "__v": 0,
+    "certificate_link": "",
+    "offer_letter_link": "https://drive.google.com/file/d/1BhD6fcGPIbzRvwTd87yYDzJe1N9vKPAN/view?usp=drive_link"
+  },
+  {
+    "_id": {
+      "$oid": "69f8a5db5065111608064d41"
+    },
+    "referralId": "VK0503",
+    "ambassador_id": "RLCA260503",
+    "name": "Vedansh Kumar Singh",
+    "email": "vedanshsingh7210@gmail.com",
+    "phone": "6202345397",
+    "password": "$2b$10$l3CehMPd9Yyv2O8JWcdxLOspKtCJZ.JIoW96mU/NBhxmDKrfGGOre",
+    "isFirstLogin": false,
+    "isOnline": true,
+    "college": "Quantum School of Technology",
+    "university": "Quantum University",
+    "designation": "Campus Ambassador",
+    "role": "ambassador",
+    "address": {
+      "street": "22 KM Milestone, Mandawar",
+      "city": "Roorkee",
+      "state": "Uttarakhand",
+      "country": "India",
+      "pincode": "247667"
+    },
+    "gender": "Male",
+    "lastHeartbeat": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/vedansh-kumar-singh-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "insta_profile_url": "https://www.instagram.com/vedansh_singh_rajputt/",
+    "internCount": 10,
+    "offer_letter_sent": false,
+    "certificate_sent": false,
+    "bronze_mail_sent": false,
+    "silver_mail_sent": false,
+    "gold_mail_sent": false,
+    "badge": "Bronze",
+    "img_url": "https://res.cloudinary.com/dypyscar8/image/upload/v1779219901/admins/ewwcifjsiypse2epcqoc.jpg",
+    "discountPercent": 10,
+    "equity": 20,
+    "total_earnings": 311.96,
+    "joining_date": {
+      "$date": "2026-05-04T13:57:47.356Z"
+    },
+    "referred_interns": [
+      {
+        "name": "Manishankar Kumar",
+        "email": "vvirat612@gmail.com",
+        "phone": "7479538565",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-16T04:07:57.493Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc56c"
+        }
+      },
+      {
+        "name": "Atul Kumar",
+        "email": "atul0kr22@gmail.com",
+        "phone": "8252132848",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-16T05:13:10.272Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc56d"
+        }
+      },
+      {
+        "name": "Rohit Yadav",
+        "email": "kumar123rohit2007@gmail.com",
+        "phone": "8303870576",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-16T05:18:06.498Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc56e"
+        }
+      },
+      {
+        "name": "Anand Kumar",
+        "email": "anandkumar3344517@gmail.com",
+        "phone": "8969787330",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-17T05:19:06.498Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc56f"
+        }
+      },
+      {
+        "name": "Subodh Kumar",
+        "email": "subodhjaat8955@gmail.com",
+        "phone": "8955256181",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-17T05:22:17.498Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc570"
+        }
+      },
+      {
+        "name": "Sujeet Kumar",
+        "email": "skgupta930411@gmail.com",
+        "phone": "9304117726",
+        "domain": "Python Programming",
+        "duration": 6,
+        "amount_paid": 137.18,
+        "equity_earned": 27.44,
+        "joining_date": {
+          "$date": "2026-05-17T05:22:24.498Z"
+        },
+        "_id": {
+          "$oid": "6a0b295df676d70df2cfc571"
+        }
+      },
+      {
+        "name": "Sumit Kumar",
+        "email": "sumitmodi728@gmail.com",
+        "phone": "9117764225",
+        "domain": "Machine Learning",
+        "duration": 6,
+        "batch_no": "2606",
+        "amount_paid": 184.14,
+        "equity_earned": 36.83,
+        "joining_date": {
+          "$date": "2026-05-19T08:04:50.522Z"
+        },
+        "_id": {
+          "$oid": "6a0c19a2e7186458bcc0885d"
+        }
+      },
+      {
+        "name": "Sachin Laik",
+        "email": "sachinlaik455@gmail.com",
+        "phone": "8210792822",
+        "domain": "Machine Learning",
+        "duration": 6,
+        "batch_no": "2606",
+        "amount_paid": 184.14,
+        "equity_earned": 36.83,
+        "joining_date": {
+          "$date": "2026-05-19T08:09:50.010Z"
+        },
+        "_id": {
+          "$oid": "6a0c1acee7186458bcc09967"
+        }
+      },
+      {
+        "name": "Aman Kumar",
+        "email": "amanctps712@gmail.com",
+        "phone": "6205451632",
+        "domain": "Machine Learning",
+        "duration": 6,
+        "batch_no": "2606",
+        "amount_paid": 184.14,
+        "equity_earned": 36.83,
+        "joining_date": {
+          "$date": "2026-05-19T17:03:20.247Z"
+        },
+        "_id": {
+          "$oid": "6a0c97d8e7186458bcc11081"
+        }
+      },
+      {
+        "name": "Sonu Gorai",
+        "email": "dynamonsworld.sonu@gmail.com",
+        "phone": "8540961371",
+        "domain": "Machine Learning",
+        "duration": 6,
+        "batch_no": "2606",
+        "amount_paid": 184.14,
+        "equity_earned": 36.83,
+        "joining_date": {
+          "$date": "2026-05-19T17:03:38.630Z"
+        },
+        "_id": {
+          "$oid": "6a0c97eae7186458bcc110f7"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-04T13:57:47.357Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-22T07:30:36.103Z"
+    },
+    "__v": 10,
+    "certificate_link": "https://drive.google.com/file/d/1hW0iuuTZS8MUN6AVknnZmVf00y2DphhU/view?usp=drive_link",
+    "offer_letter_link": "https://drive.google.com/file/d/1iQcd2ptyVBFHYv2elHvmFIsvOwlVGxYC/view?usp=drive_link",
+    "withdrawals": [
+      {
+        "amount": 311,
+        "date": {
+          "$date": "2026-05-22T07:30:36.101Z"
+        },
+        "status": "Approved",
+        "paymentDetails": "6202345397@axl",
+        "_id": {
+          "$oid": "6a0e94a33bc4d53ea81025b7"
+        },
+        "title": "Bronze Level Campus Ambassador Reward",
+        "transactionId": "UTR No: 614205112124"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin Dashboard | Rixi Lab</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/superAdmin.css">
+  <link rel="stylesheet" href="/css/mailCenter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
+
+  <!-- Favicons -->
+  <link href="/img/Rixi Lab New Logo PNG.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">  
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Payout Center Table Off-White Background */
+    #payoutTabsContent .table-responsive {
+      background-color: var(--surface-alt);
+    }
+    #payoutTabsContent .mail-table thead th {
+      background-color: var(--surface-alt) !important;
+    }
+    /* Mobile Responsive Sidebar Toggle */
+    .sidebar-toggle-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 0;
+    }
+    @media (max-width: 768px) {
+      .sidebar-toggle-btn {
+        display: inline-flex;
+      }
+    }
+  </style>
+</head>
+<body>
+<% 
+const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.length : 0;
+%>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
+      <div class="sidebar-brand-text">
+        <h2>Rixi Lab</h2>
+        <span class="sidebar-badge" style="border-color: #ff6600;">SUPER ADMIN</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav nav flex-column" role="tablist">
+      <div class="sidebar-nav-label">Payouts</div>
+      <a href="#tab-dashboard" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-dashboard" role="tab">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="#tab-ambassador" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ambassador" role="tab">
+        <i class="bi bi-people-fill"></i>
+        <span>Ambassador Withdrawals</span>
+      </a>
+      <a href="#tab-admin-salary" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-admin-salary" role="tab">
+        <i class="bi bi-cash-stack"></i>
+        <span>Admin Salary</span>
+      </a>
+      <a href="#tab-pf" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-pf" role="tab">
+        <i class="bi bi-piggy-bank-fill"></i>
+        <span>PF Withdrawals</span>
+      </a>
+      <a href="#tab-history" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-history" role="tab">
+        <i class="bi bi-clock-history"></i>
+        <span>Transaction History</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <small>Copyright © 2026 Rixi Lab. All rights reserved.</small>
+    </div>
+  </aside>
+
+  
+  <!-- Main Content Wrapper -->
+  <div class="main-content">
+<!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="d-flex align-items-center">
+        <button class="sidebar-toggle-btn" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="topbar-left ms-2">
+          <h4>Welcome, <%= superAdmin.name.split(' ')[0] %></h4>
+          <p class="d-none d-sm-block"><%= superAdmin.designation %></p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Back to Dashboard -->
+        <a href="/superAdmin" class="topbar-btn" title="Back to Dashboard" style="color: inherit; text-decoration: none;">
+          <i class="bi bi-arrow-left-circle"></i>
+        </a>
+
+        <!-- Notification Bell -->
+        <div class="dropdown">
+          <button class="topbar-btn" data-bs-toggle="dropdown" aria-expanded="false" id="notificationButton">
+            <i class="bi bi-bell"></i>
+            <% if (typeof unreadCount !== 'undefined' && unreadCount > 0) { %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge" style="font-size: 0.6rem;">
+                <%= unreadCount > 9 ? '9+' : unreadCount %>
+              </span>
+            <% } else { %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge">0</span>
+            <% } %>
+          </button>
+          
+          <ul class="dropdown-menu dropdown-menu-end notif-dropdown shadow-lg" style="width: 320px;" id="notificationList">
+            <li class="notif-header d-flex justify-content-between align-items-center p-2 border-bottom">
+              <span class="fw-bold">Notifications</span>
+              <button id="clearAllBtn" class="btn btn-xs btn-outline-secondary py-0" style="font-size: 0.7rem; display: none;">Clear All</button>
+            </li>
+            <div id="notificationItems" style="max-height: 300px; overflow-y: auto;">
+              <li class="p-4 text-center text-muted small">Loading...</li>
+            </div>
+          </ul>
+        </div>
+
+        <!-- User Profile Dropdown -->
+        <div class="dropdown ms-2">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+            <img src="<%= superAdmin.img_url %>" alt="Profile" class="rounded-circle border border-2 border-white shadow-sm" width="40" height="40" style="object-fit: cover;">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0">
+            <li><h6 class="dropdown-header">Signed in as <br><strong><%= superAdmin.email %></strong></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" onclick="window.location.href='/superAdmin'"><i class="bi bi-person me-2"></i> Update Photo</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </header>
+
+    
+    <!-- Content Body -->
+    <div class="content-body">
+      <%- include("partials/toaster") %>
+      <%- include('partials/loader') %>
+
+      <!-- <div class="page-header">
+        <h4>💳 Payout Center</h4>
+        <p>Manage Ambassador Withdrawals, Admin Payroll, and PF.</p>
+      </div> -->
+      
+      <div class="tab-content" id="payoutTabsContent">
+        <script id="payoutDataJSON" type="application/json">
+          {"transactions": <%- JSON.stringify(transactions || []).replace(/</g, '\\u003c') %>, "interns": <%- JSON.stringify(interns || []).replace(/</g, '\\u003c') %>}
+        </script>
+        <!-- Dashboard -->
+        <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel">
+          <!-- Stats -->
+          <div class="row g-4 mb-4">
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="stat-card stat-card-1">
+                <i class="bi bi-wallet2 stat-icon"></i>
+                <div class="stat-label">Total Income</div>
+                <div class="stat-value">₹<%= stats.totalIncome %></div>
+                <div class="stat-sub">Registrations</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="stat-card stat-card-2">
+                <i class="bi bi-cash-stack stat-icon"></i>
+                <div class="stat-label">Total Paid Out</div>
+                <div class="stat-value">₹<%= stats.totalPaidOut %></div>
+                <div class="stat-sub">All time</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="stat-card stat-card-3">
+                <i class="bi bi-hourglass-split stat-icon"></i>
+                <div class="stat-label">Pending Requests</div>
+                <div class="stat-value"><%= stats.pendingCount %></div>
+                <div class="stat-sub">Requires action</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="stat-card stat-card-4">
+                <i class="bi bi-calendar-check-fill stat-icon"></i>
+                <div class="stat-label">This Month</div>
+                <div class="stat-value">₹<%= stats.thisMonthPayouts %></div>
+                <div class="stat-sub">Recent payouts</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analytics Charts -->
+          <div class="row g-4 mb-4">
+            <div class="col-12 col-lg-6">
+              <div class="mail-section-card p-4 h-100">
+                <h5 class="mb-4 fw-bold">Payout Distribution</h5>
+                <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
+                  <canvas id="payoutDoughnutChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="mail-section-card p-4 h-100">
+                <h5 class="mb-4 fw-bold">Income vs Payouts (Last 6 Months)</h5>
+                <div style="position: relative; height: 300px; width: 100%;">
+                  <canvas id="payoutLineChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ambassador Withdrawals -->
+        <div class="tab-pane fade" id="tab-ambassador" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Name</th><th>Email</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% const amWithdrawals = transactions.filter(t => t.type === 'AmbassadorWithdrawal' && t.status === 'Pending'); %>
+                    <% if(amWithdrawals.length === 0) { %>
+                      <tr><td colspan="7" class="text-center py-4 text-muted">No pending requests</td></tr>
+                    <% } else { %>
+                      <% amWithdrawals.forEach(t => { %>
+                        <tr id="row-<%= t._id %>">
+                          <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
+                          <td data-label="Name"><span class="fw-semibold"><%= t.recipientName %></span></td>
+                          <td data-label="Email"><%= t.recipientEmail %></td>
+                          <td data-label="Amount"><strong class="text-dark">₹<%= t.amount %></strong></td>
+                          <td data-label="Details"><span class="badge bg-light text-dark border"><%= t.paymentDetails %></span></td>
+                          <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
+                          <td data-label="Action">
+                            <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador')"><i class="bi bi-check-lg"></i></button>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg"></i></button>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% if(amWithdrawals.length === 0) { %>
+                  <div class="text-center py-4 text-muted w-100">No pending requests</div>
+                <% } else { %>
+                  <% amWithdrawals.forEach(t => { %>
+                    <div class="intern-card" id="card-<%= t._id %>">
+                      <div class="intern-card-top">
+                        <div class="intern-card-info">
+                          <div class="fw-bold"><%= t.recipientName %></div>
+                          <div class="small font-monospace text-muted"><%= t.recipientEmail %></div>
+                        </div>
+                        <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                      </div>
+                      <div class="intern-card-meta mb-2">
+                        <div class="d-flex justify-content-between w-100">
+                           <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(t.requestedAt).toLocaleDateString() %></span>
+                           <strong class="text-dark fs-5">₹<%= t.amount %></strong>
+                        </div>
+                      </div>
+                      <div class="intern-card-meta mb-3">
+                        <span class="badge bg-light text-dark border"><%= t.paymentDetails %></span>
+                      </div>
+                      <div class="intern-card-actions d-flex gap-2">
+                        <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador')"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                        <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg me-1"></i>Reject</button>
+                      </div>
+                    </div>
+                  <% }) %>
+                <% } %>
+              </div>
+          </div>
+        </div>
+
+        <!-- Admin Salary -->
+        <div class="tab-pane fade" id="tab-admin-salary" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Admin Name</th><th>Basic</th><th>Bonus</th><th>PF</th><th>Tax</th><th>UPI</th><th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% admins.forEach(admin => { %>
+                      <% const latest = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] : null; %>
+                      <tr id="admin-row-<%= admin._id %>">
+                        <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
+                        <td id="basic-<%= admin._id %>" data-label="Basic">₹<%= latest?.basicSalary || 0 %></td>
+                        <td id="bonus-<%= admin._id %>" data-label="Bonus">₹<%= latest?.performanceBonus || 0 %></td>
+                        <td data-label="PF"><span class="text-danger" id="pf-<%= admin._id %>">₹<%= latest?.providentFund || 0 %></span></td>
+                        <td data-label="Tax"><span class="text-danger" id="tax-<%= admin._id %>">₹<%= latest?.professionalTax || 0 %></span></td>
+                        <td id="upi-<%= admin._id %>" data-label="UPI"><%= admin.upiId || 'N/A' %></td>
+                        <td data-label="Actions">
+                          <button class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1" onclick='openEditPayrollModal(<%- JSON.stringify(admin) %>)'><i class="bi bi-pencil"></i> Edit</button>
+                          <button class="btn btn-sm btn-primary rounded-pill px-3" onclick='openSettleSalaryModal(<%- JSON.stringify(admin) %>)'><i class="bi bi-cash-stack"></i> Settle</button>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% admins.forEach(admin => { %>
+                  <% const latest = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] : null; %>
+                  <div class="intern-card" id="card-admin-<%= admin._id %>">
+                    <div class="intern-card-top">
+                      <div class="intern-card-info">
+                        <div class="fw-bold fs-5"><%= admin.name %></div>
+                        <div class="small font-monospace text-muted mt-1"><i class="bi bi-wallet me-1"></i>UPI: <%= admin.upiId || 'N/A' %></div>
+                      </div>
+                    </div>
+                    <div class="intern-card-meta mb-3">
+                      <div class="row g-2 w-100">
+                        <div class="col-6">
+                           <div class="small text-muted">Basic</div>
+                           <div class="fw-semibold" id="card-basic-<%= admin._id %>">₹<%= latest?.basicSalary || 0 %></div>
+                        </div>
+                        <div class="col-6 text-end">
+                           <div class="small text-muted">Bonus</div>
+                           <div class="fw-semibold text-success" id="card-bonus-<%= admin._id %>">₹<%= latest?.performanceBonus || 0 %></div>
+                        </div>
+                        <div class="col-6">
+                           <div class="small text-muted">PF</div>
+                           <div class="fw-semibold text-danger" id="card-pf-<%= admin._id %>">₹<%= latest?.providentFund || 0 %></div>
+                        </div>
+                        <div class="col-6 text-end">
+                           <div class="small text-muted">Tax</div>
+                           <div class="fw-semibold text-danger" id="card-tax-<%= admin._id %>">₹<%= latest?.professionalTax || 0 %></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="intern-card-actions d-flex gap-2">
+                      <button class="btn btn-sm btn-outline-primary flex-fill rounded-pill" onclick='openEditPayrollModal(<%- JSON.stringify(admin) %>)'><i class="bi bi-pencil me-1"></i>Edit</button>
+                      <button class="btn btn-sm btn-primary flex-fill rounded-pill" onclick='openSettleSalaryModal(<%- JSON.stringify(admin) %>)'><i class="bi bi-cash-stack me-1"></i>Settle</button>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+          </div>
+        </div>
+
+        <!-- PF Withdrawals -->
+        <div class="tab-pane fade" id="tab-pf" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Admin Name</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let hasPF = false; %>
+                    <% admins.forEach(admin => { %>
+                      <% (admin.pfWithdrawals || []).forEach(pf => { %>
+                        <% if(pf.status === 'Pending') { hasPF = true; %>
+                          <tr id="pf-row-<%= pf._id %>">
+                            <td data-label="Date"><%= new Date(pf.requestedAt).toLocaleDateString() %></td>
+                            <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
+                            <td data-label="Amount"><strong class="text-dark">₹<%= pf.amount %></strong></td>
+                            <td data-label="Details"><span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span></td>
+                            <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
+                            <td data-label="Action">
+                              <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>')"><i class="bi bi-check-lg"></i></button>
+                              <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectPF('<%= admin._id %>', '<%= pf._id %>')"><i class="bi bi-x-lg"></i></button>
+                            </td>
+                          </tr>
+                        <% } %>
+                      <% }) %>
+                    <% }) %>
+                    <% if(!hasPF) { %>
+                      <tr><td colspan="6" class="text-center py-4 text-muted">No pending requests</td></tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% let hasPFCard = false; %>
+                <% admins.forEach(admin => { %>
+                  <% (admin.pfWithdrawals || []).forEach(pf => { %>
+                    <% if(pf.status === 'Pending') { hasPFCard = true; %>
+                      <div class="intern-card" id="card-pf-<%= pf._id %>">
+                        <div class="intern-card-top">
+                          <div class="intern-card-info">
+                            <div class="fw-bold"><%= admin.name %></div>
+                            <div class="small text-muted"><i class="bi bi-calendar3 me-1"></i><%= new Date(pf.requestedAt).toLocaleDateString() %></div>
+                          </div>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                        </div>
+                        <div class="intern-card-meta mb-2">
+                          <div class="d-flex justify-content-between w-100 align-items-center">
+                             <span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span>
+                             <strong class="text-dark fs-5">₹<%= pf.amount %></strong>
+                          </div>
+                        </div>
+                        <div class="intern-card-actions d-flex gap-2 mt-3">
+                          <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>')"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                          <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectPF('<%= admin._id %>', '<%= pf._id %>')"><i class="bi bi-x-lg me-1"></i>Reject</button>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% }) %>
+                <% }) %>
+                <% if(!hasPFCard) { %>
+                  <div class="text-center py-4 text-muted w-100">No pending requests</div>
+                <% } %>
+              </div>
+          </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="tab-pane fade" id="tab-history" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Recipient</th><th>Type</th><th>Amount</th><th>Status</th><th>Txn ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% transactions.forEach(t => { %>
+                      <tr>
+                        <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
+                        <td data-label="Recipient"><span class="fw-semibold"><%= t.recipientName %></span></td>
+                        <td data-label="Type"><span class="badge bg-secondary"><%= t.type %></span></td>
+                        <td data-label="Amount"><strong class="text-dark">₹<%= t.amount %></strong></td>
+                        <td data-label="Status">
+                          <% if(t.status === 'Approved'){ %>
+                            <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                          <% } else if(t.status === 'Rejected'){ %>
+                            <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                          <% } else { %>
+                            <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                          <% } %>
+                        </td>
+                        <td data-label="Txn ID"><small class="text-muted"><%= t.transactionId || '-' %></small></td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% transactions.forEach(t => { %>
+                  <div class="intern-card">
+                    <div class="intern-card-top">
+                      <div class="intern-card-info">
+                        <div class="fw-bold"><%= t.recipientName %></div>
+                        <div class="small font-monospace text-muted mt-1"><i class="bi bi-hash me-1"></i><%= t.transactionId || 'N/A' %></div>
+                      </div>
+                      <% if(t.status === 'Approved'){ %>
+                        <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                      <% } else if(t.status === 'Rejected'){ %>
+                        <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                      <% } else { %>
+                        <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                      <% } %>
+                    </div>
+                    <div class="intern-card-meta mb-2">
+                      <div class="d-flex justify-content-between w-100">
+                         <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(t.requestedAt).toLocaleDateString() %></span>
+                         <strong class="text-dark fs-5">₹<%= t.amount %></strong>
+                      </div>
+                    </div>
+                    <div class="intern-card-meta">
+                      <span class="badge bg-secondary"><%= t.type %></span>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+          </div>
+        </div>
+
+      </div> <!-- End tab content -->
+    </div> <!-- End content-body -->
+  </div> <!-- End main content wrapper -->
+  
+<!-- MODALS -->
+
+  <!-- Approve Ambassador/PF Modal -->
+  <div class="modal fade" tabindex="-1" id="approveModal">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h3 id="approveTitle">Approve Payout</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="approveForm">
+        <input type="hidden" id="app_txId">
+        <input type="hidden" id="app_type">
+        <input type="hidden" id="app_pfId">
+        <div class="mb-3">
+          <label>Recipient</label>
+          <input type="text" id="app_name" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label>Amount (₹)</label>
+          <input type="text" id="app_amount" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label>Payment Title/Description</label>
+          <input type="text" id="app_title" class="form-control" required placeholder="e.g., Payout for May">
+        </div>
+        <div class="mb-3">
+          <label>Transaction ID (Bank/UPI)</label>
+          <input type="text" id="app_txnId" class="form-control" required placeholder="Enter bank reference number">
+        </div>
+        <div class="mb-3 form-check" style="margin-left: 5px;">
+          <input type="checkbox" class="form-check-input" id="app_sendMail" checked>
+          <label class="form-check-label" for="app_sendMail">Send Email Notification</label>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline" onclick="closeModal('approveModal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Confirm & Save</button>
+        </div>
+      </form></div></div></div>
+
+  <!-- Edit Payroll Modal -->
+  <div class="modal fade" tabindex="-1" id="payrollModal">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h3>Edit Payroll Settings</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="payrollForm">
+        <input type="hidden" id="pay_adminId">
+        <div class="mb-3">
+          <label>Admin Name</label>
+          <input type="text" id="pay_name" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label>Payroll Month (Optional)</label>
+          <input type="text" id="pay_month" class="form-control" title="Select a month to save this payroll as a monthly record and add PF to balance" placeholder="Select month...">
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div class="mb-3" style="flex:1;">
+            <label>Basic Salary (₹)</label>
+            <input type="number" id="pay_basic" class="form-control" required>
+          </div>
+          <div class="mb-3" style="flex:1;">
+            <label>Performance Bonus (₹)</label>
+            <input type="number" id="pay_bonus" class="form-control" required>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div class="mb-3" style="flex:1;">
+            <label>Provident Fund Ded. (₹)</label>
+            <input type="number" id="pay_pf" class="form-control" required>
+          </div>
+          <div class="mb-3" style="flex:1;">
+            <label>Professional Tax (₹)</label>
+            <input type="number" id="pay_tax" class="form-control" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label>UPI ID</label>
+          <input type="text" id="pay_upi" class="form-control">
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline" onclick="closeModal('payrollModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Payroll</button>
+        </div>
+      </form></div></div></div>
+
+  <!-- Settle Salary Modal -->
+  <div class="modal fade" tabindex="-1" id="settleModal">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h3>Settle Salary</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="settleForm">
+        <input type="hidden" id="set_adminId">
+        <div class="mb-3">
+          <label>Admin Name</label>
+          <input type="text" id="set_name" class="form-control" readonly>
+        </div>
+        
+        <div class="mb-3">
+          <label>Select Month to Settle</label>
+          <select id="set_month" class="form-control" required onchange="updateSettleCalculations()">
+            <option value="">Select a month...</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Payment Title</label>
+          <input type="text" id="set_title" class="form-control" required placeholder="e.g., Salary for May 2026">
+        </div>
+        <div class="mb-3">
+          <label>Transaction ID</label>
+          <input type="text" id="set_txnId" class="form-control" required placeholder="Bank/UPI Ref No.">
+        </div>
+        <div class="mb-3 form-check" style="margin-left: 5px;">
+          <input type="checkbox" class="form-check-input" id="set_sendMail" checked>
+          <label class="form-check-label" for="set_sendMail">Send Email Notification</label>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-top: 15px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span>Gross Salary:</span>
+            <strong id="set_gross">₹0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 5px; color: #ef4444;">
+            <span>Total Deductions:</span>
+            <strong id="set_ded">₹0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-top: 1px solid #333; padding-top: 5px; margin-top: 5px; color: #16a34a; font-size: 18px;">
+            <span>Net Payable:</span>
+            <strong id="set_net">₹0</strong>
+          </div>
+        </div>
+
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline" onclick="closeModal('settleModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Process Salary</button>
+        </div>
+      </form></div></div></div>
+
+  <!-- Loader -->
+  <div class="loader-overlay" id="pageLoader">
+    <div class="spinner"></div>
+    <div style="margin-top:15px; color:#fff;">Processing...</div>
+  </div>
+
+  <!-- Custom Alert/Confirm Modal -->
+  
+
+  <script>
+    // Tab Switching
+    document.querySelectorAll('.sidebar-menu li[data-target]').forEach(li => {
+      li.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-menu li').forEach(el => el.classList.remove('active'));
+        li.classList.add('active');
+        
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById(li.getAttribute('data-target')).classList.add('active');
+      });
+    });
+
+    // Modals
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Loader & Custom Alert
+    function showLoader() { document.getElementById('pageLoader').classList.add('active'); }
+    function hideLoader() { document.getElementById('pageLoader').classList.remove('active'); }
+
+    function customAlert(message, title="Notice", type="alert") {
+      return new Promise((resolve) => {
+        document.getElementById('customAlertTitle').innerText = title;
+        document.getElementById('customAlertMessage').innerText = message;
+        const actions = document.getElementById('customAlertActions');
+        
+        if(type === 'confirm') {
+          actions.innerHTML = `
+            <button class="btn btn-outline" id="cAlertCancel">Cancel</button>
+            <button class="btn btn-primary" id="cAlertConfirm">Confirm</button>
+          `;
+          document.getElementById('cAlertCancel').onclick = () => { closeCustomAlert(); resolve(false); };
+          document.getElementById('cAlertConfirm').onclick = () => { closeCustomAlert(); resolve(true); };
+        } else {
+          actions.innerHTML = `<button class="btn btn-primary" id="cAlertOk">OK</button>`;
+          document.getElementById('cAlertOk').onclick = () => { closeCustomAlert(); resolve(true); };
+        }
+        document.getElementById('customAlertModal').classList.add('active');
+      });
+    }
+
+    function closeCustomAlert() {
+      document.getElementById('customAlertModal').classList.remove('active');
+    }
+
+    // Disable button helper
+    function disableButton(btn) {
+      if(btn) {
+        btn.disabled = true;
+        btn.dataset.originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        btn.style.opacity = "0.7";
+        btn.style.cursor = "not-allowed";
+      }
+    }
+    function enableButton(btn) {
+      if(btn) {
+        btn.disabled = false;
+        btn.innerHTML = btn.dataset.originalText || 'Submit';
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+      }
+    }
+
+    // Approve Flow
+    function openApproveModal(txId, name, amount, type, pfId = '') {
+      document.getElementById('app_txId').value = txId;
+      document.getElementById('app_name').value = name;
+      document.getElementById('app_amount').value = amount;
+      document.getElementById('app_type').value = type;
+      document.getElementById('app_pfId').value = pfId;
+      
+      document.getElementById('approveTitle').innerText = type === 'pf' ? 'Approve PF Withdrawal' : 'Approve Ambassador Withdrawal';
+      document.getElementById('approveModal').classList.add('active');
+    }
+
+    document.getElementById('approveForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      disableButton(btn);
+      showLoader();
+
+      const txId = document.getElementById('app_txId').value;
+      const type = document.getElementById('app_type').value;
+      const pfId = document.getElementById('app_pfId').value;
+      const amount = document.getElementById('app_amount').value;
+      
+      const payload = {
+        title: document.getElementById('app_title').value,
+        transactionId: document.getElementById('app_txnId').value,
+        amount: amount,
+        sendMail: document.getElementById('app_sendMail').checked
+      };
+
+      let url = type === 'pf' 
+        ? `/superAdmin/payouts/admin/pf-approve/${txId}/${pfId}`
+        : `/superAdmin/payouts/ambassador/approve/${txId}`;
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        hideLoader();
+        if(data.success) {
+          closeModal('approveModal');
+          await refreshPayoutData();
+          await customAlert('Approved successfully!', 'Success');
+        } else {
+          await customAlert(data.message || 'Error occurred', 'Error');
+          enableButton(btn);
+        }
+      } catch (err) {
+        hideLoader();
+        await customAlert('Server error', 'Error');
+        enableButton(btn);
+      }
+    });
+
+    // Reject Flows
+    async function rejectTransaction(txId, type) {
+      const confirmed = await customAlert('Are you sure you want to reject this request?', 'Confirm Action', 'confirm');
+      if(!confirmed) return;
+      
+      showLoader();
+      const url = `/superAdmin/payouts/ambassador/reject/${txId}`;
+      try {
+        const res = await fetch(url, { method: 'POST' });
+        const data = await res.json();
+        hideLoader();
+        if(data.success) {
+          await refreshPayoutData();
+        }
+        else await customAlert(data.message, 'Error');
+      } catch(e) { hideLoader(); await customAlert('Error', 'Error'); }
+    }
+
+    async function rejectPF(adminId, pfId) {
+      const confirmed = await customAlert('Are you sure you want to reject this PF request?', 'Confirm Action', 'confirm');
+      if(!confirmed) return;
+
+      showLoader();
+      const url = `/superAdmin/payouts/admin/pf-reject/${adminId}/${pfId}`;
+      try {
+        const res = await fetch(url, { method: 'POST' });
+        const data = await res.json();
+        hideLoader();
+        if(data.success) {
+          await refreshPayoutData();
+        }
+        else await customAlert(data.message, 'Error');
+      } catch(e) { hideLoader(); await customAlert('Error', 'Error'); }
+    }
+
+    // Payroll Flow
+    function openEditPayrollModal(admin) {
+      document.getElementById('pay_adminId').value = admin._id;
+      document.getElementById('pay_name').value = admin.name;
+      document.getElementById('pay_month').value = '';
+      
+      // Default to the most recent month if any, otherwise 0
+      const latest = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 
+        ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] 
+        : null;
+
+      document.getElementById('pay_basic').value = latest?.basicSalary || 0;
+      document.getElementById('pay_bonus').value = latest?.performanceBonus || 0;
+      document.getElementById('pay_pf').value = latest?.providentFund || 0;
+      document.getElementById('pay_tax').value = latest?.professionalTax || 0;
+      document.getElementById('pay_upi').value = admin.upiId || '';
+      
+      document.getElementById('payrollModal').classList.add('active');
+    }
+
+    document.getElementById('payrollForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      disableButton(btn);
+      showLoader();
+
+      const adminId = document.getElementById('pay_adminId').value;
+      const payload = {
+        month: document.getElementById('pay_month').value,
+        basicSalary: document.getElementById('pay_basic').value,
+        performanceBonus: document.getElementById('pay_bonus').value,
+        providentFund: document.getElementById('pay_pf').value,
+        professionalTax: document.getElementById('pay_tax').value,
+        upiId: document.getElementById('pay_upi').value,
+      };
+
+      try {
+        const res = await fetch(`/superAdmin/payouts/admin/update-payroll/${adminId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        hideLoader();
+        if(data.success) {
+          closeModal('payrollModal');
+          await refreshPayoutData();
+          await customAlert('Payroll updated successfully!', 'Success');
+        } else {
+          await customAlert(data.message, 'Error');
+          enableButton(btn);
+        }
+      } catch(err) { 
+        hideLoader(); 
+        await customAlert('Error', 'Error'); 
+        enableButton(btn);
+      }
+    });
+
+    let currentAdminPayroll = [];
+
+    function updateSettleCalculations() {
+      const selectedMonth = document.getElementById('set_month').value;
+      const p = currentAdminPayroll.find(m => m.month === selectedMonth);
+      if (p) {
+        const gross = (p.basicSalary || 0) + (p.performanceBonus || 0);
+        const ded = (p.providentFund || 0) + (p.professionalTax || 0);
+        const net = gross - ded;
+        document.getElementById('set_gross').innerText = `₹${gross}`;
+        document.getElementById('set_ded').innerText = `₹${ded}`;
+        document.getElementById('set_net').innerText = `₹${net}`;
+        document.getElementById('set_title').value = `Salary for ${selectedMonth}`;
+      } else {
+        document.getElementById('set_gross').innerText = `₹0`;
+        document.getElementById('set_ded').innerText = `₹0`;
+        document.getElementById('set_net').innerText = `₹0`;
+        document.getElementById('set_title').value = ``;
+      }
+    }
+
+    function openSettleSalaryModal(admin) {
+      document.getElementById('set_adminId').value = admin._id;
+      document.getElementById('set_name').value = admin.name;
+      
+      currentAdminPayroll = admin.monthlyPayroll || [];
+      const monthSelect = document.getElementById('set_month');
+      monthSelect.innerHTML = '<option value="">Select a month...</option>';
+      
+      // Sort months descending
+      const sortedPayroll = [...currentAdminPayroll].sort((a,b) => b.month.localeCompare(a.month));
+      
+      sortedPayroll.forEach(p => {
+        monthSelect.innerHTML += `<option value="${p.month}">${p.month}</option>`;
+      });
+
+      document.getElementById('set_gross').innerText = `₹0`;
+      document.getElementById('set_ded').innerText = `₹0`;
+      document.getElementById('set_net').innerText = `₹0`;
+      document.getElementById('set_title').value = ``;
+      document.getElementById('set_txnId').value = ``;
+
+      document.getElementById('settleModal').classList.add('active');
+    }
+
+    document.getElementById('settleForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      disableButton(btn);
+      showLoader();
+
+      const adminId = document.getElementById('set_adminId').value;
+      const payload = {
+        month: document.getElementById('set_month').value,
+        title: document.getElementById('set_title').value,
+        transactionId: document.getElementById('set_txnId').value,
+        sendMail: document.getElementById('set_sendMail').checked
+      };
+
+      try {
+        const res = await fetch(`/superAdmin/payouts/admin/settle/${adminId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        hideLoader();
+        if(data.success) {
+          closeModal('settleModal');
+          await refreshPayoutData();
+          await customAlert('Salary settled successfully!', 'Success');
+        } else {
+          await customAlert(data.message, 'Error');
+          enableButton(btn);
+        }
+      } catch(err) { 
+        hideLoader(); 
+        await customAlert('Error', 'Error'); 
+        enableButton(btn);
+      }
+    });
+
+  </script>
+
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // SweetAlert for custom alert
+    function customAlert(message, title="Notice", type="alert") {
+      return new Promise((resolve) => {
+        if(type === 'confirm') {
+          Swal.fire({
+            title: title,
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6600',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm'
+          }).then((result) => {
+            resolve(result.isConfirmed);
+          });
+        } else {
+          Swal.fire({
+            title: title,
+            text: message,
+            icon: type === 'Error' ? 'error' : 'success',
+            confirmButtonColor: '#ff6600'
+          }).then(() => {
+            resolve(true);
+          });
+        }
+      });
+    }
+
+    // Map custom modals to bootstrap modals
+    let modalsMap = {};
+    function getModal(id) {
+      if(!modalsMap[id]) {
+        const el = document.getElementById(id);
+        if(el) modalsMap[id] = new bootstrap.Modal(el);
+      }
+      return modalsMap[id];
+    }
+    
+    const originalOpenApprove = typeof openApproveModal === 'function' ? openApproveModal : null;
+    window.openApproveModal = function(txId, name, amount, type, pfId = '') {
+      document.getElementById('app_txId').value = txId;
+      document.getElementById('app_name').value = name;
+      document.getElementById('app_amount').value = amount;
+      document.getElementById('app_type').value = type;
+      document.getElementById('app_pfId').value = pfId;
+      document.getElementById('approveTitle').innerText = type === 'pf' ? 'Approve PF Withdrawal' : 'Approve Ambassador Withdrawal';
+      getModal('approveModal').show();
+    };
+    
+    const originalOpenEdit = typeof openEditPayrollModal === 'function' ? openEditPayrollModal : null;
+    window.openEditPayrollModal = function(admin) {
+      document.getElementById('pay_adminId').value = admin._id;
+      document.getElementById('pay_name').value = admin.name;
+      document.getElementById('pay_month').value = '';
+      const latest = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] : null;
+      document.getElementById('pay_basic').value = latest?.basicSalary || 0;
+      document.getElementById('pay_bonus').value = latest?.performanceBonus || 0;
+      document.getElementById('pay_pf').value = latest?.providentFund || 0;
+      document.getElementById('pay_tax').value = latest?.professionalTax || 0;
+      document.getElementById('pay_upi').value = admin.upiId || '';
+      getModal('payrollModal').show();
+    };
+
+    const originalOpenSettle = typeof openSettleSalaryModal === 'function' ? openSettleSalaryModal : null;
+    window.openSettleSalaryModal = function(admin) {
+      document.getElementById('set_adminId').value = admin._id;
+      document.getElementById('set_name').value = admin.name;
+      currentAdminPayroll = admin.monthlyPayroll || [];
+      const monthSelect = document.getElementById('set_month');
+      monthSelect.innerHTML = '<option value="">Select a month...</option>';
+      const sortedPayroll = [...currentAdminPayroll].sort((a,b) => b.month.localeCompare(a.month));
+      sortedPayroll.forEach(p => { 
+        const [yyyy, mm] = p.month.split('-');
+        const date = new Date(yyyy, mm - 1);
+        const display = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        monthSelect.innerHTML += `<option value="${p.month}">${display}</option>`; 
+      });
+      document.getElementById('set_gross').innerText = `₹0`;
+      document.getElementById('set_ded').innerText = `₹0`;
+      document.getElementById('set_net').innerText = `₹0`;
+      document.getElementById('set_title').value = ``;
+      document.getElementById('set_txnId').value = ``;
+      getModal('settleModal').show();
+    };
+    
+    window.closeModal = function(id) {
+       getModal(id).hide();
+    }
+    
+    // Sidebar toggle
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('active');
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
+    });
+    document.getElementById('sidebarOverlay').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.remove('active', 'open');
+      this.classList.remove('active');
+    });
+
+    // Flatpickr for month picking
+    flatpickr("#pay_month", {
+      plugins: [
+        new monthSelectPlugin({
+          shorthand: true,
+          dateFormat: "Y-m", 
+          altFormat: "F Y"
+        })
+      ],
+      altInput: true
+    });
+  
+    // Global function to refresh data without reloading
+    window.refreshPayoutData = async function() {
+      try {
+        const res = await fetch(window.location.href);
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        const activeTabLink = document.querySelector('.sidebar-nav .nav-link.active');
+        const activeTabId = activeTabLink ? activeTabLink.getAttribute('data-bs-target') : '#tab-dashboard';
+        
+        const newContent = doc.getElementById('payoutTabsContent');
+        if(newContent) {
+          document.getElementById('payoutTabsContent').innerHTML = newContent.innerHTML;
+        }
+        
+        document.querySelectorAll('#payoutTabsContent .tab-pane').forEach(pane => {
+          pane.classList.remove('show', 'active');
+        });
+        const activePane = document.querySelector(activeTabId);
+        if(activePane) activePane.classList.add('show', 'active');
+        
+        if (typeof initPayoutCharts === 'function') initPayoutCharts();
+      } catch (e) {
+        console.error("Error refreshing data dynamically", e);
+      }
+    };
+
+    // Analytics Charts Logic
+    let doughnutChart = null;
+    let lineChart = null;
+
+    window.initPayoutCharts = function() {
+      const dataEl = document.getElementById('payoutDataJSON');
+      if (!dataEl) return;
+      const parsedData = JSON.parse(dataEl.textContent);
+      const transactions = parsedData.transactions;
+      const interns = parsedData.interns;
+      
+      // Data Processing for Doughnut Chart
+      let ambassadorTotal = 0;
+      let adminTotal = 0;
+      let pfTotal = 0;
+      
+      const monthlyData = {};
+      const monthlyIncomeData = {};
+      
+      // Initialize last 6 months in order
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const d = new Date();
+      d.setDate(1);
+      const last6Months = [];
+      for (let i = 5; i >= 0; i--) {
+        const temp = new Date(d.getFullYear(), d.getMonth() - i, 1);
+        const label = monthNames[temp.getMonth()] + " " + temp.getFullYear().toString().slice(-2);
+        last6Months.push(label);
+        monthlyData[label] = 0;
+        monthlyIncomeData[label] = 0;
+      }
+
+      transactions.forEach(t => {
+        if (t.status === "Approved") {
+          // Process Distribution
+          if (t.type === "AmbassadorWithdrawal") ambassadorTotal += t.amount;
+          else if (t.type === "AdminSalary") adminTotal += t.amount;
+          else if (t.type === "PFWithdrawal") pfTotal += t.amount;
+          
+          // Process Monthly Trend
+          if (t.processedAt) {
+            const date = new Date(t.processedAt);
+            const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);
+            if (monthlyData[label] !== undefined) {
+              monthlyData[label] += t.amount;
+            }
+          }
+        }
+      });
+
+      interns.forEach(intern => {
+        let date = null;
+        if (intern.batch_no) {
+           const parsed = new Date(intern.batch_no);
+           if (!isNaN(parsed)) date = parsed;
+        }
+        if (!date && intern.createdAt) {
+           date = new Date(intern.createdAt);
+        }
+        if (date) {
+           const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);
+           if (monthlyIncomeData[label] !== undefined) {
+             monthlyIncomeData[label] += (intern.amountPaid || 0);
+           }
+        }
+      });
+
+      // Render Doughnut Chart
+      const doughnutCtx = document.getElementById('payoutDoughnutChart');
+      if (doughnutCtx) {
+        if(doughnutChart) doughnutChart.destroy();
+        doughnutChart = new Chart(doughnutCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals'],
+            datasets: [{
+              data: [ambassadorTotal, adminTotal, pfTotal],
+              backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+              borderWidth: 0,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { color: '#888', padding: 20, font: { family: 'Montserrat' } }
+              }
+            },
+            cutout: '75%'
+          }
+        });
+      }
+
+      // Render Line Chart
+      const lineCtx = document.getElementById('payoutLineChart');
+      if (lineCtx) {
+        if(lineChart) lineChart.destroy();
+        lineChart = new Chart(lineCtx, {
+          type: 'line',
+          data: {
+            labels: last6Months,
+            datasets: [
+              {
+                label: 'Income (₹)',
+                data: last6Months.map(m => monthlyIncomeData[m]),
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+              },
+              {
+                label: 'Payouts (₹)',
+                data: last6Months.map(m => monthlyData[m]),
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                display: true, 
+                position: 'top', 
+                labels: { color: '#888', font: { family: 'Montserrat' } } 
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                ticks: { color: '#888', font: { family: 'Montserrat' } }
+              },
+              x: {
+                grid: { display: false, drawBorder: false },
+                ticks: { color: '#888', font: { family: 'Montserrat' } }
+              }
+            }
+          }
+        });
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      initPayoutCharts();
+      
+      document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('active', 'open');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+  

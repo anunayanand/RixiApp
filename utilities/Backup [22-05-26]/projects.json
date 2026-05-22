@@ -1,0 +1,3691 @@
+[
+  {
+    "_id": {
+      "$oid": "68c326dea649a2855f9d29a5"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week1 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/D2C4PHakfYzgjjq99",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c32729a649a2855f9d29d2"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YtcUmnD6ZsdQYPuj9",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c32755a649a2855f9d2a21"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/SqG8UUBjfytz8btt9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c3278da649a2855f9d2a92"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/JzLL49njBYG9CR4y9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c32d3ba649a2855f9d5ab7"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/hrJC9wnGAqjS81EV6",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c404b255a135d66055d73e"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is uploaded.",
+    "domain": "Graphics Designing",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/14Pk_jQ4h058iYr9sH7LnQqfDXoLSlxrO/view?usp=sharing",
+    "uploadLink": "https://forms.gle/D2C4PHakfYzgjjq99",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c4050355a135d66055d94d"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is uploaded.",
+    "domain": "Graphics Designing",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/109Q7hkAy69tWW6qW0iaUCpNELHEBy3jj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YtcUmnD6ZsdQYPuj9",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c4053155a135d66055dab8"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is uploaded.",
+    "domain": "Graphics Designing",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1VECTP4P1IAtbF5gyptkFwDvh1AGzXi95/view?usp=sharing",
+    "uploadLink": "https://forms.gle/SqG8UUBjfytz8btt9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c4055855a135d66055db75"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is uploaded.",
+    "domain": "Graphics Designing",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1aDZWYVAlnDFqY11f-HrrTTV35dfxvG9M/view?usp=sharing",
+    "uploadLink": "https://forms.gle/JzLL49njBYG9CR4y9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c449e5e51dde48c7aef00f"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/D2C4PHakfYzgjjq99",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c44aa8e51dde48c7aef02f"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YtcUmnD6ZsdQYPuj9",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c44acde51dde48c7aef050"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/SqG8UUBjfytz8btt9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c44af1e51dde48c7aef076"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/JzLL49njBYG9CR4y9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c44b24e51dde48c7aef0a9"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/hrJC9wnGAqjS81EV6",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c458e7e51dde48c7aef869"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is uploaded.",
+    "domain": "DSA",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1zjoNxtS6zvQ6UU4InGNWqlaDd8qF1sgA/view?usp=sharing",
+    "uploadLink": "https://forms.gle/D2C4PHakfYzgjjq99",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c45918e51dde48c7aef880"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1916kiBo-LDEdbHTLqOLOtcBjMjjn5q4D/view?usp=sharing",
+    "uploadLink": "https://drive.google.com/file/d/1916kiBo-LDEdbHTLqOLOtcBjMjjn5q4D/view?usp=sharing",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c45941e51dde48c7aef89b"
+    },
+    "title": " Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1RD0afYHaVVMb5Xl4a6acMaFnyr6S9QBq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/SqG8UUBjfytz8btt9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c45968e51dde48c7aef8c2"
+    },
+    "title": " Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1pXEn4WpQ54XmSM3etr3QsVVOOjRYXm8o/view?usp=sharing",
+    "uploadLink": "https://forms.gle/JzLL49njBYG9CR4y9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c45994e51dde48c7aef8f1"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1VjV5vGRuaDeR3JocLlF80wsR0MWASCRA/view?usp=sharing",
+    "uploadLink": "https://forms.gle/hrJC9wnGAqjS81EV6",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c580f2fba63113b28cc1e7"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1zjoNxtS6zvQ6UU4InGNWqlaDd8qF1sgA/view?usp=sharing",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5810ffba63113b28cc21a"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1916kiBo-LDEdbHTLqOLOtcBjMjjn5q4D/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5812afba63113b28cc24c"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1RD0afYHaVVMb5Xl4a6acMaFnyr6S9QBq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c58a99fba63113b28ccde7"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c58ab0fba63113b28ccdfe"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c58ac8fba63113b28cce21"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c59726fba63113b28cf437"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5974efba63113b28cf4f5"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c59775fba63113b28cf5c5"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5afd7fba63113b28d0473"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1xzgNoFYr7YxZ4hJiWRmJtVIm9QD4frdB/view?usp=sharing",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5afeffba63113b28d048a"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1xzgNoFYr7YxZ4hJiWRmJtVIm9QD4frdB/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b00bfba63113b28d04a5"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b48cfba63113b28d16d1"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "Graphics Designing",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/14Pk_jQ4h058iYr9sH7LnQqfDXoLSlxrO/view?usp=sharing",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b4b1fba63113b28d16ee"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "Graphics Designing",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/109Q7hkAy69tWW6qW0iaUCpNELHEBy3jj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b4cdfba63113b28d170d"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "Graphics Designing",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1VECTP4P1IAtbF5gyptkFwDvh1AGzXi95/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b78ffba63113b28d1bd8"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/tJKkrx5iKeXNLKP58",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b7b0fba63113b28d1c14"
+    },
+    "title": "Project 2 Intermediate",
+    "description": "Week 2 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YMqLVgXNTSTuBhPM7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c5b7c7fba63113b28d1c52"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/j9eyS6sqa3fxDV4d6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c6c59e1dffe77190195740"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned",
+    "domain": "Web Development",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZWovfnUVD7CfptE3A",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68c910ac955670586b535d6a"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is uploaded.",
+    "domain": "Data Analytics",
+    "batch_no": "2501",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZWovfnUVD7CfptE3A",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cda72f955670586b54420d"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cda816955670586b5442b3"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cda8c2955670586b544332"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "Graphics Designing",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1aDZWYVAlnDFqY11f-HrrTTV35dfxvG9M/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cda946955670586b54439c"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1pXEn4WpQ54XmSM3etr3QsVVOOjRYXm8o/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cda9b6955670586b544407"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68cdaa81955670586b544543"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Xv37iC1eDRyw5XoT9",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68d781e3b95d760366d04291"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/1Gizk7LMCwfK4gic8",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68d78221b95d760366d04403"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/1Gizk7LMCwfK4gic8",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68d78263b95d760366d044e6"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "DSA",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1VjV5vGRuaDeR3JocLlF80wsR0MWASCRA/view?usp=sharing",
+    "uploadLink": "https://forms.gle/1Gizk7LMCwfK4gic8",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68d782aab95d760366d04580"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/1Gizk7LMCwfK4gic8",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68d78314b95d760366d0471a"
+    },
+    "title": "Project 5 Advance",
+    "description": "Week 5 & 6 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/1Gizk7LMCwfK4gic8",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68dbff9cb95d760366d13f6c"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68dbffd3b95d760366d1400a"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1galUludIZ_3JmTcz_vaRz5NseELM0Tjs&export=download",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68dc0004b95d760366d1407b"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "Graphics Designing",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1OnOhtCkO6t6aUfOOUForAn9Qki4b2NrD&export=download",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68dc0032b95d760366d140eb"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68dc0063b95d760366d14174"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1xzgNoFYr7YxZ4hJiWRmJtVIm9QD4frdB/view?usp=sharing",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e070bc284d325b48d990"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned.",
+    "domain": "Web Development",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1nVQAkqeHI3932u_XSN8BVIEegR9hStc-/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/ivw6nDua39VwHS3E6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e108bc284d325b48dce2"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned.",
+    "domain": "Data Analytics",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ivw6nDua39VwHS3E6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e141bc284d325b48dd59"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c269bf63d5dde43168e81b"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e1c0bc284d325b48e275"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1CrrlWFzFPiWHv9ZIEKCEbvHQ62O2i8mB&export=download",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e201bc284d325b48e2fb"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "Graphics Designing",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1_3Q5Ss85M7M8zbPrgSEGOTq1fMpVnE_k&export=download",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e232bc284d325b48e384"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned.",
+    "domain": "Python Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/ivw6nDua39VwHS3E6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e25dbc284d325b48e3e9"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c24f69aa88077de3f55df1"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e2c3bc284d325b48e50f"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned.",
+    "domain": "Java Programming",
+    "batch_no": "2502",
+    "downloadLink": "https://drive.google.com/file/d/13vYQ0FZQ7LI-agV6YFO3SIwj0qZ93usK/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/ivw6nDua39VwHS3E6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "68e9e2e9bc284d325b48e557"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2692063d5dde43168e811"
+    },
+    "__v": 0,
+    "isHidden": true
+  },
+  {
+    "_id": {
+      "$oid": "6920a5e385a8e7d76d497ad0"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25th Oct.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mCHw9D5HoTUguZDa9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a5fc85a8e7d76d497c33"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 1st Nov.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/dXyFrxPDJqSVTnYN8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a61485a8e7d76d497dcf"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 15th Nov.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/pa9EB3robEGaYdcF9",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a62f85a8e7d76d497f72"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 29th Nov.",
+    "domain": "Data Analytics",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8pAeqq5k4GoRBibV8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a80b85a8e7d76d498aac"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25th Oct.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1cjA_OkJknCsRVqOEdWqYnVU-oESMsXQS&export=download",
+    "uploadLink": "https://forms.gle/mCHw9D5HoTUguZDa9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a82685a8e7d76d498c2a"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 1st Nov.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=10UqdHLUJ4YxaBeE2ZgVo-k_eBsaDTDza&export=download",
+    "uploadLink": "https://forms.gle/dXyFrxPDJqSVTnYN8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a83f85a8e7d76d498df5"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 15th Nov.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1_3gSZ8EvVFl4_VULM00_tqZzZs8VMXkh&export=download",
+    "uploadLink": "https://forms.gle/pa9EB3robEGaYdcF9",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a86085a8e7d76d498fd3"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 29th Nov.",
+    "domain": "DSA",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/uc?id=1WZxYI85yJUZFMrlH7MF_ZBtkARoLFlUU&export=download",
+    "uploadLink": "https://forms.gle/8pAeqq5k4GoRBibV8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c2696263d5dde43168e816"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920a9e985a8e7d76d499b58"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25th Oct.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mCHw9D5HoTUguZDa9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691b5d83b615f749305c1572"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920aa0485a8e7d76d499ce8"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 1st Nov.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/dXyFrxPDJqSVTnYN8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691b5d83b615f749305c1572"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920aa2385a8e7d76d499eeb"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 15th Nov.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/pa9EB3robEGaYdcF9",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691b5d83b615f749305c1572"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920aa3e85a8e7d76d49a0cb"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 29th Nov.",
+    "domain": "Python Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/8pAeqq5k4GoRBibV8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691b5d83b615f749305c1572"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920ac0385a8e7d76d49ad10"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25th Oct.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mCHw9D5HoTUguZDa9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691b5e24b615f749305c2b99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920ac1b85a8e7d76d49ae15"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 1st Nov.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/dXyFrxPDJqSVTnYN8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691b5e24b615f749305c2b99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920ac3285a8e7d76d49af5e"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 15th Nov.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/pa9EB3robEGaYdcF9",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691b5e24b615f749305c2b99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6920ac4985a8e7d76d49b08e"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 29th Nov.",
+    "domain": "Java Programming",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/13vYQ0FZQ7LI-agV6YFO3SIwj0qZ93usK/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/8pAeqq5k4GoRBibV8 ",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691b5e24b615f749305c2b99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aeccdbbd41e596781149f"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11th Oct.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2Ji1AxdXT9AFy5eR7",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aecedbbd41e596781172a"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18th Oct.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/YFShUtjudeXxeHAY8",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aed69bbd41e5967812098"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25th Oct.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mCHw9D5HoTUguZDa9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aed87bbd41e59678124a9"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 1st Nov.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/dXyFrxPDJqSVTnYN8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aeda5bbd41e596781294b"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 15th Nov.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/pa9EB3robEGaYdcF9",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "692aedd4bbd41e5967812ddc"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 29th Nov.",
+    "domain": "Web Development",
+    "batch_no": "2503",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8pAeqq5k4GoRBibV8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "695563f5f516cc32f0a5b7be"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 10 Jan 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/Vgn6jT2jtBPzknrt6",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6955645ff516cc32f0a5bc0b"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 10 Jan 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/Vgn6jT2jtBPzknrt6",
+    "week": 1,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "695564c1f516cc32f0a5bfc0"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 10 Jan 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=1galUludIZ_3JmTcz_vaRz5NseELM0Tjs&export=download",
+    "uploadLink": "https://forms.gle/Vgn6jT2jtBPzknrt6",
+    "week": 1,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69556522f516cc32f0a5c286"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 10 Jan 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/Vgn6jT2jtBPzknrt6",
+    "week": 1,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69556562f516cc32f0a5c4fe"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 10 Jan 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1awsyy1Ey_0OEUXPNREOfXSJGy5OdaKG2/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/Vgn6jT2jtBPzknrt6",
+    "week": 1,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6961df2eab563350f31cdff5"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 17 Jan 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ek9UbcTDyfVXRm2YA",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6961dfa1ab563350f31ce433"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 17 Jan 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=1CrrlWFzFPiWHv9ZIEKCEbvHQ62O2i8mB&export=download",
+    "uploadLink": "https://forms.gle/ek9UbcTDyfVXRm2YA",
+    "week": 2,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6961e013ab563350f31ce70b"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 17 Jan 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ek9UbcTDyfVXRm2YA",
+    "week": 2,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6961e058ab563350f31cea65"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 17 Jan 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ek9UbcTDyfVXRm2YA",
+    "week": 2,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6961e09dab563350f31ced30"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 17 Jan 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/ek9UbcTDyfVXRm2YA",
+    "week": 2,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "696b3464ab563350f31fcce0"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 24 Jan 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=1cjA_OkJknCsRVqOEdWqYnVU-oESMsXQS&export=download",
+    "uploadLink": "https://forms.gle/yFFLxRLyacMy3svE7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "696b34b2ab563350f31fcf6f"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 24 Jan 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/yFFLxRLyacMy3svE7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "696b355aab563350f31fd2c6"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 24 Jan 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/yFFLxRLyacMy3svE7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "696b35fdab563350f31fd7ba"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 24 Jan 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/yFFLxRLyacMy3svE7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "696b363dab563350f31fdc84"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 24 Jan 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/yFFLxRLyacMy3svE7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6974b2e7ab563350f3242803"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 31 Jan 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/x5nXWSw22voAm2oi8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6974b38aab563350f3242fff"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 31 Jan 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/x5nXWSw22voAm2oi8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6974b43bab563350f324337f"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 31 Jan 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=10UqdHLUJ4YxaBeE2ZgVo-k_eBsaDTDza&export=download",
+    "uploadLink": "https://forms.gle/x5nXWSw22voAm2oi8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6974b536ab563350f3243723"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 31 Jan 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/x5nXWSw22voAm2oi8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6974b5a5ab563350f3243a69"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 31 Jan 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/x5nXWSw22voAm2oi8",
+    "week": 4,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697da2c6ab563350f32a352e"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/FzakKteRWh4hXGMo7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697da309ab563350f32a3a8a"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/FzakKteRWh4hXGMo7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697da346ab563350f32a3e2d"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Feb 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=1_3gSZ8EvVFl4_VULM00_tqZzZs8VMXkh&export=download",
+    "uploadLink": "https://forms.gle/FzakKteRWh4hXGMo7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697da378ab563350f32a41a6"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/FzakKteRWh4hXGMo7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697da3c1ab563350f32a451f"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/FzakKteRWh4hXGMo7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697f25e3ab563350f32c054f"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697f2630ab563350f32c0b41"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697f2676ab563350f32c1059"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "697f26a3ab563350f32c147f"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1awsyy1Ey_0OEUXPNREOfXSJGy5OdaKG2/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69863d708892c60e1e6eab64"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69863dfa8892c60e1e6eb18c"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69863e518892c60e1e6eb53d"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69863ebc8892c60e1e6eb95a"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699022239c5759009ec82ed6"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/13vYQ0FZQ7LI-agV6YFO3SIwj0qZ93usK/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/mGSZFwWWV2auQFQA8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699022709c5759009ec8315d"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8t7pGDJHbeUJ4FKP7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699022fb9c5759009ec8384b"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8t7pGDJHbeUJ4FKP7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699023709c5759009ec83c2d"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/mGSZFwWWV2auQFQA8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699023a89c5759009ec84099"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Feb 2026",
+    "domain": "DSA",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/uc?id=1WZxYI85yJUZFMrlH7MF_ZBtkARoLFlUU&export=download",
+    "uploadLink": "https://forms.gle/mGSZFwWWV2auQFQA8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699023fc9c5759009ec84584"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mGSZFwWWV2auQFQA8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6990242e9c5759009ec84a85"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8t7pGDJHbeUJ4FKP7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6990247d9c5759009ec85114"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/8t7pGDJHbeUJ4FKP7",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699024b29c5759009ec8553d"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2601",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/mGSZFwWWV2auQFQA8",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699950d82f195e7b975b8625"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6999517a2f195e7b975b8cb7"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Java Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699952942f195e7b975b94c2"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699952da2f195e7b975ba019"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 Feb 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a2e70aa610288e2527e502"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Mar 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a2e786a610288e2527eba7"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Mar 2026",
+    "domain": "Java Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a2e83ea610288e2527f5fb"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 14 Mar 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a416e7a610288e252c9f49"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 March 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a45d7ba610288e252e741f"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 March 2026",
+    "domain": "Machine Learning",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/10nazfOenGuTOMShZzBvvHGu4-qAxfxhs/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "699a9aac2f195e7b975eec9a"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a817c6a610288e253f7100"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 March 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69a81898a610288e253f7d0d"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 March 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1awsyy1Ey_0OEUXPNREOfXSJGy5OdaKG2/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69aaf6cfa610288e254999a2"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 7 March 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/A8fdhsMMsoyNBCaY8",
+    "week": 1,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ab957da610288e254bbf72"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 March 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ab95baa610288e254bc7fb"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 March 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ab95f7a610288e254bcf60"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 March 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ab9622a610288e254bd5cb"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 March 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ab9654a610288e254bda75"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 14 March 2026",
+    "domain": "Machine Learning",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1faBG9HR4V4JAVbD6BAFq_YdpKsJ8Lqhh/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/saMnDgs7Yfm2f3B59",
+    "week": 2,
+    "createdBy": {
+      "$oid": "699a9aac2f195e7b975eec9a"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b5640b7de01815fb52de4b"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 March 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/K7hPBeXjTus39PsK9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b564fd7de01815fb52e770"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Mar 2026",
+    "domain": "Web Development",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b565797de01815fb52f15d"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 28 Mar 2026",
+    "domain": "Python Programming",
+    "batch_no": "2602",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b565ad7de01815fb52f5a5"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 March 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/K7hPBeXjTus39PsK9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b5662a7de01815fb52ff0e"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 March 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/K7hPBeXjTus39PsK9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b566ca7de01815fb530777"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 March 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/K7hPBeXjTus39PsK9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b5682b7de01815fb531035"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 21 March 2026",
+    "domain": "Machine Learning",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1Em0qYEJ3uFMQnnNu_ExdOeb26QlSg1wQ/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/K7hPBeXjTus39PsK9",
+    "week": 3,
+    "createdBy": {
+      "$oid": "699a9aac2f195e7b975eec9a"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69be2adbac9fd92325eb483e"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 March 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69be2bd4ac9fd92325eb563b"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 March 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69be2fa0ac9fd92325eb8691"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 March 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69be3017ac9fd92325eb9151"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 March 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69be31faac9fd92325eba4b1"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 28 March 2026",
+    "domain": "Machine Learning",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1lYZPfRhfyIDanmvf5fCNTRCi0I2zt9I7/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/4mQnaigexvsciTEQA",
+    "week": 4,
+    "createdBy": {
+      "$oid": "699a9aac2f195e7b975eec9a"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c8b6f279382fcb97cda06f"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 11 Apr 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c8b80379382fcb97cdbbef"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 11 Apr 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c8b98d79382fcb97cdccfa"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 11 Apr 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c8ba3979382fcb97cddb80"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 11 Apr 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c8bb7179382fcb97cde92a"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 11 Apr 2026",
+    "domain": "Machine Learning",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1DDV3830oPA53yEptmaVUQ4fxcwa0jVD1/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DTs4f92HVvzFjj7UA",
+    "week": 6,
+    "createdBy": {
+      "$oid": "699a9aac2f195e7b975eec9a"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1c7179382fcb97e39de1"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1cd379382fcb97e3a8c2"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1-wfqggCmANMCWTCwdpfF_QWjl_eejUDM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1d4a79382fcb97e3b0bd"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/14Pk_jQ4h058iYr9sH7LnQqfDXoLSlxrO/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1da879382fcb97e3b7cc"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1e0c79382fcb97e3c189"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1awsyy1Ey_0OEUXPNREOfXSJGy5OdaKG2/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69cc1e6579382fcb97e3c7b3"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 11 April 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1CWR7Hbt2fUmELF5UHjMg-Bo6Tro4WfE0/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9d745b3c96c61fa691bf9"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 25 Apr 2026",
+    "domain": "Java Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/13vYQ0FZQ7LI-agV6YFO3SIwj0qZ93usK/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9d7d4b3c96c61fa69291a"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 25 Apr 2026",
+    "domain": "Python Programming",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9d82bb3c96c61fa6933c8"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 25 Apr 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9d8d5b3c96c61fa6940f5"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 25 Apr 2026",
+    "domain": "Web Development",
+    "batch_no": "2603",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gvQwL1zmgEmSGdyM9",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9dd0db3c96c61fa6962a2"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1zpsYlAfMTA6MiyfZsHwvVzUNHmp8z43r/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9ddb4b3c96c61fa696ef9"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9de09b3c96c61fa6979b7"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9de3eb3c96c61fa6980d5"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/109Q7hkAy69tWW6qW0iaUCpNELHEBy3jj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9de71b3c96c61fa6987a2"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1WZ_jU3ULwcnkWm82MwRvkrQNILnOzB-x/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9deacb3c96c61fa6991fb"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 18 April 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31d98c7fc03a6d18ebd01"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31dfcc7fc03a6d18ec910"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1gYVSEp7Q9j0Q-mroCXYKOMA4BUwrG0UG/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31e30c7fc03a6d18ecfdc"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1VECTP4P1IAtbF5gyptkFwDvh1AGzXi95/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31e5dc7fc03a6d18ed782"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31e8ec7fc03a6d18ee0fe"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e31eb6c7fc03a6d18ee6ad"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 25 April 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1x1SMGhkcAFqE_D4zkFO6SwQbHhE3_oIM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3b7864705a3d03c82cdc"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1Bj6A-PoiIuMulD3jqG8_vEFjQExKyhh0/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3bd364705a3d03c83455"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1vRSG3VIcYu69qEkVdwKDZfZTqfb_yc1E/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3bfb64705a3d03c83819"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1aDZWYVAlnDFqY11f-HrrTTV35dfxvG9M/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3c2864705a3d03c83d9d"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1WyOIBwr_iqV6wgA8ht0cWvXiObFCVOal/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3c6064705a3d03c843e8"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1efftZInaCfOFUnntj-hyJJGrNo-WOrqq/view?usp=sharing",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ec3c9164705a3d03c847ee"
+    },
+    "title": "Project 4 Advance",
+    "description": "Week 4 project is assigned. Due date by 02 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1Regd2gFwgJnnSambimkgL4rqoy9xvIjz/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/ZW92hiZqU7dRgTax6",
+    "week": 4,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f399a50a5bbb959096a775"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 9 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1jd4wkHXdhtrKFXE-G2iWsnyCKRYCvDZT/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f39a070a5bbb959096b299"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 9 May 2026",
+    "domain": "DSA",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/uc?id=1galUludIZ_3JmTcz_vaRz5NseELM0Tjs&export=download",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f39a6f0a5bbb959096bc50"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 9 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1FkLX2iRPalxEfWQPMUa6f3N7IGh6JMNa/view?usp=sharing",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": true,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f39aa20a5bbb959096c27c"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 9 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1awsyy1Ey_0OEUXPNREOfXSJGy5OdaKG2/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f39ae40a5bbb959096c902"
+    },
+    "title": "Project 1 Basic",
+    "description": "Week 1 project is assigned. Due date by 9 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1CWR7Hbt2fUmELF5UHjMg-Bo6Tro4WfE0/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/gYx2s4J5gQCTURw16",
+    "week": 1,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f59361e1dc8b4f465e9d08"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1uMAD5jp4cLrztOBVEpS2MotrKyfSx6lR/view?usp=sharing",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f593bae1dc8b4f465e9ef0"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1Ixf3-XT2exM686hxClMsyjsQE7aymLNg/view?usp=sharing",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f593ede1dc8b4f465e9f79"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1eABc-IJZ3PR52qK7bTK8Ymg_4cUUbjRA/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f59412e1dc8b4f465ea18a"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1Vc4lxM0mC-_VLf4JYm4mun12Gw7deWUx/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f59438e1dc8b4f465ea334"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1s2tanCdBruRk-dg6wak2XJ0C6zB_O4zv/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f5946ee1dc8b4f465ea3de"
+    },
+    "title": "Project 5 Intermediate",
+    "description": "Week 5 & 6 project is assigned. Due date by 16 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1uK1Xo5rWvWvvocJU3n6twnu3BkY4iHdd/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/2yCLV85JeVP2UKZL7",
+    "week": 6,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69fecbac3bc6f64d54d23819"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 16 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1zpsYlAfMTA6MiyfZsHwvVzUNHmp8z43r/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69fecc1c3bc6f64d54d23a3e"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 16 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/13k6ZVP22omd70kLoKNF0yh5xJyZ5XPGY/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69fecc793bc6f64d54d23e0c"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 16 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1rDqLed11WkcVTBtzEzREEcDtQhXrPLcT/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69feccbc3bc6f64d54d24168"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 16 May 2026",
+    "domain": "DSA",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/uc?id=1CrrlWFzFPiWHv9ZIEKCEbvHQ62O2i8mB&export=download",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69feccf73bc6f64d54d244b4"
+    },
+    "title": "Project 2 Basic",
+    "description": "Week 2 project is assigned. Due date by 16 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1EpOWxtHF8HPMN-1CXGh3hV15JFXIrAo1/view?usp=sharing",
+    "uploadLink": "https://forms.gle/DuSQHBNksD4F7qay7",
+    "week": 2,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f79466b1e6d6a8985623"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1Jh5DlqDN7jy0HrzAlmcGEJ2Ez7wM53jb/view?usp=sharing",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f81c66b1e6d6a89859dc"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 23 May 2026",
+    "domain": "Web Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1pCG_Dy86F0LUeH1JTHsXXm12TLhA-eih/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "68c1f7025165330b397c643f"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f85966b1e6d6a8985bb7"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Data Analytics",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1FJq0I-G3u0AjMZL6ZJYSe6013eug1fOt/view?usp=sharing",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "691f54f6a7a0e068e135bb09"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f8a166b1e6d6a8985c53"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Graphics Designing",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1_HrTFsC_JoRQSeiJzNfaLGtHTVwyInKW/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "68c2686c63d5dde43168e80c"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f8c866b1e6d6a8985d97"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 23 May 2026",
+    "domain": "DSA",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/uc?id=1cjA_OkJknCsRVqOEdWqYnVU-oESMsXQS&export=download",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "695380e26d7fa9c78b12596c"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f95166b1e6d6a8986215"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1o2bOeA_B3X7YEwzYoebylh1dxf3zS8LD/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f97066b1e6d6a8986295"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 23 May 2026",
+    "domain": "Python Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/12H2mEaAufX4sKzSbryXMKuHufAo48Imj/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "693da2dc9c323dd9fbe45f99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07f9a666b1e6d6a8986448"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/13vYQ0FZQ7LI-agV6YFO3SIwj0qZ93usK/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07fa1a66b1e6d6a89866ce"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 23 May 2026",
+    "domain": "Java Programming",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1jlVUVCGmBvUl7sRZGzXEDuDjjWijnMSm/view?usp=sharing",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "694bf14638c1ddf2e2bdfdef"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07fa5666b1e6d6a8986776"
+    },
+    "title": "Project 6 Advance",
+    "description": "Week 7 & 8 project is assigned. Due date by 30 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2604",
+    "downloadLink": "https://drive.google.com/file/d/1wfRQITctfxUaZMhqQlQ61G6gzVWAjq4I/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/MirCjaoC4UFJz4FK6",
+    "week": 8,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a07fa7166b1e6d6a89867b8"
+    },
+    "title": "Project 3 Intermediate",
+    "description": "Week 3 project is assigned. Due date by 23 May 2026",
+    "domain": "Full Stack Development",
+    "batch_no": "2605",
+    "downloadLink": "https://drive.google.com/file/d/1x1SMGhkcAFqE_D4zkFO6SwQbHhE3_oIM/view?usp=drive_link",
+    "uploadLink": "https://forms.gle/4oXTzzJ6SrkXJBME6",
+    "week": 3,
+    "createdBy": {
+      "$oid": "695381416d7fa9c78b125e99"
+    },
+    "isHidden": false,
+    "__v": 0
+  }
+]

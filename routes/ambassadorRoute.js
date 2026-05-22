@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Ambassador = require("../models/Ambassador");
 const User = require("../models/User"); // ✅ assuming interns are stored in User collection
+const PaymentTransaction = require("../models/PaymentTransaction");
 const authRole = require('../middleware/authRole');
 const bcrypt = require("bcrypt");
 
@@ -110,6 +111,19 @@ router.post("/ambassador/withdraw", authRole("ambassador"), async (req, res) => 
     });
 
     await ambassador.save();
+
+    // Create central PaymentTransaction
+    await PaymentTransaction.create({
+      recipientId: ambassador._id,
+      recipientModel: "Ambassador",
+      recipientName: ambassador.name,
+      recipientEmail: ambassador.email,
+      amount: withdrawAmount,
+      type: "AmbassadorWithdrawal",
+      status: "Pending",
+      paymentDetails,
+      title: `Ambassador Withdrawal - ${ambassador.name}`
+    });
 
     return res.json({
       success: true,

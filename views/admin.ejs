@@ -152,6 +152,12 @@
           <span>Attendance</span>
         </a>
 
+        <div class="sidebar-nav-label">Finance</div>
+        <a href="#salaryEarnings" class="nav-link" onclick="setActive(this)">
+          <i class="bi bi-wallet2"></i>
+          <span>Salary</span>
+        </a>
+
         <a href="#supportChat" class="nav-link d-lg-none" onclick="setActive(this)">
           <i class="bi bi-chat-dots-fill"></i>
           <span>Support Chat</span>
@@ -203,11 +209,11 @@
                           <button class="topbar-btn" data-bs-toggle="dropdown" aria-expanded="false" id="notificationButton">
                             <i class="bi bi-bell"></i>
                             <% if (typeof unreadCount !== 'undefined' && unreadCount > 0) { %>
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge">
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge" style="font-size: 0.6rem;">
                                 <%= unreadCount > 9 ? '9+' : unreadCount %>
                               </span>
                             <% } else { %>
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge">0</span>
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge" style="font-size: 0.6rem;">0</span>
                             <% } %>
                           </button>
 
@@ -525,6 +531,154 @@
               </div> <!-- end row 3 -->
             </section>
 
+            </section>
+
+            <!-- SALARY & EARNINGS SECTION -->
+            <section id="salaryEarnings" class="content-section" style="display:none;">
+              <div class="page-header">
+                <h4>Salary & Earnings</h4>
+                <p>View your payroll, download salary slips, and manage PF.</p>
+              </div>
+
+              <!-- Stats Cards -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                  <div class="stat-card stat-card-1">
+                    <i class="bi bi-wallet2 stat-icon"></i>
+                    <div class="stat-label">Total Earned</div>
+                    <div class="stat-value">₹<%= admin.totalEarnings || 0 %></div>
+                    <div class="stat-sub">Overall earnings</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="stat-card stat-card-2">
+                    <i class="bi bi-piggy-bank stat-icon"></i>
+                    <div class="stat-label">PF Balance</div>
+                    <div class="stat-value">₹<%= admin.pfBalance || 0 %></div>
+                    <div class="stat-sub">Provident Fund</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="stat-card stat-card-3">
+                    <i class="bi bi-cash-coin stat-icon"></i>
+                    <div class="stat-label">Current Basic Salary</div>
+                    <% const latestPayroll = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] : null; %>
+                    <div class="stat-value">₹<%= latestPayroll?.basicSalary || 0 %></div>
+                    <div class="stat-sub">Latest monthly basic</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-lg-8">
+                  <div class="panel-card h-100">
+                    <div class="panel-card-header">
+                      <h4><i class="bi bi-clock-history me-2"></i> Salary History</h4>
+                    </div>
+                    <div class="panel-card-body p-0">
+                      <div class="table-wrapper m-3 border-0">
+                        <table class="table table-striped table-hover align-middle mb-0">
+                          <thead>
+                            <tr>
+                              <th class="ps-4">Pay Period</th>
+                              <th>Net Pay</th>
+                              <th>Paid On</th>
+                              <th class="pe-4 text-end">Slip</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% if(!admin.salaryHistory || admin.salaryHistory.length === 0) { %>
+                              <tr><td colspan="4" class="text-center py-4 text-muted">No salary history available.</td></tr>
+                            <% } else { %>
+                              <% [...admin.salaryHistory].reverse().forEach((slip, index) => { 
+                                   // Reverse index for correct array reference
+                                   const realIndex = admin.salaryHistory.length - 1 - index;
+                              %>
+                                <tr>
+                                  <td class="ps-4"><%= new Date(slip.payPeriodStart).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) %></td>
+                                  <td class="text-success fw-bold">₹<%= slip.netPay %></td>
+                                  <td><%= new Date(slip.paidAt).toLocaleDateString() %></td>
+                                  <td class="pe-4 text-end">
+                                    <a href="/admin/download-salary-slip/<%= realIndex %>" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                      <i class="bi bi-download me-1"></i> PDF
+                                    </a>
+                                  </td>
+                                </tr>
+                              <% }) %>
+                            <% } %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                  <div class="panel-card h-100">
+                    <div class="panel-card-header">
+                      <h4><i class="bi bi-piggy-bank me-2"></i> Withdraw PF</h4>
+                    </div>
+                    <div class="panel-card-body">
+                      <form id="pfWithdrawalForm">
+                        <div class="mb-3">
+                          <label class="form-label text-muted small fw-bold">Amount to Withdraw (Max: ₹<%= admin.pfBalance || 0 %>)</label>
+                          <input type="number" id="pfAmount" class="form-control" max="<%= admin.pfBalance || 0 %>" required>
+                        </div>
+                        <div class="mb-4">
+                          <label class="form-label text-muted small fw-bold">UPI ID / Bank Details</label>
+                          <input type="text" id="pfDetails" class="form-control" required placeholder="e.g. name@upi">
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100 rounded-pill text-white fw-bold">Request Withdrawal</button>
+                      </form>
+
+                      <hr class="border-secondary my-4">
+                      <h6 class="text-muted mb-3 fw-bold" style="font-size: 0.85rem;">Recent Requests</h6>
+                      <div style="max-height: 150px; overflow-y: auto;" class="pe-2">
+                        <% if(!admin.pfWithdrawals || admin.pfWithdrawals.length === 0) { %>
+                          <div class="text-center text-muted small py-3">No recent requests.</div>
+                        <% } else { %>
+                          <% [...admin.pfWithdrawals].reverse().forEach(req => { %>
+                            <div class="meeting-item mb-2">
+                              <div>
+                                <strong class="text-primary d-block">₹<%= req.amount %></strong>
+                                <span><%= new Date(req.requestedAt).toLocaleDateString() %></span>
+                              </div>
+                              <span class="badge <%= req.status === 'Approved' ? 'badge-approved' : (req.status === 'Rejected' ? 'badge-rejected' : 'badge-pending') %>">
+                                <%= req.status %>
+                              </span>
+                            </div>
+                          <% }) %>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <script>
+                document.getElementById('pfWithdrawalForm')?.addEventListener('submit', async (e) => {
+                  e.preventDefault();
+                  const amount = document.getElementById('pfAmount').value;
+                  const paymentDetails = document.getElementById('pfDetails').value;
+                  
+                  try {
+                    const res = await fetch('/admin/request-pf-withdrawal', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ amount, paymentDetails })
+                    });
+                    const data = await res.json();
+                    if(data.success) {
+                      showToast(data.message || 'PF withdrawal requested successfully', 'success');
+                      setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                      showToast(data.message || 'Error requesting PF withdrawal', 'error');
+                    }
+                  } catch(err) {
+                    showToast('Error requesting PF withdrawal.', 'error');
+                  }
+                });
+              </script>
             </section>
 
             <!-- SUPPORT CHAT SECTION -->

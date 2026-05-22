@@ -1,0 +1,7224 @@
+[
+  {
+    "_id": {
+      "$oid": "68eab415b28e0487bbb09da6"
+    },
+    "title": "Web Development Final Quiz (Set A)",
+    "week": 4,
+    "domain": "Web Development",
+    "questions": [
+      {
+        "questionText": "Which HTML element is semantically correct to display self-contained content that could stand independently?",
+        "options": [
+          "<section>",
+          "<article>",
+          "<div>",
+          "<aside>"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09da7"
+        }
+      },
+      {
+        "questionText": "Which of the following CSS selectors has the highest specificity?",
+        "options": [
+          ".class",
+          "#id",
+          "div p",
+          "*"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09da8"
+        }
+      },
+      {
+        "questionText": "Which JavaScript statement is true about event bubbling?",
+        "options": [
+          "Events propagate from parent to child",
+          "Events propagate from child to parent",
+          "Bubbling occurs only for inline events",
+          "Bubbling can’t be stopped"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09da9"
+        }
+      },
+      {
+        "questionText": "In CSS, which property allows you to create a stacking context without using z-index?",
+        "options": [
+          "opacity",
+          "position: static",
+          "visibility: hidden",
+          "overflow: visible"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09daa"
+        }
+      },
+      {
+        "questionText": "Which HTML attribute is deprecated but still supported in most browsers?",
+        "options": [
+          "align",
+          "class",
+          "src",
+          "id"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09dab"
+        }
+      },
+      {
+        "questionText": "In JavaScript, what is the result of: console.log([ ] + [ ]);",
+        "options": [
+          "[ ]",
+          "\"\"",
+          "0",
+          "undefined"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09dac"
+        }
+      },
+      {
+        "questionText": "Which CSS pseudo-class applies only to elements not being hovered over?",
+        "options": [
+          ":hover",
+          ":not(:hover)",
+          ":active",
+          ":focus"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09dad"
+        }
+      },
+      {
+        "questionText": "In HTML5, which input type allows selecting multiple values but shows them as chips?",
+        "options": [
+          "email",
+          "file",
+          "select with multiple",
+          "checkbox"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09dae"
+        }
+      },
+      {
+        "questionText": "What is true about let and const in JavaScript?",
+        "options": [
+          "Both are hoisted but not initialized ",
+          "Both are function-scoped",
+          "Only let can be reassigned",
+          "const can be reassigned if primitive"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09daf"
+        }
+      },
+      {
+        "questionText": "Which of the following CSS units is relative to the parent element’s font size?",
+        "options": [
+          "px ",
+          "rem",
+          "em",
+          "%"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db0"
+        }
+      },
+      {
+        "questionText": "Which HTML5 feature is required for offline caching of a web app?",
+        "options": [
+          "<link rel=\"manifest\">",
+          "<meta charset>",
+          "<script>",
+          "<noscript>"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db1"
+        }
+      },
+      {
+        "questionText": "What will the following JS code output? console.log(typeof null);",
+        "options": [
+          "`null`  ",
+          "`undefined`  ",
+          "`object`",
+          "`NaN`  "
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db2"
+        }
+      },
+      {
+        "questionText": "Which CSS property controls how text wraps inside an element?",
+        "options": [
+          "text-align",
+          "white-space",
+          "word-wrap",
+          "text-overflow"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db3"
+        }
+      },
+      {
+        "questionText": "Which JavaScript method can flatten an array to any depth?",
+        "options": [
+          "Array.flat()",
+          "Array.concat()",
+          "Array.reduce()",
+          "Array.merge()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db4"
+        }
+      },
+      {
+        "questionText": "Which HTML tag allows embedding interactive content, like a small app or game?",
+        "options": [
+          "<iframe>",
+          "<object>",
+          "<embed>",
+          "<section>"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db5"
+        }
+      },
+      {
+        "questionText": "Which JavaScript function creates a new array with only certain elements?",
+        "options": [
+          "map()",
+          "filter()",
+          "reduce()",
+          "forEach()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db6"
+        }
+      },
+      {
+        "questionText": "What is true about the difference between inline, block, and inline-block in CSS?",
+        "options": [
+          "inline respects height and width",
+          "inline-block respects height and width",
+          "block ignores margin",
+          "inline-block does not respect padding"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db7"
+        }
+      },
+      {
+        "questionText": "In HTML, which attribute prevents form input autocomplete?",
+        "options": [
+          "autofocus",
+          "autocomplete=\"off\"",
+          "novalidate",
+          "required"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db8"
+        }
+      },
+      {
+        "questionText": "Which JavaScript expression is true?  [ ] == ![ ]",
+        "options": [
+          " true",
+          "false  ",
+          "throws error  ",
+          "undefined  "
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09db9"
+        }
+      },
+      {
+        "questionText": "Which CSS property allows nested transformations to behave independently?",
+        "options": [
+          "transform-style: preserve-3d",
+          "perspective",
+          "position: relative",
+          "backface-visibility"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eab415b28e0487bbb09dba"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2501",
+      "2503",
+      "2601",
+      "2602",
+      "2603"
+    ],
+    "createdAt": {
+      "$date": "2025-10-11T19:46:29.214Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb3edcb28e0487bbb0b992"
+    },
+    "title": "Web Development Final Quiz (Set A)",
+    "week": 6,
+    "domain": "Web Development",
+    "questions": [
+      {
+        "questionText": "Which of the following is true about MongoDB’s _id field?",
+        "options": [
+          "It is optional",
+          "It is always an ObjectId by default ",
+          "It can never be indexed",
+          "It is automatically encrypted"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b993"
+        }
+      },
+      {
+        "questionText": "In Express.js, what is the difference between app.use() and app.get()?",
+        "options": [
+          "app.use() handles only GET requests",
+          "app.get() can handle middleware",
+          "app.use() applies to all HTTP methods",
+          "app.get() applies to all HTTP methods"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b994"
+        }
+      },
+      {
+        "questionText": "Which CSS property allows a flex item to shrink if necessary?",
+        "options": [
+          "flex-grow",
+          "flex-shrink",
+          "flex-basis",
+          "order"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b995"
+        }
+      },
+      {
+        "questionText": "In React, what is true about keys in lists?",
+        "options": [
+          "Keys can be reused across sibling elements",
+          "Keys must always be numbers",
+          "Keys help React identify which items changed",
+          "Keys prevent rendering errors completely"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b996"
+        }
+      },
+      {
+        "questionText": "Which of the following MongoDB queries will return documents with age greater than 25?",
+        "options": [
+          "{ age: { $lt: 25 } }",
+          "{ age: { $gt: 25 } }",
+          "{ age: { $gte: 25 } }",
+          "{ age: { $lte: 25 } }"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b997"
+        }
+      },
+      {
+        "questionText": "Which HTML5 element is deprecated but still affects layout in most browsers?",
+        "options": [
+          "<center>",
+          "<section>",
+          "<article>",
+          "<figure>"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b998"
+        }
+      },
+      {
+        "questionText": "Which statement is true about Node.js?",
+        "options": [
+          "Node.js cannot handle asynchronous I/O",
+          "Node.js is a frontend framework",
+          "Node.js requires a browser to run",
+          "Node.js is single-threaded "
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b999"
+        }
+      },
+      {
+        "questionText": "In CSS Grid, what does grid-auto-flow: dense; do",
+        "options": [
+          "Compresses items to fill gaps",
+          "Automatically creates rows",
+          "Disables grid-gap",
+          "Converts grid to flex"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99a"
+        }
+      },
+      {
+        "questionText": "Which of these React hooks can replace lifecycle methods in functional components?",
+        "options": [
+          "useState",
+          "useReducer",
+          "useEffect",
+          "useMemo"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99b"
+        }
+      },
+      {
+        "questionText": "Which Express.js middleware is used to serve static files?",
+        "options": [
+          "express.json()",
+          "express.static()",
+          "body-parser",
+          "cors"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99c"
+        }
+      },
+      {
+        "questionText": "In JavaScript, which of the following correctly clones an array?",
+        "options": [
+          "const arr2 = arr1;",
+          "const arr2 = [...arr1];",
+          "const arr2 = arr1.push();",
+          "const arr2 = arr1.map()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99d"
+        }
+      },
+      {
+        "questionText": "Which MongoDB feature allows joining data across collections?",
+        "options": [
+          "$populate",
+          "$aggregateOnly",
+          "$join",
+          "$lookup"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99e"
+        }
+      },
+      {
+        "questionText": "Which CSS pseudo-element allows inserting content before an element’s content?",
+        "options": [
+          ":before",
+          ":after",
+          ":first-child",
+          ":first-of-type"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b99f"
+        }
+      },
+      {
+        "questionText": "In React, when would you use useReducer instead of useState?",
+        "options": [
+          "For simple state toggling",
+          "For complex state logic",
+          "To optimize rendering speed",
+          "To manage refs"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a0"
+        }
+      },
+      {
+        "questionText": "Which of these Node.js methods writes to a file asynchronously?",
+        "options": [
+          "fs.writeFileSync()",
+          "fs.writeFile()",
+          "fs.appendSync()",
+          "fs.appendFileSync()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a1"
+        }
+      },
+      {
+        "questionText": "Which of the following is true about controlled components in React?",
+        "options": [
+          "Input values are handled by the DOM",
+          "Input values are controlled by React state",
+          "They cannot use useState",
+          "They do not trigger re-render"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a2"
+        }
+      },
+      {
+        "questionText": "What will the following JavaScript code output? ",
+        "options": [
+          "`\"NaN\"` ",
+          "`\"undefined\"`",
+          "`\"object\"`  ",
+          "`\"number\"`"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a3"
+        }
+      },
+      {
+        "questionText": "Which CSS property makes text truncate with ellipsis?",
+        "options": [
+          "text-overflow: ellipsis;",
+          "overflow-wrap: ellipsis;",
+          "word-break: ellipsis;",
+          "white-space: break-word;"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a4"
+        }
+      },
+      {
+        "questionText": "Which Express.js method handles all HTTP requests for a given path?",
+        "options": [
+          "app.get()",
+          "app.use()",
+          "app.post()",
+          "app.all()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a5"
+        }
+      },
+      {
+        "questionText": "Which of these statements about MongoDB indexes is true?",
+        "options": [
+          "They automatically compress data",
+          "They prevent duplicate data",
+          "They slow down read operations",
+          "They speed up queries"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a6"
+        }
+      },
+      {
+        "questionText": "In React, what is the correct way to conditionally render a component inline?",
+        "options": [
+          "if(condition) <Component />",
+          "<Component condition />",
+          "{ condition && <Component /> }",
+          "component.render(condition)"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a7"
+        }
+      },
+      {
+        "questionText": "Which CSS property allows a child element to inherit a parent’s flex sizing?",
+        "options": [
+          "flex-grow: inherit",
+          "flex-basis: inherit",
+          "flex: auto",
+          "order: inherit"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a8"
+        }
+      },
+      {
+        "questionText": "Which JavaScript expression is true? [ ] == false",
+        "options": [
+          " true",
+          "false ",
+          "throws error ",
+          "undefined  "
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9a9"
+        }
+      },
+      {
+        "questionText": "Which MongoDB query operator matches all documents where a field does not exist?",
+        "options": [
+          "$ne",
+          "$not",
+          "$missing",
+          "$exists: false"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9aa"
+        }
+      },
+      {
+        "questionText": "Which HTML input type allows selecting multiple files?",
+        "options": [
+          "text",
+          "email",
+          "file with multiple",
+          "checkbox"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9ab"
+        }
+      },
+      {
+        "questionText": "In React, what is true about useCallback?",
+        "options": [
+          "Memoizes a value",
+          "Memoizes a function",
+          "Replaces useEffect",
+          "Only works in class components"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9ac"
+        }
+      },
+      {
+        "questionText": "Which Node.js module allows path manipulation across different OS?",
+        "options": [
+          "fs",
+          "url",
+          "path",
+          "os"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9ad"
+        }
+      },
+      {
+        "questionText": "Which of the following CSS selectors targets all direct children of an element?",
+        "options": [
+          "+",
+          "~",
+          "*",
+          " >"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9ae"
+        }
+      },
+      {
+        "questionText": "Which MongoDB aggregation stage groups documents by a field?",
+        "options": [
+          "$group",
+          "$match",
+          "$project",
+          "$sort"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9af"
+        }
+      },
+      {
+        "questionText": "In JavaScript, what is true about this in arrow functions?",
+        "options": [
+          "It refers to the function itself",
+          "It refers to the parent scope",
+          "It is undefined",
+          "It refers to global object"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb3edcb28e0487bbb0b9b0"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2501",
+      "2503",
+      "2601",
+      "2602"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T05:38:36.986Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb445eb28e0487bbb0ce4a"
+    },
+    "title": "Java Programming Final Quiz (Set A)",
+    "week": 4,
+    "domain": "Java Programming",
+    "questions": [
+      {
+        "questionText": "What method of `Scanner` is used to read a string input?",
+        "options": [
+          "nextLine()",
+          "readLine()",
+          "getString()",
+          "inputLine()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce4b"
+        }
+      },
+      {
+        "questionText": "Which Java class can generate random numbers for Rock–Paper–Scissors?",
+        "options": [
+          "Number",
+          "Math",
+          "Random",
+          "Generator"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce4c"
+        }
+      },
+      {
+        "questionText": "In Java, what statement is used to compare two strings?",
+        "options": [
+          "0",
+          "equals()",
+          "compare()",
+          "isEqual()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce4d"
+        }
+      },
+      {
+        "questionText": "What GUI library is used to design windows, buttons, and labels in Java?",
+        "options": [
+          "AWT",
+          "Swing",
+          "JavaFX",
+          "JFX"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce4e"
+        }
+      },
+      {
+        "questionText": "Which Swing class is used to create a simple button?",
+        "options": [
+          "JButton",
+          "JLabel",
+          "JTextField",
+          "JPanel"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce4f"
+        }
+      },
+      {
+        "questionText": "What is the purpose of `actionPerformed()` method in a Java Swing program?",
+        "options": [
+          "To handle mouse events",
+          "To handle button click events",
+          "To close the window",
+          "To perform arithmetic operations"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce50"
+        }
+      },
+      {
+        "questionText": "Which loop is best for repeatedly showing a banking menu until user exits?",
+        "options": [
+          "for loop",
+          "while loop",
+          "do-while loop",
+          "switch loop"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce51"
+        }
+      },
+      {
+        "questionText": "What should be done before performing a withdrawal operation in a bank program?",
+        "options": [
+          "Add balance",
+          "Validate sufficient funds",
+          "Clear screen",
+          "Reset variables"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce52"
+        }
+      },
+      {
+        "questionText": "In the currency converter, which data type is most suitable for storing money values?",
+        "options": [
+          "int",
+          "String",
+          "long",
+          "double"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce53"
+        }
+      },
+      {
+        "questionText": "In a quiz application, how can you store multiple questions efficiently?",
+        "options": [
+          "Using Arrays",
+          "Using ArrayList",
+          "Using Switch",
+          "Using Enum"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce54"
+        }
+      },
+      {
+        "questionText": "What access modifier should be used to restrict direct access to class variables in Java?",
+        "options": [
+          "public",
+          "static",
+          "protected",
+          "private"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce55"
+        }
+      },
+      {
+        "questionText": "Which method terminates the program execution in Java?",
+        "options": [
+          "stop()",
+          "exit()",
+          "System.exit(0)",
+          "terminate()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce56"
+        }
+      },
+      {
+        "questionText": "In Rock–Paper–Scissors, how many possible outcomes are there between two players?",
+        "options": [
+          "2",
+          "3",
+          "6",
+          "9"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce57"
+        }
+      },
+      {
+        "questionText": "What is the best way to allow replay in the Rock–Paper–Scissors game?",
+        "options": [
+          "Use recursion",
+          "Use a for loop",
+          "Use a while loop with user input",
+          "Restart the program"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce58"
+        }
+      },
+      {
+        "questionText": "Which Swing component displays short text or information on the window?",
+        "options": [
+          "JTextField",
+          "JLabel",
+          "JButton",
+          "JDialog"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce59"
+        }
+      },
+      {
+        "questionText": "In a banking application, which Java concept ensures each account has its own data and behavior?",
+        "options": [
+          "Encapsulation",
+          "Polymorphism",
+          "Abstraction",
+          "Inheritance"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce5a"
+        }
+      },
+      {
+        "questionText": "How can you display dynamic conversion results in Swing when a button is clicked?",
+        "options": [
+          "Use System.out.println()",
+          "Update JLabel in event listener",
+          "Reopen the frame",
+          "Use JOptionPane only"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce5b"
+        }
+      },
+      {
+        "questionText": "In the Quiz project, which Java collection would be best if questions can be dynamically added and removed?",
+        "options": [
+          "ArrayList",
+          "Vector",
+          "LinkedList",
+          "Array"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce5c"
+        }
+      },
+      {
+        "questionText": "If you want to save quiz scores permanently for future runs, which Java feature can be used?",
+        "options": [
+          "Multithreading",
+          "File I/O",
+          "JDBC",
+          "Serialization"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce5d"
+        }
+      },
+      {
+        "questionText": "Which Java class is used to take input from the user in console applications?",
+        "options": [
+          "Scanner",
+          "InputReader",
+          "BufferedInput",
+          "ConsoleReader"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb445eb28e0487bbb0ce5e"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2503",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T06:02:06.539Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb4a28b28e0487bbb0d120"
+    },
+    "title": "Java Programming Final Quiz (Set A)",
+    "week": 6,
+    "domain": "Java Programming",
+    "questions": [
+      {
+        "questionText": "Which Java class is commonly used to take user input for console games?",
+        "options": [
+          "Scanner",
+          "Input",
+          "Reader",
+          "Console"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d121"
+        }
+      },
+      {
+        "questionText": "Which method generates random numbers in Java?",
+        "options": [
+          "Random.nextInt()",
+          "Math.rand()",
+          "Number.random()",
+          "Generate()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d122"
+        }
+      },
+      {
+        "questionText": "What structure is best for comparing user and computer choices?",
+        "options": [
+          "HashMap",
+          "For loop",
+          "Switch-case",
+          "If-else ladder"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d123"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to exit a loop in Java?",
+        "options": [
+          "continue",
+          "return",
+          "break",
+          "stop"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d124"
+        }
+      },
+      {
+        "questionText": "What would you use to allow the player to replay the game?",
+        "options": [
+          "Recursion",
+          "While loop",
+          "Switch",
+          "Goto"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d125"
+        }
+      },
+      {
+        "questionText": "Which method of Random class returns an int within range?",
+        "options": [
+          "next()",
+          "nextInt()",
+          "nextDouble()",
+          "nextLong()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d126"
+        }
+      },
+      {
+        "questionText": "Which Java package is used for GUI components?",
+        "options": [
+          "java.util",
+          "java.awt.event",
+          "java.io",
+          "javax.swing"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d127"
+        }
+      },
+      {
+        "questionText": "Which component is used for inputting text in Swing?",
+        "options": [
+          "JLabel",
+          "JButton",
+          "JTextField",
+          "JList"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d128"
+        }
+      },
+      {
+        "questionText": "What type of listener handles button clicks?",
+        "options": [
+          "ActionListener",
+          "MouseListener",
+          "WindowListener",
+          "FocusListener"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d129"
+        }
+      },
+      {
+        "questionText": "Which layout manager arranges components in a single row?",
+        "options": [
+          "BorderLayout",
+          "GridLayout",
+          "FlowLayout",
+          "BoxLayout"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12a"
+        }
+      },
+      {
+        "questionText": "Which method clears a text field in Swing?",
+        "options": [
+          "setValue('')",
+          "clear()",
+          "setText('')",
+          "reset()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12b"
+        }
+      },
+      {
+        "questionText": "For accurate currency conversion, which data type should be used?",
+        "options": [
+          "int",
+          "double",
+          "float",
+          "String"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12c"
+        }
+      },
+      {
+        "questionText": "Which control structure can display options repeatedly?",
+        "options": [
+          "for loop",
+          "while loop",
+          "do-while loop",
+          "foreach"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12d"
+        }
+      },
+      {
+        "questionText": "Which operation must check balance before execution?",
+        "options": [
+          "Deposit",
+          "Withdrawal",
+          "Transfer",
+          "Interest"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12e"
+        }
+      },
+      {
+        "questionText": "Which OOP principle ensures data security in bank accounts?",
+        "options": [
+          "Inheritance",
+          "Polymorphism",
+          "Abstraction",
+          "Encapsulation"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d12f"
+        }
+      },
+      {
+        "questionText": "Which exception occurs if non-numeric input is entered for amount?",
+        "options": [
+          "IOException",
+          "InputMismatchException",
+          "NumberFormatException",
+          "ArithmeticException"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d130"
+        }
+      },
+      {
+        "questionText": "Which class is used to take user input from console?",
+        "options": [
+          "Scanner",
+          "InputReader",
+          "BufferedReader",
+          "DataInputStream"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d131"
+        }
+      },
+      {
+        "questionText": "Which method can show balance in the console?",
+        "options": [
+          "System.out.println()",
+          "print()",
+          "echo()",
+          "display()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d132"
+        }
+      },
+      {
+        "questionText": "Which collection type can hold dynamic list of questions?",
+        "options": [
+          "Array",
+          "ArrayList",
+          "Queue",
+          "Stack"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d133"
+        }
+      },
+      {
+        "questionText": "Which Java keyword is used to define a class?",
+        "options": [
+          "object",
+          "Class",
+          "class",
+          "define"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d134"
+        }
+      },
+      {
+        "questionText": "What method reads user choice from keyboard?",
+        "options": [
+          "System.in.read()",
+          "Scanner.nextInt()",
+          "Input.read()",
+          "Console.input()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d135"
+        }
+      },
+      {
+        "questionText": "Which statement best checks if answer is correct?",
+        "options": [
+          "if(answer == correct)",
+          "if(answer.equals(correct))",
+          "if(answer === correct)",
+          "if(correct = answer)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d136"
+        }
+      },
+      {
+        "questionText": "Which concept allows multiple question objects to exist independently?",
+        "options": [
+          "Abstraction",
+          "Encapsulation",
+          "Object-Oriented Programming",
+          "Polymorphism"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d137"
+        }
+      },
+      {
+        "questionText": "Which feature would allow saving quiz results for next session?",
+        "options": [
+          "Multithreading",
+          "Serialization",
+          "Networking",
+          "File I/O"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d138"
+        }
+      },
+      {
+        "questionText": "Which framework is used for building the backend in Job Portal?",
+        "options": [
+          "Hibernate",
+          "Spring Boot",
+          "JavaFX",
+          "Servlet"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d139"
+        }
+      },
+      {
+        "questionText": "Which Spring module handles database operations?",
+        "options": [
+          "Spring Security",
+          "Spring MVC",
+          "Spring Data JPA",
+          "Spring REST"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d13a"
+        }
+      },
+      {
+        "questionText": "Which library can be used for resume parsing?",
+        "options": [
+          "OpenCV",
+          "Apache OpenNLP",
+          "TensorFlow",
+          "Jsoup"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d13b"
+        }
+      },
+      {
+        "questionText": "Which component sends job alert emails?",
+        "options": [
+          "Spring Mail",
+          "Java Mail API",
+          "SMTPClient",
+          "MailService"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d13c"
+        }
+      },
+      {
+        "questionText": "Which algorithmic technique can recommend jobs based on skills?",
+        "options": [
+          "Decision Tree",
+          "Linear Regression",
+          "Content-based filtering",
+          "Neural Clustering"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d13d"
+        }
+      },
+      {
+        "questionText": "Which frontend framework can be used for responsive UI?",
+        "options": [
+          "Bootstrap",
+          "Tailwind",
+          "Material UI",
+          "Vuetify"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a28b28e0487bbb0d13e"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2503",
+      "2602"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T06:26:48.716Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb4a79b28e0487bbb0d25c"
+    },
+    "title": "Python Programming Final Quiz (Set A)",
+    "week": 4,
+    "domain": "Python Programming",
+    "questions": [
+      {
+        "questionText": "Which of the following is the correct way to create a Python class?",
+        "options": [
+          "class MyClass:",
+          "def MyClass():",
+          "class MyClass():",
+          "function MyClass():"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d25d"
+        }
+      },
+      {
+        "questionText": "What will be the output of: print(type([]) is list)?",
+        "options": [
+          "True",
+          "False",
+          "list",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d25e"
+        }
+      },
+      {
+        "questionText": "Which method is used to add an element at the end of a list?",
+        "options": [
+          "append()",
+          "insert()",
+          "extend()",
+          "add()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d25f"
+        }
+      },
+      {
+        "questionText": "What is the output of: 3 * 'ab'?",
+        "options": [
+          "'abab'",
+          "'ababab'",
+          "'ab3'",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d260"
+        }
+      },
+      {
+        "questionText": "Which of the following is NOT a valid Python data type?",
+        "options": [
+          "tuple",
+          "set",
+          "array",
+          "dict"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d261"
+        }
+      },
+      {
+        "questionText": "What is the difference between '==' and 'is' in Python?",
+        "options": [
+          "Both are same",
+          "'==' compares values, 'is' compares identity",
+          "'==' compares identity, 'is' compares values",
+          "None of the above"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d262"
+        }
+      },
+      {
+        "questionText": "Which built-in function is used to get the length of a string or list?",
+        "options": [
+          "count()",
+          "size()",
+          "len()",
+          "length()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d263"
+        }
+      },
+      {
+        "questionText": "Which of the following will raise a KeyError?",
+        "options": [
+          "d = {'a':1}; print(d['b'])",
+          "d.get('b')",
+          "'b' in d",
+          "None of the above"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d264"
+        }
+      },
+      {
+        "questionText": "How do you handle exceptions in Python?",
+        "options": [
+          "try-except block",
+          "do-catch block",
+          "if-else block",
+          "switch-case"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d265"
+        }
+      },
+      {
+        "questionText": "What is the output of: list(range(2,10,2))?",
+        "options": [
+          "[2,4,6,8]",
+          "[2,4,6,8,10]",
+          "[2,4,6,10]",
+          "[0,2,4,6,8]"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d266"
+        }
+      },
+      {
+        "questionText": "Which Tkinter widget is used to take single-line text input?",
+        "options": [
+          "Text",
+          "Entry",
+          "Label",
+          "Button"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d267"
+        }
+      },
+      {
+        "questionText": "What is the purpose of __init__ method in Python class?",
+        "options": [
+          "Destructor",
+          "Constructor",
+          "Iterator",
+          "None of the above"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d268"
+        }
+      },
+      {
+        "questionText": "Which operator is used for floor division in Python?",
+        "options": [
+          "/",
+          "//",
+          "%",
+          "**"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d269"
+        }
+      },
+      {
+        "questionText": "What will be the output of: bool('False')?",
+        "options": [
+          "False",
+          "True",
+          "Error",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26a"
+        }
+      },
+      {
+        "questionText": "Which function is used to read a file in Python?",
+        "options": [
+          "open()",
+          "read()",
+          "file()",
+          "input()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26b"
+        }
+      },
+      {
+        "questionText": "Which of the following correctly creates a dictionary?",
+        "options": [
+          "d = {}",
+          "d = dict()",
+          "d = {'key':'value'}",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26c"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to create a generator in Python?",
+        "options": [
+          "yield",
+          "return",
+          "generate",
+          "defgen"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26d"
+        }
+      },
+      {
+        "questionText": "Which of the following will reverse a list in Python?",
+        "options": [
+          "list.reverse()",
+          "reversed(list)",
+          "list[::-1]",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26e"
+        }
+      },
+      {
+        "questionText": "Which statement is true about Python modules?",
+        "options": [
+          "Modules are files containing Python code",
+          "Modules cannot be imported",
+          "Modules are same as classes",
+          "None of the above"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d26f"
+        }
+      },
+      {
+        "questionText": "Which method is used to add an element at a specific index in a list?",
+        "options": [
+          "append()",
+          "insert()",
+          "extend()",
+          "add()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb4a79b28e0487bbb0d270"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2503",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T06:28:09.928Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb77b0b28e0487bbb0eeca"
+    },
+    "title": "Data Analytics Final Quiz (Set A)",
+    "week": 4,
+    "domain": "Data Analytics",
+    "questions": [
+      {
+        "questionText": "Which method is used in pandas to check for missing values in a DataFrame?",
+        "options": [
+          "A) isnull()",
+          "B) isna()",
+          "C) notnull()",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eecb"
+        }
+      },
+      {
+        "questionText": "Which plot is best for showing distribution of a numerical variable?",
+        "options": [
+          "A) Histogram",
+          "B) Pie Chart",
+          "C) Bar Chart",
+          "D) Line Chart"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eecc"
+        }
+      },
+      {
+        "questionText": "Which function in pandas is used to get summary statistics of numerical columns?",
+        "options": [
+          "A) info() ",
+          "B) describe()",
+          "C) head()",
+          "D) tail()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eecd"
+        }
+      },
+      {
+        "questionText": "Which method is used to group data by a column in pandas?",
+        "options": [
+          "A) groupby()",
+          "B) merge()",
+          "C) concat()",
+          "D) join()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eece"
+        }
+      },
+      {
+        "questionText": "Which technique helps reduce skewness in data distribution?",
+        "options": [
+          "A) Normalization",
+          "B) Standardization",
+          "C) Log Transformation",
+          "D) Clustering"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eecf"
+        }
+      },
+      {
+        "questionText": "Correlation coefficient indicates:",
+        "options": [
+          "A) Causation between variables",
+          "B) Linear relationship",
+          "C) Mean difference",
+          "D) Variance"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed0"
+        }
+      },
+      {
+        "questionText": "Which visualization is suitable to compare proportions between categories?",
+        "options": [
+          "A) Bar Chart",
+          "B) Pie Chart",
+          "C) Line Chart",
+          "D) Scatter Plot"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed1"
+        }
+      },
+      {
+        "questionText": "Boxplot is used to detect:",
+        "options": [
+          "A) Mean",
+          "B) Median",
+          "C) Outliers",
+          "D) Mode"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed2"
+        }
+      },
+      {
+        "questionText": "Which method is used to merge two pandas DataFrames?",
+        "options": [
+          "A) merge()",
+          "B) join()",
+          "C) concat()",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed3"
+        }
+      },
+      {
+        "questionText": "Which is a supervised learning task in analytics?",
+        "options": [
+          "A) Regression",
+          "B) Clustering",
+          "C) PCA",
+          "D) Correlation"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed4"
+        }
+      },
+      {
+        "questionText": "What is the purpose of feature scaling?",
+        "options": [
+          "A) Reduce memory usage",
+          "B) Improve algorithm performance",
+          "C) Remove missing values",
+          "D) Detect outliers"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed5"
+        }
+      },
+      {
+        "questionText": "Which metric is used for regression model evaluation?",
+        "options": [
+          "A) Accuracy",
+          "B) RMSE",
+          "C) F1-score",
+          "D) Confusion Matrix"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed6"
+        }
+      },
+      {
+        "questionText": "Which technique is used to reduce dimensionality of data?",
+        "options": [
+          "A) PCA",
+          "B) LSTM",
+          "C) One-hot Encoding",
+          "D) Bagging"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed7"
+        }
+      },
+      {
+        "questionText": "Handling missing categorical values can be done using:",
+        "options": [
+          "A) Mean imputation",
+          "B) Mode imputation",
+          "C) Median imputation",
+          "D) Scaling"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed8"
+        }
+      },
+      {
+        "questionText": "Outlier detection can be performed using:",
+        "options": [
+          "A) IQR method",
+          "B) Z-score method",
+          "C) Visualization with Boxplot",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eed9"
+        }
+      },
+      {
+        "questionText": "Which chart in Project 1 is used to show Age by Segment?",
+        "options": [
+          "A) Histogram",
+          "B) Boxplot",
+          "C) Pie Chart",
+          "D) Line Chart"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eeda"
+        }
+      },
+      {
+        "questionText": "In Project 2, if Price equals Selling Price even with a Coupon Code, what discount is applied?",
+        "options": [
+          "A) 5%",
+          "B) 10%",
+          "C) 0%",
+          "D) 15%"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eedb"
+        }
+      },
+      {
+        "questionText": "In Project 3, which column helps detect duplicate products?",
+        "options": [
+          "A) Product Name",
+          "B) EAN or Internal ID",
+          "C) Category",
+          "D) Price"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eedc"
+        }
+      },
+      {
+        "questionText": "Which Python library is used for deep learning in Project 4?",
+        "options": [
+          "A) scikit-learn",
+          "B) tensorflow",
+          "C) matplotlib",
+          "D) pandas"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eedd"
+        }
+      },
+      {
+        "questionText": "Which metric is used to evaluate stock prediction models in Project 4?",
+        "options": [
+          "A) Accuracy",
+          "B) Precision",
+          "C) F1-score",
+          "D) RMSE"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb77b0b28e0487bbb0eede"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2501",
+      "2503",
+      "2601",
+      "2602",
+      "2603",
+      "2604"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T09:41:04.715Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb7ee7b28e0487bbb0f5da"
+    },
+    "title": "Python Programming Final Quiz (Set A)",
+    "week": 6,
+    "domain": "Python Programming",
+    "questions": [
+      {
+        "questionText": "What Python module is commonly used to generate a random choice for the computer in Rock-Paper-Scissors?",
+        "options": [
+          "random",
+          "math",
+          "os ",
+          "sys"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5db"
+        }
+      },
+      {
+        "questionText": "Which data structure is the most efficient for checking the winner in a Rock-Paper-Scissors game? List",
+        "options": [
+          "List",
+          "Dictionary",
+          "Set ",
+          "Tuple"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5dc"
+        }
+      },
+      {
+        "questionText": "What happens if you compare strings in Python using \"is\" instead of \"==\"?",
+        "options": [
+          "They compare contents",
+          "They compare identities (memory locations)",
+          "They always return False",
+          "They throw an error"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5dd"
+        }
+      },
+      {
+        "questionText": "Which of these is the most Pythonic way to implement multiple rounds with user quitting?",
+        "options": [
+          "Using while True with break on quit input",
+          "Using for loop with fixed number of iterations",
+          "Using recursion",
+          "Using generator functions"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5de"
+        }
+      },
+      {
+        "questionText": "How would you store and update the scores for both user and computer in Rock-Paper-Scissors?",
+        "options": [
+          "As separate global variables",
+          "Inside a dictionary with keys \"user\" and \"computer\"",
+          "As list with two elements",
+          "Using tuples"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5df"
+        }
+      },
+      {
+        "questionText": "What is the downside of using input() without validation in this game?",
+        "options": [
+          "May crash on empty input or invalid text",
+          "Is slower in execution",
+          "Does not read from console",
+          "Accepts hidden input"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e0"
+        }
+      },
+      {
+        "questionText": "Which Tkinter widget is best for allowing the user to pick a currency from multiple options?",
+        "options": [
+          "Button",
+          "Label",
+          "Entry",
+          "OptionMenu/Combobox"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e1"
+        }
+      },
+      {
+        "questionText": "How can you prevent the user from entering non-numeric characters in the amount Entry widget?",
+        "options": [
+          "Use try-except around float conversion on submit",
+          "Use Entry widget validation commands (register validation function)",
+          "Use Spinbox widget instead",
+          "Just allow and handle errors later"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e2"
+        }
+      },
+      {
+        "questionText": "What event triggers the currency conversion in a typical Tkinter GUI?",
+        "options": [
+          "Button click event",
+          "Keyboard interrupt",
+          "Window resize event",
+          "Mouse hover event"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e3"
+        }
+      },
+      {
+        "questionText": "Why is it important to separate conversion logic from GUI code?",
+        "options": [
+          "For better readability and easier testing",
+          "GUI code runs faster",
+          "To use less memory",
+          "It is not important"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e4"
+        }
+      },
+      {
+        "questionText": "What method would you call to dynamically update the display Label with conversion result?",
+        "options": [
+          "config() or configure()",
+          "pack()",
+          "bind()",
+          "mainloop()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e5"
+        }
+      },
+      {
+        "questionText": "How can you reset all input fields and outputs in a Tkinter form?",
+        "options": [
+          "Use the delete() method on Entry, set Labels to empty strings",
+          "Destroy and recreate the whole window",
+          "Just quit and restart the app",
+          "Set the text property of Button to \"Reset\""
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e6"
+        }
+      },
+      {
+        "questionText": "How can you prevent withdrawal of an amount greater than the current balance?",
+        "options": [
+          "Use conditional if balance >= withdrawal_amount",
+          "Raise an exception without handling it",
+          "Allow negative balance",
+          "Use try-except only"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e7"
+        }
+      },
+      {
+        "questionText": "Which Tkinter messagebox method should be used to show balance status?",
+        "options": [
+          "messagebox.showinfo()",
+          "messagebox.showerror()",
+          "messagebox.askquestion()",
+          "messagebox.askyesno()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e8"
+        }
+      },
+      {
+        "questionText": "Why might integrating SQLite be beneficial in the banking app?",
+        "options": [
+          "To persist user account data and transaction history",
+          "For faster GUI rendering",
+          "To create better button styles",
+          "To handle Tkinter events"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5e9"
+        }
+      },
+      {
+        "questionText": "Which Python construct is most suitable for repeated transaction options in the app?",
+        "options": [
+          "Recursion of window creation",
+          "For loop on fixed range",
+          "While loop with menu buttons",
+          "Class inheritance"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5ea"
+        }
+      },
+      {
+        "questionText": "How can you ensure that the deposit and withdrawal Amount inputs are valid numbers?",
+        "options": [
+          "Validate with try-except on conversion to float/int",
+          "Trust user input without validation",
+          "Use regex to check integer only",
+          "Use a dropdown instead of entry"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5eb"
+        }
+      },
+      {
+        "questionText": "What method can be used for safely closing the Tkinter application window?",
+        "options": [
+          "root.destroy()",
+          "root.quit()",
+          "exit()",
+          "sys.exit()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5ec"
+        }
+      },
+      {
+        "questionText": "Why should quiz questions be stored in a JSON file?",
+        "options": [
+          "To make the program run faster",
+          "JSON files occupy less disk space than text files",
+          "To store the quiz GUI layout",
+          "To separate data from code and allow easy modifications"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5ed"
+        }
+      },
+      {
+        "questionText": "How do you randomize the order of questions in the quiz?",
+        "options": [
+          "Use random.shuffle() on the questions list",
+          "Use sorted() function",
+          "Use list slicing",
+          "Use direct indexing"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5ee"
+        }
+      },
+      {
+        "questionText": "What's the best way to track the user's correct and incorrect answers?",
+        "options": [
+          "Use global variables randomly",
+          "Use a dictionary with question IDs as keys and boolean for correctness",
+          "Write to a log file continuously",
+          "Use lists for storing answers only"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5ef"
+        }
+      },
+      {
+        "questionText": "How would you display the quiz score percentage at the end?",
+        "options": [
+          "Count correct answers only",
+          "Use user's age divided by number of questions",
+          "Calculate (correct_count / total_questions) * 100",
+          "Use a random percentage"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f0"
+        }
+      },
+      {
+        "questionText": "Which Python module helps to measure quiz duration in a command-line quiz?",
+        "options": [
+          "time module (time.time() or time.perf_counter())",
+          "datetime module only",
+          "os module",
+          "sys module"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f1"
+        }
+      },
+      {
+        "questionText": "How do you handle invalid user input during answer selection in CLI?",
+        "options": [
+          "Provide prompts again until valid input entered",
+          "Exit the quiz immediately",
+          "Accept without checks",
+          "Use default answer for invalid input"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f2"
+        }
+      },
+      {
+        "questionText": "What Django feature simplifies database operations without raw SQL queries?",
+        "options": [
+          "Django Serializer",
+          "Django Middleware",
+          "Django Signals",
+          "Django ORM (Object Relational Mapper)"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f3"
+        }
+      },
+      {
+        "questionText": "Why are user roles like Job Seeker and Recruiter important in such apps?",
+        "options": [
+          "To display different colors on UI",
+          "To control access permissions and functionality based on role",
+          "To speed up queries",
+          "To enable multi-language support"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f4"
+        }
+      },
+      {
+        "questionText": "Which Python library can be used for parsing PDFs to extract text in resumes?",
+        "options": [
+          "Numpy",
+          "Matplotlib",
+          "PyPDF2",
+          "Pandas"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f5"
+        }
+      },
+      {
+        "questionText": "What is the primary purpose of scikit-learn in this job portal project?",
+        "options": [
+          "To build the front-end UI",
+          "To send email notifications",
+          "To create a content-based job recommendation engine",
+          "To handle database transactions"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f6"
+        }
+      },
+      {
+        "questionText": "How can you send email notifications from a Django app?",
+        "options": [
+          "Using OS commands only",
+          "Sending SMS instead of emails",
+          "Using Tkinter GUI mail sender",
+          "Using Django's built-in Email API or smtplib library"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f7"
+        }
+      },
+      {
+        "questionText": "What is a superuser in Django admin?",
+        "options": [
+          "A user who is new to the system",
+          "A user with all permissions, capable of managing the entire admin panel",
+          "Anonymous user accessing pages without login",
+          "A guest user with limited access"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7ee7b28e0487bbb0f5f8"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2503",
+      "2602"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T10:11:51.285Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68eb7f29b28e0487bbb0f7ce"
+    },
+    "title": "Data Analytics Final Quiz (Set A)",
+    "week": 6,
+    "domain": "Data Analytics",
+    "questions": [
+      {
+        "questionText": "Which method is used in pandas to check for missing values in a DataFrame?",
+        "options": [
+          "A) isnull()",
+          "B) isna()",
+          "C) notnull()",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7cf"
+        }
+      },
+      {
+        "questionText": "Which plot is best for showing distribution of a numerical variable?",
+        "options": [
+          "A) Histogram",
+          "B) Pie Chart",
+          "C) Bar Chart",
+          "D) Line Chart"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d0"
+        }
+      },
+      {
+        "questionText": "In Project 3, which metric helps identify low-stock products?",
+        "options": [
+          "A) Price",
+          "B) Quantity Available",
+          "C) Category",
+          "D) Product ID"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d1"
+        }
+      },
+      {
+        "questionText": "Which method is used to group data by a column in pandas?",
+        "options": [
+          "A) groupby()",
+          "B) merge()",
+          "C) concat()",
+          "D) join()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d2"
+        }
+      },
+      {
+        "questionText": "Which technique helps reduce skewness in data distribution?",
+        "options": [
+          "A) Normalization",
+          "B) Standardization",
+          "C) Log Transformation",
+          "D) Clustering"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d3"
+        }
+      },
+      {
+        "questionText": "Correlation coefficient indicates:",
+        "options": [
+          "A) Causation between variables",
+          "B) Linear relationship",
+          "C) Mean difference",
+          "D) Variance"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d4"
+        }
+      },
+      {
+        "questionText": "Which visualization is suitable to compare proportions between categories?",
+        "options": [
+          "A) Bar Chart",
+          "B) Pie Chart",
+          "C) Line Chart",
+          "D) Scatter Plot"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d5"
+        }
+      },
+      {
+        "questionText": "Boxplot is used to detect:",
+        "options": [
+          "A) Mean",
+          "B) Median",
+          "C) Outliers",
+          "D) Mode"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d6"
+        }
+      },
+      {
+        "questionText": "Which method is used to merge two pandas DataFrames?",
+        "options": [
+          "A) merge()",
+          "B) join()",
+          "C) concat()",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d7"
+        }
+      },
+      {
+        "questionText": "Which is a supervised learning task in analytics?",
+        "options": [
+          "A) Regression",
+          "B) Clustering",
+          "C) PCA",
+          "D) Correlation"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d8"
+        }
+      },
+      {
+        "questionText": "What is the purpose of feature scaling?",
+        "options": [
+          "A) Reduce memory usage",
+          "B) Improve algorithm performance",
+          "C) Remove missing values",
+          "D) Detect outliers"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7d9"
+        }
+      },
+      {
+        "questionText": "Which metric is used for regression model evaluation?",
+        "options": [
+          "A) Accuracy",
+          "B) RMSE",
+          "C) F1-score",
+          "D) Confusion Matrix"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7da"
+        }
+      },
+      {
+        "questionText": "Which technique is used to reduce dimensionality of data?",
+        "options": [
+          "A) PCA",
+          "B) LSTM",
+          "C) One-hot Encoding",
+          "D) Bagging"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7db"
+        }
+      },
+      {
+        "questionText": "Handling missing categorical values can be done using:",
+        "options": [
+          "A) Mean imputation",
+          "B) Mode imputation",
+          "C) Median imputation",
+          "D) Scaling"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7dc"
+        }
+      },
+      {
+        "questionText": "Outlier detection can be performed using:",
+        "options": [
+          "A) IQR method",
+          "B) Z-score method",
+          "C) Visualization with Boxplot",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7dd"
+        }
+      },
+      {
+        "questionText": "Which Python function is used to read CSV files into a pandas DataFrame?",
+        "options": [
+          "A) read_csv()",
+          "B) read_excel()",
+          "C) open()",
+          "D) load()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7de"
+        }
+      },
+      {
+        "questionText": "Which method provides the first few rows of a DataFrame?",
+        "options": [
+          "A) head()",
+          "B) tail()",
+          "C) sample()",
+          "D) info()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7df"
+        }
+      },
+      {
+        "questionText": "Which pandas method helps fill missing values?",
+        "options": [
+          "A) dropna()",
+          "B) fillna()",
+          "C) isnull()",
+          "D) notnull()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e0"
+        }
+      },
+      {
+        "questionText": "Which visualization helps to identify correlation between two numerical variables?",
+        "options": [
+          "A) Scatter Plot",
+          "B) Pie Chart",
+          "C) Bar Chart",
+          "D) Histogram"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e1"
+        }
+      },
+      {
+        "questionText": "Which function in pandas removes duplicate rows?",
+        "options": [
+          "A) remove_duplicates()",
+          "B) drop_duplicates()",
+          "C) delete_duplicates()",
+          "D) unique_rows()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e2"
+        }
+      },
+      {
+        "questionText": "Which method is used to sort a pandas DataFrame?",
+        "options": [
+          "A) sort_values()",
+          "B) order_by()",
+          "C) sort_index()",
+          "D) arrange()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e3"
+        }
+      },
+      {
+        "questionText": "Which of the following is NOT a measure of central tendency?",
+        "options": [
+          "A) Mean",
+          "B) Median",
+          "C) Mode",
+          "D) Variance"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e4"
+        }
+      },
+      {
+        "questionText": "Which Python library is primarily used for numerical computations?",
+        "options": [
+          "A) pandas",
+          "B) numpy",
+          "C) matplotlib",
+          "D) seaborn"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e5"
+        }
+      },
+      {
+        "questionText": "Which technique is used to encode categorical variables numerically?",
+        "options": [
+          "A) One-hot encoding",
+          "B) PCA",
+          "C) Normalization",
+          "D) Clustering"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e6"
+        }
+      },
+      {
+        "questionText": "Which plot is most suitable for showing trends over time?",
+        "options": [
+          "A) Histogram",
+          "B) Line Chart",
+          "C) Pie Chart",
+          "D) Boxplot"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e7"
+        }
+      },
+      {
+        "questionText": "Standardization of features transforms data to have:",
+        "options": [
+          "A) Mean=0, Std=1",
+          "B) Min=0, Max=1",
+          "C) Only positive values",
+          "D) Median=0"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e8"
+        }
+      },
+      {
+        "questionText": "In Project 1, which chart shows customer distribution by credit type?",
+        "options": [
+          "A) Histogram",
+          "B) Bar Chart",
+          "C) Pie Chart",
+          "D) Scatter Plot"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7e9"
+        }
+      },
+      {
+        "questionText": "In Project 2, which feature ensures transaction IDs are unique?",
+        "options": [
+          "A) Customer ID",
+          "B) Transaction ID",
+          "C) Coupon ID",
+          "D) Payment Method"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7ea"
+        }
+      },
+      {
+        "questionText": "In Project 4, which technical indicator is used for trend analysis?",
+        "options": [
+          "A) RSI",
+          "B) MA (Moving Average)",
+          "C) MACD",
+          "D) All of the above"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7eb"
+        }
+      },
+      {
+        "questionText": "In Project 5, which column represents the adjusted closing price in stock data?",
+        "options": [
+          "A) Open",
+          "B) Close",
+          "C) Adjusted Close",
+          "D) Volume"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68eb7f29b28e0487bbb0f7ec"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2501",
+      "2503",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-10-12T10:12:57.813Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68fb67488509706327469664"
+    },
+    "title": "Web Development Final Quiz (Set A)",
+    "week": 8,
+    "domain": "Web Development",
+    "questions": [
+      {
+        "questionText": "Which HTML element cannot contain block-level elements by spec?",
+        "options": [
+          "<p>",
+          "<div>",
+          "<section>",
+          "<article>"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469665"
+        }
+      },
+      {
+        "questionText": "Which combination centers an element inside a flex container both vertically and horizontally?",
+        "options": [
+          "justify-content: center; align-items: center;",
+          "justify-content: flex-start; align-items: flex-start;",
+          "margin: auto; position: absolute;",
+          "text-align: center; vertical-align: middle;"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469666"
+        }
+      },
+      {
+        "questionText": "In React, when does the useEffect cleanup function run?",
+        "options": [
+          "Only after initial render",
+          "Before the next effect runs and on unmount",
+          "Immediately after calling setState",
+          "Only on unmount"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469667"
+        }
+      },
+      {
+        "questionText": "Which MongoDB query finds documents where a field is either null or missing?",
+        "options": [
+          "{ field: null }",
+          "{ field: { $exists: false } }",
+          "{ $or: [{ field: null }, { field: { $exists: false } }] }",
+          "{ field: undefined }"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469668"
+        }
+      },
+      {
+        "questionText": "Which Node.js API returns a Promise-based variant for file operations?",
+        "options": [
+          "fs.readFileSync()",
+          "fs.promises.readFile()",
+          "fs.readFile()",
+          "fs.openSync()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469669"
+        }
+      },
+      {
+        "questionText": "To preserve 3D transforms on nested elements, which property is required?",
+        "options": [
+          "perspective",
+          "transform-style: preserve-3d",
+          "backface-visibility",
+          "z-index"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966a"
+        }
+      },
+      {
+        "questionText": "Regarding closures inside loops, which is true for var, let, const?",
+        "options": [
+          "var creates block-scoped variable",
+          "let creates a fresh binding each iteration",
+          "const cannot be used in loops at all",
+          "All behave identically"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966b"
+        }
+      },
+      {
+        "questionText": "Why is using array index as key in React often discouraged?",
+        "options": [
+          "It causes array mutation",
+          "It can lead to state mismatch on reorder",
+          "It slows rendering significantly",
+          "It triggers duplicate API calls"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966c"
+        }
+      },
+      {
+        "questionText": "Which MongoDB method updates only the first matching document?",
+        "options": [
+          "updateOne()",
+          "updateMany()",
+          "replaceOne()",
+          "save()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966d"
+        }
+      },
+      {
+        "questionText": "Which describes min-content in CSS sizing?",
+        "options": [
+          "Maximum size of the box",
+          "Minimum intrinsic width of the content",
+          "Same as auto",
+          "Ignored by modern browsers"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966e"
+        }
+      },
+      {
+        "questionText": "In Node.js, what is global === globalThis?",
+        "options": [
+          "true",
+          "false",
+          "undefined",
+          "throws"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746966f"
+        }
+      },
+      {
+        "questionText": "Which HTML attribute allows regex-based validation for input values?",
+        "options": [
+          "required",
+          "pattern",
+          "validate",
+          "match"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469670"
+        }
+      },
+      {
+        "questionText": "Which statement about React.memo is correct?",
+        "options": [
+          "It prevents re-rendering unconditionally",
+          "It memoizes a functional component’s output based on props",
+          "It only works for class components",
+          "It replaces use of useState"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469671"
+        }
+      },
+      {
+        "questionText": "Which CSS approach best avoids content being cut off while preserving readable wrapping?",
+        "options": [
+          "overflow: hidden",
+          "word-break: normal",
+          "overflow-wrap: break-word",
+          "text-overflow: ellipsis"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469672"
+        }
+      },
+      {
+        "questionText": "Which Node.js module is used to spawn child processes?",
+        "options": [
+          "process",
+          "cluster",
+          "events",
+          "child_process"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469673"
+        }
+      },
+      {
+        "questionText": "What does [] + {} evaluate to in JavaScript (string coercion quirks aside)?",
+        "options": [
+          "[object Object]",
+          "{}",
+          "[object Array]",
+          "NaN"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469674"
+        }
+      },
+      {
+        "questionText": "Which MongoDB index type supports multi-field text searches?",
+        "options": [
+          "Compound index",
+          "Text index",
+          "Unique index",
+          "Sparse index"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469675"
+        }
+      },
+      {
+        "questionText": "Which element lets you inline an SVG element so you can script or style its internals?",
+        "options": [
+          "<object>",
+          "<svg>",
+          "<img>",
+          "<canvas>"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469676"
+        }
+      },
+      {
+        "questionText": "Which CSS property controls auto-placement algorithm behavior for Grid?",
+        "options": [
+          "grid-template-areas",
+          "grid-gap",
+          "grid-auto-columns",
+          "grid-auto-flow"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469677"
+        }
+      },
+      {
+        "questionText": "Which is true about useRef in React?",
+        "options": [
+          "Updating a ref triggers re-render",
+          "It stores a mutable value that survives renders",
+          "It cannot hold primitives",
+          "It is equivalent to useState"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469678"
+        }
+      },
+      {
+        "questionText": "Evaluate this JavaScript token pair: what can {} + [] produce (depending on parser context)?",
+        "options": [
+          "0",
+          "0 (depending on parser)",
+          "[object Object]",
+          "NaN"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469679"
+        }
+      },
+      {
+        "questionText": "Which CSS setting can let a child appear outside a parent’s overflow (when allowed by layout)?",
+        "options": [
+          "overflow: visible",
+          "overflow: hidden",
+          "overflow: scroll",
+          "overflow-x: auto"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967a"
+        }
+      },
+      {
+        "questionText": "In MongoDB aggregation, which stage picks selected fields and can reshape documents?",
+        "options": [
+          "$group",
+          "$match",
+          "$project",
+          "$sort"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967b"
+        }
+      },
+      {
+        "questionText": "Which pattern helps prevent “callback hell” in Node.js?",
+        "options": [
+          "Nested callbacks",
+          "Promises / async-await",
+          "Synchronous functions",
+          "setInterval loops"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967c"
+        }
+      },
+      {
+        "questionText": "Which React hook returns a memoized function reference that only changes when dependencies change?",
+        "options": [
+          "useEffect",
+          "useMemo",
+          "useCallback",
+          "useState"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967d"
+        }
+      },
+      {
+        "questionText": "Which box-sizing value causes the specified width to include padding and border?",
+        "options": [
+          "border-box",
+          "content-box",
+          "padding-box",
+          "margin-box"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967e"
+        }
+      },
+      {
+        "questionText": "Which is true comparing Map vs Object in JS?",
+        "options": [
+          "Object keys can be objects",
+          "Map does not allow primitive keys",
+          "Map is always faster",
+          "Map preserves insertion order"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746967f"
+        }
+      },
+      {
+        "questionText": "Which action triggers a React component re-render?",
+        "options": [
+          "Updating a useRef value",
+          "Updating state via useState",
+          "Defining a function inside the component body (by itself)",
+          "Calling console.log() inside render"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469680"
+        }
+      },
+      {
+        "questionText": "Which Node.js method will terminate the process immediately?",
+        "options": [
+          "process.exit()",
+          "process.kill()",
+          "process.abort()",
+          "server.close()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469681"
+        }
+      },
+      {
+        "questionText": "Which MongoDB operator selects documents whose field values are not in a given array?",
+        "options": [
+          "$in",
+          "$nin",
+          "$ne",
+          "$not"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469682"
+        }
+      },
+      {
+        "questionText": "Which CSS property prevents flex items from shrinking below a threshold width?",
+        "options": [
+          "flex-basis",
+          "min-width",
+          "flex-shrink",
+          "max-width"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469683"
+        }
+      },
+      {
+        "questionText": "Which HTML5 input type supports numeric entry with min and max attributes?",
+        "options": [
+          "range",
+          "number",
+          "text",
+          "tel"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469684"
+        }
+      },
+      {
+        "questionText": "Which statement about Node.js event loop ordering is correct?",
+        "options": [
+          "setImmediate always runs before process.nextTick",
+          "setTimeout(..., 0) runs before process.nextTick",
+          "Event loop phases have identical ordering across implementations",
+          "process.nextTick runs before I/O callbacks and before setImmediate in the same tick"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469685"
+        }
+      },
+      {
+        "questionText": "Which CSS property controls background image tiling behavior?",
+        "options": [
+          "background-repeat",
+          "background-size",
+          "background-position",
+          "background-clip"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469686"
+        }
+      },
+      {
+        "questionText": "When using React.memo, which of the following can still cause a child component to re-render?",
+        "options": [
+          "The parent re-renders but passes the same props by reference",
+          "A context value used inside the memoized child changes",
+          "The child has no props and no hooks",
+          "The parent uses useCallback to wrap functions passed down"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469687"
+        }
+      },
+      {
+        "questionText": "Before React JSX code executes in the browser, Babel typically converts JSX into what?",
+        "options": [
+          "Vanilla JavaScript DOM manipulation calls",
+          "WebAssembly bytecode",
+          "A JSON representation of the component tree",
+          "Calls to React.createElement()"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469688"
+        }
+      },
+      {
+        "questionText": "What happens if a component using useEffect updates state synchronously inside its cleanup function?",
+        "options": [
+          "The update is ignored completely",
+          "It throws an error",
+          "It triggers another render before unmounting finishes",
+          "It’s queued but never executed"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb67488509706327469689"
+        }
+      },
+      {
+        "questionText": "In React 18’s concurrent rendering, which of the following can cause a component’s effect to run twice in development mode even without state change?",
+        "options": [
+          "The component uses memoization",
+          "StrictMode is enabled",
+          "useCallback has no dependencies",
+          "The component is class-based"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746968a"
+        }
+      },
+      {
+        "questionText": "If you call setState inside useLayoutEffect and inside useEffect in the same render, what happens?",
+        "options": [
+          "Only the useEffect update runs",
+          "Only the useLayoutEffect update runs",
+          "Both run, but layout effect update happens first",
+          "It causes a batching error"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746968b"
+        }
+      },
+      {
+        "questionText": "When using useTransition, which part of the UI is marked as “pending”?",
+        "options": [
+          "The component initiating the transition",
+          "All components in the app tree",
+          "Only the components triggered by the state change wrapped in startTransition",
+          "Any component using useEffect"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb6748850970632746968c"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2501",
+      "2502",
+      "2503",
+      "2601",
+      "2602",
+      "2603"
+    ],
+    "createdAt": {
+      "$date": "2025-10-24T11:47:20.081Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68fb90b928b5b4fdb6490d35"
+    },
+    "title": "DSA Final Quiz (Set A)",
+    "week": 4,
+    "domain": "DSA",
+    "questions": [
+      {
+        "questionText": "Which data structure uses LIFO (Last In First Out)?",
+        "options": [
+          "Queue",
+          " Stack",
+          " Array",
+          " Linked List"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d36"
+        }
+      },
+      {
+        "questionText": "Which data structure uses FIFO (First In First Out)?",
+        "options": [
+          "Queue",
+          " Stack",
+          " Tree",
+          " Graph"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d37"
+        }
+      },
+      {
+        "questionText": "What is the time complexity of binary search in a sorted array?",
+        "options": [
+          "O(n)",
+          " O(log n)",
+          " O(n log n)",
+          " O(1)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d38"
+        }
+      },
+      {
+        "questionText": "Which data structure is used to implement recursion?",
+        "options": [
+          "Queue",
+          " Tree",
+          " Linked List",
+          " Stack"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d39"
+        }
+      },
+      {
+        "questionText": "Which of the following is not a linear data structure?",
+        "options": [
+          "Array",
+          " Linked List",
+          " Tree",
+          " Stack"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3a"
+        }
+      },
+      {
+        "questionText": "Which operation is used to add an element to a stack?",
+        "options": [
+          " Enqueue",
+          " Push",
+          " Insert",
+          " Add"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3b"
+        }
+      },
+      {
+        "questionText": "In a queue, elements are added at the ____ and removed from the ____.",
+        "options": [
+          "rear, front",
+          " front, rear",
+          " top, bottom",
+          " both ends"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3c"
+        }
+      },
+      {
+        "questionText": "Which traversal technique is used in Breadth-First Search (BFS)?",
+        "options": [
+          "Stack",
+          " Recursion",
+          " Queue",
+          " Heap"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3d"
+        }
+      },
+      {
+        "questionText": "What is the space complexity of DFS on a graph?",
+        "options": [
+          " O(V + E)",
+          " O(V)",
+          " O(E)",
+          " O(1)"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3e"
+        }
+      },
+      {
+        "questionText": "Which of the following data structures can be used to represent a graph?",
+        "options": [
+          " Array",
+          " Binary Tree",
+          " Linked List",
+          " Adjacency List"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d3f"
+        }
+      },
+      {
+        "questionText": "In Dijkstra’s algorithm, what data structure is commonly used to find the minimum distance?",
+        "options": [
+          " Stack",
+          " Priority Queue",
+          " Linked List",
+          " Tree"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d40"
+        }
+      },
+      {
+        "questionText": "Which data structure is best for implementing a priority queue?",
+        "options": [
+          " Heap",
+          " Stack",
+          " Queue",
+          " Array"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d41"
+        }
+      },
+      {
+        "questionText": "Which of the following has the highest time complexity for searching?",
+        "options": [
+          " Hash Table",
+          " Binary Search Tree",
+          " Linked List",
+          " Array"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d42"
+        }
+      },
+      {
+        "questionText": "What is the time complexity of inserting an element in a max heap?",
+        "options": [
+          " O(1)",
+          " O(log n)",
+          " O(n)",
+          " O(n log n)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d43"
+        }
+      },
+      {
+        "questionText": "Which traversal algorithm guarantees the shortest path in an unweighted graph?",
+        "options": [
+          " DFS",
+          " Bellman-Ford",
+          " Dijkstra",
+          " BFS"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d44"
+        }
+      },
+      {
+        "questionText": "What is the best data structure for undo operation in text editors?",
+        "options": [
+          " Queue",
+          " Array",
+          " Stack",
+          " Heap"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d45"
+        }
+      },
+      {
+        "questionText": "Which data structure can be used to implement a To-Do List with task priorities?",
+        "options": [
+          " Stack",
+          " Queue",
+          " Priority Queue",
+          " Array"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d46"
+        }
+      },
+      {
+        "questionText": "In the Number Guessing Game, which algorithm concept is primarily used?",
+        "options": [
+          " Linear Search",
+          " Binary Search",
+          " DFS",
+          " Sorting"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d47"
+        }
+      },
+      {
+        "questionText": "Which algorithm can be used in a Maze Solver to find the shortest path?",
+        "options": [
+          "BFS",
+          " DFS",
+          " Dijkstra",
+          " Bellman-Ford"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d48"
+        }
+      },
+      {
+        "questionText": "Dijkstra’s algorithm is used to find the ____ in a graph.",
+        "options": [
+          "Longest Path",
+          " Shortest Path",
+          " Cycle",
+          " Traversal Order"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fb90b928b5b4fdb6490d49"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2501",
+      "2502",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-10-24T14:44:09.920Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "68fce7206c61341ebfa51358"
+    },
+    "title": "Python Programming Final Quiz (Set A)",
+    "week": 8,
+    "domain": "Python Programming",
+    "questions": [
+      {
+        "questionText": "What is the output of print(type([]))?",
+        "options": [
+          "list",
+          "tuple",
+          "dict",
+          "set"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51359"
+        }
+      },
+      {
+        "questionText": "Which of the following is immutable?",
+        "options": [
+          "list",
+          "tuple",
+          "dict",
+          "set"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135a"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to create a function in Python?",
+        "options": [
+          "def",
+          "function",
+          "lambda",
+          "func"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135b"
+        }
+      },
+      {
+        "questionText": "Which data type is returned by input() function?",
+        "options": [
+          "int",
+          "str",
+          "float",
+          "bool"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135c"
+        }
+      },
+      {
+        "questionText": "Which of these is used to handle exceptions?",
+        "options": [
+          "if-else",
+          "try-except",
+          "for loop",
+          "def"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135d"
+        }
+      },
+      {
+        "questionText": "What does len('Python') return?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135e"
+        }
+      },
+      {
+        "questionText": "Which operator is used for floor division?",
+        "options": [
+          "/",
+          "//",
+          "%",
+          "**"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa5135f"
+        }
+      },
+      {
+        "questionText": "What will be the output of bool('False')?",
+        "options": [
+          "True",
+          "False",
+          "Error",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51360"
+        }
+      },
+      {
+        "questionText": "Which of the following creates a dictionary?",
+        "options": [
+          "{}",
+          "[]",
+          "()",
+          "{1,2}"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51361"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to import modules?",
+        "options": [
+          "include",
+          "require",
+          "import",
+          "module"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51362"
+        }
+      },
+      {
+        "questionText": "What is the output of 2 ** 3 ** 2?",
+        "options": [
+          "64",
+          "256",
+          "16",
+          "512"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51363"
+        }
+      },
+      {
+        "questionText": "Which method is used to get a list of keys in a dictionary?",
+        "options": [
+          "keys()",
+          "values()",
+          "items()",
+          "get()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51364"
+        }
+      },
+      {
+        "questionText": "What is the default return type of print()?",
+        "options": [
+          "None",
+          "0",
+          "True",
+          "String"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51365"
+        }
+      },
+      {
+        "questionText": "What is the difference between 'is' and '=='?",
+        "options": [
+          "No difference",
+          "'is' compares identity, '==' compares values",
+          "'==' compares identity",
+          "None"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51366"
+        }
+      },
+      {
+        "questionText": "Which function is used to iterate with index?",
+        "options": [
+          "range()",
+          "map()",
+          "enumerate()",
+          "zip()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51367"
+        }
+      },
+      {
+        "questionText": "Which module in Python supports regular expressions?",
+        "options": [
+          "re",
+          "rexp",
+          "pattern",
+          "regex"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51368"
+        }
+      },
+      {
+        "questionText": "What will be printed: x = [1,2,3]; print(x*2)?",
+        "options": [
+          "[2,4,6]",
+          "[1,2,3,6]",
+          "Error",
+          "[1,2,3,1,2,3]"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7206c61341ebfa51369"
+        }
+      },
+      {
+        "questionText": "How do you create a set?",
+        "options": [
+          "{}",
+          "[]",
+          "set()",
+          "()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136a"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to define an anonymous function?",
+        "options": [
+          "def",
+          "fun",
+          "lambda",
+          "return"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136b"
+        }
+      },
+      {
+        "questionText": "Which function converts a string to a list?",
+        "options": [
+          "split()",
+          "join()",
+          "map()",
+          "list()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136c"
+        }
+      },
+      {
+        "questionText": "Which statement about Python is true?",
+        "options": [
+          "It’s compiled only",
+          "It’s interpreted only",
+          "It’s both compiled and interpreted",
+          "Neither"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136d"
+        }
+      },
+      {
+        "questionText": "What is the output of list(range(2,10,2))?",
+        "options": [
+          "[2,4,6,8]",
+          "[2,3,4,5,6,7,8,9,10]",
+          "[2,10,2]",
+          "Error"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136e"
+        }
+      },
+      {
+        "questionText": "Which operator is used for logical AND?",
+        "options": [
+          "and",
+          "&",
+          "&&",
+          "both a and b"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5136f"
+        }
+      },
+      {
+        "questionText": "Which of the following is a Python tuple?",
+        "options": [
+          "(1,2,3)",
+          "[1,2,3]",
+          "{1,2,3}",
+          "{1:2,3:4}"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51370"
+        }
+      },
+      {
+        "questionText": "How are Python arguments passed?",
+        "options": [
+          "By value",
+          "By reference",
+          "By object reference",
+          "By copy"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51371"
+        }
+      },
+      {
+        "questionText": "What is the output of ' '.join(['a','b','c'])?",
+        "options": [
+          "abc",
+          "a b c",
+          "['a','b','c']",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51372"
+        }
+      },
+      {
+        "questionText": "What does the @staticmethod decorator do?",
+        "options": [
+          "Makes a method static",
+          "Creates a class method",
+          "Freezes class",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51373"
+        }
+      },
+      {
+        "questionText": "Which statement is used to inherit a class?",
+        "options": [
+          "inherit",
+          "base",
+          "extends",
+          "class Sub(Base):"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51374"
+        }
+      },
+      {
+        "questionText": "What is a generator in Python?",
+        "options": [
+          "Function using yield",
+          "Looping function",
+          "Decorator",
+          "Iterator class"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51375"
+        }
+      },
+      {
+        "questionText": "Which keyword ends a loop prematurely?",
+        "options": [
+          "stop",
+          "end",
+          "break",
+          "exit"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51376"
+        }
+      },
+      {
+        "questionText": "Which method is called when an object is created?",
+        "options": [
+          "__init__",
+          "__del__",
+          "__new__",
+          "__create__"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51377"
+        }
+      },
+      {
+        "questionText": "What will be the output of bool([])?",
+        "options": [
+          "True",
+          "False",
+          "Error",
+          "None"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51378"
+        }
+      },
+      {
+        "questionText": "Which function returns the memory address of an object?",
+        "options": [
+          "id()",
+          "type()",
+          "memory()",
+          "addr()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51379"
+        }
+      },
+      {
+        "questionText": "What is the output of {1,2,3} & {2,3,4}?",
+        "options": [
+          "{1,2,3,4}",
+          "{2,3}",
+          "{1,4}",
+          "Error"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137a"
+        }
+      },
+      {
+        "questionText": "Which statement is true about decorators?",
+        "options": [
+          "They modify functions",
+          "They delete functions",
+          "They create classes",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137b"
+        }
+      },
+      {
+        "questionText": "Which of these defines a context manager?",
+        "options": [
+          "with",
+          "use",
+          "context",
+          "try"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137c"
+        }
+      },
+      {
+        "questionText": "Which library is used for numerical computation?",
+        "options": [
+          "numpy",
+          "pandas",
+          "math",
+          "statistics"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137d"
+        }
+      },
+      {
+        "questionText": "Which method removes and returns last list element?",
+        "options": [
+          "pop()",
+          "remove()",
+          "del()",
+          "discard()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137e"
+        }
+      },
+      {
+        "questionText": "What is the difference between shallow and deep copy?",
+        "options": [
+          "No difference",
+          "Deep copy copies nested objects too",
+          "Shallow copy copies all",
+          "None"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa5137f"
+        }
+      },
+      {
+        "questionText": "Which of these can’t be used as dictionary keys?",
+        "options": [
+          "string",
+          "tuple",
+          "list",
+          "int"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "68fce7216c61341ebfa51380"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2502",
+      "2503",
+      "2601",
+      "2602",
+      "2603"
+    ],
+    "createdAt": {
+      "$date": "2025-10-25T15:05:05.009Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "69039fd06c61341ebfa62753"
+    },
+    "title": "Data Analytics Final Quiz (Set A)",
+    "week": 8,
+    "domain": "Data Analytics",
+    "questions": [
+      {
+        "questionText": "What is the primary goal of data analytics?",
+        "options": [
+          "To collect data",
+          "To clean data",
+          "To find insights and make decisions",
+          "To visualize data"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62754"
+        }
+      },
+      {
+        "questionText": "Which of the following is NOT a data type in Python?",
+        "options": [
+          "int",
+          "float",
+          "string",
+          "real"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62755"
+        }
+      },
+      {
+        "questionText": "Which library is commonly used in Python for data manipulation?",
+        "options": [
+          "NumPy",
+          "Pandas",
+          "Matplotlib",
+          "Seaborn"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62756"
+        }
+      },
+      {
+        "questionText": "Which function in Pandas is used to read a CSV file?",
+        "options": [
+          "pd.read_csv()",
+          "pd.open_csv()",
+          "pd.load_csv()",
+          "pd.import_csv()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62757"
+        }
+      },
+      {
+        "questionText": "What does SQL stand for?",
+        "options": [
+          "Structured Query Language",
+          "System Query Language",
+          "Structured Question Language",
+          "Sequential Query Language"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62758"
+        }
+      },
+      {
+        "questionText": "Which chart is best suited for showing proportions?",
+        "options": [
+          "Bar Chart",
+          "Pie Chart",
+          "Line Chart",
+          "Histogram"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62759"
+        }
+      },
+      {
+        "questionText": "What is the purpose of data cleaning?",
+        "options": [
+          "To remove duplicates",
+          "To make data accurate and consistent",
+          "To reduce dataset size",
+          "To convert data type"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275a"
+        }
+      },
+      {
+        "questionText": "Which command in SQL is used to retrieve data from a database?",
+        "options": [
+          "GET",
+          "SELECT",
+          "FETCH",
+          "RETRIEVE"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275b"
+        }
+      },
+      {
+        "questionText": "Which of the following is an example of categorical data?",
+        "options": [
+          "Height",
+          "Weight",
+          "Gender",
+          "Age"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275c"
+        }
+      },
+      {
+        "questionText": "Which Python function gives the first five rows of a DataFrame?",
+        "options": [
+          "df.top()",
+          "df.head()",
+          "df.start()",
+          "df.first()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275d"
+        }
+      },
+      {
+        "questionText": "Which of the following is a Python visualization library?",
+        "options": [
+          "TensorFlow",
+          "NumPy",
+          "Matplotlib",
+          "Scikit-learn"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275e"
+        }
+      },
+      {
+        "questionText": "What does ETL stand for in data processing?",
+        "options": [
+          "Extract, Transform, Load",
+          "Edit, Transfer, Link",
+          "Extract, Transfer, Log",
+          "Execute, Test, Load"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6275f"
+        }
+      },
+      {
+        "questionText": "Which of the following measures the spread of data?",
+        "options": [
+          "Mean",
+          "Median",
+          "Standard Deviation",
+          "Mode"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62760"
+        }
+      },
+      {
+        "questionText": "In a histogram, the x-axis represents:",
+        "options": [
+          "Categories",
+          "Frequency",
+          "Data ranges (bins)",
+          "Mean values"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62761"
+        }
+      },
+      {
+        "questionText": "Which Python package is best for numerical computation?",
+        "options": [
+          "NumPy",
+          "Pandas",
+          "Matplotlib",
+          "Scikit-learn"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62762"
+        }
+      },
+      {
+        "questionText": "Which SQL keyword is used to sort results?",
+        "options": [
+          "ORDER BY",
+          "SORT BY",
+          "GROUP BY",
+          "ARRANGE BY"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62763"
+        }
+      },
+      {
+        "questionText": "What does the term 'outlier' refer to?",
+        "options": [
+          "Missing data",
+          "Duplicate data",
+          "Extreme value different from others",
+          "Median value"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62764"
+        }
+      },
+      {
+        "questionText": "Which of the following represents the center of a dataset?",
+        "options": [
+          "Variance",
+          "Mean",
+          "Range",
+          "Standard Deviation"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62765"
+        }
+      },
+      {
+        "questionText": "Which tool is commonly used for creating dashboards?",
+        "options": [
+          "Excel",
+          "Tableau",
+          "Python",
+          "R"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62766"
+        }
+      },
+      {
+        "questionText": "Which of these is NOT an Excel function?",
+        "options": [
+          "SUM()",
+          "AVERAGE()",
+          "SELECT()",
+          "COUNT()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62767"
+        }
+      },
+      {
+        "questionText": "Which Python function removes missing values from a DataFrame?",
+        "options": [
+          "dropna()",
+          "remove_null()",
+          "delete_na()",
+          "clear()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62768"
+        }
+      },
+      {
+        "questionText": "What type of data visualization is best for time-series data?",
+        "options": [
+          "Line chart",
+          "Pie chart",
+          "Histogram",
+          "Box plot"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62769"
+        }
+      },
+      {
+        "questionText": "What is the output of df.shape in Pandas?",
+        "options": [
+          "Number of columns",
+          "Number of rows",
+          "Tuple (rows, columns)",
+          "Data types"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276a"
+        }
+      },
+      {
+        "questionText": "Which of the following is NOT a measure of central tendency?",
+        "options": [
+          "Mean",
+          "Median",
+          "Mode",
+          "Variance"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276b"
+        }
+      },
+      {
+        "questionText": "What is the default axis for dropna() in Pandas?",
+        "options": [
+          "axis=0",
+          "axis=1",
+          "axis=2",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276c"
+        }
+      },
+      {
+        "questionText": "What is correlation used for?",
+        "options": [
+          "To find missing values",
+          "To measure relationships between variables",
+          "To clean data",
+          "To group data"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276d"
+        }
+      },
+      {
+        "questionText": "Which of these represents a relational database?",
+        "options": [
+          "MongoDB",
+          "MySQL",
+          "Cassandra",
+          "Neo4j"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276e"
+        }
+      },
+      {
+        "questionText": "Which function in Pandas is used to get summary statistics?",
+        "options": [
+          "df.summary()",
+          "df.describe()",
+          "df.stats()",
+          "df.mean()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6276f"
+        }
+      },
+      {
+        "questionText": "Which Python function returns the data type of a column?",
+        "options": [
+          "dtype()",
+          "type()",
+          "dtypes",
+          "get_type()"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62770"
+        }
+      },
+      {
+        "questionText": "Which of the following is an unsupervised learning method?",
+        "options": [
+          "Linear Regression",
+          "Logistic Regression",
+          "K-Means Clustering",
+          "Decision Tree"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62771"
+        }
+      },
+      {
+        "questionText": "Which file format is commonly used to exchange tabular data?",
+        "options": [
+          "JSON",
+          "CSV",
+          "XML",
+          "TXT"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62772"
+        }
+      },
+      {
+        "questionText": "Which Python library is used for machine learning?",
+        "options": [
+          "Seaborn",
+          "Scikit-learn",
+          "Matplotlib",
+          "Pandas"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62773"
+        }
+      },
+      {
+        "questionText": "Which SQL clause is used to filter records?",
+        "options": [
+          "WHERE",
+          "GROUP BY",
+          "ORDER BY",
+          "HAVING"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62774"
+        }
+      },
+      {
+        "questionText": "Which method is used to merge two Pandas DataFrames?",
+        "options": [
+          "pd.concat()",
+          "pd.merge()",
+          "pd.append()",
+          "pd.combine()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62775"
+        }
+      },
+      {
+        "questionText": "Which visualization shows data distribution?",
+        "options": [
+          "Bar chart",
+          "Line chart",
+          "Box plot",
+          "Pie chart"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62776"
+        }
+      },
+      {
+        "questionText": "Which of these indicates skewness in a dataset?",
+        "options": [
+          "Mean = Median = Mode",
+          "Mean > Median",
+          "Mean < Median",
+          "B or C"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62777"
+        }
+      },
+      {
+        "questionText": "Which SQL command is used to remove a table?",
+        "options": [
+          "DELETE TABLE",
+          "REMOVE TABLE",
+          "DROP TABLE",
+          "CLEAR TABLE"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62778"
+        }
+      },
+      {
+        "questionText": "Which method gives column names of a DataFrame?",
+        "options": [
+          "df.columns",
+          "df.colnames()",
+          "df.get_columns()",
+          "df.names()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa62779"
+        }
+      },
+      {
+        "questionText": "What is the purpose of a pivot table?",
+        "options": [
+          "To filter data",
+          "To summarize data",
+          "To merge data",
+          "To visualize data"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6277a"
+        }
+      },
+      {
+        "questionText": "Which Python function removes missing values from a DataFrame?",
+        "options": [
+          "dropna()",
+          "remove_null()",
+          "delete_na()",
+          "clear()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69039fd06c61341ebfa6277b"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2501",
+      "2502",
+      "2503",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-10-30T17:26:40.305Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "69059d242ba586d2c3abd851"
+    },
+    "title": "DSA FINAL QUIZ (SET B)",
+    "week": 8,
+    "domain": "DSA",
+    "questions": [
+      {
+        "questionText": "What does CRUD stand for in a To-Do List application?",
+        "options": [
+          "A. Create, Run, Update, Drop",
+          "B. Create, Read, Update, Delete",
+          "C. Copy, Read, Undo, Delete",
+          "D. Create, Remove, Undo, Delete"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd852"
+        }
+      },
+      {
+        "questionText": "Which data structure follows the Last-In-First-Out (LIFO) principle?    ",
+        "options": [
+          "A. Queue",
+          "B. Array",
+          "C. Stack ",
+          "D. Linked List"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd853"
+        }
+      },
+      {
+        "questionText": "In a To-Do List application, deleting a task is an example of which CRUD operation?   ",
+        "options": [
+          "A. Create ",
+          "B. Read",
+          "C. Update",
+          "D. Delete"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd854"
+        }
+      },
+      {
+        "questionText": "If tasks are processed in the order they were added, which data structure is most appropriate?   ",
+        "options": [
+          "A. Stack",
+          "B. Queue",
+          " C. Graph",
+          "D. Tree"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd855"
+        }
+      },
+      {
+        "questionText": "Which of the following is not a valid CRUD operation? ",
+        "options": [
+          "A. Create",
+          " B. Replace ",
+          "C. Update ",
+          " D. Delete"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd856"
+        }
+      },
+      {
+        "questionText": "The binary search algorithm is primarily used for:  ",
+        "options": [
+          "A. Sorting elements ",
+          "B. Searching in sorted data",
+          "C. Random guessing",
+          "D. Linear traversal"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd857"
+        }
+      },
+      {
+        "questionText": "What is the main logic behind binary search in the guessing game?    ",
+        "options": [
+          "A. Guess numbers randomly",
+          "B. Check all numbers sequentially ",
+          "C. Repeatedly divide the range in half",
+          "D. Jump over every second number"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd858"
+        }
+      },
+      {
+        "questionText": "If the range is 1 to 100 and the midpoint is chosen each time, how many guesses are needed at most? ",
+        "options": [
+          "A. 5 ",
+          "B. 7 ",
+          "C. 10",
+          "  D. 15"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd859"
+        }
+      },
+      {
+        "questionText": "In a number guessing game using binary search, if the computer’s guess is too high, what happens next?   ",
+        "options": [
+          "A. The upper bound becomes the previous guess",
+          "B. The lower bound becomes the previous guess ",
+          "C. Both bounds remain the same",
+          "D. The program stops immediately"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85a"
+        }
+      },
+      {
+        "questionText": "Binary search works efficiently only when the data is: ",
+        "options": [
+          "A. Random",
+          "B. Sorted",
+          "C. Unsorted ",
+          "D. Circular"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85b"
+        }
+      },
+      {
+        "questionText": "DFS stands for: ",
+        "options": [
+          "A. Depth First Search ",
+          "B. Data Find Search",
+          "C. Direct File Scan",
+          "D. Depth Flow Sort"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85c"
+        }
+      },
+      {
+        "questionText": "BFS stands for:   ",
+        "options": [
+          "A. Best First Search",
+          "B. Binary Find Search",
+          "C. Breadth First Search ",
+          "D. Base Flow System"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85d"
+        }
+      },
+      {
+        "questionText": "Which data structure is typically used to implement DFS?  ",
+        "options": [
+          "A. Queue",
+          "B. Stack ",
+          " C. Array",
+          "D. Tree"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85e"
+        }
+      },
+      {
+        "questionText": "Which data structure is typically used to implement BFS? ",
+        "options": [
+          "A. Queue ",
+          "B. Stack",
+          "C. Linked List ",
+          "D. Set"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd85f"
+        }
+      },
+      {
+        "questionText": "What is the primary goal of a Maze Solver algorithm?  ",
+        "options": [
+          "A. To find the shortest path or any valid path through a maze",
+          "B. To count the number of walls ",
+          "C. To generate random mazes ",
+          "D. To color the maze"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd860"
+        }
+      },
+      {
+        "questionText": "Dijkstra’s algorithm is used to:  ",
+        "options": [
+          "A. Find the shortest path in a graph",
+          "B. Sort numbers in ascending order ",
+          "C. Find maximum flow in a network",
+          "D. Traverse a tree"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd861"
+        }
+      },
+      {
+        "questionText": "Dijkstra’s algorithm primarily uses which data structure to find the next closest node?   ",
+        "options": [
+          "A. Stack ",
+          "B. Priority Queue",
+          "C. Hash Table",
+          "D. Array"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd862"
+        }
+      },
+      {
+        "questionText": "What is the initial distance assigned to all nodes except the starting node in Dijkstra’s algorithm?  ",
+        "options": [
+          "A. 0",
+          "B. -1 ",
+          "C. Infinity ",
+          "D. 1"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd863"
+        }
+      },
+      {
+        "questionText": "Which type of graph edge weights can Dijkstra’s algorithm handle correctly?    ",
+        "options": [
+          "A. Negative and positive",
+          "B. Only positive",
+          "C. Only zero ",
+          "D. Negative only"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd864"
+        }
+      },
+      {
+        "questionText": "The main idea behind Dijkstra’s algorithm is:  ",
+        "options": [
+          " A. To explore all possible paths randomly",
+          "B. To always choose the unvisited node with the smallest tentative distance ",
+          " C. To backtrack recursively",
+          "D. To traverse using DFS"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69059d242ba586d2c3abd865"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2503",
+      "2601"
+    ],
+    "createdAt": {
+      "$date": "2025-11-01T05:39:48.043Z"
+    },
+    "__v": 0,
+    "isClosed": false
+  },
+  {
+    "_id": {
+      "$oid": "69161041b615f7493058b480"
+    },
+    "title": "DSA Final Quiz (Set A)",
+    "week": 6,
+    "domain": "DSA",
+    "questions": [
+      {
+        "questionText": "Which data structure follows FIFO?",
+        "options": [
+          "Stack",
+          "Queue",
+          "Tree",
+          "Graph"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b481"
+        }
+      },
+      {
+        "questionText": "The time complexity of binary search is:",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(log n)",
+          "O(1)"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b482"
+        }
+      },
+      {
+        "questionText": "Which data structure is used for implementing recursion?",
+        "options": [
+          "Array",
+          "Queue",
+          "Stack",
+          "Linked list"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b483"
+        }
+      },
+      {
+        "questionText": "In a max heap, the largest element is found at:",
+        "options": [
+          "Last index",
+          "Any leaf",
+          "Root node",
+          "Middle element"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b484"
+        }
+      },
+      {
+        "questionText": "BFS uses which data structure?",
+        "options": [
+          "Stack",
+          "Queue",
+          "Array",
+          "Tree"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b485"
+        }
+      },
+      {
+        "questionText": "DFS uses which data structure?",
+        "options": [
+          "Queue",
+          "Linked List",
+          "Stack",
+          "Heap"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b486"
+        }
+      },
+      {
+        "questionText": "The worst-case time complexity of Quick Sort is:",
+        "options": [
+          "O(n log n)",
+          "O(n²)",
+          "O(log n)",
+          "O(n)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b487"
+        }
+      },
+      {
+        "questionText": "Which of the following is not a stable sorting algorithm?",
+        "options": [
+          "Merge Sort",
+          "Bubble Sort",
+          "Selection Sort",
+          "Insertion Sort"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b488"
+        }
+      },
+      {
+        "questionText": "A binary tree with N nodes has how many edges?",
+        "options": [
+          "N",
+          "N + 1",
+          "N – 1",
+          "2N"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b489"
+        }
+      },
+      {
+        "questionText": "Which traversal gives sorted order in a BST?",
+        "options": [
+          "Preorder",
+          "Inorder",
+          "Postorder",
+          "Level order"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48a"
+        }
+      },
+      {
+        "questionText": "Which has the fastest lookup time?",
+        "options": [
+          "Array",
+          "Linked List",
+          "Hash Table",
+          "Queue"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48b"
+        }
+      },
+      {
+        "questionText": "What is the space complexity of recursive Fibonacci?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(log n)",
+          "O(n²)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48c"
+        }
+      },
+      {
+        "questionText": "Which is true about a queue?",
+        "options": [
+          "Insertion at rear, deletion at front",
+          "Insertion at front, deletion at rear",
+          "Both at rear",
+          "Both at front"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48d"
+        }
+      },
+      {
+        "questionText": "Which data structure is used in Dijkstra’s algorithm?",
+        "options": [
+          "Stack",
+          "Min Heap",
+          "HashMap",
+          "Queue"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48e"
+        }
+      },
+      {
+        "questionText": "Which operation takes O(1) in a stack?",
+        "options": [
+          "Insert in middle",
+          "Search",
+          "Delete by value",
+          "Pop"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b48f"
+        }
+      },
+      {
+        "questionText": "The height of an AVL tree is:",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(n log n)",
+          "O(1)"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b490"
+        }
+      },
+      {
+        "questionText": "Which is NOT a basic operation on a linked list?",
+        "options": [
+          "Insert",
+          "Delete",
+          "Sort",
+          "Traverse"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b491"
+        }
+      },
+      {
+        "questionText": "A graph with no cycles is called:",
+        "options": [
+          "Tree",
+          "DAG",
+          "Forest",
+          "Complete graph"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b492"
+        }
+      },
+      {
+        "questionText": "Which algorithm is used to find connected components?",
+        "options": [
+          "BFS",
+          "DFS ",
+          "Both a & b",
+          "Dijkstra"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b493"
+        }
+      },
+      {
+        "questionText": "Best for finding shortest path in unweighted graph:",
+        "options": [
+          "DFS",
+          "BFS",
+          "Dijkstra",
+          "Bellman-Ford"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b494"
+        }
+      },
+      {
+        "questionText": "Merge Sort is based on:",
+        "options": [
+          "Divide and conquer",
+          "Greedy method",
+          "Dynamic programming",
+          "Backtracking"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b495"
+        }
+      },
+      {
+        "questionText": "Insertion sort is best suited for:",
+        "options": [
+          "Large datasets",
+          "Random datasets",
+          "Nearly sorted datasets",
+          "None"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b496"
+        }
+      },
+      {
+        "questionText": "Stack overflow occurs when:",
+        "options": [
+          "Stack is empty",
+          "Stack is full",
+          "Queue is full",
+          "Memory is unlimited"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b497"
+        }
+      },
+      {
+        "questionText": "Which traversal is used to find shortest path in a maze?",
+        "options": [
+          "DFS",
+          "BFS",
+          "Preorder",
+          "Postorder0"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b498"
+        }
+      },
+      {
+        "questionText": "The adjacency matrix of a graph takes:",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(n²)",
+          "O(n log n)"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b499"
+        }
+      },
+      {
+        "questionText": "In a To-Do list app, which DS stores completed tasks separately?",
+        "options": [
+          "Stack",
+          "Queue",
+          "Array / List",
+          "Graph"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b49a"
+        }
+      },
+      {
+        "questionText": "The number guessing game uses which technique?",
+        "options": [
+          "Linear search",
+          "Binary search",
+          "DFS",
+          "Hashing"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b49b"
+        }
+      },
+      {
+        "questionText": "Maze Solver using BFS gives:",
+        "options": [
+          "Any random path",
+          "No path",
+          "The shortest path",
+          "The longest path"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b49c"
+        }
+      },
+      {
+        "questionText": "Dijkstra’s algorithm fails when:",
+        "options": [
+          "Positive weights",
+          "Zero weights",
+          "Two nodes",
+          "Negative weights"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b49d"
+        }
+      },
+      {
+        "questionText": "Why is Min Heap used in Event Scheduler?",
+        "options": [
+          "Sort alphabetically",
+          "Find latest event",
+          "Get next event quickly",
+          "Remove all events"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69161041b615f7493058b49e"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2503"
+    ],
+    "isClosed": false,
+    "createdAt": {
+      "$date": "2025-11-13T17:07:13.872Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "694aa5bb38c1ddf2e2bdc0cc"
+    },
+    "title": "Full Stack Development Final Quiz",
+    "week": 8,
+    "domain": "Full Stack Development",
+    "questions": [
+      {
+        "questionText": "Which of the following is considered a front-end technology?",
+        "options": [
+          " Node.js",
+          " MongoDB",
+          "React.js",
+          "MySQL"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0cd"
+        }
+      },
+      {
+        "questionText": "What does HTML stand for?",
+        "options": [
+          " Hyper Tool Markup Language",
+          " Hyper Text Markup Language",
+          " High Text Machine Language",
+          " Hyper Transfer Markup Language"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0ce"
+        }
+      },
+      {
+        "questionText": "Which CSS property is used to control the spacing between elements’ borders and their content?",
+        "options": [
+          " margin",
+          "spacing",
+          " padding",
+          " border"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0cf"
+        }
+      },
+      {
+        "questionText": "Which JavaScript method is used to convert JSON data into a JavaScript object?",
+        "options": [
+          "JSON.stringify()",
+          "JSON.parse()",
+          "JSON.convert()",
+          " JSON.decode()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d0"
+        }
+      },
+      {
+        "questionText": "What is the main purpose of a backend in a full stack application?",
+        "options": [
+          " Styling the web page",
+          " Handling user interactions",
+          " Managing server-side logic and database operations",
+          " Designing UI components"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d1"
+        }
+      },
+      {
+        "questionText": "Which HTTP method is commonly used to update existing data on a server?",
+        "options": [
+          "GET",
+          "POST",
+          " PUT",
+          " DELETE"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d2"
+        }
+      },
+      {
+        "questionText": "In a RESTful API, which status code indicates a successful request?",
+        "options": [
+          " 404",
+          "500",
+          "200",
+          "403"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d3"
+        }
+      },
+      {
+        "questionText": "Which database is a NoSQL database?",
+        "options": [
+          " MySQL",
+          " PostgreSQL",
+          " Oracle",
+          "MongoDB"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d4"
+        }
+      },
+      {
+        "questionText": "What is the role of middleware in Express.js?",
+        "options": [
+          " Designing the user interface",
+          "Handling database schema",
+          " Processing requests before they reach the route handler",
+          " Compiling JavaScript code"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d5"
+        }
+      },
+      {
+        "questionText": "Which of the following is used for version control in full stack development?",
+        "options": [
+          " Docker",
+          "Git",
+          "Jenkins",
+          " Kubernetes"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "694aa5bb38c1ddf2e2bdc0d6"
+        }
+      }
+    ],
+    "assignedBatches": [],
+    "isClosed": false,
+    "createdAt": {
+      "$date": "2025-12-23T14:22:51.343Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "699df0a02f195e7b9767018b"
+    },
+    "title": "Java Programming Final Quiz (Set A)",
+    "week": 8,
+    "domain": "Java Programming",
+    "questions": [
+      {
+        "questionText": "Who developed Java?",
+        "options": [
+          "A) Dennis Ritchie",
+          "B) James Gosling",
+          "C) Bjarne Stroustrup",
+          "D) Guido van Rossum"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767018c"
+        }
+      },
+      {
+        "questionText": "Java was developed at which company?",
+        "options": [
+          "A) Microsoft",
+          "B) Apple",
+          "C) Sun Microsystems",
+          "D) IBM"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767018d"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to define a class in Java?",
+        "options": [
+          "A) define",
+          "B) class",
+          "C) struct",
+          "D) object"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767018e"
+        }
+      },
+      {
+        "questionText": "Which method is the entry point of a Java program?",
+        "options": [
+          "A) main()",
+          "B) run()",
+          "C) start()",
+          "D) init()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767018f"
+        }
+      },
+      {
+        "questionText": "Which of these is not a Java primitive data type?",
+        "options": [
+          "A) int",
+          "B) float",
+          "C) String",
+          "D) char"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670190"
+        }
+      },
+      {
+        "questionText": "What is the size of int in Java?",
+        "options": [
+          "A) 2 bytes",
+          "B) 4 bytes",
+          "C) 8 bytes",
+          "D) 1 byte"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670191"
+        }
+      },
+      {
+        "questionText": "Which operator is used for comparison?",
+        "options": [
+          "A) =",
+          "B) !=",
+          "C) :=",
+          "D) =="
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670192"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to inherit a class?",
+        "options": [
+          "A) implements",
+          "B) extends",
+          "C) inherits",
+          "D) super"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670193"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to create an object?",
+        "options": [
+          "A) new",
+          "B) create",
+          "C) object",
+          "D) make"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670194"
+        }
+      },
+      {
+        "questionText": "Which of the following is a loop structure?",
+        "options": [
+          "A) Break",
+          "B) switch",
+          "C) if",
+          "D) For"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670195"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to stop a loop?",
+        "options": [
+          "A) stop",
+          "B) exit",
+          "C) break",
+          "D) return"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670196"
+        }
+      },
+      {
+        "questionText": "Java is:",
+        "options": [
+          "A) Platform dependent",
+          "B) Platform independent",
+          "C) Machine dependent",
+          "D) None"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670197"
+        }
+      },
+      {
+        "questionText": "Which concept allows the same method name with different parameters?",
+        "options": [
+          "A) Overriding",
+          "B) Overloading",
+          "C) Inheritance",
+          "D) Encapsulation"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670198"
+        }
+      },
+      {
+        "questionText": "Which access modifier makes a variable visible only within the class?",
+        "options": [
+          "A) public",
+          "B) protected",
+          "C) private",
+          "D) default"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b97670199"
+        }
+      },
+      {
+        "questionText": "Which package contains Scanner class?",
+        "options": [
+          "A) java.io",
+          "B) java.util",
+          "C) java.lang",
+          "D) java.net"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019a"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to handle exceptions?",
+        "options": [
+          "A) catch",
+          "B) error",
+          "C) final",
+          "D) try"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019b"
+        }
+      },
+      {
+        "questionText": "Which block always executes in exception handling?",
+        "options": [
+          "A) try",
+          "B) catch",
+          "C) finally",
+          "D) throw"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019c"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to define a constant?",
+        "options": [
+          "A) static",
+          "B) final",
+          "C) const",
+          "D) define"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019d"
+        }
+      },
+      {
+        "questionText": "Java supports:",
+        "options": [
+          "A) Multiple inheritance through classes",
+          "B) Multiple inheritance through interfaces",
+          "C) No inheritance",
+          "D) Only single inheritance"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019e"
+        }
+      },
+      {
+        "questionText": "Which of the following is not an OOP concept?",
+        "options": [
+          "A) Encapsulation",
+          "B) Polymorphism",
+          "C) Compilation",
+          "D) Abstraction"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b9767019f"
+        }
+      },
+      {
+        "questionText": "Which symbol is used to end a statement in Java?",
+        "options": [
+          "A) ;",
+          "B) :",
+          "C) .",
+          "D) ,"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a0"
+        }
+      },
+      {
+        "questionText": "Which method is used to print output?",
+        "options": [
+          "A) print()",
+          "B) System.out.print()",
+          "C) echo()",
+          "D) display()"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a1"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to call parent class constructor?",
+        "options": [
+          "A) this",
+          "B) super",
+          "C) parent",
+          "D) base"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a2"
+        }
+      },
+      {
+        "questionText": "Which data type is used to store true/false?",
+        "options": [
+          "A) int",
+          "B) String",
+          "C) char",
+          "D) boolean"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a3"
+        }
+      },
+      {
+        "questionText": "Default value of boolean is:",
+        "options": [
+          "A) true",
+          "B) false",
+          "C) 0",
+          "D) null"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a4"
+        }
+      },
+      {
+        "questionText": "Which loop executes at least once?",
+        "options": [
+          "A) for",
+          "B) while",
+          "C) do-while",
+          "D) foreach"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a5"
+        }
+      },
+      {
+        "questionText": "Which keyword prevents inheritance?",
+        "options": [
+          "A) static",
+          "B) final",
+          "C) private",
+          "D) protected"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a6"
+        }
+      },
+      {
+        "questionText": "Which class is superclass of all classes?",
+        "options": [
+          "A) Object",
+          "B) Class",
+          "C) Main",
+          "D) System"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a7"
+        }
+      },
+      {
+        "questionText": "Which method converts String to int?",
+        "options": [
+          "A) parseInt()",
+          "B) toInt()",
+          "C) convert()",
+          "D) intValue()"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a8"
+        }
+      },
+      {
+        "questionText": "Which collection allows duplicate elements?",
+        "options": [
+          "A) Set",
+          "B) List",
+          "C) Map",
+          "D) None"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701a9"
+        }
+      },
+      {
+        "questionText": "Which interface is implemented by ArrayList?",
+        "options": [
+          "A) Set",
+          "B) Map",
+          "C) List",
+          "D) Queue"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701aa"
+        }
+      },
+      {
+        "questionText": "Which exception occurs when dividing by zero?",
+        "options": [
+          "A) ArithmeticException",
+          "B) NullPointerException",
+          "C) IOException",
+          "D) ClassNotFoundException"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701ab"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to define interface?",
+        "options": [
+          "A) class",
+          "B) implements",
+          "C) interface",
+          "D) extends"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701ac"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to implement interface?",
+        "options": [
+          "A) extends",
+          "B) implements",
+          "C) inherit",
+          "D) use"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701ad"
+        }
+      },
+      {
+        "questionText": "Which statement is used for decision making?",
+        "options": [
+          "A) for",
+          "B) continue",
+          "C) while",
+          "D) if"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701ae"
+        }
+      },
+      {
+        "questionText": "Which type of memory is used for objects?",
+        "options": [
+          "A) Stack",
+          "B) Heap",
+          "C) ROM",
+          "D) Cache"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701af"
+        }
+      },
+      {
+        "questionText": "JVM stands for:",
+        "options": [
+          "A) Java Variable Machine",
+          "B) Java Virtual Machine",
+          "C) Java Verified Machine",
+          "D) Java Visual Machine"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701b0"
+        }
+      },
+      {
+        "questionText": "JDK stands for:",
+        "options": [
+          "A) Java Development Kit",
+          "B) Java Design Kit",
+          "C) Java Deployment Kit",
+          "D) Java Debug Kit"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701b1"
+        }
+      },
+      {
+        "questionText": "Which keyword is used to throw an exception?",
+        "options": [
+          "A) throws",
+          "B) throw",
+          "C) catch",
+          "D) final"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701b2"
+        }
+      },
+      {
+        "questionText": "Which of the following is used to take input from user?",
+        "options": [
+          "A) Scanner",
+          "B) InputReader",
+          "C) ConsoleRead",
+          "D) DataInput"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "699df0a02f195e7b976701b3"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2601",
+      "2603"
+    ],
+    "isClosed": false,
+    "createdAt": {
+      "$date": "2026-02-24T18:40:32.551Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d932fcb3c96c61fa661bd0"
+    },
+    "title": "Machine Learning Final Quiz (Set A)",
+    "week": 4,
+    "domain": "Machine Learning",
+    "questions": [
+      {
+        "questionText": "What is Machine learning?",
+        "options": [
+          "The selective acquisition of knowledge through the use of computer programs",
+          "The selective acquisition of knowledge through the use of manual programs",
+          "The autonomous acquisition of knowledge through the use of computer programs",
+          "The autonomous acquisition of knowledge through the use of manual programs"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd1"
+        }
+      },
+      {
+        "questionText": "K-Nearest Neighbors (KNN) is classified as what type of machine learning algorithm?",
+        "options": [
+          "Instance-based learning",
+          "Parametric learning",
+          "Non-parametric learning",
+          "Model-based learning"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd2"
+        }
+      },
+      {
+        "questionText": "Which of the following is not a supervised machine learning algorithm?",
+        "options": [
+          "K-means",
+          "Naïve Bayes",
+          "SVM for classification problems",
+          "Decision tree"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd3"
+        }
+      },
+      {
+        "questionText": "What’s the key benefit of using deep learning for tasks like recognizing images?",
+        "options": [
+          "They need less training data than other methods.",
+          "They’re easier to explain and understand than other models.",
+          "They can learn complex details from the data on their own.",
+          "They work faster and are more efficient computationally."
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd4"
+        }
+      },
+      {
+        "questionText": "Which algorithm is best suited for a binary classification problem?",
+        "options": [
+          "K-nearest Neighbors",
+          "Decision Trees",
+          "Random Forest",
+          "Linear Regression"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd5"
+        }
+      },
+      {
+        "questionText": "What is the key difference between supervised and unsupervised learning?",
+        "options": [
+          "Supervised learning requires labeled data, while unsupervised learning does not.",
+          "Supervised learning predicts labels, while unsupervised learning discovers patterns.",
+          "Supervised learning is used for classification, while unsupervised learning is used for regression.",
+          "Supervised learning is always more accurate than unsupervised learning."
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd6"
+        }
+      },
+      {
+        "questionText": "Which type of machine learning algorithm falls under unsupervised learning?",
+        "options": [
+          "Linear Regression",
+          "K-means Clustering",
+          "Decision Trees",
+          "Random Forest"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd7"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is true about AdaBoost?",
+        "options": [
+          "It is particularly prone to overfitting on noisy datasets",
+          "Complexity of the weak learner is important in AdaBoost",
+          "It is generally more prone to overfitting",
+          "It improves classification accuracy"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd8"
+        }
+      },
+      {
+        "questionText": "Which one of the following models is a generative model?",
+        "options": [
+          "Support vector machines",
+          "Naïve Bayes",
+          "Logistic Regression",
+          "Linear Regression"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bd9"
+        }
+      },
+      {
+        "questionText": "An AI car decreases speed based on distance. Which algorithm is used?",
+        "options": [
+          "Naïve-Bayes",
+          "Decision Tree",
+          "Linear Regression",
+          "Logistic Regression"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bda"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is false about Ensemble learning?",
+        "options": [
+          "It is a supervised learning algorithm",
+          "It is an unsupervised learning algorithm",
+          "More random algorithms can be used to produce a stronger ensemble",
+          "Ensembles can represent more flexible functions"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bdb"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is true about stochastic gradient descent?",
+        "options": [
+          "It processes one training example per iteration",
+          "It is not preferred for large datasets",
+          "It processes all examples per iteration",
+          "It is computationally expensive for large datasets"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bdc"
+        }
+      },
+      {
+        "questionText": "Decision tree uses the inductive learning approach.",
+        "options": [
+          "False",
+          "True",
+          "None of these",
+          "None of these"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bdd"
+        }
+      },
+      {
+        "questionText": "What elements describe the Candidate-Elimination algorithm?",
+        "options": [
+          "Depends on dataset",
+          "Set of candidate hypotheses",
+          "Set of instances",
+          "Set of instances and candidate hypotheses"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bde"
+        }
+      },
+      {
+        "questionText": "Which statement is not true about boosting?",
+        "options": [
+          "It increases bias and variance",
+          "It trains next learner on previous mistakes",
+          "It solves two-class problems",
+          "It increases weights of misclassified data"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661bdf"
+        }
+      },
+      {
+        "questionText": "Which algorithm is used for dimensionality reduction?",
+        "options": [
+          "PCA",
+          "KNN",
+          "Naïve Bayes",
+          "Decision Tree"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661be0"
+        }
+      },
+      {
+        "questionText": "Which metric is used for classification accuracy?",
+        "options": [
+          "Mean Squared Error",
+          "Accuracy Score",
+          "R-squared",
+          "Log Loss"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661be1"
+        }
+      },
+      {
+        "questionText": "Which type of learning uses rewards and penalties?",
+        "options": [
+          "Supervised",
+          "Unsupervised",
+          "Reinforcement",
+          "Semi-supervised"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661be2"
+        }
+      },
+      {
+        "questionText": "Which model is best for predicting continuous values?",
+        "options": [
+          "Logistic Regression",
+          "Linear Regression",
+          "Decision Tree",
+          "Naïve Bayes"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661be3"
+        }
+      },
+      {
+        "questionText": "What is overfitting?",
+        "options": [
+          "Model performs well on training but poorly on test data",
+          "Model performs poorly on training",
+          "Model ignores training data",
+          "Model is too simple"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d932fcb3c96c61fa661be4"
+        }
+      }
+    ],
+    "assignedBatches": [],
+    "isClosed": false,
+    "createdAt": {
+      "$date": "2026-04-10T17:27:24.688Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93d10b3c96c61fa66584e"
+    },
+    "title": "Machine Learning Final Quiz (Set A)",
+    "week": 6,
+    "domain": "Machine Learning",
+    "questions": [
+      {
+        "questionText": "What is Machine learning?",
+        "options": [
+          "The selective acquisition of knowledge through the use of computer programs",
+          "The selective acquisition of knowledge through the use of manual programs",
+          "The autonomous acquisition of knowledge through the use of computer programs",
+          "The autonomous acquisition of knowledge through the use of manual programs"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66584f"
+        }
+      },
+      {
+        "questionText": "K-Nearest Neighbors (KNN) is classified as what type of machine learning algorithm?",
+        "options": [
+          "Instance-based learning",
+          "Parametric learning",
+          "Non-parametric learning",
+          "Model-based learning"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665850"
+        }
+      },
+      {
+        "questionText": "Which of the following is not a supervised machine learning algorithm?",
+        "options": [
+          "K-means",
+          "Naïve Bayes",
+          "SVM for classification problems",
+          "Decision tree"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665851"
+        }
+      },
+      {
+        "questionText": "What’s the key benefit of using deep learning for tasks like recognizing images?",
+        "options": [
+          "They need less training data than other methods.",
+          "They’re easier to explain and understand than other models.",
+          "They can learn complex details from the data on their own.",
+          "They work faster and are more efficient computationally."
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665852"
+        }
+      },
+      {
+        "questionText": "Which algorithm is best suited for a binary classification problem?",
+        "options": [
+          "K-nearest Neighbors",
+          "Decision Trees",
+          "Random Forest",
+          "Linear Regression"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665853"
+        }
+      },
+      {
+        "questionText": "What is the key difference between supervised and unsupervised learning?",
+        "options": [
+          "Supervised learning requires labeled data, while unsupervised learning does not.",
+          "Supervised learning predicts labels, while unsupervised learning discovers patterns.",
+          "Supervised learning is used for classification, while unsupervised learning is used for regression.",
+          "Supervised learning is always more accurate than unsupervised learning."
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665854"
+        }
+      },
+      {
+        "questionText": "Which type of machine learning algorithm falls under unsupervised learning?",
+        "options": [
+          "Linear Regression",
+          "K-means Clustering",
+          "Decision Trees",
+          "Random Forest"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665855"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is true about AdaBoost?",
+        "options": [
+          "It is particularly prone to overfitting on noisy datasets",
+          "Complexity of the weak learner is important in AdaBoost",
+          "It is generally more prone to overfitting",
+          "It improves classification accuracy"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665856"
+        }
+      },
+      {
+        "questionText": "Which one of the following models is a generative model?",
+        "options": [
+          "Support vector machines",
+          "Naïve Bayes",
+          "Logistic Regression",
+          "Linear Regression"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665857"
+        }
+      },
+      {
+        "questionText": "An AI car decreases speed based on distance. Which algorithm is used?",
+        "options": [
+          "Naïve-Bayes",
+          "Decision Tree",
+          "Linear Regression",
+          "Logistic Regression"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665858"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is false about Ensemble learning?",
+        "options": [
+          "It is a supervised learning algorithm",
+          "It is an unsupervised learning algorithm",
+          "More random algorithms can be used to produce a stronger ensemble",
+          "Ensembles can represent more flexible functions"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665859"
+        }
+      },
+      {
+        "questionText": "Which of the following statements is true about stochastic gradient descent?",
+        "options": [
+          "It processes one training example per iteration",
+          "It is not preferred for large datasets",
+          "It processes all examples per iteration",
+          "It is computationally expensive for large datasets"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585a"
+        }
+      },
+      {
+        "questionText": "Decision tree uses the inductive learning approach.",
+        "options": [
+          "False",
+          "True",
+          "None of these",
+          "None of these"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585b"
+        }
+      },
+      {
+        "questionText": "What elements describe the Candidate-Elimination algorithm?",
+        "options": [
+          "Depends on dataset",
+          "Set of candidate hypotheses",
+          "Set of instances",
+          "Set of instances and candidate hypotheses"
+        ],
+        "correctAnswer": 3,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585c"
+        }
+      },
+      {
+        "questionText": "Which statement is not true about boosting?",
+        "options": [
+          "It increases bias and variance",
+          "It trains next learner on previous mistakes",
+          "It solves two-class problems",
+          "It increases weights of misclassified data"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585d"
+        }
+      },
+      {
+        "questionText": "Which algorithm is used for dimensionality reduction?",
+        "options": [
+          "PCA",
+          "KNN",
+          "Naïve Bayes",
+          "Decision Tree"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585e"
+        }
+      },
+      {
+        "questionText": "Which metric is used for classification accuracy?",
+        "options": [
+          "Mean Squared Error",
+          "Accuracy Score",
+          "R-squared",
+          "Log Loss"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66585f"
+        }
+      },
+      {
+        "questionText": "Which type of learning uses rewards and penalties?",
+        "options": [
+          "Supervised",
+          "Unsupervised",
+          "Reinforcement",
+          "Semi-supervised"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665860"
+        }
+      },
+      {
+        "questionText": "Which model is best for predicting continuous values?",
+        "options": [
+          "Logistic Regression",
+          "Linear Regression",
+          "Decision Tree",
+          "Naïve Bayes"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665861"
+        }
+      },
+      {
+        "questionText": "What is overfitting?",
+        "options": [
+          "Model performs well on training but poorly on test data",
+          "Model performs poorly on training",
+          "Model ignores training data",
+          "Model is too simple"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665862"
+        }
+      },
+      {
+        "questionText": "What is overfitting in Machine Learning?",
+        "options": [
+          "Model performs well on training data but poorly on test data",
+          "Model performs poorly on both training and test data",
+          "Model ignores training data",
+          "Model works only on new data"
+        ],
+        "correctAnswer": 0,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665863"
+        }
+      },
+      {
+        "questionText": "Which algorithm is used for classification problems?",
+        "options": [
+          "Linear Regression",
+          "Logistic Regression",
+          "K-Means",
+          "PCA"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665864"
+        }
+      },
+      {
+        "questionText": "What does 'training data' mean?",
+        "options": [
+          "Data used to test the model",
+          "Data used to train the model",
+          "Data used to validate the model",
+          "Data used to deploy the model"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665865"
+        }
+      },
+      {
+        "questionText": "Which of the following is an example of unsupervised learning?",
+        "options": [
+          "Decision Tree",
+          "Linear Regression",
+          "K-Means Clustering",
+          "Logistic Regression"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665866"
+        }
+      },
+      {
+        "questionText": "What is a feature in Machine Learning?",
+        "options": [
+          "Output variable",
+          "Input variable",
+          "Algorithm",
+          "Model"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665867"
+        }
+      },
+      {
+        "questionText": "Which metric is commonly used for classification accuracy?",
+        "options": [
+          "Mean Squared Error",
+          "Accuracy Score",
+          "R-squared",
+          "Loss Function"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665868"
+        }
+      },
+      {
+        "questionText": "What is the purpose of a test dataset?",
+        "options": [
+          "To train the model",
+          "To tune hyperparameters",
+          "To evaluate model performance",
+          "To clean data"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa665869"
+        }
+      },
+      {
+        "questionText": "Which of the following is a supervised learning algorithm?",
+        "options": [
+          "K-Means",
+          "PCA",
+          "Decision Tree",
+          "Apriori"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66586a"
+        }
+      },
+      {
+        "questionText": "What does bias in Machine Learning refer to?",
+        "options": [
+          "Error due to too much complexity",
+          "Error due to overly simple model",
+          "Random noise in data",
+          "Model accuracy"
+        ],
+        "correctAnswer": 1,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66586b"
+        }
+      },
+      {
+        "questionText": "Which library is commonly used for Machine Learning in Python?",
+        "options": [
+          "NumPy",
+          "Pandas",
+          "Scikit-learn",
+          "Matplotlib"
+        ],
+        "correctAnswer": 2,
+        "image": null,
+        "_id": {
+          "$oid": "69d93d10b3c96c61fa66586c"
+        }
+      }
+    ],
+    "assignedBatches": [
+      "2603"
+    ],
+    "isClosed": false,
+    "createdAt": {
+      "$date": "2026-04-10T18:10:24.726Z"
+    },
+    "__v": 0
+  }
+]

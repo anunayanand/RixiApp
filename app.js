@@ -204,6 +204,9 @@ app.use('/', lectureRoute);
 const superAdminRoute = require('./routes/superAdminRoute');
 app.use('/superAdmin', superAdminRoute);
 
+const payoutRoute = require('./routes/payoutRoute');
+app.use('/superAdmin', payoutRoute);
+
 // Bootcamp Manager Dashboard
 const bootcampManagerRoute = require('./routes/bootcampManagerRoute');
 app.use('/bootcampManager', bootcampManagerRoute);

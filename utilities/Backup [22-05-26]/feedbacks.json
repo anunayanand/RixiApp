@@ -1,0 +1,2622 @@
+[
+  {
+    "_id": {
+      "$oid": "69da8c820d92d3df577352b8"
+    },
+    "userId": {
+      "$oid": "68c4406fb73040f19fd859c1"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "What I liked the most about the internship program was the opportunity to work on real projects. The hands-on learning experience and the positive work environment helped me enhance both my technical and professional skills.",
+    "suggestions": "The internship was a great learning experience. For future programs, I would suggest adding more structured onboarding and opportunities for team-based projects. Skill-development workshops and clear project roadmaps would also help interns gain maximum benefit from the program.",
+    "linkedinUrl": "https://drive.google.com/open?id=1STzAKF8yMoOxc26DjYmFkwSDPJsaukpd",
+    "githubUrl": "https://drive.google.com/open?id=19qHm1dN6A9zBN3Jt-ymgSkJsmqTEQI9e",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:38.012Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c820d92d3df577352c7"
+    },
+    "userId": {
+      "$oid": "68c3112f81a4b49141840a80"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Free of cost program that's why",
+    "suggestions": "to me personally, project report seems unnecessary .",
+    "linkedinUrl": "https://drive.google.com/open?id=14kzz7fA9soyEUbIz7v-jUY0QRppPeUuH",
+    "githubUrl": "https://drive.google.com/open?id=1tVKTLxojbyOgaMxgnUumjVOpXwhntU0e",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:38.340Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c820d92d3df577352d5"
+    },
+    "userId": {
+      "$oid": "68c4041e55a135d66055d681"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "Food restaurant poster",
+    "suggestions": "Regular interaction with mentors to get timely feedback and career advice.",
+    "linkedinUrl": "https://drive.google.com/open?id=1v5mHjxyQ6jrblnUunnHebG5raeiMbN6S",
+    "githubUrl": "https://drive.google.com/open?id=1MedyuI8M8kOy92IinGbUzn5gxYj-jzgL",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:38.704Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c830d92d3df577352e3"
+    },
+    "userId": {
+      "$oid": "68c43f70b73040f19fd85649"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "everything",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1kHt8CF-I17K609EMMjJZQTyvQ4YB12r2",
+    "githubUrl": "https://drive.google.com/open?id=1fFXr-kmOUykIX7qBos7WrPJixzZygjJv",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:39.002Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c830d92d3df577352f2"
+    },
+    "userId": {
+      "$oid": "68c313d781a4b49141840aa3"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "I really liked the hands-on approach of the internship program. Instead of just theory, I got to build a complete, working project from scratch. I especially enjoyed learning how to integrate different components—like secure authentication, database design, and role-based access control—into one system. It gave me a clear idea of how real-world applications are structured and helped me improve both my coding and problem-solving skills.",
+    "suggestions": "I think one improvement for the internship program could be having more collaborative or group tasks. My project helped me learn a lot technically, but working with a small team would’ve given me exposure to version control and teamwork like in real development settings. Also, regular feedback or code reviews from mentors would be really helpful to know where I can improve early on. Maybe a few short sessions on industry practices or advanced tools would also make the experience even richer.",
+    "linkedinUrl": "https://drive.google.com/open?id=1-imhkZgUQrdV9RmcziOACVbmX2zAgmVT",
+    "githubUrl": "https://drive.google.com/open?id=19dbIXvCrAbdLabXVHVaaQXcrCrLv5wDP",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:39.341Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c830d92d3df57735301"
+    },
+    "userId": {
+      "$oid": "68c2dd90e12ee95f9bac0fca"
+    },
+    "overallRating": 4,
+    "quizRating": 2,
+    "projectRating": 4,
+    "experienceText": "liked the internship because I got to work on real projects, learn new things, and get guidance from mentors. It helped me improve my skills and gain practical experience",
+    "suggestions": "More projects and feedback would help",
+    "linkedinUrl": "https://drive.google.com/open?id=1eciWAJKf2lREEQw8Kjw8Se9lXPT64mN7",
+    "githubUrl": "https://drive.google.com/open?id=11dycC95nAWWZrYWow59RvgMa5qPFmr1D",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:39.680Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c830d92d3df57735310"
+    },
+    "userId": {
+      "$oid": "68c30de981a4b49141840a4f"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Good",
+    "suggestions": "Good",
+    "linkedinUrl": "https://drive.google.com/open?id=1rIjnjBwBNGE-rFMOxW6VUsy9DoFNYhn5",
+    "githubUrl": "https://drive.google.com/open?id=1Xn3UE_kLY_s2heV-8iYGGouhEbg-9kNd",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:39.987Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c840d92d3df5773531f"
+    },
+    "userId": {
+      "$oid": "68c448cee51dde48c7aeefe8"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "projects",
+    "suggestions": "everything was fine",
+    "linkedinUrl": "https://drive.google.com/open?id=1Yt0UvKf78xaQs_mb7KvhL59cfaVO-RLe",
+    "githubUrl": "https://drive.google.com/open?id=1QtWhJUh5sCbMSs76b4zwZYkO4IWDbAPN",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:40.299Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c840d92d3df5773532e"
+    },
+    "userId": {
+      "$oid": "68c2db6ee12ee95f9bac0fb5"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "the hands-on learning experience. I got the opportunity to work on real projects that enhanced my understanding of web technologies such as HTML5, CSS, JavaScript, and responsive design. The mentorship and guidance from the team were really valuable—they encouraged me to experiment, solve problems independently, and then refine my work with feedback. I also appreciated the collaborative environment, where I learned teamwork, project management, and how a professional web development workflow operates. Overall, the balance of technical learning and practical exposure was the highlight of this internship for me.",
+    "suggestions": "“The internship was very beneficial. Future programs could include more structured guidance, regular feedback sessions, and exposure to advanced tools/technologies to maximize learning.”",
+    "linkedinUrl": "https://drive.google.com/open?id=1ydhxqNaslfOkHj2HW4UVqknE_g9s17Vo",
+    "githubUrl": "https://drive.google.com/open?id=1wM7Coy2nGo2GgE0jmWLme_peCVe3W6gF",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:40.631Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c840d92d3df5773533d"
+    },
+    "userId": {
+      "$oid": "68c30f8a81a4b49141840a64"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "NA",
+    "suggestions": "I would suggest providing more structured mentorship and regular feedback sessions to help interns learn and grow more effectively.",
+    "linkedinUrl": "https://drive.google.com/open?id=1qFtoYxJXqCEymauDh8yeGU66QxcqitaG",
+    "githubUrl": "https://drive.google.com/open?id=1StgUg7RnAi5miZuFD9v-RZeA4vAuaXxi",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:40.938Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c850d92d3df5773534c"
+    },
+    "userId": {
+      "$oid": "68c2da7de12ee95f9bac0f9e"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "THE FLEXIBILITY OF DOING TASKS AT MY OWN PACE",
+    "suggestions": "MAKE THE TASKS A BIT MORE ENGAGING",
+    "linkedinUrl": "https://drive.google.com/open?id=1mV0yrnmiLj--YihUabF12pCOii-_P9nT",
+    "githubUrl": "https://drive.google.com/open?id=14h0jyn0wYIlkQkovMZFjy2fnSm9JunhB",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:41.229Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c850d92d3df5773535b"
+    },
+    "userId": {
+      "$oid": "68c44010b73040f19fd85863"
+    },
+    "overallRating": 5,
+    "quizRating": 2,
+    "projectRating": 5,
+    "experienceText": "What I liked the most about the internship program at Rixi Labs was the hands-on learning experience and the exposure to real-world projects. I appreciated how the program emphasized practical application of concepts rather than just theory, which helped me strengthen my technical skills and problem-solving abilities. The supportive work environment and guidance from mentors made it easy to ask questions and learn from feedback. I also enjoyed the collaborative culture, where I had opportunities to share ideas and learn from my peers. Overall, the internship gave me valuable insights into industry practices and boosted my confidence to take on future professional challenges.",
+    "suggestions": "The internship program at Rixi Labs was very well-structured, but I believe a few improvements could make it even more impactful. For example, including more interactive training sessions or workshops at the beginning would help interns quickly adapt to the tools and technologies used. A structured roadmap with clear weekly goals could also ensure better tracking of progress and learning outcomes. Additionally, providing more opportunities for collaboration across different teams or projects would allow interns to gain broader exposure to various domains. Lastly, regular feedback sessions from mentors would further help interns identify their strengths and areas for improvement in real time.",
+    "linkedinUrl": "https://drive.google.com/open?id=1jPR7Xv6rVIzEThNfeMzFzqaGFHcIJdx7",
+    "githubUrl": "https://drive.google.com/open?id=1r2-IRCKfdd6zY1GHGK35vfEQbt6oKRwJ",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:41.520Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c850d92d3df57735369"
+    },
+    "userId": {
+      "$oid": "68c4045f55a135d66055d68d"
+    },
+    "overallRating": 5,
+    "quizRating": 1,
+    "projectRating": 3,
+    "experienceText": "the projects are so intresting",
+    "suggestions": "add some related courses for any doubt",
+    "linkedinUrl": "https://drive.google.com/open?id=1vOTlZSs4IWFcDmGA8erfTSZQBabVChyU",
+    "githubUrl": "https://drive.google.com/open?id=1fN9bZmcYnTKEFNaS_h_EvgTXcob1gWPL",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:41.805Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c860d92d3df57735377"
+    },
+    "userId": {
+      "$oid": "68c2ddfae12ee95f9bac0fd1"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Yes",
+    "suggestions": "Timing",
+    "linkedinUrl": "https://drive.google.com/open?id=1PzQVzPyNfKOhBB-jX4qcEVIhp5x79uMr",
+    "githubUrl": "https://drive.google.com/open?id=13S5Qpz_ZNGMeTeLqZYkXdCZ3THhBfQCe",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:42.096Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c860d92d3df57735386"
+    },
+    "userId": {
+      "$oid": "68c2dc75e12ee95f9bac0fc3"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 3,
+    "experienceText": "I valued the flexibility of time and the learning opportunities",
+    "suggestions": "I am fully satisfied with the internship program and have no suggestions for changes",
+    "linkedinUrl": "https://drive.google.com/open?id=1Z05_kQ0_HvK219nem9xxaku2d2mpZ68P",
+    "githubUrl": "https://drive.google.com/open?id=1UIoN_a7GJel9HfhOOpSyi7TeG7AOrxa-",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:42.388Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c860d92d3df57735396"
+    },
+    "userId": {
+      "$oid": "68c4082455a135d66055e83c"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "the project give meaningful insights",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1RD1ukq3apOhMYZA-VcFzIc3Yiq-4RE_K",
+    "githubUrl": "https://drive.google.com/open?id=1CRPOS_aAaHF5c0f8dw3EkxiQlG87vVmk",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:42.717Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c870d92d3df577353a7"
+    },
+    "userId": {
+      "$oid": "68c30fe881a4b49141840a6b"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "I think it would be better to first give classes and then assign tasks instead of assigning projects directly.",
+    "suggestions": "First let the interns learn the course,then executing with projects.",
+    "linkedinUrl": "https://drive.google.com/open?id=1y7p3gBytfk0HSRMif2Xk0SoVFhVIhw74",
+    "githubUrl": "https://drive.google.com/open?id=1dO0kDtGrZ_js037BA4nzmB5L6HsjCLFZ",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:43.037Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c870d92d3df577353b9"
+    },
+    "userId": {
+      "$oid": "68c3156481a4b49141840ac0"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Get to do more real life projects .",
+    "suggestions": "Along with the projects if we can get some reviews about our project and at least 15 interview question in each task .",
+    "linkedinUrl": "https://drive.google.com/open?id=1RnE1nSIy40vYlqXdO9fcUD21o-81KVz4",
+    "githubUrl": "https://drive.google.com/open?id=1OuR_4DAks6sfVNp-rEierdnLeldzyRYS",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:43.352Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c870d92d3df577353ca"
+    },
+    "userId": {
+      "$oid": "68c585f5fba63113b28cc51b"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Free intership for aspirants like us",
+    "suggestions": "If you don't mind please provide classes for the project by conducting sessions",
+    "linkedinUrl": "https://drive.google.com/open?id=1FIJz191ZlyQhzWcg_QH1IrUlGCYllGol",
+    "githubUrl": "https://drive.google.com/open?id=11N2CaSqnfSgdik8O2ZNRclLwRd4xswsM",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:43.665Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c870d92d3df577353d9"
+    },
+    "userId": {
+      "$oid": "68c5b738fba63113b28d1b73"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "Task or goal of the projects were already provided",
+    "suggestions": "maybe you guys should focus on more insights data for real world aspects",
+    "linkedinUrl": "https://drive.google.com/open?id=1IccMjC3ky3eOlcWc_mcsUBnqvmOkYf0g",
+    "githubUrl": "https://drive.google.com/open?id=1fc_C7EOv_ixLbpthkGI-56pRanZ-87ho",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:43.976Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c880d92d3df577353e8"
+    },
+    "userId": {
+      "$oid": "68c5910efba63113b28cddd5"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Consistent about Project assigning",
+    "suggestions": "No improvement All things are good",
+    "linkedinUrl": "https://drive.google.com/open?id=1oyt7WU-Izsqc7lPcJjDHWZw2liuizldD",
+    "githubUrl": "https://drive.google.com/open?id=1HrgpfvQ6bPUJ1Ui-73AnnlOlxCnPWu7-",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:44.276Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c880d92d3df577353f7"
+    },
+    "userId": {
+      "$oid": "68c5ae62fba63113b28d0400"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "To experience the real world applications",
+    "suggestions": "Offer sessions on resume building, interview preparation, communication skills,and technical skills",
+    "linkedinUrl": "https://drive.google.com/open?id=1NCaieyv-nspdmtGKNss84udvFUskBa7-",
+    "githubUrl": "https://drive.google.com/open?id=1xwNldB_nmvvc7IG2YQwjGLKKa8WKgd3w",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:44.708Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c890d92d3df57735408"
+    },
+    "userId": {
+      "$oid": "68c3149c81a4b49141840ab1"
+    },
+    "overallRating": 5,
+    "quizRating": 2,
+    "projectRating": 3,
+    "experienceText": "I really liked the hands-on learning experience and the supportive guidance from mentors. The program gave me practical exposure to real-world projects, which helped me improve my technical skills and gain confidence.",
+    "suggestions": "The program was overall very good, but it could be even better by including more interactive sessions such as live workshops, group projects, and feedback sessions. This would allow interns to collaborate more and enhance both teamwork and communication skills.",
+    "linkedinUrl": "https://drive.google.com/open?id=1MOXUhIk1lK1ztx-dafBzgD0De2HeOYH4",
+    "githubUrl": "https://drive.google.com/open?id=1QaNDvCQfLppkbEt70NPcwWD6B2ntVD6J",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:45.051Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c890d92d3df57735419"
+    },
+    "userId": {
+      "$oid": "68c58936fba63113b28cca3e"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I liked that the internship was online, flexible, and very informative. I got to learn Python programming step by step, worked on coding exercises, and improved my problem-solving skills. The online resources and mentor support were also very helpful.\"",
+    "suggestions": "The internship was very useful. For future programs, adding more live interactive sessions, doubt-clearing classes, and real-world project work would make it even better. Also, providing recorded sessions for revision would help a lot.\"",
+    "linkedinUrl": "https://drive.google.com/open?id=1lx6-8FagBygoTC2mpIcN8JP6S7BEDlKk",
+    "githubUrl": "https://drive.google.com/open?id=1fy1Y3iPnan7ZyOic1bZukpScoXAheI4I",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:45.354Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c890d92d3df57735428"
+    },
+    "userId": {
+      "$oid": "68c584cefba63113b28cc3a4"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "It gave me exposure to learn how to make projects and completing it independently.",
+    "suggestions": "Adding some guidance or interaction would make the experience more engaging.",
+    "linkedinUrl": "https://drive.google.com/open?id=1etl0s7w9GCHWvmuZGQR22gc3YpTpdbRY",
+    "githubUrl": "https://drive.google.com/open?id=1za6OFZyH5CecXP9J789vtvgwCJbA8U00",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:45.666Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c890d92d3df57735437"
+    },
+    "userId": {
+      "$oid": "68c5610ffba63113b28cbea3"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "Good",
+    "suggestions": "It's better to solve the feedback as early as possible",
+    "linkedinUrl": "https://drive.google.com/open?id=1i-98L7xKP4Yp-5lAAGvkjIP3mZYgHRRY",
+    "githubUrl": "https://drive.google.com/open?id=1anGby7uAX7VADluUFpDVGQ3yluuNBd95",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:45.960Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8a0d92d3df57735446"
+    },
+    "userId": {
+      "$oid": "68c58843fba63113b28cc8a5"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "the assigned tasks teach us a lot about real world project and test our problem solving skill",
+    "suggestions": "weekly quiz or testes in between",
+    "linkedinUrl": "https://drive.google.com/open?id=1AEHkf5-_Lqpxj9jnU1TXHn7O-DAupyXS",
+    "githubUrl": "https://drive.google.com/open?id=1VtdV2vrhp9X7u4k5QSa61JD5Egp7akXE",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:46.273Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8a0d92d3df57735455"
+    },
+    "userId": {
+      "$oid": "68c5915afba63113b28cde7b"
+    },
+    "overallRating": 4,
+    "quizRating": 2,
+    "projectRating": 5,
+    "experienceText": "I like that we can do all projects in our on timeline through out the week.",
+    "suggestions": "It would be great if we can incorporate those projects with GitHub while submitting them.",
+    "linkedinUrl": "https://drive.google.com/open?id=1-Tk4iMPQWFDli_MwkhA0VyoOHNQ-honB",
+    "githubUrl": "https://drive.google.com/open?id=1ZUFUMmoM9d72WvImEW4Za0v7-R1IfoFo",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:46.627Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8a0d92d3df57735466"
+    },
+    "userId": {
+      "$oid": "68c315b981a4b49141840acb"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Good support and best project work",
+    "suggestions": "All is well",
+    "linkedinUrl": "https://drive.google.com/open?id=18E1Knv4S1oWNgsymwe1l9rHnsZgdqXLb",
+    "githubUrl": "https://drive.google.com/open?id=10pSBOENdAnCI5BBxlrBjAMBa5tud9wiZ",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:46.949Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8b0d92d3df57735477"
+    },
+    "userId": {
+      "$oid": "68c455ece51dde48c7aef7f4"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "learn something new",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1BFVZ3Kk6X7uPp5IodWfCH09Wa0WbkCwK",
+    "githubUrl": "https://drive.google.com/open?id=1QqVo8KFMkv6ir7Fq491EVen8txol-PtY",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:47.267Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8b0d92d3df57735487"
+    },
+    "userId": {
+      "$oid": "68c5869bfba63113b28cc67f"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Question level of Last Project",
+    "suggestions": "Make some more featuresea",
+    "linkedinUrl": "https://drive.google.com/open?id=1xyI7AszNoNJ4prcTAlDmp7SzDPkH-Q_Q",
+    "githubUrl": "https://drive.google.com/open?id=1fpW8k0smC3ws2hYT5oToeDDsFugUSYfz",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:47.553Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8b0d92d3df57735498"
+    },
+    "userId": {
+      "$oid": "68c5af2dfba63113b28d0428"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Question,time giving",
+    "suggestions": "some time student not understand .then you can helps on what'sapp where student ask question.",
+    "linkedinUrl": "https://drive.google.com/open?id=1IMysJ3c46qgqIE_c1CV5RpssvqofsaeY",
+    "githubUrl": "https://drive.google.com/open?id=1BdA65OWM4t2NaGGnXSm8gPj7mJzmg6a4",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:47.911Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8c0d92d3df577354a8"
+    },
+    "userId": {
+      "$oid": "68c5b5abfba63113b28d17d6"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 3,
+    "experienceText": "I have learn to work about web development real life project..",
+    "suggestions": "For videos training",
+    "linkedinUrl": "https://drive.google.com/open?id=1bYq5wCNq24o_nOw4GP_6Hrhb-WhQjlbQ",
+    "githubUrl": "https://drive.google.com/open?id=1zfF0LPtErAZTkvF1DQBP-rDqxdZNDzz9",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:48.206Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8c0d92d3df577354b8"
+    },
+    "userId": {
+      "$oid": "68c58acbfba63113b28cce4f"
+    },
+    "overallRating": 4,
+    "quizRating": 2,
+    "projectRating": 5,
+    "experienceText": "Providing free certificate for mant students",
+    "suggestions": "Take online classes",
+    "linkedinUrl": "https://drive.google.com/open?id=1XcVY530X_cD3oaERvblQnpDtkgT92Hyg",
+    "githubUrl": "https://drive.google.com/open?id=140z79lFTFfASvtLNC0yw6ex5A82_liBu",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:48.510Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8c0d92d3df577354c9"
+    },
+    "userId": {
+      "$oid": "68c5aee4fba63113b28d0418"
+    },
+    "overallRating": 4,
+    "quizRating": 1,
+    "projectRating": 3,
+    "experienceText": "It gives a good experience to work on real world projects.",
+    "suggestions": "add more real-life problems based on projects.",
+    "linkedinUrl": "https://drive.google.com/open?id=1BhVddX14y5HuzWiY0GWLRhW6mpfsF4YO",
+    "githubUrl": "https://drive.google.com/open?id=1BEnI_lNxChT6EvgKKeS0_LQskXd-YiXg",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:48.809Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8d0d92d3df577354da"
+    },
+    "userId": {
+      "$oid": "68c5adb8fba63113b28d03dc"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Free cost of certificate provide",
+    "suggestions": "Conducting live meetings to the students",
+    "linkedinUrl": "https://drive.google.com/open?id=1fC0rNpqhu5GF3QeW9Y8DfuSAEIw-31ZU",
+    "githubUrl": "https://drive.google.com/open?id=1NXA6FObGh6YGzpuSoMBTRqKTNEz83H8D",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:49.113Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8d0d92d3df577354eb"
+    },
+    "userId": {
+      "$oid": "68c58a1ffba63113b28ccc8d"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "dedication i like",
+    "suggestions": "Yeah,I have learn lot of information and improve my skills",
+    "linkedinUrl": "https://drive.google.com/open?id=1fGEWJUZrqCKvtGv1NRtdjkkulOApnvvS",
+    "githubUrl": "https://drive.google.com/open?id=1R1Wv3aV8SC1qem6LufiZdT0AFR5EBPp2",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:49.414Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8d0d92d3df577354fc"
+    },
+    "userId": {
+      "$oid": "68c5ae2afba63113b28d03f4"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "The project ideas",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1nn7ecX-VPYzXV-05VYpUEYQCby06OOlm",
+    "githubUrl": "https://drive.google.com/open?id=1y4dj1BoPvae0XSxhqD4fqdCDqnqEQ9P_",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:49.719Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8e0d92d3df5773550d"
+    },
+    "userId": {
+      "$oid": "68c587b2fba63113b28cc7e7"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "differnt real time projects",
+    "suggestions": "Better to teach internships and the assign projects to the interns",
+    "linkedinUrl": "https://drive.google.com/open?id=1iFPdc1H8Ge0kX-U2dffiRdeDTM0jfKmU",
+    "githubUrl": "https://drive.google.com/open?id=1lCP_FwnN8oLj6-rq8hg8vOfVni8a2BBG",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:50.013Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8e0d92d3df5773551f"
+    },
+    "userId": {
+      "$oid": "68c58d81fba63113b28cd6cd"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Consistently works on problems",
+    "suggestions": "Extend internship duration",
+    "linkedinUrl": "https://drive.google.com/open?id=1PMr4SWArRTtj3YojFNcMzxwYzDsfmmLb",
+    "githubUrl": "https://drive.google.com/open?id=1wi8liMZHaS6rcSAsXpGdWmPx_A6G_qIA",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:50.296Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8e0d92d3df57735532"
+    },
+    "userId": {
+      "$oid": "68c5883efba63113b28cc899"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "the level of the projects",
+    "suggestions": "you can also provide some online classes that are related to the domain we have selected and then assign the project.",
+    "linkedinUrl": "https://drive.google.com/open?id=1k9hNw8VvnL1cNeHQxQMzc01vNcqqWB4z",
+    "githubUrl": "https://drive.google.com/open?id=1TfqWVh8qY7ZxvqXXZWC9qEwnRt5NZbLg",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:50.603Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8e0d92d3df57735543"
+    },
+    "userId": {
+      "$oid": "68ceec51955670586b549726"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "The way of project",
+    "suggestions": "Providing the classes for the project",
+    "linkedinUrl": "https://drive.google.com/open?id=1FNPi6NRy12no7PN-pmWW94M-YQRLrX7B",
+    "githubUrl": "https://drive.google.com/open?id=1UDReTpS_KloTGFrhaguiPx__Ht2meHsV",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:50.888Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8f0d92d3df57735552"
+    },
+    "userId": {
+      "$oid": "68ceb984955670586b546e08"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 3,
+    "experienceText": "learning new concepts in java",
+    "suggestions": "Everything is perfect I think no suggestions is needed",
+    "linkedinUrl": "https://drive.google.com/open?id=1XmVmGOrbYusVhGj-EBLT7Y9tir3FYwCi",
+    "githubUrl": "https://drive.google.com/open?id=1A47EmhC8LJVi3G_nQituzdXxJFRFw-e7",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:51.175Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8f0d92d3df57735561"
+    },
+    "userId": {
+      "$oid": "68cae311955670586b53b04d"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "What I liked the most about the RIXI Lab virtual internship was the weekly project-based learning approach. Each project helped me understand new concepts practically and apply my skills in real scenarios. The structure of weekly tasks kept the experience engaging and well-organized, and I really appreciated the flexibility and guidance provided throughout the program.",
+    "suggestions": "The internship program was very well organized, but I think a few improvements could make it even better. For example, adding short interactive sessions or live discussions with mentors could help clear doubts more quickly. Also, providing feedback on each weekly project in more detail would help interns understand their strengths and areas to improve. Overall, the experience was great and very beneficial.",
+    "linkedinUrl": "https://drive.google.com/open?id=1dSyhf9yZWdf-evS_O2iMKnVs8v02UHFi",
+    "githubUrl": "https://drive.google.com/open?id=1R2kkHvOyfUfCK0QoJiVkUabUtvPMoFVa",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:51.515Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c8f0d92d3df57735570"
+    },
+    "userId": {
+      "$oid": "68cae2d8955670586b53af4f"
+    },
+    "overallRating": 3,
+    "quizRating": 2,
+    "projectRating": 4,
+    "experienceText": "nothing to say",
+    "suggestions": "nothing to say",
+    "linkedinUrl": "https://drive.google.com/open?id=1Ev_lJZfnItJ2dqw2JiNlcz6UxwmaDmF9",
+    "githubUrl": "https://drive.google.com/open?id=1pVh_cOoak1TYk5zuWV6BXHqWeLjGi4rC",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:51.838Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c900d92d3df5773557f"
+    },
+    "userId": {
+      "$oid": "68c975e6955670586b53733c"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 2,
+    "experienceText": "The best part of my experience was the project-based internship, which helped me a lot in my practice.",
+    "suggestions": "The internship program was well-structured and informative. For future batches, adding more hands-on projects and mentorship sessions could enhance practical learning and engagement.",
+    "linkedinUrl": "https://drive.google.com/open?id=1XE-Iv22x8FOe2yeoTzVMyUTBsYSgdCq3",
+    "githubUrl": "https://drive.google.com/open?id=134E3WLEwwKXDu1qLatyUGfc3tmsjcwBv",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:52.170Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c900d92d3df5773558e"
+    },
+    "userId": {
+      "$oid": "68c7f028256d45e3fca8820a"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 1,
+    "experienceText": "It's easy to do with your studies",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=13yn1-AEZEm6rZXoKqCkFpyTEAxFwjNa4",
+    "githubUrl": "https://drive.google.com/open?id=1FRWDnjqVGcmyd95R5p6N5soKRSPWq1uE",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:52.475Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c900d92d3df5773559d"
+    },
+    "userId": {
+      "$oid": "68c7f7b67d0c60fd500f6554"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Quiz Attempting",
+    "suggestions": "\"if someone is unable to upload their project on time, please extend the deadline for them\".",
+    "linkedinUrl": "https://drive.google.com/open?id=14-81tl6b5ktcjNn0shrUWyEJVYTLyN_o",
+    "githubUrl": "https://drive.google.com/open?id=1koom02SqBt1i_ovjZSzr__ivmcoVldbL",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:52.759Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c910d92d3df577355ac"
+    },
+    "userId": {
+      "$oid": "68cbcf88955670586b53e329"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "I appreciated the opportunity to work on real projects and gain practical knowledge.",
+    "suggestions": "Please provide video suggestion of the project which help us to complete the project easily",
+    "linkedinUrl": "https://drive.google.com/open?id=1TJwOv9lyd1i6fz94Q1MwlxJKH_8Ph6Ar",
+    "githubUrl": "https://drive.google.com/open?id=1SWpCVgsLGN_QYLpj9LtL-5FJ_AgCURDo",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:53.078Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c910d92d3df577355bb"
+    },
+    "userId": {
+      "$oid": "68c65c8fd3b2ba69611d2351"
+    },
+    "overallRating": 3,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Real-world project ownership and the high level of trust given to interns.",
+    "suggestions": "Implement a more comprehensive onboarding guide for tools and company software.",
+    "linkedinUrl": "https://drive.google.com/open?id=1XE_vohhPkM1JuDFZpynKLvySP26aelNz",
+    "githubUrl": "https://drive.google.com/open?id=15JioyRAOemUOnU-6j6lhoKtJEv4OLU0H",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:53.405Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c910d92d3df577355ca"
+    },
+    "userId": {
+      "$oid": "68cbd63a955670586b53f1c9"
+    },
+    "overallRating": 3,
+    "quizRating": 4,
+    "projectRating": 3,
+    "experienceText": "Real-world project ownership and the high level of trust given to interns.\r\nThe exceptional mentorship provided by the team.",
+    "suggestions": "Implement a more comprehensive onboarding guide for tools and company software.\r\nSchedule a mandatory mid-point progress review with the mentor/manager.",
+    "linkedinUrl": "https://drive.google.com/open?id=1j8wPVQSIHvkmqAhfIjybCGnTaaHWkcHP",
+    "githubUrl": "https://drive.google.com/open?id=1ApFadC7q3J7ecBnL2fnEz4r_-MG-X7sL",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:53.690Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c910d92d3df577355d9"
+    },
+    "userId": {
+      "$oid": "68c65bf7d3b2ba69611d1fba"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I really liked the hands-on learning experience and the supportive environment. The guidance from mentors and the opportunity to work on real projects helped me improve my practical skills and gain confidence.",
+    "suggestions": "The program was great overall, but adding more interactive sessions, workshops, or team projects could make it even more engaging and help interns collaborate and learn from each other.",
+    "linkedinUrl": "https://drive.google.com/open?id=1muneysEmL_tc3XMPqQ3ZD5F9s3nU1Psz",
+    "githubUrl": "https://drive.google.com/open?id=143vQ4Apv0G-Zq-4K3ycP7CkytmKFXSHX",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:53.967Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c920d92d3df577355e8"
+    },
+    "userId": {
+      "$oid": "68c45464e51dde48c7aef7ac"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Assignments are the best",
+    "suggestions": "Related course",
+    "linkedinUrl": "https://drive.google.com/open?id=1SwoRHo-Xr_7kbrValEVLgUJOrbIKjsRd",
+    "githubUrl": "https://drive.google.com/open?id=1qXD8jXoqA4wA8Ud_qBgwJpoOM_9bvb7j",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:54.292Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c920d92d3df577355f9"
+    },
+    "userId": {
+      "$oid": "68c2df18e12ee95f9bac0fe4"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "What I liked the most about the internship program at Rixi Labs was the hands-on learning experience and the opportunity to work on real-world projects. The environment was very collaborative — mentors were approachable, and I could openly discuss ideas or challenges. I also appreciated how the program emphasized both technical skills and problem-solving, which helped me grow as a professional.",
+    "suggestions": "Overall, the internship was great, but I believe having a more formal mentorship system would make it even stronger. Pairing each intern with a dedicated mentor or senior developer for continuous guidance could help interns learn faster and feel more confident while working on projects.",
+    "linkedinUrl": "https://drive.google.com/open?id=1_2M6EDgROz4SxuLOlR0QBrEI56jAj8_j",
+    "githubUrl": "https://drive.google.com/open?id=12aOYbug4Z5PZZarVfwOBlJL4bOdqIjft",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:54.597Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c920d92d3df5773560b"
+    },
+    "userId": {
+      "$oid": "68c7f7ea7d0c60fd500f659d"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "the different kinds of useful projects",
+    "suggestions": "teach something before giving the projects",
+    "linkedinUrl": "https://drive.google.com/open?id=1FoywRMuvbegfVnrxkfALf6m3m0cXUEdl",
+    "githubUrl": "https://drive.google.com/open?id=1AKgLcfNu2gViG94zbRNd73Btn1qXarDs",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:54.893Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c930d92d3df5773561c"
+    },
+    "userId": {
+      "$oid": "68cec0ba955670586b5475c6"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "With this internship i learnt a lot and it will help me in future projects and it thought me a lot. Thank You For Giving this opportunity.",
+    "suggestions": "Conduct Any Online Meetings In future internships.",
+    "linkedinUrl": "https://drive.google.com/open?id=1skmIrkgu87hWNOy_PElYMLvH6azA_CIq",
+    "githubUrl": "https://drive.google.com/open?id=129iPUvEOObYP65d4qaGvcMxaCo4wD7_Y",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:55.177Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c930d92d3df57735635"
+    },
+    "userId": {
+      "$oid": "68ceec03955670586b549611"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Projects",
+    "suggestions": "Everything good",
+    "linkedinUrl": "https://drive.google.com/open?id=1CfXLdf1rVr3xoquhNp_V0onVluCGnDIW",
+    "githubUrl": "https://drive.google.com/open?id=1CUXhajZCgADgpu68xIQ9Y8qN7hDW3ADN",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:55.646Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c930d92d3df57735646"
+    },
+    "userId": {
+      "$oid": "68d6761cb95d760366d01243"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "I like the way you gave the projects from very basic to advanced",
+    "suggestions": "It can be little hard to build advance level projects own .So, the workshops or classes are recommended",
+    "linkedinUrl": "https://drive.google.com/open?id=1QCBjIV3avTTNtNBLb11DsdxFOlW4iS26",
+    "githubUrl": "https://drive.google.com/open?id=1Xui1g3sX5WEfNi-OElcRnzc-9RFZGrHI",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:55.956Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c940d92d3df57735657"
+    },
+    "userId": {
+      "$oid": "68c65e36d3b2ba69611d2d23"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "The projects helped me a lot to enhance my programming skills. I can use this language to my future projects also. The hands-on learning experience and the positive work environment helped me enhance both my technical and professional skills.",
+    "suggestions": "Weekly meeting and attendance",
+    "linkedinUrl": "https://drive.google.com/open?id=13ZS2pgt_q81sF7ljsyWaNr4cauEAIdu8",
+    "githubUrl": "https://drive.google.com/open?id=1N-f__FlTnFP1Jzcu856XuPXG7VlC4bdY",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:56.249Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c940d92d3df57735668"
+    },
+    "userId": {
+      "$oid": "68c68d9b2d43f6eb8c250709"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "first of I loved your support team and i learn from it how to make projects and manage them",
+    "suggestions": "Arrange a meetings for your interns.",
+    "linkedinUrl": "https://drive.google.com/open?id=11H7pvkxcAAfeCxtxQcNlatJn9VTaNn5n",
+    "githubUrl": "https://drive.google.com/open?id=15vKAPV9GSuHigfKcui3SeuhhrwrXaZp7",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:56.547Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c940d92d3df57735679"
+    },
+    "userId": {
+      "$oid": "68c65dbbd3b2ba69611d2b3b"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 2,
+    "experienceText": "i like the projects that you gave us to practice and improve our knowledge",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1WV084fOQ8KZLjkx0a2yZb9m4WxWIDwCh",
+    "githubUrl": "https://drive.google.com/open?id=1SUyAHq6d6GuL2CO-l0C6htvT9zPtrXYG",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:56.841Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c950d92d3df5773568a"
+    },
+    "userId": {
+      "$oid": "68c68b9d2d43f6eb8c25066a"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Your support team was very helpfu and they are active and i completed and enjoyed the internship by my heart",
+    "suggestions": "Arrange a meetings for a interns.",
+    "linkedinUrl": "https://drive.google.com/open?id=12tq0z9IhZMZS8jZDwxoGF0ZdrxYY4D5N",
+    "githubUrl": "https://drive.google.com/open?id=1HHCBshF-gwqpb_eQoLvSaD3LkjcEkMgX",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:57.126Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c950d92d3df5773569b"
+    },
+    "userId": {
+      "$oid": "68c65d4fd3b2ba69611d2a45"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Building the from low to high",
+    "suggestions": "We can reduce time period and at that time we can give one more project ,To getting the experience",
+    "linkedinUrl": "https://drive.google.com/open?id=1rfWMyJidSsuMD-70wT80LbqERRdzydpE",
+    "githubUrl": "https://drive.google.com/open?id=1yXz-hXFI_EvEo_WH1RfH9PeqOq8723xC",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:57.457Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c950d92d3df577356ac"
+    },
+    "userId": {
+      "$oid": "68c68cfc2d43f6eb8c2506d4"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "The work environment was very positive and made learning enjoyable, they gave learning opportunities and have very supportive teamwork.",
+    "suggestions": "They can help physically to students in the projects by clearing their doubts and help in the problems.",
+    "linkedinUrl": "https://drive.google.com/open?id=1DC9Ui7tKnuZHQWuzg3-t7BgAYikS2s7B",
+    "githubUrl": "https://drive.google.com/open?id=1GThwm9znHWmaW53By_igvaEmgTY5QpPA",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:57.762Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c960d92d3df577356bd"
+    },
+    "userId": {
+      "$oid": "68c68e3c2d43f6eb8c250741"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "The guidance from mentor was the best part they were supportive and always ready to help",
+    "suggestions": "No suggestion it already best",
+    "linkedinUrl": "https://drive.google.com/open?id=1rNFxzpnYI00P62IhEAWTUxNiihxsiyiQ",
+    "githubUrl": "https://drive.google.com/open?id=1zZBjc8Pt8Xjv6uQ4lvU2R9UvpmV3YWVn",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:58.071Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c960d92d3df577356ce"
+    },
+    "userId": {
+      "$oid": "68cf8324c55c825793b96cbf"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "Responsiveness of mentor",
+    "suggestions": "Details about questio",
+    "linkedinUrl": "https://drive.google.com/open?id=1EeVn2_ZvWVs03chzRfmujcgyvfjsZCPU",
+    "githubUrl": "https://drive.google.com/open?id=1WRV1aaG5CCFZ5RNFoiMuiNF-o5XqPAvf",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:58.360Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c960d92d3df577356df"
+    },
+    "userId": {
+      "$oid": "68c7f8157d0c60fd500f65e6"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 2,
+    "experienceText": "All",
+    "suggestions": "Provide offline internship",
+    "linkedinUrl": "https://drive.google.com/open?id=1F_-C6sX8znfJhVNfc3G3j0vImaBmrCeZ",
+    "githubUrl": "https://drive.google.com/open?id=10mrrLLpk51vPecrE95pj5xQw6qdYGYy0",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:58.668Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c960d92d3df577356f0"
+    },
+    "userId": {
+      "$oid": "68d67609b95d760366d011f6"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 1,
+    "experienceText": "I like how the Rixi Lab team is immediately responding to the interns concerns and problems as since 2 weeks I cudn't be able to submit my project on time as my semester exams are happening and the team has granted me to submit once I done",
+    "suggestions": "Should extend the internship duration like 3 months",
+    "linkedinUrl": "https://drive.google.com/open?id=1spIQksqMwPbd6q57-IOLaCAIkEZom6Cq",
+    "githubUrl": "https://drive.google.com/open?id=1lmOKh6ldh9aHniyC8Uw8SRtk_GCWNgz6",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:58.954Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c970d92d3df57735701"
+    },
+    "userId": {
+      "$oid": "68cf99ebc55c825793b97b43"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Doing real time projects",
+    "suggestions": "NA",
+    "linkedinUrl": "https://drive.google.com/open?id=12zUjhQZLryLwGBO-O9UJ6BVtmnhM_nVs",
+    "githubUrl": "https://drive.google.com/open?id=1doIbpx5EfhzE-_wfnxC-BhH7JMLL9D0Y",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:59.665Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c970d92d3df57735712"
+    },
+    "userId": {
+      "$oid": "68ceec94955670586b54983b"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 3,
+    "experienceText": "Projects",
+    "suggestions": "NA",
+    "linkedinUrl": "https://drive.google.com/open?id=1wvaaXlGlOwF9X2pq3d3JR72pyQFgDXpK",
+    "githubUrl": "https://drive.google.com/open?id=1CdinGv6XA345DJYEbN7ZFmE12trkARJ-",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:01:59.938Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c980d92d3df57735725"
+    },
+    "userId": {
+      "$oid": "68cae259955670586b53ad53"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "I liked working on real web development projects at Rixi Lab. I learned how to build and improve websites, got guidance from mentors, and understood how teams work together. It helped me grow my skills and gave me clarity about my future in web development.",
+    "suggestions": "Hands-on coding time",
+    "linkedinUrl": "https://drive.google.com/open?id=1Fh1dxwVLptNyPGdXzRwEV0Dli1V8Xf9N",
+    "githubUrl": "https://drive.google.com/open?id=1Sr8jdNFZmE1qUrtJUZ3Pipwg2EfttfqC",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:00.231Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c980d92d3df5773573a"
+    },
+    "userId": {
+      "$oid": "68cae207955670586b53ac4f"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "guidrence",
+    "suggestions": "hand experince",
+    "linkedinUrl": "https://drive.google.com/open?id=1U-kZ-AmcSrZmtEBebV-h30ADsZF5CC9D",
+    "githubUrl": "https://drive.google.com/open?id=1PGEsdxHPVrj1-IYzYQEtcLbYcyeGwVbo",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:00.530Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c980d92d3df5773574e"
+    },
+    "userId": {
+      "$oid": "68cedb7e955670586b5489bb"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "About projects",
+    "suggestions": "NA",
+    "linkedinUrl": "https://drive.google.com/open?id=1RkvLgkLVkB7XsYcHSGCewLYF1jS8enTW",
+    "githubUrl": "https://drive.google.com/open?id=1HDz9HK6g4ds4J9NiWgQamK539Gth3FQe",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:00.798Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c990d92d3df57735761"
+    },
+    "userId": {
+      "$oid": "68ceda71955670586b5488b7"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "the projects",
+    "suggestions": "technical issues",
+    "linkedinUrl": "https://drive.google.com/open?id=1FEv8usFg-UC1ODD1WIMTd1EhfdgMH7og",
+    "githubUrl": "https://drive.google.com/open?id=1jiQAyImH8MBxG1kLjn8bMmNnmG4gwf9H",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:01.106Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c990d92d3df57735775"
+    },
+    "userId": {
+      "$oid": "68ceeb97955670586b5494f6"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "mainly the projects",
+    "suggestions": "i'll develop on web development",
+    "linkedinUrl": "https://drive.google.com/open?id=1b4pobl-PBoZ6iLb8VDTic7EXAWygNiMG",
+    "githubUrl": "https://drive.google.com/open?id=1wHbylfSGl0cg7Yd8nAvZU_CKiORV0dUj",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:01.409Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c990d92d3df57735789"
+    },
+    "userId": {
+      "$oid": "694199844f97e7f6016ebf79"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "The Internship team members are very active in this internship they respond very quickly.",
+    "suggestions": "online classes like you tube which is more help full to every interns",
+    "linkedinUrl": "https://drive.google.com/open?id=1TDcTqNsM2n6R6xbGGX-l4b9w2_y-XfLj",
+    "githubUrl": "https://drive.google.com/open?id=1OHrkJXCyeZUZXIC6uzVchrsXpLMzvZQH",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:01.717Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9a0d92d3df5773579c"
+    },
+    "userId": {
+      "$oid": "68c65c46d3b2ba69611d2322"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "What I liked the most about the Python internship program was the hands-on experience with real-world projects. It helped me strengthen my coding skills and gain practical knowledge in using Python for web development and data handling.",
+    "suggestions": "The program could be improved by adding clearer weekly goals and more frequent mentor check-ins. This would streamline the learning process and ensure interns get timely guidance while working on technical tasks.",
+    "linkedinUrl": "https://drive.google.com/open?id=15JIXWsIJGmRCDSbKbQ-oV5tqwksG7Bpm",
+    "githubUrl": "https://drive.google.com/open?id=1RGRtUSwNN-fOQ0Ru0JZyBk9iT62mXoxs",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:02.008Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9a0d92d3df577357ae"
+    },
+    "userId": {
+      "$oid": "68caa78e955670586b539b99"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 2,
+    "experienceText": "Projects are more intresting.",
+    "suggestions": "By providing content and videos about the content.",
+    "linkedinUrl": "https://drive.google.com/open?id=1hus58BGSphft6MQQHsS2YwxushKMKLGz",
+    "githubUrl": "https://drive.google.com/open?id=1m2T6_lKwBub8Zqo5HZvIbeMmyHn-9bB9",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:02.296Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9a0d92d3df577357c0"
+    },
+    "userId": {
+      "$oid": "68c7efa6256d45e3fca881d0"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I liked the practical exposure we received—especially the real-time coding exercises and problem-solving assignments. They helped me improve my programming confidence.",
+    "suggestions": "I suggest adding more interactive live sessions, including additional real-time projects, and providing a structured weekly learning roadmap. These improvements would make the internship even more effective and engaging.",
+    "linkedinUrl": "https://drive.google.com/open?id=1yp-ui0tVFYtZTo0ZyBvR6HYew02vPtBa",
+    "githubUrl": "https://drive.google.com/open?id=1dokpNzyA5VzIW3CBvZs0_JrpqLhxN1VG",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:02.615Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9a0d92d3df577357d3"
+    },
+    "userId": {
+      "$oid": "68c65c9dd3b2ba69611d243a"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "“I would suggest regular feedback sessions so interns can understand their progress.”",
+    "suggestions": "“Sure, I’m comfortable with it. Please go ahead and feature my profile picture.”",
+    "linkedinUrl": "https://drive.google.com/open?id=1-QyORTFcK4L_sIVyO9P406Q2pYM6cgTG",
+    "githubUrl": "https://drive.google.com/open?id=1KfKUIHVx37Tz6vw7djM1y1Dd4Q-azFzS",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:02.905Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9b0d92d3df577357e7"
+    },
+    "userId": {
+      "$oid": "68c65d07d3b2ba69611d295c"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "The projects you gave were very useful",
+    "suggestions": "Include some more project s",
+    "linkedinUrl": "https://drive.google.com/open?id=1zZjGWqC1qIs_fplupRzviu2Z9VPVCFYx",
+    "githubUrl": "https://drive.google.com/open?id=1oXQy_OkkIqz6vNtcvUjqIj806MsmSs5C",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:03.193Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9b0d92d3df577357fb"
+    },
+    "userId": {
+      "$oid": "68ced9d5955670586b54881c"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I Like the most Quiz Program",
+    "suggestions": "I will improve my coding skills",
+    "linkedinUrl": "https://drive.google.com/open?id=1vsJvxKd1gyal9wot5BXeeZ_PrfOz4uzI",
+    "githubUrl": "https://drive.google.com/open?id=1Nb62WqFm6HfaAn-KPgxkK1AAQyERfUM9",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:03.481Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9b0d92d3df5773580e"
+    },
+    "userId": {
+      "$oid": "68cedbcf955670586b548a02"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Gain knowledge from basic",
+    "suggestions": "More time for submission assignments",
+    "linkedinUrl": "https://drive.google.com/open?id=1NJTH3gQkWNRuHek43jv5QcBIbbeE2_lP",
+    "githubUrl": "https://drive.google.com/open?id=1J5Fl9GLPu2GYqIpFi_fN_3KDCmSRpTeS",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:03.779Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9c0d92d3df57735821"
+    },
+    "userId": {
+      "$oid": "68c30e8a81a4b49141840a56"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Project idea is very good for me .I am very lucky for join this internship",
+    "suggestions": "If any help through mentor this very helpful",
+    "linkedinUrl": "https://drive.google.com/open?id=1SiPuzYHVB-PUKqHN83eQ2CTBZp6RiCiH",
+    "githubUrl": "https://drive.google.com/open?id=1DxcXVWiiDi3MSHlhgcQ3YWjf2R_ZBBKm",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:04.085Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9c0d92d3df57735834"
+    },
+    "userId": {
+      "$oid": "68cee074955670586b548cce"
+    },
+    "overallRating": 4,
+    "quizRating": 2,
+    "projectRating": 5,
+    "experienceText": "I likeed the learning experience and guidance provided during the internship",
+    "suggestions": "More practice sessions would be helpful",
+    "linkedinUrl": "https://drive.google.com/open?id=1sDs65rDVL8N8gegPgY6bfncJrKXS15z3",
+    "githubUrl": "https://drive.google.com/open?id=13hb-4S-uvRF6inVDBvvW8tOsuTqaUkZO",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:04.986Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9e0d92d3df57735845"
+    },
+    "userId": {
+      "$oid": "6952853a927d82ecadcd334b"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Overall it is good and improved myself",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1SN0iWBcGxDuLaJvXAomWggOYnqOP5Dko",
+    "githubUrl": "https://drive.google.com/open?id=1TK-q5jGk28wZoavZdpuPBja02ZeJgmuX",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:06.560Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9e0d92d3df57735859"
+    },
+    "userId": {
+      "$oid": "6947d55438c1ddf2e2bd682b"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "Internship",
+    "suggestions": "Knowledge",
+    "linkedinUrl": "https://drive.google.com/open?id=1-ZPuYddN1ls_aAim_HkTPP7kw-D0Rd83",
+    "githubUrl": "https://drive.google.com/open?id=13iCFqfW98tNOzQZ1jHqjmFTQF87WDhuz",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:06.867Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9f0d92d3df57735872"
+    },
+    "userId": {
+      "$oid": "69526620927d82ecadcd1cf5"
+    },
+    "overallRating": 4,
+    "quizRating": 2,
+    "projectRating": 5,
+    "experienceText": "What I liked most about my internship at Rixi Lab was the hands-on experience and exposure to real-world projects. I appreciated how the program encouraged learning by doing, allowing me to work on actual projects rather than just theoretical tasks. The mentorship and guidance from experienced professionals were also invaluable, helping me understand complex concepts clearly and improve my technical skills. Additionally, the collaborative and supportive work environment made it easier to ask questions, share ideas, and learn from peers, which I found highly motivating and rewarding.",
+    "suggestions": "For future internship programs, I would suggest incorporating more structured learning modules at the beginning to help interns quickly get up to speed with the tools and technologies used in projects. It could also be helpful to have regular feedback sessions so interns can understand their strengths and areas for improvement throughout the program. Additionally, providing opportunities for cross-team collaboration or short workshops on emerging technologies would allow interns to gain broader exposure and enhance their overall learning experience.",
+    "linkedinUrl": "https://drive.google.com/open?id=1V3nf_27qyFiy_SnVFF6xD7V2S_m0nlQU",
+    "githubUrl": "https://drive.google.com/open?id=13RaO3EQIudgnRC_F6aXEV4zbCtdFR8NQ",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:07.141Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9f0d92d3df57735886"
+    },
+    "userId": {
+      "$oid": "692bfd8f2d3d9f99d5592020"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Assignments",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1wZn3VAGiwxy6bNLUlcQFO1mAMVZdmmgV",
+    "githubUrl": "https://drive.google.com/open?id=1Q6KfJ7kVkwbA13bGPUk6Zs-Lil_z1Sc6",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:07.446Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8c9f0d92d3df5773589a"
+    },
+    "userId": {
+      "$oid": "694d6b4238c1ddf2e2be8c04"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "portal",
+    "suggestions": "artificial intelligence",
+    "linkedinUrl": "https://drive.google.com/open?id=1JcwrRG76NtzQReKDWD9H3iObcVcNnMS_",
+    "githubUrl": "https://drive.google.com/open?id=1H_u74lXnVR3Q1NQ8XgCMyg8ijYlJ_Tx5",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:07.746Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca00d92d3df577358ae"
+    },
+    "userId": {
+      "$oid": "6954ce80f516cc32f0a59444"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Projects",
+    "suggestions": "Live sessions",
+    "linkedinUrl": "https://drive.google.com/open?id=1VVQBoUUQiZ-Aq3BPazYlYCLesdoa8Lrg",
+    "githubUrl": "https://drive.google.com/open?id=17CL6vtGtdxKoIvayAcofJuuTypcu22Yt",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:08.044Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca00d92d3df577358c4"
+    },
+    "userId": {
+      "$oid": "694d372538c1ddf2e2be6488"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Projects",
+    "suggestions": "Provide some courses on web development before assigning the projects",
+    "linkedinUrl": "https://drive.google.com/open?id=1h7i8Cw7ROVV1BghwKs8QPfNQhxJwI4Ve",
+    "githubUrl": "https://drive.google.com/open?id=1G2F1Ifu9VUrOCqmo3gpiDrDOehqKfXdS",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:08.654Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca00d92d3df577358dd"
+    },
+    "userId": {
+      "$oid": "6952856d927d82ecadcd3601"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "everything is good",
+    "suggestions": "put on more live classes about the domain we choosed",
+    "linkedinUrl": "https://drive.google.com/open?id=1GiSUeTpnOHHhxAs3X0Djho36PoQ-DW8F",
+    "githubUrl": "https://drive.google.com/open?id=1vJt1-VsJOkTumEKDq4eZ4J4aOG8FDy96",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:08.949Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca10d92d3df577358f7"
+    },
+    "userId": {
+      "$oid": "693017cc144148ab03594ca3"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "I liked the internship most for providing hands-on practical experience and exposure to real-world industry work.",
+    "suggestions": "I suggest adding more hands-on projects, regular mentor feedback sessions, and structured learning workshops for better skill development.",
+    "linkedinUrl": "https://drive.google.com/open?id=13G3eEIcthIZ9kp3vwhITsACbF8V2JrYV",
+    "githubUrl": "https://drive.google.com/open?id=1Jrk0-YBIg7vbfqZ2TXOvBfLcOXxOA29e",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:09.316Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca10d92d3df57735916"
+    },
+    "userId": {
+      "$oid": "69304ccc144148ab03597d28"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Good projects",
+    "suggestions": "We can give more interesting project in the future intership",
+    "linkedinUrl": "https://drive.google.com/open?id=1_mIE3Ib-ygp9U1oraV98xc9PCaKlnObd",
+    "githubUrl": "https://drive.google.com/open?id=1r8vKIcAkCTWGnpSqX7WqGZCwynD6PUHc",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:09.604Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca10d92d3df57735935"
+    },
+    "userId": {
+      "$oid": "69304d28144148ab03597e3c"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Good Project",
+    "suggestions": "Still more project you want give",
+    "linkedinUrl": "https://drive.google.com/open?id=1SXTYvWuSt6c7H8o9pFyu-cVhPWi7uhF5",
+    "githubUrl": "https://drive.google.com/open?id=1Y85C3Pdsaa8lu9V3_4pR6IjOSTH0bErG",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:09.924Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca20d92d3df57735954"
+    },
+    "userId": {
+      "$oid": "69304de7144148ab0359805f"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "Good Project",
+    "suggestions": "We want more project",
+    "linkedinUrl": "https://drive.google.com/open?id=1vuEo7lRAAG-5GwL_oeZf1ckwkAYczbNZ",
+    "githubUrl": "https://drive.google.com/open?id=1szIJowWqmo1yMY_iJffg3qPYAifVkBs-",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:10.221Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca20d92d3df57735974"
+    },
+    "userId": {
+      "$oid": "692b0b3ebbd41e596781b594"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "The structured learning approach, supportive mentors, and the opportunity to work on real-time projects helped me improve my practical knowledge and technical skills",
+    "suggestions": "Including more interactive sessions, live project demonstrations, and regular feedback meetings would make the program even more effective and engaging.",
+    "linkedinUrl": "https://drive.google.com/open?id=1yFFED9a7Nc_y9AaLbmQBzZCdXj57YHSJ",
+    "githubUrl": "https://drive.google.com/open?id=1xYHzXNoaU_kmaaH2Y_w3OtWFe2jimcDo",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:10.515Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca20d92d3df5773598e"
+    },
+    "userId": {
+      "$oid": "694d01a238c1ddf2e2be32e3"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "I Like the projects most, I improved my skills.",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1wLS6KNSl-qiJEoUqGzx6Iq172gYmdAnh",
+    "githubUrl": "https://drive.google.com/open?id=11m-7-PTNWqtYOp0BFlLAFv7rNFUg4CjJ",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:10.810Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca30d92d3df577359a2"
+    },
+    "userId": {
+      "$oid": "693010cf144148ab03594435"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "I really appreciated the structured learning and real-time tasks in the online internship. Even though it was virtual, it gave me practical exposure and improved my problem-solving skills. It also helped me become more independent and responsible.",
+    "suggestions": "The internship was well organized. Adding more interactive sessions and mentor guidance would enhance the overall learning experience.",
+    "linkedinUrl": "https://drive.google.com/open?id=1LvXSMu9PE6_sJAIQ_jqWtTNSPOVsY5kN",
+    "githubUrl": "https://drive.google.com/open?id=1hIjiYMB32mB6mBkB2l0yaRiLWqUGeyxs",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:11.116Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca30d92d3df577359bc"
+    },
+    "userId": {
+      "$oid": "694bac4f38c1ddf2e2bde501"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Assigning the projects and everything on time",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1MNCeqYmtA4mLeIPfWNUwPnfflHtubf5g",
+    "githubUrl": "https://drive.google.com/open?id=10FBzfb8CTWBwg9KbD7i9kzhcuxK6rFjM",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:11.423Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca30d92d3df577359d5"
+    },
+    "userId": {
+      "$oid": "694bf19c38c1ddf2e2be04b4"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "giving chance for my problems and response from sir/madam.",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1XSMVYDT5bVYF7OiNldzeo6fUYfZFMeEr",
+    "githubUrl": "https://drive.google.com/open?id=1MLRwbcojtFTHBY3eZ7lbukGTa1IZKIxj",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:11.732Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca40d92d3df577359e8"
+    },
+    "userId": {
+      "$oid": "694bf19338c1ddf2e2be049c"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Translating theoretical knowledge into actual industry projects",
+    "suggestions": "Clear learning objectives, specific skills and goals for interns to achieve",
+    "linkedinUrl": "https://drive.google.com/open?id=1M0dP_MAkjaj7Is29QYPC35S1gpOZhHXU",
+    "githubUrl": "https://drive.google.com/open?id=1gmwjdES79iXCZ5lC47XeVbmy2YRj8tqd",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:12.008Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca40d92d3df57735a02"
+    },
+    "userId": {
+      "$oid": "69526eb2927d82ecadcd2405"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Website design",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1oK0YvPn4LW3gdTAafTSoYRgvc95WjcvL",
+    "githubUrl": "https://drive.google.com/open?id=1oK0YvPn4LW3gdTAafTSoYRgvc95WjcvL",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:12.285Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca40d92d3df57735a22"
+    },
+    "userId": {
+      "$oid": "695280e0927d82ecadcd2c10"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "real time projects",
+    "suggestions": "The internship program was very helpful and well-structured. Adding more live sessions and hands-on real-time projects would make it even more effective and industry oriented.",
+    "linkedinUrl": "https://drive.google.com/open?id=1svSfLrHN_c-4GIUFBOqd5VLRsH0nMMoB",
+    "githubUrl": "https://drive.google.com/open?id=1H_x7hOE_sCl5seM2C2btRb9W1trSoc8a",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:12.691Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca50d92d3df57735a3f"
+    },
+    "userId": {
+      "$oid": "694fcdd938c1ddf2e2bf0429"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "To get the more knowledge.",
+    "suggestions": "nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=1TPzbIurXj2a1up9eOdOKfGe4uV321boX",
+    "githubUrl": "https://drive.google.com/open?id=1wr-McDyVSxRtFYxEMhh_YL-A8bjxXqhy",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:13.978Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca60d92d3df57735a5d"
+    },
+    "userId": {
+      "$oid": "694256e3e69533b3a3970d92"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 3,
+    "experienceText": "Projects",
+    "suggestions": "NA",
+    "linkedinUrl": "https://drive.google.com/open?id=1a8SoTUT4QiIk95uKs6Es5TJ0XUI1LHn3",
+    "githubUrl": "https://drive.google.com/open?id=1NnfTrfPKhjCMJDY8txc6bW_uYGi8MYMB",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:14.424Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca60d92d3df57735a7e"
+    },
+    "userId": {
+      "$oid": "69416cf07ae5ed09c0ccbc7a"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Projects",
+    "suggestions": "N/A",
+    "linkedinUrl": "https://drive.google.com/open?id=122J7AE-5jrPkcViB9SNiII-K4oZUeaLt",
+    "githubUrl": "https://drive.google.com/open?id=13TFKsU-CrvNMSwKMGXoWqez4glmDiSHy",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:14.701Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca70d92d3df57735a99"
+    },
+    "userId": {
+      "$oid": "69704d7bab563350f32209cd"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "Weekly projects submission and work on real time projects and also providing canva premium for 1 year",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://drive.google.com/open?id=16qQrZUZ6YdOaetGNIzfa2k9DuC9WlVj6",
+    "githubUrl": "https://drive.google.com/open?id=16qQrZUZ6YdOaetGNIzfa2k9DuC9WlVj6",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:15.064Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca70d92d3df57735ab3"
+    },
+    "userId": {
+      "$oid": "6953c3326d7fa9c78b12710e"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "Hands on experience in projects",
+    "suggestions": "no",
+    "linkedinUrl": "https://drive.google.com/open?id=1BSVbo0jy7vEjSlq6ZruNYvWg4xOnr-Ka",
+    "githubUrl": "https://drive.google.com/open?id=1BSVbo0jy7vEjSlq6ZruNYvWg4xOnr-Ka",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:15.387Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca70d92d3df57735ad3"
+    },
+    "userId": {
+      "$oid": "6953cf426d7fa9c78b127e73"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "Good experience",
+    "suggestions": "No",
+    "linkedinUrl": "https://drive.google.com/open?id=14WtAZKgEUBkJr0j-pCjMzmPP1wavefsP",
+    "githubUrl": "https://drive.google.com/open?id=18TedwSOIOhAF-l8dASdej_ebxOMobk4S",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:15.688Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca80d92d3df57735af4"
+    },
+    "userId": {
+      "$oid": "6953cfac6d7fa9c78b1281ef"
+    },
+    "overallRating": 5,
+    "quizRating": 3,
+    "projectRating": 5,
+    "experienceText": "Good experience",
+    "suggestions": "No",
+    "linkedinUrl": "https://drive.google.com/open?id=1aP_ANQ9zpeAd3wTULQPs82ljDvyo41OL",
+    "githubUrl": "https://drive.google.com/open?id=1-Z1ZSevJo0A2Nd9uekoiDNsmNjZHj4Jr",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:16.565Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca90d92d3df57735b14"
+    },
+    "userId": {
+      "$oid": "69590202f516cc32f0a6b4f3"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I liked the practical learning experience and the supportive guidance from mentors.",
+    "suggestions": "Adding doubt clearing sessions.",
+    "linkedinUrl": "https://drive.google.com/open?id=1OLZ7rs0FMvsMzF6uzk46NXb_AvQj9I0E",
+    "githubUrl": "https://drive.google.com/open?id=1YdBKu8ptk9tcuRq5Nx8KtuXojYcPkT9m",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:17.002Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca90d92d3df57735b32"
+    },
+    "userId": {
+      "$oid": "6975c482ab563350f324df28"
+    },
+    "overallRating": 4,
+    "quizRating": 3,
+    "projectRating": 4,
+    "experienceText": "Doing projects",
+    "suggestions": "How to do projects it helps to learn more",
+    "linkedinUrl": "https://drive.google.com/open?id=1P9AS3jaiFdjAEnwMKNCFMH_zx4dhhhIW",
+    "githubUrl": "https://drive.google.com/open?id=1VZ_4tzbdb1zTcwVuX0rnDPB3gJRrKSGn",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:17.447Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8ca90d92d3df57735b4f"
+    },
+    "userId": {
+      "$oid": "697d9fefab563350f32a2570"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "There teaching skills and the work that have got enthusiastic experience that I got while doing this internship.",
+    "suggestions": "Assigning more weeks for internship",
+    "linkedinUrl": "https://drive.google.com/open?id=1T1LaQ4GO8sLIHt-yP-9Zf9calc_8CWVI",
+    "githubUrl": "https://drive.google.com/open?id=1Rmos13FCF-2snFonZH6YWB716sFYuyQt",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:17.747Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8caa0d92d3df57735b6b"
+    },
+    "userId": {
+      "$oid": "697cd4bcab563350f3295dfb"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "The projects",
+    "suggestions": "REQUIRE INDIVIDUAL MENTORSHIP GUIDE",
+    "linkedinUrl": "https://drive.google.com/open?id=1Zrff16bqJCph3rzMu7EwPIYP1Lxa7cdh",
+    "githubUrl": "https://drive.google.com/open?id=15p-zDVYXL9WNjpWFhiDbFHok1c6cEjM0",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:18.036Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8caa0d92d3df57735b87"
+    },
+    "userId": {
+      "$oid": "6975c2c5ab563350f324d055"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "its all about time management.I'll improve my timing to submit before deadline.and also i learn something different in python.Rixi Lab is very intresting and very good platform.",
+    "suggestions": "All good.keep it up.",
+    "linkedinUrl": "https://drive.google.com/open?id=1YAxh1ZJGYUd53NZD2OLP49F10LX0njFR",
+    "githubUrl": "https://drive.google.com/open?id=1g7dKuIBp5LxpTPdvzdRobXys4FZfjq3j",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:18.319Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8caa0d92d3df57735ba0"
+    },
+    "userId": {
+      "$oid": "6986fd801de26187ecfca9db"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I liked the practical learning experience most. It helped me to understand real world applications to improve my skills. This made my learning more interesting and useful.",
+    "suggestions": "The auto submission of the assessment-quiz should be removed (In particular cases only) because for me the two auto attempts were used at the first attempt itself.",
+    "linkedinUrl": "https://drive.google.com/open?id=1KB5a_c2eA_Z81irladKCycovaYLeQtzo",
+    "githubUrl": "https://drive.google.com/open?id=1eIMiCWUA4F5iWZUiIDLUTBQd5IVObC_v",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:18.639Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69da8caa0d92d3df57735bb8"
+    },
+    "userId": {
+      "$oid": "697f2b07ab563350f32c4855"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "I enjoyed the hands-on learning and real-world project experience.",
+    "suggestions": "Adding more live projects and regular feedback would improve the program.",
+    "linkedinUrl": "https://drive.google.com/open?id=14bU1VjW0TeWKNAXv9ZNnlvWyEbhA7kPm",
+    "githubUrl": "https://drive.google.com/open?id=1b0SbgX1EDT3tkd9LAf8XJEuY2AtspKxK",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-11T18:02:18.979Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69de8fd9c7fc03a6d1767a19"
+    },
+    "userId": {
+      "$oid": "68c58943fba63113b28cca46"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "All Good",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://google.com",
+    "githubUrl": "https://google.com",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-14T19:04:57.755Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69e5417cc7fc03a6d19b70d0"
+    },
+    "userId": {
+      "$oid": "68e78e91bc284d325b486053"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "All Good",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://google.com",
+    "githubUrl": "https://google.com",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-19T20:56:28.670Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ed7b3864705a3d03cf3ee6"
+    },
+    "userId": {
+      "$oid": "69a815f5a610288e253f63dc"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 4,
+    "experienceText": "What I liked most about the internship was the opportunity to apply what I learned in a real work environment while gaining hands-on experience. I especially appreciated working with a team, learning from experienced professionals, and improving my problem-solving and communication skills through real projects. It helped me understand how the industry works and gave me confidence in my abilities.",
+    "suggestions": "One suggestion for improvement would be to provide more structured training or orientation at the beginning of the internship. This would help interns understand their roles, expectations, and company processes more quickly, allowing them to contribute more effectively from the start.",
+    "linkedinUrl": "https://www.linkedin.com/help/linkedin/?trk=p_settings_helpcenter_globalnav_android",
+    "githubUrl": "https://www.linkedin.com/help/linkedin/?trk=p_settings_helpcenter_globalnav_android",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-26T02:40:56.041Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69eee572e72a3587d382598b"
+    },
+    "userId": {
+      "$oid": "69a4773fa610288e2531ed61"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "entire internship",
+    "suggestions": "keep same like this",
+    "linkedinUrl": "https://www.linkedin.com/in/sravani-sravani-37b42b358?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-27T04:26:26.940Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69eee924e72a3587d382b706"
+    },
+    "userId": {
+      "$oid": "69a47753a610288e2531f120"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "EXPOSURE TO WORKPLACE CULTURE AND PROFESSIONAL ENVIRONMENTS",
+    "suggestions": "SPECIFIC PROJECTS OR TASKS YOU FOUNDS REWARDING",
+    "linkedinUrl": "SHAIK ANWAR",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-27T04:42:12.879Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69ef5b9de72a3587d386a18a"
+    },
+    "userId": {
+      "$oid": "6984b18a189813128d03cf55"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "YES ITS A NICE PLATFOM TO DO THE ONLINE INTERNSHIP IT DOESNOT HEVA ANY ISSUES",
+    "suggestions": "PLEASE RESPOND FASTLY TO THE STUDENTS IN WHATSAPP",
+    "linkedinUrl": "Hemanth Puliga",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-27T12:50:37.558Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f0bd620a5bbb9590833412"
+    },
+    "userId": {
+      "$oid": "69a5052ea610288e2533da8f"
+    },
+    "overallRating": 4,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "i really like the hands on learning experience  during the internship.it helped me understand real world application of concepts i studied",
+    "suggestions": "The program can be improved by providing more detailed instructions for the task and \nclear deadline",
+    "linkedinUrl": "https://www.linkedin.com/in/mounika-ragi-5b27b4404",
+    "githubUrl": "",
+    "profilePictureConsent": false,
+    "submittedAt": {
+      "$date": "2026-04-28T14:00:02.559Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f1cc620a5bbb95908a08f9"
+    },
+    "userId": {
+      "$oid": "697b2a91ab563350f32810b0"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "everything was good \nhow the rixi lab giving projets and quiz everything was good",
+    "suggestions": "Everything was good",
+    "linkedinUrl": "https://www.linkedin.com/in/muskan-sahani-03875a2a6?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-04-29T09:16:18.416Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f3f36e9ee11a44bae735dc"
+    },
+    "userId": {
+      "$oid": "69ca452d79382fcb97d672d5"
+    },
+    "overallRating": 4,
+    "quizRating": 4,
+    "projectRating": 4,
+    "experienceText": "Understood easily",
+    "suggestions": "Nothing",
+    "linkedinUrl": "https://www.linkedin.com/in/allam-manasa-yadav-751576369?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-05-01T00:27:26.420Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f85716506511160806289c"
+    },
+    "userId": {
+      "$oid": "69a8182da610288e253f791a"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "I liked most the opportunity to apply my theoretical knowledge to real-world problems and gain hands-on practical experience.",
+    "suggestions": "Providing more structured mentorship and regular feedback sessions would further improve the internship experience.",
+    "linkedinUrl": "Vishnuvardhan Mestri",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-05-04T08:21:42.405Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f97b20506511160806b211"
+    },
+    "userId": {
+      "$oid": "6986c7751de26187ecfc55e7"
+    },
+    "overallRating": 5,
+    "quizRating": 4,
+    "projectRating": 5,
+    "experienceText": "this internship provided a supportive environment and guidance from mentors helped me understand real world application better. over all it was a great learning opportunity.",
+    "suggestions": "the intern could be improved by providing more structured guidance and clear task objectives ,increasing hands on project opportunities would enhance the overall learning experience.",
+    "linkedinUrl": "inkedin.com/in/krithika-t-598013317",
+    "githubUrl": "",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-05-05T05:07:44.823Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a046aa43bc6f64d54d51bcb"
+    },
+    "userId": {
+      "$oid": "697d83baab563350f329fc50"
+    },
+    "overallRating": 5,
+    "quizRating": 5,
+    "projectRating": 5,
+    "experienceText": "understable projects given",
+    "suggestions": "no improvements .all good",
+    "linkedinUrl": "https://www.linkedin.com/in/m-tirumala-reddy-593020309?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+    "githubUrl": "https://github.com/tiru0003",
+    "profilePictureConsent": true,
+    "submittedAt": {
+      "$date": "2026-05-13T12:12:20.677Z"
+    },
+    "__v": 0
+  }
+]

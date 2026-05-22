@@ -64,6 +64,42 @@ const adminSchema = new mongoose.Schema({
   otpExpiry: Date,
   qrLoginSecret: { type: String, default: null },
   isQrLoginSetup: { type: Boolean, default: false },
+
+  upiId: { type: String, default: "" },
+  salaryHistory: [{
+    payPeriodStart: Date,
+    payPeriodEnd: Date,
+    basicSalary: Number,
+    performanceBonus: Number,
+    grossSalary: Number,
+    providentFund: Number,
+    professionalTax: Number,
+    totalDeductions: Number,
+    netPay: Number,
+    paymentMode: { type: String, default: "UPI" },
+    transactionId: String,
+    paidAt: Date
+  }],
+  monthlyPayroll: [{
+    month: String,
+    basicSalary: Number,
+    performanceBonus: Number,
+    providentFund: Number,  
+    professionalTax: Number,
+    upiId: String,
+    savedAt: { type: Date, default: Date.now }
+  }],
+  pfBalance: { type: Number, default: 0 },
+  totalEarnings: { type: Number, default: 0 },
+  pfWithdrawals: [{
+    amount: Number,
+    paymentDetails: String,
+    status: { type: String, enum: ["Pending", "Approved", "Rejected"], default: "Pending" },
+    transactionId: String,
+    title: String,
+    requestedAt: { type: Date, default: Date.now },
+    processedAt: Date
+  }]
 });
 
 module.exports = mongoose.model("Admin", adminSchema);

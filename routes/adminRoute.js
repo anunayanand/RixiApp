@@ -14,6 +14,8 @@ const axios = require("axios");
 const { notify } = require("../services/notificationService");
 const Notification = require("../models/Notification");
 const { sendConfirmationMail } = require("../services/confirmationMailScript");
+const PaymentTransaction = require("../models/PaymentTransaction");
+const { generateSalarySlip } = require("../services/salarySlipGenerator");
 // Function to split intern_id into parts
 const startingDate = {
   2601: "2026-01-01T00:00:00.000+00:00",
@@ -212,6 +214,8 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       batch_no,
       starting_date: startDate,
       role: "intern",
+      amountPaid: registration.final_amount || 0,
+      paymentTransactionId: registration.payID || registration.order_id || "",
     });
 
     await newUser.save();
@@ -339,6 +343,73 @@ router.post("/update-admin-profile", authRole("admin"), async (req, res) => {
   } catch (err) {
     console.error("Error updating admin profile:", err);
     res.status(500).json({ success: false, message: "Server Error while updating profile." });
+  }
+});
+
+// Admin requests PF withdrawal
+router.post("/request-pf-withdrawal", authRole("admin"), async (req, res) => {
+  try {
+    const adminId = req.session.user;
+    const { amount, paymentDetails } = req.body;
+    
+    if (!amount || amount <= 0 || !paymentDetails) {
+      return res.status(400).json({ success: false, message: "Invalid amount or payment details." });
+    }
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) return res.status(404).json({ success: false, message: "Admin not found." });
+
+    if (amount > admin.pfBalance) {
+      return res.status(400).json({ success: false, message: "Insufficient PF balance." });
+    }
+
+    // Add request to admin
+    admin.pfWithdrawals.push({
+      amount: Number(amount),
+      paymentDetails,
+      status: "Pending",
+      requestedAt: new Date()
+    });
+    
+    await admin.save();
+
+    // Create central PaymentTransaction
+    await PaymentTransaction.create({
+      recipientId: admin._id,
+      recipientModel: "Admin",
+      recipientName: admin.name,
+      recipientEmail: admin.email,
+      amount: Number(amount),
+      type: "PFWithdrawal",
+      status: "Pending",
+      paymentDetails,
+      title: `PF Withdrawal - ${admin.name}`
+    });
+
+    res.json({ success: true, message: "PF Withdrawal requested successfully." });
+  } catch (error) {
+    console.error("PF Withdrawal Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
+// Admin downloads salary slip
+router.get("/download-salary-slip/:slipIndex", authRole("admin"), async (req, res) => {
+  try {
+    const adminId = req.session.user;
+    const slipIndex = parseInt(req.params.slipIndex);
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) return res.status(404).send("Admin not found");
+
+    if (isNaN(slipIndex) || slipIndex < 0 || slipIndex >= admin.salaryHistory.length) {
+      return res.status(404).send("Salary slip not found");
+    }
+
+    generateSalarySlip(admin, slipIndex, res);
+  } catch (error) {
+    console.error("Download slip error:", error);
+    res.status(500).send("Server Error");
   }
 });
 

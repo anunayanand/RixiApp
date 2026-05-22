@@ -142,6 +142,12 @@
         <span>Create Ambassador</span>
       </a>
 
+      <div class="sidebar-nav-label d-md-none">Finance & Payouts</div>
+      <a href="/superAdmin/payouts" class="nav-link d-md-none">
+        <i class="bi bi-credit-card-fill"></i> 
+        <span>Payout Center</span>
+      </a>
+
       <div class="sidebar-nav-label">Communications</div>
       <a href="#scheduleMeetingSection" class="nav-link" onclick="setActive(this)">
         <i class="bi bi-calendar-plus-fill"></i> 
@@ -197,6 +203,11 @@
             </span>
           <% } %>
         </button>
+
+        <!-- Payout Center Link -->
+        <a href="/superAdmin/payouts" class="topbar-btn d-none d-md-flex me-2" title="Payout Center" style="color: inherit; text-decoration: none;">
+          <i class="bi bi-credit-card-fill"></i>
+        </a>
 
         <!-- Mail Center Link -->
         <a href="/superAdmin/mail-center" class="topbar-btn d-none d-md-flex" title="Mail Center" style="color: inherit; text-decoration: none;">
@@ -718,9 +729,9 @@
               <h4 title="<%= ambassador.name %>" class="ambassador-name"><%= ambassador.name %></h4>
               <div class="d-flex align-items-center gap-1 flex-wrap">
                 <span class="admin-designation-badge bg-info text-white"><%= ambassador.badge %></span>
-                <% if (ambassador.withdrawals && ambassador.withdrawals.some(w => w.status === 'Pending')) { %>
+                <!-- <% if (ambassador.withdrawals && ambassador.withdrawals.some(w => w.status === 'Pending')) { %>
                   <span class="badge bg-warning text-dark px-2 py-1" style="font-size: 0.65rem; font-weight: 700; border-radius: 4px; box-shadow: 0 0 8px rgba(255, 193, 7, 0.4);"><i class="bi bi-wallet2 me-1"></i>Pending Cashout</span>
-                <% } %>
+                <% } %> -->
               </div>
             </div>
           </div>
@@ -808,9 +819,9 @@
             <button class="admin-action-btn admin-action-delete" title="Delete Ambassador" data-bs-toggle="modal" data-bs-target="#deleteAmbassadorModal<%= ambassador._id %>">
               <i class="bi bi-trash"></i>
             </button>
-            <button class="admin-action-btn border " style="background: transparent;" title="Manage Withdrawals" data-bs-toggle="modal" data-bs-target="#manageWithdrawalsModal<%= ambassador._id %>">
+            <!-- <button class="admin-action-btn border " style="background: transparent;" title="Manage Withdrawals" data-bs-toggle="modal" data-bs-target="#manageWithdrawalsModal<%= ambassador._id %>">
               <i class="bi bi-cash-coin"></i>
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -3098,42 +3109,6 @@ function updateIntern(id) {
                 </div>
               <% } %>
 
-              <!-- Approval Action Form Container (Dynamically toggled) -->
-              <div id="approvalFormContainer<%= ambassador._id %>" class="d-none p-4 rounded bg-white shadow-sm" style="border: 1px solid rgba(255, 102, 0, 0.4); border-left: 4px solid #ff6600; margin-top: 15px;">
-                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Process Pending Request</h6>
-                
-                <form id="approveWithdrawalForm<%= ambassador._id %>" onsubmit="submitWithdrawalDecision(event, '<%= ambassador._id %>')">
-                  <input type="hidden" name="withdrawId" id="modalWithdrawId<%= ambassador._id %>">
-                  
-                  <div class="row g-3">
-                    <div class="col-md-4">
-                      <label class="form-label small fw-semibold text-secondary">Approved Amount (₹) <span class="text-danger">*</span></label>
-                      <input type="number" name="amount" id="modalApproveAmount<%= ambassador._id %>" class="form-control" required min="1" step="0.01">
-                    </div>
-                    <div class="col-md-8">
-                      <label class="form-label small fw-semibold text-secondary">Payout Title / Description <span class="text-danger">*</span></label>
-                      <input type="text" name="title" id="modalApproveTitle<%= ambassador._id %>" class="form-control" placeholder="e.g. Bronze Level Referral Payout" required>
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label small fw-semibold text-secondary">Transaction ID / Reference Number <span class="text-danger">*</span></label>
-                      <input type="text" name="transactionId" id="modalApproveTxnId<%= ambassador._id %>" class="form-control" placeholder="e.g. UPI Ref ID or Bank Txn Ref" required>
-                    </div>
-                  </div>
-
-                  <div class="d-flex justify-content-between mt-4 pt-3 border-top">
-                    <button type="button" class="btn btn-outline-danger btn-sm px-3" onclick="rejectPendingRequest('<%= ambassador._id %>')">
-                      <i class="bi bi-x-circle me-1"></i>Reject Request
-                    </button>
-                    <div class="d-flex gap-2">
-                      <button type="button" class="btn btn-light border btn-sm px-3" onclick="hideApprovalForm('<%= ambassador._id %>')">Cancel</button>
-                      <button type="submit" class="btn btn-success btn-sm px-4 shadow-sm">
-                        <i class="bi bi-check-circle me-1"></i>Approve & Credit
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
             </div>
           </div>
         </div>
@@ -3557,75 +3532,6 @@ function updateIntern(id) {
         btn.innerHTML = original;
         btn.disabled = false;
         if (overlay) overlay.classList.add('d-none');
-      }
-    }
-  </script>
-  <!-- Withdrawal Management Scripts -->
-  <script>
-    function showApprovalForm(ambassadorId, withdrawId, amount) {
-      document.getElementById('modalWithdrawId' + ambassadorId).value = withdrawId;
-      document.getElementById('modalApproveAmount' + ambassadorId).value = amount;
-      document.getElementById('approvalFormContainer' + ambassadorId).classList.remove('d-none');
-    }
-
-    function hideApprovalForm(ambassadorId) {
-      document.getElementById('approvalFormContainer' + ambassadorId).classList.add('d-none');
-    }
-
-    async function submitWithdrawalDecision(event, ambassadorId) {
-      event.preventDefault();
-      const withdrawId = document.getElementById('modalWithdrawId' + ambassadorId).value;
-      const amount = document.getElementById('modalApproveAmount' + ambassadorId).value;
-      const title = document.getElementById('modalApproveTitle' + ambassadorId).value;
-      const transactionId = document.getElementById('modalApproveTxnId' + ambassadorId).value;
-
-      if (!amount || !title || !transactionId) {
-        showToast('Please fill all fields before approving.', 'error');
-        return;
-      }
-
-      try {
-        const res = await fetch('/superAdmin/ambassador/' + ambassadorId + '/approve-withdrawal/' + withdrawId, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount, title, transactionId })
-        });
-        const data = await res.json();
-        if (data.success) {
-          showToast(data.message, 'success');
-          setTimeout(() => location.reload(), 1500);
-        } else {
-          showToast(data.message || 'Failed to approve withdrawal.', 'error');
-        }
-      } catch (err) {
-        console.error('Approval error:', err);
-        showToast('Network error. Please try again.', 'error');
-      }
-    }
-
-    async function rejectPendingRequest(ambassadorId, optionalWithdrawId) {
-      const withdrawId = optionalWithdrawId || document.getElementById('modalWithdrawId' + ambassadorId).value;
-      if (!withdrawId) {
-        showToast('No pending request selected to reject.', 'error');
-        return;
-      }
-      if (!confirm('Are you sure you want to reject this withdrawal request?')) return;
-
-      try {
-        const res = await fetch('/superAdmin/ambassador/' + ambassadorId + '/reject-withdrawal/' + withdrawId, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await res.json();
-        if (data.success) {
-          showToast(data.message, 'success');
-          setTimeout(() => location.reload(), 1500);
-        } else {
-          showToast(data.message || 'Failed to reject withdrawal.', 'error');
-        }
-      } catch (err) {
-        console.error('Rejection error:', err);
-        showToast('Network error. Please try again.', 'error');
       }
     }
   </script>

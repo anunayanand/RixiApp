@@ -1,0 +1,2196 @@
+[
+  {
+    "_id": {
+      "$oid": "6a06a61fa39332686d72363e"
+    },
+    "name": "Rajnish Sharma",
+    "email": "iamrajnish2002@gmail.com",
+    "phone": "8005266410",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260101",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:30Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039c108ce0d3e128a6f3"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f0e7186458bcc019cf"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad2e7186458bcc0eb28"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06a61fa39332686d72363f"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260201",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:31Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b29e7186458bcc0ed73"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc14fe7186458bcc23b7b"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06f169a39332686d725ebf"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260301",
+        "certificate_date": {
+          "$date": "2026-05-16T00:14:20Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07697066b1e6d6a8980420"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07697c66b1e6d6a898044c"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07698466b1e6d6a8980472"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07694866b1e6d6a89803d2"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0b6abfe7186458bcc01df6"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T04:50:39.598Z"
+    },
+    "__v": 16
+  },
+  {
+    "_id": {
+      "$oid": "6a06aba4a39332686d7238a8"
+    },
+    "name": "Megha",
+    "email": "23030566@quantumuniversity.edu.in",
+    "phone": "9548871307",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260102",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:31Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039d108ce0d3e128a6f7"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f1e7186458bcc019d4"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad2e7186458bcc0eb31"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06aba4a39332686d7238a9"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260202",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:32Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b29e7186458bcc0ed7c"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc150e7186458bcc23b86"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c6031e7186458bcc0d8a6"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0c604ee7186458bcc0d8ce"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T05:14:12.456Z"
+    },
+    "__v": 12
+  },
+  {
+    "_id": {
+      "$oid": "6a06bf6ba39332686d723f93"
+    },
+    "name": "Nitin Kumar",
+    "email": "nitinprajapati90846@gmail.com",
+    "phone": "+919548279358",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260103",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:31Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039d108ce0d3e128a6ff"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f1e7186458bcc019dd"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad3e7186458bcc0eb3c"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06bf6ba39332686d723f94"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260303",
+        "certificate_date": {
+          "$date": "2026-05-16T17:46:33Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a085ffd66b1e6d6a898efa7"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08601766b1e6d6a898efe9"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08602166b1e6d6a898f01f"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08549266b1e6d6a898ea8e"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T06:38:35.966Z"
+    },
+    "__v": 10
+  },
+  {
+    "_id": {
+      "$oid": "6a06dd58a39332686d7254a0"
+    },
+    "name": "Jiwan Bogati",
+    "email": "jiwanbogati7@gmail.com",
+    "phone": "+918850258484",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260104",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:32Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039e108ce0d3e128a703"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f2e7186458bcc019e2"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad4e7186458bcc0eb43"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06dd58a39332686d7254a1"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T08:46:16.731Z"
+    },
+    "__v": 6
+  },
+  {
+    "_id": {
+      "$oid": "6a06df2ea39332686d7255b7"
+    },
+    "name": "Nabin Chaudhary ",
+    "email": "nabinqusmee@gmail.com",
+    "phone": "9548631912",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260105",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:33Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039e108ce0d3e128a707"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f2e7186458bcc019e7"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad5e7186458bcc0eb4a"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06df2ea39332686d7255b8"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T08:54:06.150Z"
+    },
+    "__v": 6
+  },
+  {
+    "_id": {
+      "$oid": "6a06e08ea39332686d72567e"
+    },
+    "name": "Sanskriti Singh",
+    "email": "sankritis9@gmail.com",
+    "phone": "+919142011947",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260106",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:34Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039f108ce0d3e128a70b"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f3e7186458bcc019ed"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad6e7186458bcc0eb51"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a06e08ea39332686d72567f"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0ee4043bc4d53ea8107f68"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260313",
+        "certificate_date": {
+          "$date": "2026-05-21T23:47:15Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c1344480ac3a9bd5958"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c1d44480ac3a9bd5a14"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c2b44480ac3a9bd5aca"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0f33c03bc4d53ea810cbcc"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260212",
+        "certificate_date": {
+          "$date": "2026-05-21T23:45:01Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4b9b44480ac3a9bd5742"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4ba544480ac3a9bd57e5"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0f33d63bc4d53ea810cc20"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T08:59:58.307Z"
+    },
+    "__v": 14
+  },
+  {
+    "_id": {
+      "$oid": "6a073458a87646403e98ed06"
+    },
+    "name": "Pushpendra Kumar ",
+    "email": "pk656290@gmail.com",
+    "phone": "9301817911",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260107",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:34Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a039f108ce0d3e128a714"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f3e7186458bcc01a02"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad6e7186458bcc0eb5d"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a073458a87646403e98ed07"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260203",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:32Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b29e7186458bcc0ed88"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc150e7186458bcc23b94"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07348fa87646403e98ed24"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260302",
+        "certificate_date": {
+          "$date": "2026-05-16T10:19:13Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07f73866b1e6d6a898525d"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07f74166b1e6d6a8985283"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a07f74866b1e6d6a89852b7"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07f48966b1e6d6a89841ca"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T14:57:28.746Z"
+    },
+    "__v": 15
+  },
+  {
+    "_id": {
+      "$oid": "6a073a57a87646403e98ef6f"
+    },
+    "name": "Priyanshu Kumar",
+    "email": "priyanshukumar82807@gmail.com",
+    "phone": "7667824857",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260108",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:35Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a0108ce0d3e128a719"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f4e7186458bcc01a08"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad7e7186458bcc0eb65"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a073a57a87646403e98ef70"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260204",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:33Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b2ae7186458bcc0ed90"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc151e7186458bcc23b9e"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a073aa9a87646403e98efa5"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T15:23:03.043Z"
+    },
+    "__v": 11
+  },
+  {
+    "_id": {
+      "$oid": "6a073d4df1cd338b101eb4d0"
+    },
+    "name": "Anunay Anand",
+    "email": "anunay3882@gmail.com",
+    "phone": "8294049826",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260205",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:34Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b2ae7186458bcc0ed9c"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc152e7186458bcc23bac"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a073d4df1cd338b101eb4d1"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260109",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:36Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a0108ce0d3e128a722"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f4e7186458bcc01a12"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad8e7186458bcc0eb71"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a073da0f1cd338b101eb4ef"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260305",
+        "certificate_date": {
+          "$date": "2026-05-16T16:50:19Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0891e790c65bb44b1e90e8"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08a01596aa5f82b885540a"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08a04b96aa5f82b8855480"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08919c90c65bb44b1e9070"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T15:35:41.933Z"
+    },
+    "__v": 17
+  },
+  {
+    "_id": {
+      "$oid": "6a07565366b1e6d6a897ee3f"
+    },
+    "name": "Prashant Gupta",
+    "email": "sanugpt26@gmail.com",
+    "phone": "9691912418",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260110",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:37Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a1108ce0d3e128a72b"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f4e7186458bcc01a1c"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad8e7186458bcc0eb7d"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07565366b1e6d6a897ee40"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260206",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:35Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b2be7186458bcc0eda8"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc152e7186458bcc23bba"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07566266b1e6d6a897ee55"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260306",
+        "certificate_date": {
+          "$date": "2026-05-16T23:19:16Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae0813e41fca092b5429"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae1413e41fca092b5473"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae1c13e41fca092b54bd"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08ad4013e41fca092b52ae"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-15T17:22:27.733Z"
+    },
+    "__v": 15
+  },
+  {
+    "_id": {
+      "$oid": "6a07f3c666b1e6d6a898413a"
+    },
+    "name": "Manishankar Kumar",
+    "email": "vvirat612@gmail.com",
+    "phone": "7479538565",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260111",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:37Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a1108ce0d3e128a733"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f5e7186458bcc01a25"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7ad9e7186458bcc0eb88"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07f3c666b1e6d6a898413b"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260304",
+        "certificate_date": {
+          "$date": "2026-05-16T17:46:34Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a085ffe66b1e6d6a898efac"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08601766b1e6d6a898efef"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08602266b1e6d6a898f027"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08596c66b1e6d6a898ec77"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T04:34:14.208Z"
+    },
+    "__v": 12
+  },
+  {
+    "_id": {
+      "$oid": "6a07fe5b66b1e6d6a8987d7f"
+    },
+    "name": "Rohit Yadav",
+    "email": "kumar123rohit2007@gmail.com",
+    "phone": "8303870576",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260112",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:38Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a2108ce0d3e128a73b"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f5e7186458bcc01a2e"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adae7186458bcc0eb93"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07fe5b66b1e6d6a8987d80"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260311",
+        "certificate_date": {
+          "$date": "2026-05-17T23:31:34Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a0263108ce0d3e128a2db"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a0271108ce0d3e128a337"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a027e108ce0d3e128a3a3"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a09ed98108ce0d3e128550e"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T05:19:23.636Z"
+    },
+    "__v": 10
+  },
+  {
+    "_id": {
+      "$oid": "6a07feda66b1e6d6a8988583"
+    },
+    "name": "Atul Kumar ",
+    "email": "atul0kr22@gmail.com",
+    "phone": "8252132848",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260113",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:39Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a2108ce0d3e128a743"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f6e7186458bcc01a37"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adae7186458bcc0eb9e"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a07feda66b1e6d6a8988584"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260310",
+        "certificate_date": {
+          "$date": "2026-05-17T20:05:52Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a09d235518573991e00e212"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a09d23f518573991e00e261"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a09d248518573991e00e2b2"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a098e10518573991e00a647"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T05:21:30.564Z"
+    },
+    "__v": 10
+  },
+  {
+    "_id": {
+      "$oid": "6a086cc466b1e6d6a8990a5b"
+    },
+    "name": "Akash Kumar",
+    "email": "ak9083865@gmail.com",
+    "phone": "9341677179",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260114",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:39Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a2108ce0d3e128a748"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f6e7186458bcc01a3d"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adbe7186458bcc0eba6"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a086cc466b1e6d6a8990a5c"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260207",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:35Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b2be7186458bcc0edb0"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc153e7186458bcc23bc4"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a086ce466b1e6d6a8990a75"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T13:10:28.830Z"
+    },
+    "__v": 11
+  },
+  {
+    "_id": {
+      "$oid": "6a08ac7413e41fca092b51b9"
+    },
+    "name": "Sushant",
+    "email": "krsushant43@gmail.com",
+    "phone": "8789181672",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260307",
+        "certificate_date": {
+          "$date": "2026-05-16T23:19:17Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae0813e41fca092b542f"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae1413e41fca092b547a"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08ae1d13e41fca092b54c6"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08ac7413e41fca092b51ba"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260208",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:36Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7b2ce7186458bcc0edbd"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc154e7186458bcc23bd2"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08aca113e41fca092b51e2"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260115",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:40Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a3108ce0d3e128a751"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f7e7186458bcc01a47"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adce7186458bcc0ebb2"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08acb013e41fca092b5200"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T17:42:12.457Z"
+    },
+    "__v": 15
+  },
+  {
+    "_id": {
+      "$oid": "6a08b57313e41fca092b5b78"
+    },
+    "name": "VEDANSH KUMAR SINGH",
+    "email": "vedanshsingh7210@gmail.com",
+    "phone": "6202345397",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260308",
+        "certificate_date": {
+          "$date": "2026-05-17T00:34:54Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfba13e41fca092b6183"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfca13e41fca092b61d3"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfd613e41fca092b6223"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08b57313e41fca092b5b79"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0f611e44480ac3a9bd72b4"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T18:20:35.506Z"
+    },
+    "__v": 4
+  },
+  {
+    "_id": {
+      "$oid": "6a08b6e913e41fca092b5c2f"
+    },
+    "name": "Sakshi Jain",
+    "email": "77jainsakshi@gmail.com",
+    "phone": "7505031976",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260309",
+        "certificate_date": {
+          "$date": "2026-05-17T00:34:55Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfba13e41fca092b6188"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfcb13e41fca092b61d9"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a08bfd713e41fca092b622b"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08b6e913e41fca092b5c30"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260116",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:41Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a3108ce0d3e128a759"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f7e7186458bcc01a52"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adce7186458bcc0ebbd"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a08b70e13e41fca092b5c5a"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-16T18:26:49.922Z"
+    },
+    "__v": 10
+  },
+  {
+    "_id": {
+      "$oid": "6a09f328108ce0d3e1285831"
+    },
+    "name": "Subodh Kumar",
+    "email": "subodhjaat8955@gmail.com",
+    "phone": "8955256181",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260117",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:41Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a4108ce0d3e128a75d"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f8e7186458bcc01a59"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adde7186458bcc0ebc4"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a09f328108ce0d3e1285832"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0defa1e7186458bcc25cd7"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-17T16:56:08.122Z"
+    },
+    "__v": 7
+  },
+  {
+    "_id": {
+      "$oid": "6a09f353108ce0d3e1285857"
+    },
+    "name": "Sujeet Kumar ",
+    "email": "skgupta930411@gmail.com",
+    "phone": "9304117726",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260118",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:42Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a03a4108ce0d3e128a765"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0b67f8e7186458bcc01a62"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adee7186458bcc0ebcf"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a09f353108ce0d3e1285858"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260312",
+        "certificate_date": {
+          "$date": "2026-05-17T23:31:35Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a0264108ce0d3e128a2e0"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a0271108ce0d3e128a33d"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0a027f108ce0d3e128a3ab"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a09f43c108ce0d3e1286719"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0def4ee7186458bcc25c73"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-17T16:56:51.556Z"
+    },
+    "__v": 11
+  },
+  {
+    "_id": {
+      "$oid": "6a0c18b9e7186458bcc07f99"
+    },
+    "name": "Sumit Kumar",
+    "email": "sumitmodi728@gmail.com",
+    "phone": "+919117764225",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260119",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:43Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c1ca8e7186458bcc0b3c8"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c1cbce7186458bcc0b46e"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adee7186458bcc0ebd6"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c18b9e7186458bcc07f9a"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260209",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:37Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc142e7186458bcc23af7"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc154e7186458bcc23bdd"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c8d32e7186458bcc101c0"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0c8d53e7186458bcc101e6"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-19T08:00:57.529Z"
+    },
+    "__v": 9
+  },
+  {
+    "_id": {
+      "$oid": "6a0c1a5ee7186458bcc09855"
+    },
+    "name": "Sachin Laik",
+    "email": "sachinlaik455@gmail.com",
+    "phone": "+918210792822",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260120",
+        "certificate_date": {
+          "$date": "2026-05-19T20:29:43Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c1ca9e7186458bcc0b3cc"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c1cbce7186458bcc0b473"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0c7adfe7186458bcc0ebdd"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c1a5ee7186458bcc09856"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-19T08:07:58.664Z"
+    },
+    "__v": 4
+  },
+  {
+    "_id": {
+      "$oid": "6a0c90d9e7186458bcc10446"
+    },
+    "name": "Sonu Gorai",
+    "email": "dynamonsworld.sonu@gmail.com",
+    "phone": "8540961371",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260210",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:37Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc142e7186458bcc23afc"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc155e7186458bcc23be4"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c90d9e7186458bcc10447"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0c9104e7186458bcc10491"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-19T16:33:29.612Z"
+    },
+    "__v": 4
+  },
+  {
+    "_id": {
+      "$oid": "6a0c90f8e7186458bcc10473"
+    },
+    "name": "Aman Kumar",
+    "email": "amanctps712@gmail.com",
+    "phone": "+91 62054-51632",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260211",
+        "certificate_date": {
+          "$date": "2026-05-20T19:42:38Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc143e7186458bcc23b01"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0dc156e7186458bcc23beb"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0c90f8e7186458bcc10474"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0c92a9e7186458bcc105cd"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-19T16:34:00.025Z"
+    },
+    "__v": 4
+  },
+  {
+    "_id": {
+      "$oid": "6a0e73083bc4d53ea81017ce"
+    },
+    "name": "Kumar uttam ",
+    "email": "kumaruttam4474@gmail.com",
+    "phone": "9588230972",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0e73083bc4d53ea81017cf"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-21T02:50:48.190Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a0f33c63bc4d53ea810cbe2"
+    },
+    "name": "Roshan Kumar ",
+    "email": "vikashroshan4321@gmail.com",
+    "phone": "8409727509",
+    "profile_image": "https://i.pinimg.com/736x/e6/31/f1/e631f170b5dfc882ed2845b521653ecb.jpg",
+    "otp": null,
+    "otpExpiry": null,
+    "enrolledBootcamps": [
+      {
+        "bootcamp_id": {
+          "$oid": "6a0b6a88e7186458bcc01cc1"
+        },
+        "progress": 0,
+        "certificate_id": null,
+        "certificate_date": null,
+        "attendance": [],
+        "_id": {
+          "$oid": "6a0f33c63bc4d53ea810cbe3"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a0768df66b1e6d6a89802ea"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260314",
+        "certificate_date": {
+          "$date": "2026-05-21T23:47:16Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c1344480ac3a9bd5964"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c1e44480ac3a9bd5a21"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4c2c44480ac3a9bd5ae4"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0f33ee3bc4d53ea810cc37"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06ee95a39332686d725d20"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260213",
+        "certificate_date": {
+          "$date": "2026-05-21T23:45:02Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4b9b44480ac3a9bd574c"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4ba644480ac3a9bd57f1"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0f340a3bc4d53ea810cc84"
+        }
+      },
+      {
+        "bootcamp_id": {
+          "$oid": "6a06a497a39332686d723552"
+        },
+        "progress": 100,
+        "certificate_id": "RLB260121",
+        "certificate_date": {
+          "$date": "2026-05-21T23:44:32Z"
+        },
+        "attendance": [
+          {
+            "session_id": 1,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4b7644480ac3a9bd549d"
+            }
+          },
+          {
+            "session_id": 2,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4b7f44480ac3a9bd5570"
+            }
+          },
+          {
+            "session_id": 3,
+            "status": "present",
+            "_id": {
+              "$oid": "6a0f4b8844480ac3a9bd5635"
+            }
+          }
+        ],
+        "_id": {
+          "$oid": "6a0f34243bc4d53ea810ccbc"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-05-21T16:33:10.333Z"
+    },
+    "__v": 11
+  }
+]
