@@ -23,6 +23,7 @@
   
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -43,6 +44,11 @@
       color: var(--text-primary);
       cursor: pointer;
       padding: 0;
+    }
+    .modal-header{
+      background-color: #fff !important;
+      padding: 0px 20px !important;
+      color: black !important;
     }
     @media (max-width: 768px) {
       .sidebar-toggle-btn {
@@ -85,6 +91,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         <i class="bi bi-piggy-bank-fill"></i>
         <span>PF Withdrawals</span>
       </a>
+      <a href="#tab-expenditure" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-expenditure" role="tab">
+        <i class="bi bi-receipt"></i>
+        <span>Expenditures</span>
+      </a>
       <a href="#tab-history" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-history" role="tab">
         <i class="bi bi-clock-history"></i>
         <span>Transaction History</span>
@@ -106,9 +116,14 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
           <i class="bi bi-list"></i>
         </button>
         <div class="topbar-left ms-2">
-          <h4>Welcome, <%= superAdmin.name.split(' ')[0] %></h4>
+          <h4>Welcome, <%= superAdmin.name %></h4>
           <p class="d-none d-sm-block"><%= superAdmin.designation %></p>
         </div>
+      </div>
+
+      <!-- Centered Title (Desktop Only) -->
+      <div class="position-absolute top-50 start-50 translate-middle d-none d-lg-block">
+        <h4 class="mb-0 fw-bold" style="color: var(--text-primary); letter-spacing: 0.5px;">Finance Management System</h4>
       </div>
 
       <div class="topbar-right">
@@ -181,31 +196,37 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
               <div class="stat-card stat-card-1">
                 <i class="bi bi-wallet2 stat-icon"></i>
                 <div class="stat-label">Total Income</div>
-                <div class="stat-value">₹<%= stats.totalIncome %></div>
+                <div class="stat-value">
+                  ₹<span id="totalIncomeValue">*****</span>
+                  <i id="totalIncomeIcon" class="bi bi-eye ms-2 toggle-secret-icon" style="cursor: pointer; font-size: 1.2rem; vertical-align: middle;" onclick="toggleSecretVisibility('income')"></i>
+                </div>
                 <div class="stat-sub">Registrations</div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="stat-card stat-card-2">
-                <i class="bi bi-cash-stack stat-icon"></i>
-                <div class="stat-label">Total Paid Out</div>
-                <div class="stat-value">₹<%= stats.totalPaidOut %></div>
-                <div class="stat-sub">All time</div>
+                <i class="bi bi-wallet-fill stat-icon"></i>
+                <div class="stat-label">Available Balance</div>
+                <div class="stat-value">
+                  ₹<span id="availableBalanceValue">*****</span>
+                  <i id="availableBalanceIcon" class="bi bi-eye ms-2 toggle-secret-icon" style="cursor: pointer; font-size: 1.2rem; vertical-align: middle;" onclick="toggleSecretVisibility('balance')"></i>
+                </div>
+                <div class="stat-sub">Remaining funds</div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="stat-card stat-card-3">
-                <i class="bi bi-hourglass-split stat-icon"></i>
-                <div class="stat-label">Pending Requests</div>
-                <div class="stat-value"><%= stats.pendingCount %></div>
-                <div class="stat-sub">Requires action</div>
+                <i class="bi bi-cash-stack stat-icon"></i>
+                <div class="stat-label">Total Paid Out</div>
+                <div class="stat-value">₹<%= Number(stats.totalPaidOut).toFixed(2) %></div>
+                <div class="stat-sub">All time</div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="stat-card stat-card-4">
                 <i class="bi bi-calendar-check-fill stat-icon"></i>
                 <div class="stat-label">This Month</div>
-                <div class="stat-value">₹<%= stats.thisMonthPayouts %></div>
+                <div class="stat-value">₹<%= Number(stats.thisMonthPayouts).toFixed(2) %></div>
                 <div class="stat-sub">Recent payouts</div>
               </div>
             </div>
@@ -252,7 +273,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                           <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
                           <td data-label="Name"><span class="fw-semibold"><%= t.recipientName %></span></td>
                           <td data-label="Email"><%= t.recipientEmail %></td>
-                          <td data-label="Amount"><strong class="text-dark">₹<%= t.amount %></strong></td>
+                          <td data-label="Amount"><strong class="text-dark">₹<%= Number(t.amount).toFixed(2) %></strong></td>
                           <td data-label="Details"><span class="badge bg-light text-dark border"><%= t.paymentDetails %></span></td>
                           <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
                           <td data-label="Action">
@@ -283,7 +304,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                       <div class="intern-card-meta mb-2">
                         <div class="d-flex justify-content-between w-100">
                            <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(t.requestedAt).toLocaleDateString() %></span>
-                           <strong class="text-dark fs-5">₹<%= t.amount %></strong>
+                           <strong class="text-dark fs-5">₹<%= Number(t.amount).toFixed(2) %></strong>
                         </div>
                       </div>
                       <div class="intern-card-meta mb-3">
@@ -315,10 +336,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                       <% const latest = admin.monthlyPayroll && admin.monthlyPayroll.length > 0 ? admin.monthlyPayroll[admin.monthlyPayroll.length - 1] : null; %>
                       <tr id="admin-row-<%= admin._id %>">
                         <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
-                        <td id="basic-<%= admin._id %>" data-label="Basic">₹<%= latest?.basicSalary || 0 %></td>
-                        <td id="bonus-<%= admin._id %>" data-label="Bonus">₹<%= latest?.performanceBonus || 0 %></td>
-                        <td data-label="PF"><span class="text-danger" id="pf-<%= admin._id %>">₹<%= latest?.providentFund || 0 %></span></td>
-                        <td data-label="Tax"><span class="text-danger" id="tax-<%= admin._id %>">₹<%= latest?.professionalTax || 0 %></span></td>
+                        <td id="basic-<%= admin._id %>" data-label="Basic">₹<%= Number(latest?.basicSalary || 0).toFixed(2) %></td>
+                        <td id="bonus-<%= admin._id %>" data-label="Bonus">₹<%= Number(latest?.performanceBonus || 0).toFixed(2) %></td>
+                        <td data-label="PF"><span class="text-danger" id="pf-<%= admin._id %>">₹<%= Number(latest?.providentFund || 0).toFixed(2) %></span></td>
+                        <td data-label="Tax"><span class="text-danger" id="tax-<%= admin._id %>">₹<%= Number(latest?.professionalTax || 0).toFixed(2) %></span></td>
                         <td id="upi-<%= admin._id %>" data-label="UPI"><%= admin.upiId || 'N/A' %></td>
                         <td data-label="Actions">
                           <button class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1" onclick='openEditPayrollModal(<%- JSON.stringify(admin) %>)'><i class="bi bi-pencil"></i> Edit</button>
@@ -345,19 +366,19 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                       <div class="row g-2 w-100">
                         <div class="col-6">
                            <div class="small text-muted">Basic</div>
-                           <div class="fw-semibold" id="card-basic-<%= admin._id %>">₹<%= latest?.basicSalary || 0 %></div>
+                           <div class="fw-semibold" id="card-basic-<%= admin._id %>">₹<%= Number(latest?.basicSalary || 0).toFixed(2) %></div>
                         </div>
                         <div class="col-6 text-end">
                            <div class="small text-muted">Bonus</div>
-                           <div class="fw-semibold text-success" id="card-bonus-<%= admin._id %>">₹<%= latest?.performanceBonus || 0 %></div>
+                           <div class="fw-semibold text-success" id="card-bonus-<%= admin._id %>">₹<%= Number(latest?.performanceBonus || 0).toFixed(2) %></div>
                         </div>
                         <div class="col-6">
                            <div class="small text-muted">PF</div>
-                           <div class="fw-semibold text-danger" id="card-pf-<%= admin._id %>">₹<%= latest?.providentFund || 0 %></div>
+                           <div class="fw-semibold text-danger" id="card-pf-<%= admin._id %>">₹<%= Number(latest?.providentFund || 0).toFixed(2) %></div>
                         </div>
                         <div class="col-6 text-end">
                            <div class="small text-muted">Tax</div>
-                           <div class="fw-semibold text-danger" id="card-tax-<%= admin._id %>">₹<%= latest?.professionalTax || 0 %></div>
+                           <div class="fw-semibold text-danger" id="card-tax-<%= admin._id %>">₹<%= Number(latest?.professionalTax || 0).toFixed(2) %></div>
                         </div>
                       </div>
                     </div>
@@ -389,7 +410,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                           <tr id="pf-row-<%= pf._id %>">
                             <td data-label="Date"><%= new Date(pf.requestedAt).toLocaleDateString() %></td>
                             <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
-                            <td data-label="Amount"><strong class="text-dark">₹<%= pf.amount %></strong></td>
+                            <td data-label="Amount"><strong class="text-dark">₹<%= Number(pf.amount).toFixed(2) %></strong></td>
                             <td data-label="Details"><span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span></td>
                             <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
                             <td data-label="Action">
@@ -424,7 +445,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                         <div class="intern-card-meta mb-2">
                           <div class="d-flex justify-content-between w-100 align-items-center">
                              <span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span>
-                             <strong class="text-dark fs-5">₹<%= pf.amount %></strong>
+                             <strong class="text-dark fs-5">₹<%= Number(pf.amount).toFixed(2) %></strong>
                           </div>
                         </div>
                         <div class="intern-card-actions d-flex gap-2 mt-3">
@@ -439,6 +460,79 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                   <div class="text-center py-4 text-muted w-100">No pending requests</div>
                 <% } %>
               </div>
+          </div>
+        </div>
+
+        <!-- Expenditure -->
+        <div class="tab-pane fade" id="tab-expenditure" role="tabpanel">
+          <div class="mail-section-card p-4">
+            <ul class="nav nav-pills mb-4" id="expenditureTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="add-expenditure-tab" data-bs-toggle="pill" data-bs-target="#add-expenditure" type="button" role="tab">Add Expenditure</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="expenditure-history-tab" data-bs-toggle="pill" data-bs-target="#expenditure-history" type="button" role="tab">History</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="expenditureTabsContent">
+              <!-- Add Expenditure Form -->
+              <div class="tab-pane fade show active" id="add-expenditure" role="tabpanel">
+                <form id="expenditureForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Title <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="exp_title" required placeholder="e.g. Office Rent">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Amount (₹) <span class="text-danger">*</span></label>
+                      <input type="number" class="form-control" id="exp_amount" required min="1">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Date</label>
+                      <input type="date" class="form-control" id="exp_date">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Transaction ID</label>
+                      <input type="text" class="form-control" id="exp_txnId">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Description</label>
+                      <textarea class="form-control" id="exp_description" rows="3" placeholder="Optional details..."></textarea>
+                    </div>
+                    <div class="col-12 mt-4">
+                      <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-circle me-2"></i> Add Expenditure</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- Expenditure History -->
+              <div class="tab-pane fade" id="expenditure-history" role="tabpanel">
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                  <table class="mail-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th><th>Title</th><th>Amount</th><th>Description</th><th>Transaction ID</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(typeof expenditures !== 'undefined' && expenditures.length > 0) { %>
+                        <% expenditures.forEach(exp => { %>
+                          <tr>
+                            <td data-label="Date"><%= new Date(exp.date).toLocaleDateString() %></td>
+                            <td data-label="Title"><span class="fw-semibold"><%= exp.title %></span></td>
+                            <td data-label="Amount"><strong class="text-danger">₹<%= Number(exp.amount).toFixed(2) %></strong></td>
+                            <td data-label="Description"><small class="text-muted"><%= exp.description || '-' %></small></td>
+                            <td data-label="Transaction ID"><small class="text-muted"><%= exp.transactionId %></small></td>
+                          </tr>
+                        <% }) %>
+                      <% } else { %>
+                        <tr><td colspan="5" class="text-center py-4 text-muted">No expenditures recorded</td></tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -458,7 +552,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                         <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
                         <td data-label="Recipient"><span class="fw-semibold"><%= t.recipientName %></span></td>
                         <td data-label="Type"><span class="badge bg-secondary"><%= t.type %></span></td>
-                        <td data-label="Amount"><strong class="text-dark">₹<%= t.amount %></strong></td>
+                        <td data-label="Amount"><strong class="text-dark">₹<%= Number(t.amount).toFixed(2) %></strong></td>
                         <td data-label="Status">
                           <% if(t.status === 'Approved'){ %>
                             <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
@@ -495,7 +589,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                     <div class="intern-card-meta mb-2">
                       <div class="d-flex justify-content-between w-100">
                          <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(t.requestedAt).toLocaleDateString() %></span>
-                         <strong class="text-dark fs-5">₹<%= t.amount %></strong>
+                         <strong class="text-dark fs-5">₹<%= Number(t.amount).toFixed(2) %></strong>
                       </div>
                     </div>
                     <div class="intern-card-meta">
@@ -660,6 +754,65 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
 
   <!-- Custom Alert/Confirm Modal -->
   
+  <!-- Secret Key Modal -->
+  <div class="modal fade" tabindex="-1" id="secretModal" data-has-secret="<%= hasSecretKey %>">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content p-3 border-0 shadow">
+        
+        <!-- View 1: Set PIN -->
+        <div id="view-set-pin" class="d-none">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-center w-100 fw-bold">Set New PIN</h5>
+            <button type="button" class="btn-close position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p class="text-muted small mb-3">Create a 4-digit secret key to view secure stats</p>
+            <input type="password" id="newSecretKeyInput" class="form-control text-center fs-3 fw-bold" style="letter-spacing: 0.5em; border-radius: 12px;" placeholder="****">
+            <div id="setSecretError" class="text-danger small mt-2 d-none fw-semibold">Error</div>
+          </div>
+          <div class="modal-footer border-0 pt-0 justify-content-center">
+            <button type="button" class="btn btn-primary w-100 rounded-pill py-2" onclick="setSecretKey()">Set PIN</button>
+          </div>
+        </div>
+
+        <!-- View 2: Verify PIN -->
+        <div id="view-verify-pin" class="d-none">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-center w-100 fw-bold">Enter PIN</h5>
+            <button type="button" class="btn-close position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p class="text-muted small mb-3">Provide your secret key to view total income</p>
+            <input type="password" id="secretKeyInput" class="form-control text-center fs-3 fw-bold" style="letter-spacing: 0.5em; border-radius: 12px;" placeholder="****">
+            <div id="secretError" class="text-danger small mt-2 d-none fw-semibold">Invalid secret key</div>
+          </div>
+          <div class="modal-footer border-0 pt-0 flex-column">
+            <button type="button" class="btn btn-primary w-100 rounded-pill py-2 mb-2" onclick="verifySecretKey()">Verify & View</button>
+            <a href="#" class="text-decoration-none small" onclick="showResetView(event)">Forgot PIN?</a>
+          </div>
+        </div>
+
+        <!-- View 3: Reset PIN -->
+        <div id="view-reset-pin" class="d-none">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-center w-100 fw-bold">Reset PIN</h5>
+            <button type="button" class="btn-close position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted small text-center mb-3">Verify your account password</p>
+            <input type="password" id="resetPasswordInput" class="form-control mb-3" placeholder="Account Password">
+            <input type="password" id="resetNewPinInput" class="form-control text-center fs-4 fw-bold" style="letter-spacing: 0.5em; border-radius: 12px;" placeholder="New PIN">
+            <div id="resetSecretError" class="text-danger small mt-2 d-none fw-semibold text-center">Error</div>
+          </div>
+          <div class="modal-footer border-0 pt-0 flex-column">
+            <button type="button" class="btn btn-danger w-100 rounded-pill py-2 mb-2" onclick="resetSecretKey()">Reset PIN</button>
+            <a href="#" class="text-decoration-none small text-muted" onclick="showVerifyView(event)">Back</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <script>
     // Tab Switching
@@ -886,14 +1039,14 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         const gross = (p.basicSalary || 0) + (p.performanceBonus || 0);
         const ded = (p.providentFund || 0) + (p.professionalTax || 0);
         const net = gross - ded;
-        document.getElementById('set_gross').innerText = `₹${gross}`;
-        document.getElementById('set_ded').innerText = `₹${ded}`;
-        document.getElementById('set_net').innerText = `₹${net}`;
+        document.getElementById('set_gross').innerText = `₹${gross.toFixed(2)}`;
+        document.getElementById('set_ded').innerText = `₹${ded.toFixed(2)}`;
+        document.getElementById('set_net').innerText = `₹${net.toFixed(2)}`;
         document.getElementById('set_title').value = `Salary for ${selectedMonth}`;
       } else {
-        document.getElementById('set_gross').innerText = `₹0`;
-        document.getElementById('set_ded').innerText = `₹0`;
-        document.getElementById('set_net').innerText = `₹0`;
+        document.getElementById('set_gross').innerText = `₹0.00`;
+        document.getElementById('set_ded').innerText = `₹0.00`;
+        document.getElementById('set_net').innerText = `₹0.00`;
         document.getElementById('set_title').value = ``;
       }
     }
@@ -913,9 +1066,9 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         monthSelect.innerHTML += `<option value="${p.month}">${p.month}</option>`;
       });
 
-      document.getElementById('set_gross').innerText = `₹0`;
-      document.getElementById('set_ded').innerText = `₹0`;
-      document.getElementById('set_net').innerText = `₹0`;
+      document.getElementById('set_gross').innerText = `₹0.00`;
+      document.getElementById('set_ded').innerText = `₹0.00`;
+      document.getElementById('set_net').innerText = `₹0.00`;
       document.getElementById('set_title').value = ``;
       document.getElementById('set_txnId').value = ``;
 
@@ -956,6 +1109,226 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         hideLoader(); 
         await customAlert('Error', 'Error'); 
         enableButton(btn);
+      }
+    });
+
+    // Secret Modal Logic
+    let hasSecretKey = document.getElementById('secretModal').getAttribute('data-has-secret') === 'true';
+
+    let cachedTotalIncome = null;
+    let cachedAvailableBalance = null;
+    let activeToggleTarget = null;
+
+    function toggleSecretVisibility(target) {
+      let el = null;
+      let icon = null;
+      let cachedValue = null;
+
+      if (target === 'income') {
+        el = document.getElementById('totalIncomeValue');
+        icon = document.getElementById('totalIncomeIcon');
+        cachedValue = cachedTotalIncome;
+      } else if (target === 'balance') {
+        el = document.getElementById('availableBalanceValue');
+        icon = document.getElementById('availableBalanceIcon');
+        cachedValue = cachedAvailableBalance;
+      }
+
+      if (!el) return;
+
+      if (el.innerText !== '*****') {
+        el.innerText = '*****';
+        if (icon) {
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+      } else {
+        if (cachedValue !== null) {
+          el.innerText = cachedValue;
+          if (icon) {
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+          }
+        } else {
+          activeToggleTarget = target;
+          openSecretModal();
+        }
+      }
+    }
+
+    function openSecretModal() {
+      // Reset fields
+      document.getElementById('secretKeyInput').value = '';
+      document.getElementById('newSecretKeyInput').value = '';
+      document.getElementById('resetPasswordInput').value = '';
+      document.getElementById('resetNewPinInput').value = '';
+      
+      document.getElementById('secretError').classList.add('d-none');
+      document.getElementById('setSecretError').classList.add('d-none');
+      document.getElementById('resetSecretError').classList.add('d-none');
+
+      if (hasSecretKey) {
+        showVerifyView();
+      } else {
+        showSetView();
+      }
+      getModal('secretModal').show();
+    }
+
+    function showSetView() {
+      document.getElementById('view-set-pin').classList.remove('d-none');
+      document.getElementById('view-verify-pin').classList.add('d-none');
+      document.getElementById('view-reset-pin').classList.add('d-none');
+    }
+
+    function showVerifyView(e) {
+      if(e) e.preventDefault();
+      document.getElementById('view-set-pin').classList.add('d-none');
+      document.getElementById('view-verify-pin').classList.remove('d-none');
+      document.getElementById('view-reset-pin').classList.add('d-none');
+    }
+
+    function showResetView(e) {
+      if(e) e.preventDefault();
+      document.getElementById('view-set-pin').classList.add('d-none');
+      document.getElementById('view-verify-pin').classList.add('d-none');
+      document.getElementById('view-reset-pin').classList.remove('d-none');
+    }
+
+    async function setSecretKey() {
+      const newSecret = document.getElementById('newSecretKeyInput').value;
+      if (!newSecret || newSecret.length < 4) {
+        const errEl = document.getElementById('setSecretError');
+        errEl.innerText = 'PIN must be at least 4 digits';
+        errEl.classList.remove('d-none');
+        return;
+      }
+
+      const btn = document.querySelector('#view-set-pin .btn-primary');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Saving...';
+      btn.disabled = true;
+
+      try {
+        const res = await axios.post('/superAdmin/payouts/set-secret', { new_secret: newSecret });
+        if(res.data.success) {
+          hasSecretKey = true;
+          document.getElementById('secretModal').setAttribute('data-has-secret', 'true');
+          showVerifyView();
+        }
+      } catch(err) {
+        const errEl = document.getElementById('setSecretError');
+        errEl.innerText = err.response?.data?.message || 'Error setting PIN';
+        errEl.classList.remove('d-none');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function verifySecretKey() {
+      const secret = document.getElementById('secretKeyInput').value;
+      if(!secret) return;
+      
+      const btn = document.querySelector('#view-verify-pin .btn-primary');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Verifying...';
+      btn.disabled = true;
+
+      try {
+        const res = await axios.post('/superAdmin/payouts/verify-secret', { secret_key: secret });
+        if(res.data.success) {
+          cachedTotalIncome = Number(res.data.totalIncome).toFixed(2);
+          cachedAvailableBalance = Number(res.data.availableBalance).toFixed(2);
+          
+          if (activeToggleTarget === 'income') {
+            document.getElementById('totalIncomeValue').innerText = cachedTotalIncome;
+            const icon = document.getElementById('totalIncomeIcon');
+            if(icon) {
+              icon.classList.remove('bi-eye');
+              icon.classList.add('bi-eye-slash');
+            }
+          } else if (activeToggleTarget === 'balance') {
+            const abEl = document.getElementById('availableBalanceValue');
+            if (abEl) abEl.innerText = cachedAvailableBalance;
+            const icon = document.getElementById('availableBalanceIcon');
+            if(icon) {
+              icon.classList.remove('bi-eye');
+              icon.classList.add('bi-eye-slash');
+            }
+          }
+          getModal('secretModal').hide();
+        }
+      } catch(err) {
+        document.getElementById('secretError').innerText = err.response?.data?.message || "Invalid secret key";
+        document.getElementById('secretError').classList.remove('d-none');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function resetSecretKey() {
+      const password = document.getElementById('resetPasswordInput').value;
+      const newSecret = document.getElementById('resetNewPinInput').value;
+      
+      if (!password || !newSecret || newSecret.length < 4) {
+        const errEl = document.getElementById('resetSecretError');
+        errEl.innerText = 'Password and new 4-digit PIN required';
+        errEl.classList.remove('d-none');
+        return;
+      }
+
+      const btn = document.querySelector('#view-reset-pin .btn-danger');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Resetting...';
+      btn.disabled = true;
+
+      try {
+        const res = await axios.post('/superAdmin/payouts/reset-secret', { password, new_secret: newSecret });
+        if(res.data.success) {
+          await customAlert('PIN reset successfully!', 'Success');
+          showVerifyView();
+        }
+      } catch(err) {
+        const errEl = document.getElementById('resetSecretError');
+        errEl.innerText = err.response?.data?.message || 'Error resetting PIN';
+        errEl.classList.remove('d-none');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Expenditure Form Logic
+    document.getElementById('expenditureForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      disableButton(btn);
+      showLoader();
+
+      const payload = {
+        title: document.getElementById('exp_title').value,
+        amount: document.getElementById('exp_amount').value,
+        date: document.getElementById('exp_date').value,
+        txnId: document.getElementById('exp_txnId').value,
+        description: document.getElementById('exp_description').value
+      };
+
+      try {
+        const res = await axios.post('/superAdmin/payouts/expenditure', payload);
+        if(res.data.success) {
+          e.target.reset();
+          await refreshPayoutData();
+          await customAlert('Expenditure added successfully!', 'Success');
+          document.getElementById('expenditure-history-tab').click();
+        }
+      } catch(err) {
+        console.error(err);
+        await customAlert(err.response?.data?.message || 'Error adding expenditure', 'Error');
+      } finally {
+        enableButton(btn);
+        hideLoader();
       }
     });
 
@@ -1041,9 +1414,9 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         const display = date.toLocaleString('default', { month: 'long', year: 'numeric' });
         monthSelect.innerHTML += `<option value="${p.month}">${display}</option>`; 
       });
-      document.getElementById('set_gross').innerText = `₹0`;
-      document.getElementById('set_ded').innerText = `₹0`;
-      document.getElementById('set_net').innerText = `₹0`;
+      document.getElementById('set_gross').innerText = `₹0.00`;
+      document.getElementById('set_ded').innerText = `₹0.00`;
+      document.getElementById('set_net').innerText = `₹0.00`;
       document.getElementById('set_title').value = ``;
       document.getElementById('set_txnId').value = ``;
       getModal('settleModal').show();
@@ -1156,12 +1529,11 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
 
       interns.forEach(intern => {
         let date = null;
-        if (intern.batch_no) {
+        if (intern.joining_date || intern.createdAt) {
+           date = new Date(intern.joining_date || intern.createdAt);
+        } else if (intern.batch_no) {
            const parsed = new Date(intern.batch_no);
            if (!isNaN(parsed)) date = parsed;
-        }
-        if (!date && intern.createdAt) {
-           date = new Date(intern.createdAt);
         }
         if (date) {
            const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);

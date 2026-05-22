@@ -310,6 +310,7 @@ router.get("/payment/callback", async (req, res) => {
           PayID: registration.payID,
           Terms: registration.terms ? "Yes" : "No",
           Timestamp: formattedTimestamp,
+          Amount : registration.final_amount || 0
         };
 
         try {

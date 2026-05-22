@@ -103,6 +103,10 @@
         <i class="bi bi-grid-1x2-fill"></i> 
         <span>Dashboard</span>
       </a>
+      <a href="/superAdmin/payouts" class="nav-link" onclick="setActive(this)">
+          <i class="bi bi-credit-card-fill"></i>
+          <span>Payout Center</span>
+      </a>
       
       <div class="sidebar-nav-label">Team Management</div>
       <a href="#viewAdmin" class="nav-link" onclick="setActive(this)">
@@ -113,10 +117,10 @@
         <i class="bi bi-person-plus"></i> 
         <span>Create Admin</span>
       </a>
-      <a href="#createBootcampManager" class="nav-link" onclick="setActive(this)">
+      <!-- <a href="#createBootcampManager" class="nav-link" onclick="setActive(this)">
         <i class="bi bi-person-video3"></i> 
         <span>Create Bootcamp Mgr</span>
-      </a>
+      </a> -->
       
       <div class="sidebar-nav-label">Intern Management</div>
       <a href="#viewInterns" class="nav-link" onclick="setActive(this)">
@@ -187,7 +191,7 @@
           <i class="bi bi-list"></i>
         </button>
         <div class="topbar-left ms-2">
-          <h4>Welcome, <%= superAdmin.name.split(' ')[0] %></h4>
+          <h4>Welcome, <%= superAdmin.name %></h4>
           <p class="d-none d-sm-block"><%= superAdmin.designation %></p>
         </div>
       </div>
@@ -205,9 +209,9 @@
         </button>
 
         <!-- Payout Center Link -->
-        <a href="/superAdmin/payouts" class="topbar-btn d-none d-md-flex me-2" title="Payout Center" style="color: inherit; text-decoration: none;">
+        <!-- <a href="/superAdmin/payouts" class="topbar-btn d-none d-md-flex me-2" title="Payout Center" style="color: inherit; text-decoration: none;">
           <i class="bi bi-credit-card-fill"></i>
-        </a>
+        </a> -->
 
         <!-- Mail Center Link -->
         <a href="/superAdmin/mail-center" class="topbar-btn d-none d-md-flex" title="Mail Center" style="color: inherit; text-decoration: none;">

@@ -63,6 +63,7 @@ const superAdminSchema = new mongoose.Schema({
   otpExpiry: Date,
   qrLoginSecret: { type: String, default: null },
   isQrLoginSetup: { type: Boolean, default: false },
+  secretKey: { type: String, default: null },
 });
 
 module.exports = mongoose.model("SuperAdmin", superAdminSchema);

@@ -6,8 +6,23 @@ const Admin = require("../models/Admin");
 const authRole = require("../middleware/authRole");
 const { sendPayoutSuccessMail } = require("../services/payoutMailScript");
 const { generateSalarySlip } = require("../services/salarySlipGenerator");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const SuperAdmin = require("../models/SuperAdmin");
+const Expenditure = require("../models/Expenditure");
+
+const getAvailableBalance = async () => {
+  const users = await User.find();
+  const rawIncome = users.reduce((sum, u) => sum + (u.amountPaid || 0), 0);
+  
+  const expenditures = await Expenditure.find();
+  const expTotal = expenditures.reduce((sum, exp) => sum + (exp.amount || 0), 0);
+  
+  const transactions = await PaymentTransaction.find({ status: "Approved" });
+  const paidTotal = transactions.reduce((sum, t) => sum + t.amount, 0);
+  
+  return rawIncome - expTotal - paidTotal;
+};
 
 // GET /superAdmin/payouts -> Render Payout Center
 router.get("/payouts", authRole("superAdmin"), async (req, res) => {
@@ -17,29 +32,41 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
     const ambassadors = await Ambassador.find().sort({ name: 1 });
     const superAdmin = await SuperAdmin.findOne({});
     const interns = await User.find({ role: "intern" });
+    const expenditures = await Expenditure.find().sort({ date: -1 }).populate('addedBy', 'name');
     
     // Stats calculation
-    const totalPaidOut = transactions
+    const totalPaidOutTransactions = Number(transactions
       .filter(t => t.status === "Approved")
-      .reduce((sum, t) => sum + t.amount, 0);
+      .reduce((sum, t) => sum + t.amount, 0).toFixed(2));
       
     const pendingCount = transactions.filter(t => t.status === "Pending").length;
     
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const thisMonthPayouts = transactions
+    const thisMonthPayoutsTransactions = Number(transactions
       .filter(t => t.status === "Approved" && new Date(t.processedAt) >= startOfMonth)
-      .reduce((sum, t) => sum + t.amount, 0);
+      .reduce((sum, t) => sum + t.amount, 0).toFixed(2));
+
+    const totalExpenditure = Number(expenditures.reduce((sum, exp) => sum + (exp.amount || 0), 0).toFixed(2));
+    
+    const thisMonthExpenditures = Number(expenditures
+      .filter(exp => new Date(exp.date) >= startOfMonth)
+      .reduce((sum, exp) => sum + (exp.amount || 0), 0).toFixed(2));
+
+    const totalPaidOut = Number((totalPaidOutTransactions + totalExpenditure).toFixed(2));
+    const thisMonthPayouts = Number((thisMonthPayoutsTransactions + thisMonthExpenditures).toFixed(2));
 
     const users = await User.find();
-    const totalIncome = users.reduce((sum, u) => sum + (u.amountPaid || 0), 0);
+    const totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
 
     res.render("payoutCenter", {
       transactions,
       admins,
       ambassadors,
       superAdmin,
+      hasSecretKey: !!superAdmin.secretKey,
       interns,
+      expenditures,
       stats: {
         totalIncome,
         totalPaidOut,
@@ -53,6 +80,119 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
   }
 });
 
+// POST /superAdmin/payouts/expenditure -> Add External Expenditure
+router.post("/payouts/expenditure", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { title, amount, description, date, txnId } = req.body;
+    if (!title || !amount || !txnId) {
+      return res.status(400).json({ success: false, message: "Title, amount and transaction ID are required" });
+    }
+
+    const available = await getAvailableBalance();
+    if (Number(amount) > available) {
+      return res.status(400).json({ success: false, message: "Insufficient available balance" });
+    }
+
+    const expenditure = new Expenditure({
+      title : title.trim(),
+      amount: Number(amount),
+      description: description.trim() || "",
+      addedBy: req.session.user ? req.session.user._id : null,
+      transactionId: txnId.trim(),
+      date : date ? new Date(date) : new Date(),
+    });
+
+    await expenditure.save();
+    res.json({ success: true, message: "Expenditure added successfully", expenditure });
+  } catch (error) {
+    console.error("Expenditure Error:", error);
+    res.status(500).json({ success: false, message: "Server error while adding expenditure" });
+  }
+});
+
+// POST /superAdmin/payouts/verify-secret -> Verify Secret Key for Total Income
+router.post("/payouts/verify-secret", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { secret_key } = req.body;
+    if (!secret_key) return res.status(400).json({ success: false, message: "Secret key is required" });
+
+    // Find the superAdmin
+    const superAdmin = await SuperAdmin.findOne({});
+    if (!superAdmin) return res.status(404).json({ success: false, message: "SuperAdmin not found" });
+
+    if (superAdmin.secretKey === secret_key) {
+      // Calculate total income and return it
+      const users = await User.find();
+      const totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
+      
+      const expenditures = await Expenditure.find();
+      const totalExpenditure = Number(expenditures.reduce((sum, exp) => sum + (exp.amount || 0), 0).toFixed(2));
+
+      const transactions = await PaymentTransaction.find({ status: "Approved" });
+      const totalPaidOutTransactions = Number(transactions.reduce((sum, t) => sum + t.amount, 0).toFixed(2));
+      
+      const totalPaidOut = Number((totalPaidOutTransactions + totalExpenditure).toFixed(2));
+      const availableBalance = Number((totalIncome - totalPaidOut).toFixed(2));
+
+      res.json({ success: true, totalIncome, availableBalance });
+    } else {
+      res.status(403).json({ success: false, message: "Invalid secret key" });
+    }
+  } catch (error) {
+    console.error("Verify Secret Error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// POST /superAdmin/payouts/set-secret -> Set Secret Key initially
+router.post("/payouts/set-secret", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { new_secret } = req.body;
+    if (!new_secret || new_secret.length < 4) return res.status(400).json({ success: false, message: "Secret key must be at least 4 characters" });
+
+    const superAdmin = await SuperAdmin.findOne({});
+    if (!superAdmin) return res.status(404).json({ success: false, message: "SuperAdmin not found" });
+
+    if (superAdmin.secretKey) {
+      return res.status(400).json({ success: false, message: "Secret key is already set. Use reset option instead." });
+    }
+
+    superAdmin.secretKey = new_secret;
+    await superAdmin.save();
+
+    res.json({ success: true, message: "Secret key set successfully" });
+  } catch (error) {
+    console.error("Set Secret Error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// POST /superAdmin/payouts/reset-secret -> Reset Secret Key using account password
+router.post("/payouts/reset-secret", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { password, new_secret } = req.body;
+    if (!password || !new_secret || new_secret.length < 4) {
+      return res.status(400).json({ success: false, message: "Current password and new secret key (min 4 chars) are required" });
+    }
+
+    const superAdmin = await SuperAdmin.findOne({});
+    if (!superAdmin) return res.status(404).json({ success: false, message: "SuperAdmin not found" });
+
+    const isMatch = await bcrypt.compare(password, superAdmin.password);
+    if (!isMatch) {
+      return res.status(403).json({ success: false, message: "Incorrect account password" });
+    }
+
+    superAdmin.secretKey = new_secret;
+    await superAdmin.save();
+
+    res.json({ success: true, message: "Secret key reset successfully" });
+  } catch (error) {
+    console.error("Reset Secret Error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 // POST /superAdmin/payouts/ambassador/approve/:txId
 router.post("/payouts/ambassador/approve/:txId", authRole("superAdmin"), async (req, res) => {
   try {
@@ -60,6 +200,11 @@ router.post("/payouts/ambassador/approve/:txId", authRole("superAdmin"), async (
     const tx = await PaymentTransaction.findById(req.params.txId);
     if (!tx || tx.status !== "Pending" || tx.type !== "AmbassadorWithdrawal") {
       return res.status(400).json({ success: false, message: "Invalid transaction" });
+    }
+
+    const available = await getAvailableBalance();
+    if (Number(amount) > available) {
+      return res.status(400).json({ success: false, message: "Insufficient available balance" });
     }
 
     const ambassador = await Ambassador.findById(tx.recipientId);
@@ -197,9 +342,14 @@ router.post("/payouts/admin/settle/:adminId", authRole("superAdmin"), async (req
     const providentFund = monthEntry.providentFund || 0;
     const professionalTax = monthEntry.professionalTax || 0;
 
-    const grossSalary = basicSalary + performanceBonus;
-    const totalDeductions = providentFund + professionalTax;
-    const netPay = grossSalary - totalDeductions;
+    const grossSalary = Number((basicSalary + performanceBonus).toFixed(2));
+    const totalDeductions = Number((providentFund + professionalTax).toFixed(2));
+    const netPay = Number((grossSalary - totalDeductions).toFixed(2));
+
+    const available = await getAvailableBalance();
+    if (netPay > available) {
+      return res.status(400).json({ success: false, message: "Insufficient available balance" });
+    }
 
     const [year, m] = month.split('-');
     const payPeriodStart = new Date(year, m - 1, 1);
@@ -270,6 +420,11 @@ router.post("/payouts/admin/pf-approve/:adminId/:pfId", authRole("superAdmin"), 
 
     const pfRequest = admin.pfWithdrawals.id(req.params.pfId);
     if (!pfRequest || pfRequest.status !== "Pending") return res.status(400).json({ success: false, message: "Invalid PF request" });
+
+    const available = await getAvailableBalance();
+    if (pfRequest.amount > available) {
+      return res.status(400).json({ success: false, message: "Insufficient available balance" });
+    }
 
     pfRequest.status = "Approved";
     pfRequest.transactionId = transactionId;
