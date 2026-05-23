@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { sendRejectionMail } = require('../services/rejectionMailService');
 
 router.post('/projects/update-status', async (req, res) => {
   try {
-    const { userId, projectId, status } = req.body;
+    const { userId, projectId, status, reason } = req.body;
     const isAjax = req.xhr || (req.headers.accept && req.headers.accept.indexOf('json') > -1) || req.headers['content-type'] === 'application/json';
 
     // 🔹 Validation
@@ -33,10 +34,17 @@ router.post('/projects/update-status', async (req, res) => {
     if (updatedUser) {
       const assignedProjects = updatedUser.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-      const arr = [0, 1, 2, 3, 4, 6, 8];
-      const duration = updatedUser.duration || 1;
-      updatedUser.progress = Math.round((arr[acceptedCount] / duration) * 100);
+      const totalAssignedProjects = assignedProjects.length;
+      updatedUser.progress = totalAssignedProjects > 0 ? Math.round((acceptedCount / totalAssignedProjects) * 100) : 0;
       await updatedUser.save();
+
+      if (status === 'rejected') {
+        const Project = require('../models/Project');
+        const project = await Project.findById(projectId);
+        const projectTitle = project ? project.title : 'Project';
+        // Send email in background
+        sendRejectionMail(updatedUser.email, updatedUser.name, projectTitle, reason);
+      }
     }
 
     if (!updatedUser) {

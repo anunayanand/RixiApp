@@ -1,10 +1,13 @@
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
-const BASE_URL = rawUrl.replace('https://', 'www.');
+require("dotenv").config();
 
+// ==============================
+// CONFIGURATION
+// ==============================
 const oAuth2Client = new google.auth.OAuth2(
   process.env.PROJECT_INFO_CLIENT_ID,
-  process.env.PROJECT_INFO_CLIENT_SECRET
+  process.env.PROJECT_INFO_CLIENT_SECRET,
+  process.env.PROJECT_INFO_REDIRECT_URI
 );
 
 oAuth2Client.setCredentials({
@@ -16,6 +19,9 @@ const gmail = google.gmail({
   auth: oAuth2Client
 });
 
+// ==============================
+// HELPER: Encode Email for Gmail API
+// ==============================
 function makeBody(to, from, subject, message) {
   const str = [
     "Content-Type: text/html; charset=\"UTF-8\"\n",
@@ -30,12 +36,16 @@ function makeBody(to, from, subject, message) {
   return Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
 }
 
-async function sendPayoutSuccessMail({ name, email, amount, transactionId, title, date }) {
-  const subject = "Payment Processed - Rixi Lab";
+// ==============================
+// EXPORTED FUNCTION
+// ==============================
+async function sendRejectionMail(email, name, projectTitle, reason) {
+  try {
+    const subject = `Rixi Lab ${projectTitle} - Rejected`;
+    const BASE_URL = process.env.BASE_URL;
 
-  const htmlBody = `
-
-<!DOCTYPE html>
+    const body = `
+   <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8"/>
@@ -78,18 +88,10 @@ img{
     line-height:1.8 !important;
   }
 
-  .card-padding{
-    padding:18px !important;
-  }
-
   .button{
     display:block !important;
     width:100% !important;
     box-sizing:border-box !important;
-  }
-
-  .footer-text{
-    font-size:11px !important;
   }
 
 }
@@ -122,16 +124,16 @@ img{
 </tr>
 
 <tr>
-<td class="content" style="padding:42px 34px;">
+<td class="content" style="padding:40px 32px;">
 
-<!-- Logo -->
+<!-- Header -->
 <table width="100%">
 <tr>
 <td align="center">
 
 <table
-  width="90"
-  height="90"
+  width="88"
+  height="88"
   cellpadding="0"
   cellspacing="0"
   style="
@@ -144,7 +146,7 @@ img{
 
 <img
   src="https://www.rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
-  width="54"
+  width="52"
   alt="Rixi Lab"
 />
 
@@ -155,42 +157,42 @@ img{
 <h1
   class="heading"
   style="
-    margin:24px 0 0;
-    font-size:32px;
-    line-height:1.25;
+    margin:22px 0 0;
+    font-size:30px;
     color:#ff6600;
     font-weight:bold;
   "
 >
-  Payment Successful
+  ${projectTitle.split(' ').slice(0, 2).join(' ')} Rejected
 </h1>
 
 <p
   style="
-    margin:12px 0 0;
+    margin:10px 0 0;
     color:#777;
     font-size:14px;
     line-height:1.7;
   "
 >
-  Your payment has been processed successfully
+  Please review the feedback and upload the updated project
 </p>
 
 </td>
 </tr>
 </table>
 
-<!-- Greeting -->
-<table width="100%" style="margin-top:40px;">
+<!-- Body -->
+<table width="100%" style="margin-top:34px;">
 <tr>
 <td>
 
 <p
+  class="normal-text"
   style="
     margin:0;
-    font-size:15px;
-    color:#222;
-    font-weight:500;
+    font-size:13px;
+    line-height:1.9;
+    color:#555;
   "
 >
   Dear <strong>${name}</strong>,
@@ -199,83 +201,64 @@ img{
 <p
   class="normal-text"
   style="
-    margin:18px 0 0;
+    margin:16px 0 0;
     font-size:13px;
     line-height:1.9;
     color:#555;
   "
 >
-  We are pleased to inform you that your payment request for
-  <strong>${title}</strong> has been successfully processed.
-</p>
-
-<p
-  class="normal-text"
-  style="
-    margin:18px 0 0;
-    font-size:13px;
-    line-height:1.9;
-    color:#555;
-  "
->
-  Thank you for being part of Rixi Lab.
+  Your submission for <strong>${projectTitle}</strong>
+  has been reviewed and unfortunately it has been rejected.
 </p>
 
 </td>
 </tr>
 </table>
 
-<!-- Payment Details -->
+<!-- Feedback -->
 <table
   width="100%"
   cellpadding="0"
   cellspacing="0"
   style="
-    margin-top:30px;
+    margin-top:24px;
     background:#fffaf7;
     border:1px solid #ffd8c2;
-    border-radius:18px;
+    border-radius:16px;
   "
 >
 <tr>
-<td class="card-padding" style="padding:24px;">
+<td style="padding:20px;">
 
 <p
   style="
     margin:0;
     font-size:13px;
     font-weight:bold;
-    color:#222;
+    color:#ff6600;
   "
 >
-  Payment Details
+  Reason : 
 </p>
 
-<table width="100%" style="margin-top:16px;">
-<tr>
-<td
+<p
+  class="normal-text"
   style="
+    margin:12px 0 0;
     font-size:13px;
+    line-height:1.8;
     color:#555;
-    line-height:2;
   "
 >
-
-<strong>Amount:</strong> ₹${amount}<br/>
-<strong>Transaction ID:</strong> ${transactionId}<br/>
-<strong>Date Processed:</strong> ${new Date(date).toLocaleString()}<br/>
-<strong>Status:</strong> Successfully Processed
+  ${reason || 'Please review the project guidelines carefully and submit again.'}
+</p>
 
 </td>
 </tr>
 </table>
 
-</td>
-</tr>
-</table>
-
-<!-- Message -->
-<table width="100%" style="margin-top:28px;">
+<!-- Reminder -->
+<table width="100%" style="margin-top:24px;">
 <tr>
 <td>
 
@@ -288,8 +271,8 @@ img{
     color:#555;
   "
 >
-  If you have any questions or face any issues regarding this transaction,
-  please feel free to contact the administration or support team.
+  Please make the required corrections and upload the updated
+  project before the submission deadline.
 </p>
 
 </td>
@@ -297,12 +280,12 @@ img{
 </table>
 
 <!-- Button -->
-<table width="100%" style="margin-top:34px;">
+<table width="100%" style="margin-top:30px;">
 <tr>
 <td align="center">
 
 <a
-  href="${BASE_URL}"
+  href="${BASE_URL}/login"
   class="button"
   style="
     background:#ff6600;
@@ -315,7 +298,7 @@ img{
     font-size:14px;
   "
 >
-  Visit Dashboard
+  Go to Dashboard
 </a>
 
 </td>
@@ -326,80 +309,18 @@ img{
 <table
   width="100%"
   style="
-    margin-top:40px;
+    margin-top:36px;
     border-top:1px solid #ececec;
   "
 >
 <tr>
-<td align="center" style="padding-top:24px;">
+<td align="center" style="padding-top:20px;">
 
 <p
-  class="footer-text"
   style="
     margin:0;
     color:#888;
     font-size:12px;
-    line-height:1.8;
-  "
->
-  Rixi Lab • Rethink Innovate eXecute Inspire
-</p>
-
-<!-- Social Icons -->
-<p style="margin:18px 0 0;">
-
-<a
-  href="https://www.instagram.com/rixilab.in"
-  style="display:inline-block;margin:0 6px;"
->
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
-    width="24"
-    alt="Instagram"
-  />
-</a>
-
-<a
-  href="https://www.linkedin.com/company/rixilab"
-  style="display:inline-block;margin:0 6px;"
->
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-    width="24"
-    alt="LinkedIn"
-  />
-</a>
-
-<a
-  href="https://www.facebook.com/rixilab"
-  style="display:inline-block;margin:0 6px;"
->
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-    width="24"
-    alt="Facebook"
-  />
-</a>
-
-<a
-  href="https://www.youtube.com/@RixiLab"
-  style="display:inline-block;margin:0 6px;"
->
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
-    width="24"
-    alt="YouTube"
-  />
-</a>
-
-</p>
-
-<p
-  class="footer-text"
-  style="
-    margin:18px 0 0;
-    color:#999;
-    font-size:11px;
     line-height:1.8;
   "
 >
@@ -421,15 +342,28 @@ img{
 
 </body>
 </html>
-`;
+    `;
 
-  const encodedMail = makeBody(email,`"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, process.env.PROJECT_INFO_EMAIL, subject, htmlBody);
-  return gmail.users.messages.send({
-    userId: 'me',
-    resource: {
-      raw: encodedMail
-    }
-  });
+    const encodedMail = makeBody(
+      email,
+      `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`,
+      subject,
+      body
+    );
+    
+    await gmail.users.messages.send({
+      userId: 'me',
+      resource: {
+        raw: encodedMail
+      }
+    });
+
+    // console.log(`✅ Rejection email sent to ${email} for project: ${projectTitle}`);
+    return { success: true };
+  } catch (err) {
+    // console.error(`❌ Failed to send rejection email to ${email}:`, err.message);
+    return { success: false, error: err.message };
+  }
 }
 
-module.exports = { sendPayoutSuccessMail };
+module.exports = { sendRejectionMail };

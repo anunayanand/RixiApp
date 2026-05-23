@@ -29,7 +29,6 @@ const projectSchema = new mongoose.Schema({
   },
 
   // Submissions tracking
-
 });
 
 module.exports = mongoose.model("Project", projectSchema);

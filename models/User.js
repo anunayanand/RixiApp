@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
       week: Number,
       status: {
         type: String,
-        enum: ["pending", "accepted", "rejected"],
+        enum: ["pending", "submitted", "accepted", "rejected"],
         default: "pending",
       },
     },

@@ -490,7 +490,7 @@ img{
 </html>
       `;
 
-      const encodedMail = makeBody(email, process.env.PROJECT_INFO_EMAIL, subject, body);
+      const encodedMail = makeBody(email,`"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, process.env.PROJECT_INFO_EMAIL, subject, body);
       await gmail.users.messages.send({
         userId: 'me',
         resource: {

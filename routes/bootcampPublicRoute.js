@@ -436,7 +436,7 @@ img{
 </html>
 
     `;
-    const encodedMail = makeBody(user.email, process.env.PROJECT_INFO_EMAIL, subject, body);
+    const encodedMail = makeBody(user.email,`"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, process.env.PROJECT_INFO_EMAIL, subject, body);
     try {
         await gmail.users.messages.send({ userId: 'me', resource: { raw: encodedMail } });
     } catch (err) {

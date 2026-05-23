@@ -234,6 +234,9 @@ app.post('/admin/project/update/:id', updateProjectRouter);
 const deleteProjectRouter = require('./routes/deleteProjectRouter');
 app.post('/delete-project/:id', deleteProjectRouter);
 
+// Intern Submit Project
+app.use(require('./routes/submitProjectRoute'));
+
 // View specific intern (admin only)
 const viewInternRouter = require('./routes/viewInternRoute');
 app.get('/admin/intern/:internId', viewInternRouter);

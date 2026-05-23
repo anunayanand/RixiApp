@@ -1151,10 +1151,9 @@
                         required>
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label">Submission Link (Upload)</label>
-                      <input type="url" name="uploadLink" class="form-control" placeholder="Google Form link" required>
+                      <label class="form-label">Submission Link (Upload) <small class="text-muted">(Legacy)</small></label>
+                      <input type="url" name="uploadLink" class="form-control" placeholder="Google Form link">
                     </div>
-
                     <div class="col-12 text-end mt-4">
                       <button type="submit" class="btn btn-primary px-5">Publish Project</button>
                     </div>
@@ -1513,7 +1512,7 @@
                               <input type="number" name="batch_no" class="form-control mb-2" value="<%= p.batch_no %>">
                               <div class="row">
                                 <div class="col-6">
-                                  <label class="form-label">Upload Link</label>
+                                  <label class="form-label">Upload Link <small class="text-muted">(Legacy)</small></label>
                                   <input type="text" name="uploadLink" class="form-control" value="<%= p.uploadLink %>">
                                 </div>
                                 <div class="col-6">
@@ -1625,10 +1624,8 @@
             <% interns.forEach(intern=> { %>
               <% if (Array.isArray(intern.projectAssigned) && intern.projectAssigned.length> 0) { %>
 
-                <!-- Calculate progress -->
-                <% let acceptedCount=intern.projectAssigned.filter(p=> p.status==='accepted').length; %>
-                  <% let totalCount=intern.projectAssigned.length; %>
-                    <% let percent=Math.round((acceptedCount/totalCount)*100); %>
+                <!-- Get progress from DB -->
+                <% let percent = intern.progress || 0; %>
 
                       <!-- Added 'intern-card' class for filter compatibility -->
                       <div class="review-card intern-card" data-batch="<%= intern.batch_no %>">
@@ -1695,10 +1692,11 @@
                             <table class="table review-table mb-0">
                               <thead>
                                 <tr>
-                                  <th style="width: 35%;">Title</th>
+                                  <th style="width: 30%;">Title</th>
                                   <th style="width: 15%;">Week</th>
                                   <th style="width: 15%;" class="text-center">Status</th>
-                                  <th style="width: 35%;" class="text-end pe-4">Actions</th>
+                                  <th style="width: 25%;">Note</th>
+                                  <th style="width: 15%;" class="text-end pe-4">Actions</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -1720,6 +1718,9 @@
                                       <span class="badge badge-sub-<%= sub.status || 'pending' %>">
                                         <%= sub.status || 'pending' %>
                                       </span>
+                                    </td>
+                                    <td>
+                                      <input type="text" id="reject-note-<%= intern._id %>-<%= sub.projectId ? sub.projectId._id : sub.projectId %>" class="form-control form-control-sm" placeholder="Reason (if rejecting)">
                                     </td>
                                     <td class="text-end pe-4">
                                       <div class="d-flex gap-2 justify-content-end project-review-actions">
@@ -3869,6 +3870,25 @@
             }
           }
           async function updateProjectStatus(userId, projectId, status, btn) {
+            let reason = '';
+            if (status === 'rejected') {
+              const noteInput = document.getElementById(`reject-note-${userId}-${projectId}`);
+              if (noteInput) {
+                reason = noteInput.value.trim();
+                if (reason === '') {
+                  if (typeof showToast !== 'undefined') showToast("Please fill in the Note column to reject this project.", "error");
+                  else alert("Please fill in the Note column to reject this project.");
+                  noteInput.focus();
+                  return;
+                }
+              } else {
+                // Fallback
+                reason = window.prompt("Please provide a reason for rejecting this project:");
+                if (reason === null) return;
+                if (reason.trim() === '') return;
+              }
+            }
+
             const icon = btn.querySelector('.btn-icon');
             const spinner = btn.querySelector('.spinner-border');
 
@@ -3886,7 +3906,7 @@
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ userId, projectId, status })
+                body: JSON.stringify({ userId, projectId, status, reason })
               });
 
               const data = await response.json();

@@ -498,11 +498,11 @@
             <button class="id-topbar-btn" data-bs-toggle="dropdown" aria-expanded="false" id="notificationButton">
               <i class="bi bi-bell"></i>
               <% if (typeof unreadCount !== 'undefined' && unreadCount > 0) { %>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="unreadBadge" style="font-size: 0.6rem;">
                   <%= unreadCount > 9 ? '9+' : unreadCount %>
                 </span>
               <% } else { %>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge">0</span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="unreadBadge" style="font-size: 0.6rem;">0</span>
               <% } %>
             </button>
 
@@ -674,43 +674,48 @@
                 %>
                 <div class="col-12">
                   <div class="id-project-card">
-                    <!-- Project Info -->
-                    <div class="id-project-info">
-                      <h5>
-                        <%= proj ? proj.title : 'N/A' %>
-                      </h5>
-                      <p>
-                        <%= proj ? proj.description : '' %>
-                      </p>
-                    </div>
+                    <!-- Default View -->
+                    <div id="project-default-view-<%= proj._id %>" class="w-100">
+                      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center w-100">
+                        <!-- Project Info -->
+                        <div class="id-project-info">
+                          <h5>
+                            <%= proj ? proj.title : 'N/A' %>
+                          </h5>
+                          <p>
+                            <%= proj ? proj.description : '' %>
+                          </p>
+                        </div>
 
-                    <!-- Actions -->
-                    <div class="id-project-actions mt-3 mt-md-0">
-                      <% if (sub.status==='accepted' ) { %>
-                        <span class="id-status-badge id-status-accepted"><i class="bi bi-check-circle-fill me-1"></i>
-                          Accepted</span>
-                        <% } else if (sub.status==='rejected' ) { %>
-                          <span class="id-status-badge id-status-rejected"><i class="bi bi-x-circle-fill me-1"></i>
-                            Rejected</span>
-                          <% } else{ %>
-                            <span class="id-status-badge id-status-pending"><i class="bi bi-clock-fill me-1"></i>
-                              Pending</span>
-                            <% } %>
+                        <!-- Actions -->
+                        <div class="id-project-actions mt-3 mt-md-0 d-flex gap-2 flex-wrap">
+                          <% if (sub.status==='accepted' ) { %>
+                            <span class="id-status-badge id-status-accepted"><i class="bi bi-check-circle-fill me-1"></i> Accepted</span>
+                          <% } else if (sub.status==='rejected' ) { %>
+                            <span class="id-status-badge id-status-rejected"><i class="bi bi-x-circle-fill me-1"></i> Rejected</span>
+                          <% } else if (sub.status==='submitted' ) { %>
+                            <span class="id-status-badge" style="background: rgba(255,193,7,0.15); color: #ffc107; border: 1px solid rgba(255,193,7,0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;"><i class="bi bi-clock-history me-1"></i> Under Review</span>
+                          <% } else if (proj && proj.isHidden) { %>
+                            <span class="id-status-badge" style="background: rgba(108,117,125,0.15); color: #adb5bd; border: 1px solid rgba(108,117,125,0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;"><i class="bi bi-lock-fill me-1"></i> Closed</span>
+                          <% } else { %>
+                            <span class="id-status-badge id-status-pending"><i class="bi bi-clock-fill me-1"></i> Pending</span>
+                          <% } %>
 
-                              <a href="<%= proj ? proj.downloadLink : '#' %>" target="_blank"
-                                class="btn btn-outline-primary-custom">
-                                <i class="bi bi-download me-1"></i> Download
-                              </a>
+                                  <a href="<%= proj ? proj.downloadLink : '#' %>" target="_blank"
+                                    class="btn btn-outline-primary-custom">
+                                    <i class="bi bi-download me-1"></i> Download
+                                  </a>
 
-                              <% if (sub.status !=='accepted' && proj && !proj.isHidden) { %>
-                                <a href="<%= proj.uploadLink %>" target="_blank" class="btn btn-primary-custom">
-                                  <i class="bi bi-upload me-1"></i> Upload
-                                </a>
-                                <% } else if (sub.status !=='accepted' && proj && proj.isHidden) { %>
-                                  <button class="btn btn-secondary px-4 disabled">Closed</button>
-                                  <% } else { %>
-                                    <button class="btn btn-outline-success  disabled">Uploaded</button>
-                                    <% } %>
+                                  <% if (sub.status !=='accepted' && sub.status !=='submitted' && proj && !proj.isHidden) { %>
+                                    <button class="btn btn-primary-custom"
+                                            onclick="openProjectSubmitModal('<%= proj._id %>', '<%= sub.projectId %>', '<%= proj.title.replace(/'/g, `\\'`) %>')">
+                                      <i class="bi bi-cloud-upload me-1"></i> Submit
+                                    </button>
+                                  <% } else if (sub.status !=='accepted' && sub.status !=='submitted' && proj && proj.isHidden) { %>
+                                    <button class="btn btn-secondary px-4 disabled">Closed</button>
+                                  <% } %>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2549,6 +2554,182 @@
                   });
                 }
 
+              </script>
+
+              <!-- Project Submit Modal -->
+              <div class="modal fade" id="projectSubmitModal" data-bs-backdrop="static" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content" style="background: rgba(20, 20, 25, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);">
+                    <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 20px 24px;">
+                      <h5 class="modal-title fw-bold" style="letter-spacing: 0.5px;">
+                        Submit Project
+                      </h5>
+                      <button type="button" class="btn-close btn-close-white opacity-75" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="padding: 24px;">
+                      <p id="submitModalProjectTitle" class="text-light small mb-4 fw-medium" style="opacity: 0.8;"></p>
+                      
+                      <!-- Drag & Drop Zone -->
+                      <div class="drag-drop-zone mb-4" id="global-drop-zone"
+                           style="background: rgba(255, 255, 255, 0.03); border: 1.5px dashed rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 40px 20px; text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;"
+                           ondragover="event.preventDefault(); this.style.borderColor='var(--primary, #ff6600)'; this.style.background='rgba(255,102,0,0.05)'; this.style.transform='scale(1.02)';"
+                           ondragleave="this.style.borderColor='rgba(255, 255, 255, 0.15)'; this.style.background='rgba(255, 255, 255, 0.03)'; this.style.transform='scale(1)';"
+                           ondrop="handleGlobalDrop(event)"
+                           onclick="document.getElementById('global-file-input').click()">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                          <i class="bi bi-cloud-arrow-up fs-3" id="global-icon" style="color: var(--primary, #ff6600);"></i>
+                        </div>
+                        <p class="mb-1 fw-semibold text-light" id="global-text" style="font-size: 1.05rem;">Click or drag file to upload</p>
+                        <small class="d-block mb-0" id="global-subtext" style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">Maximum file size 10MB (.zip or .pdf)</small>
+                        <input type="file" id="global-file-input" style="display: none;" accept=".zip,.pdf" onchange="handleGlobalFileSelect()">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label class="form-label text-light small fw-medium mb-2" style="opacity: 0.9;">Additional Notes <span style="opacity: 0.5; font-weight: 400;">(optional)</span></label>
+                        <style>#global-notes::placeholder { color: rgba(255, 255, 255, 0.7) !important; }</style>
+                        <textarea id="global-notes" class="form-control" rows="3"
+                                  placeholder="Any notes for the reviewer..."
+                                  style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; padding: 12px 16px; transition: all 0.3s ease; resize: none;"></textarea>
+                      </div>
+
+                      <!-- Upload Progress -->
+                      <div id="global-progress-wrap" style="display:none;" class="mb-2 mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                          <small class="text-light fw-medium" id="global-progress-text" style="opacity: 0.9;">Uploading...</small>
+                          <!-- <small class="text-light fw-bold" id="global-progress-percentage" style="color: var(--primary, #ff6600);">0%</small> -->
+                        </div>
+                        <div class="progress" style="height: 6px; background-color: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                          <div id="global-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+                               style="width:0%; background-color: var(--primary, #ff6600); border-radius: 10px;"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 16px 24px;">
+                      <button type="button" class="btn btn-link text-light text-decoration-none px-3" data-bs-dismiss="modal" style="opacity: 0.7; font-weight: 500;">Cancel</button>
+                      <button type="button" id="confirmProjectSubmitBtn" class="btn" onclick="submitProjectGlobal()"
+                              style="background: var(--primary, #ff6600); color: #fff; border: none; border-radius: 10px; padding: 10px 24px; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3); transition: all 0.3s ease;">
+                        Submit Project
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <script>
+                let _submitProjectId = null;
+                let _selectedGlobalFile = null;
+
+                function openProjectSubmitModal(projectId, subProjectId, title) {
+                  _submitProjectId = projectId;
+                  _selectedGlobalFile = null;
+                  
+                  // Reset UI
+                  document.getElementById('submitModalProjectTitle').textContent = title;
+                  document.getElementById('global-notes').value = '';
+                  document.getElementById('global-progress-wrap').style.display = 'none';
+                  document.getElementById('global-file-input').value = '';
+                  
+                  document.getElementById('global-icon').className = 'bi bi-cloud-arrow-up fs-3';
+                  document.getElementById('global-icon').style.color = 'var(--primary, #ff6600)';
+                  document.getElementById('global-text').textContent = 'Click or drag file to upload';
+                  document.getElementById('global-text').className = 'mb-1 fw-semibold text-light';
+                  document.getElementById('global-subtext').textContent = 'Maximum file size 10MB (.zip or .pdf)';
+                  
+                  const dropZone = document.getElementById('global-drop-zone');
+                  dropZone.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                  dropZone.style.background = 'rgba(255, 255, 255, 0.03)';
+                  dropZone.style.transform = 'scale(1)';
+
+                  new bootstrap.Modal(document.getElementById('projectSubmitModal')).show();
+                }
+
+                function handleGlobalDrop(event) {
+                  event.preventDefault();
+                  const dropZone = document.getElementById('global-drop-zone');
+                  dropZone.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                  dropZone.style.background = 'rgba(255, 255, 255, 0.03)';
+                  dropZone.style.transform = 'scale(1)';
+                  
+                  if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                    processGlobalFile(event.dataTransfer.files[0]);
+                  }
+                }
+
+                function handleGlobalFileSelect() {
+                  const input = document.getElementById('global-file-input');
+                  if (input.files && input.files.length > 0) {
+                    processGlobalFile(input.files[0]);
+                  }
+                }
+
+                function processGlobalFile(file) {
+                  if (file.size > 10 * 1024 * 1024) {
+                    showToast('File is too large (max 10 MB)', 'error');
+                    return;
+                  }
+                  
+                  const fileExt = file.name.split('.').pop().toLowerCase();
+                  if (fileExt !== 'zip' && fileExt !== 'pdf') {
+                    showToast('Only .zip and .pdf files are allowed', 'error');
+                    return;
+                  }
+
+                  _selectedGlobalFile = file;
+                  
+                  // Update UI to show selected file
+                  document.getElementById('global-icon').className = 'bi bi-file-earmark-check fs-3';
+                  document.getElementById('global-icon').style.color = '#10b981';
+                  document.getElementById('global-text').textContent = file.name;
+                  document.getElementById('global-text').className = 'mb-1 fw-semibold text-success';
+                  document.getElementById('global-subtext').textContent = `${(file.size / (1024*1024)).toFixed(2)} MB`;
+                }
+
+                async function submitProjectGlobal() {
+                  if (!_selectedGlobalFile) {
+                    showToast('Please select or drag and drop a file', 'error');
+                    return;
+                  }
+
+                  const formData = new FormData();
+                  formData.append('projectId', _submitProjectId);
+                  formData.append('notes', document.getElementById('global-notes').value.trim());
+                  formData.append('file', _selectedGlobalFile);
+
+                  // Show progress
+                  const progressWrap = document.getElementById('global-progress-wrap');
+                  const progressBar = document.getElementById('global-progress-bar');
+                  const btn = document.getElementById('confirmProjectSubmitBtn');
+                  
+                  progressWrap.style.display = 'block';
+                  progressBar.style.width = '30%';
+                  btn.disabled = true;
+                  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Submitting...';
+
+                  try {
+                    const res = await fetch('/intern/submit-project', { method: 'POST', body: formData });
+                    progressBar.style.width = '80%';
+                    const data = await res.json();
+                    
+                    progressBar.style.width = '100%';
+                    
+                    if (data.success) {
+                      showToast('Project submitted successfully!', 'success');
+                      setTimeout(() => location.reload(), 1500);
+                    } else {
+                      showToast(data.message || 'Submission failed. Please try again.', 'error');
+                      resetGlobalSubmitBtn(btn, progressWrap);
+                    }
+                  } catch (err) {
+                    showToast('Network error. Please try again.', 'error');
+                    resetGlobalSubmitBtn(btn, progressWrap);
+                  }
+                }
+
+                function resetGlobalSubmitBtn(btn, progressWrap) {
+                  btn.disabled = false;
+                  btn.innerHTML = '<i class="bi bi-send me-1"></i> Submit Project';
+                  progressWrap.style.display = 'none';
+                }
               </script>
               <script src="/js/notifications.js"></script>
 </body>
