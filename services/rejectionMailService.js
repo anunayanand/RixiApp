@@ -45,7 +45,8 @@ async function sendRejectionMail(email, name, projectTitle, reason) {
     const BASE_URL = process.env.BASE_URL;
 
     const body = `
-   <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8"/>
@@ -92,6 +93,10 @@ img{
     display:block !important;
     width:100% !important;
     box-sizing:border-box !important;
+  }
+
+  .footer-text{
+    font-size:11px !important;
   }
 
 }
@@ -238,7 +243,7 @@ img{
     color:#ff6600;
   "
 >
-  Reason : 
+  Reason :
 </p>
 
 <p
@@ -309,18 +314,80 @@ img{
 <table
   width="100%"
   style="
-    margin-top:36px;
+    margin-top:40px;
     border-top:1px solid #ececec;
   "
 >
 <tr>
-<td align="center" style="padding-top:20px;">
+<td align="center" style="padding-top:24px;">
 
 <p
+  class="footer-text"
   style="
     margin:0;
     color:#888;
     font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rixi Lab • Rethink Innovate eXecute Inspire
+</p>
+
+<!-- Social Icons -->
+<p style="margin:18px 0 0;">
+
+<a
+  href="https://www.instagram.com/rixilab.in"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+    width="24"
+    alt="Instagram"
+  />
+</a>
+
+<a
+  href="https://www.linkedin.com/company/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+    width="24"
+    alt="LinkedIn"
+  />
+</a>
+
+<a
+  href="https://www.facebook.com/rixilab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+    width="24"
+    alt="Facebook"
+  />
+</a>
+
+<a
+  href="https://www.youtube.com/@RixiLab"
+  style="display:inline-block;margin:0 6px;"
+>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+    width="24"
+    alt="YouTube"
+  />
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
     line-height:1.8;
   "
 >

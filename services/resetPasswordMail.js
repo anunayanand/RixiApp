@@ -462,7 +462,7 @@ img{
 
 `;
 
-  const encodedMail = makeBody(user.email,`"Rixi Lab" <${process.env.OTP_EMAIL}>`, process.env.OTP_EMAIL, subject, htmlBody);
+  const encodedMail = makeBody(user.email, `"Rixi Lab" <${process.env.OTP_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {

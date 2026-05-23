@@ -29,7 +29,13 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
     const assignedProjects = intern.projectAssigned || [];
     const assignedMeetings = intern.meetings || [];
     const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-    const progress = intern.progress || 0;
+    const totalAssignedProjects = assignedProjects.length;
+    
+    // Recalculate and update progress
+    intern.progress = totalAssignedProjects > 0 ? Math.round((acceptedCount / totalAssignedProjects) * 100) : 0;
+    await intern.save();
+    
+    const progress = intern.progress;
 
     // Attendance
     const totalMeetings = assignedMeetings.length;

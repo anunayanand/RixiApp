@@ -512,7 +512,7 @@ img{
 
 `;
 
-  const encodedMail = makeBody(intern.email,`"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, process.env.PROJECT_INFO_EMAIL, subject, htmlBody);
+  const encodedMail = makeBody(intern.email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {

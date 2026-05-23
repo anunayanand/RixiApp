@@ -711,8 +711,6 @@
                                             onclick="openProjectSubmitModal('<%= proj._id %>', '<%= sub.projectId %>', '<%= proj.title.replace(/'/g, `\\'`) %>')">
                                       <i class="bi bi-cloud-upload me-1"></i> Submit
                                     </button>
-                                  <% } else if (sub.status !=='accepted' && sub.status !=='submitted' && proj && proj.isHidden) { %>
-                                    <button class="btn btn-secondary px-4 disabled">Closed</button>
                                   <% } %>
                         </div>
                       </div>
