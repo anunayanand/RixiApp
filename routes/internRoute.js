@@ -29,10 +29,18 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
     const assignedProjects = intern.projectAssigned || [];
     const assignedMeetings = intern.meetings || [];
     const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-    const totalAssignedProjects = assignedProjects.length;
     
+    let expectedTotalProjects = assignedProjects.length;
+    if (intern.duration === 4) {
+      expectedTotalProjects = 4;
+    } else if (intern.duration === 6) {
+      expectedTotalProjects = 5;
+    } else if (intern.duration === 8) {
+      expectedTotalProjects = 6;
+    }
+
     // Recalculate and update progress
-    intern.progress = totalAssignedProjects > 0 ? Math.round((acceptedCount / totalAssignedProjects) * 100) : 0;
+    intern.progress = expectedTotalProjects > 0 ? Math.min(100, Math.round((acceptedCount / expectedTotalProjects) * 100)) : 0;
     await intern.save();
     
     const progress = intern.progress;

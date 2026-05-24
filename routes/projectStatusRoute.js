@@ -34,8 +34,17 @@ router.post('/projects/update-status', async (req, res) => {
     if (updatedUser) {
       const assignedProjects = updatedUser.projectAssigned || [];
       const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
-      const totalAssignedProjects = assignedProjects.length;
-      updatedUser.progress = totalAssignedProjects > 0 ? Math.round((acceptedCount / totalAssignedProjects) * 100) : 0;
+      
+      let expectedTotalProjects = assignedProjects.length;
+      if (updatedUser.duration === 4) {
+        expectedTotalProjects = 4;
+      } else if (updatedUser.duration === 6) {
+        expectedTotalProjects = 5;
+      } else if (updatedUser.duration === 8) {
+        expectedTotalProjects = 6;
+      }
+
+      updatedUser.progress = expectedTotalProjects > 0 ? Math.min(100, Math.round((acceptedCount / expectedTotalProjects) * 100)) : 0;
       await updatedUser.save();
 
       if (status === 'rejected') {
