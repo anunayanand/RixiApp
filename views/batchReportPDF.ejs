@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Batch Report</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#f4f4f2;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#6b7280;
+  --border:#d8d8d8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#e9e9e7;
+  color:var(--text);
+
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+.report-container{
+  width:210mm;
+  margin:0 auto;
+}
+
+/* PAGE */
+
+.page{
+  width:210mm;
+  min-height:296mm;
+
+  padding:11mm;
+
+  position:relative;
+  overflow:hidden;
+
+  background:var(--bg);
+
+  border:1px solid #d9d9d9;
+}
+
+.page-break{
+  page-break-before:always;
+}
+
+/* HEADER */
+
+.page-header{
+  position:absolute;
+  top:10mm;
+  right:14mm;
+
+  text-align:right;
+
+  font-size:10px;
+  line-height:1.6;
+
+  letter-spacing:1px;
+
+  color:#7a7a7a;
+
+  text-transform:uppercase;
+}
+
+/* COVER */
+
+.cover-page{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.logo{
+  width:180px;
+  margin-bottom:45px;
+}
+
+.cover-title{
+  font-size:72px;
+  font-weight:800;
+
+  letter-spacing:-3px;
+
+  line-height:1;
+
+  margin-bottom:20px;
+
+  color:#111;
+}
+
+.cover-line{
+  width:100px;
+  height:2px;
+
+  background:#111;
+
+  margin-bottom:30px;
+}
+
+.cover-sub{
+  font-size:26px;
+  color:#222;
+
+  font-weight:600;
+
+  margin-bottom:36px;
+}
+
+.cover-info{
+  font-size:15px;
+
+  color:#6b7280;
+
+  line-height:1.8;
+}
+
+.footer{
+  position:absolute;
+
+  bottom:10mm;
+  left:14mm;
+  right:14mm;
+
+  display:flex;
+  justify-content:space-between;
+
+  color:#7a7a7a;
+  font-size:11px;
+}
+
+/* TITLES */
+
+.section-title{
+  font-size:30px;
+  font-weight:700;
+
+  margin-bottom:22px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  color:#111;
+}
+
+.section-title::before{
+  content:"";
+
+  width:4px;
+  height:28px;
+
+  background:#111;
+}
+
+/* CARDS */
+
+.glass{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  box-shadow:none;
+}
+
+/* AI */
+
+.ai-badge{
+  display:inline-flex;
+  align-items:center;
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  border:1px solid #111;
+
+  color:#111;
+
+  background:#fff;
+
+  font-size:11px;
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  margin-bottom:18px;
+
+  text-transform:uppercase;
+}
+
+.ai-box{
+  padding:22px;
+
+  line-height:1.8;
+
+  font-size:14px;
+
+  color:#2d2d2d;
+}
+
+.ai-box h4{
+  color:#111;
+
+  margin-top:0;
+  margin-bottom:10px;
+
+  font-size:12px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1px;
+}
+
+/* KPI */
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+
+  gap:16px;
+
+  margin-bottom:18px;
+}
+
+.kpi{
+  padding:22px;
+}
+
+.kpi-value{
+  font-size:30px;
+  font-weight:700;
+
+  margin-bottom:10px;
+
+  color:#111;
+}
+
+.kpi-label{
+  color:#6b7280;
+
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+  margin-bottom:8px;
+}
+
+.kpi-note{
+  font-size:10px;
+  color:#444;
+  line-height:1.5;
+}
+
+/* CHARTS */
+
+.chart-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:16px;
+
+  margin-bottom:16px;
+}
+
+.chart-card{
+  padding:18px;
+
+  height:420px;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.chart-full{
+  padding:22px;
+
+  height:390px;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.large-chart{
+  height:460px;
+}
+
+.chart-title{
+  text-align:center;
+
+  margin-bottom:12px;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  letter-spacing:.5px;
+
+  text-transform:uppercase;
+
+  color:#111;
+}
+
+.chart-canvas{
+  position:relative;
+  flex:1;
+}
+
+/* TABLE */
+
+.table-card{
+  padding:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+thead tr{
+  background:#f1f1f1;
+}
+
+th{
+  padding:14px 12px;
+
+  color:#555;
+
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+  text-align:left;
+}
+
+td{
+  padding:15px 12px;
+
+  border-top:1px solid #e3e3e3;
+
+  font-size:12px;
+
+  color:#222;
+}
+
+tbody tr:nth-child(even){
+  background:#fafafa;
+}
+
+.name{
+  font-weight:700;
+  color:#111;
+}
+
+.id{
+  font-family:monospace;
+  color:#666;
+}
+
+.progress{
+  height:6px;
+  width:100%;
+
+  background:#e2e2e2;
+
+  border-radius:999px;
+
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  border-radius:999px;
+
+  background:#111;
+}
+
+/* PAGE NUMBER */
+
+.page-number{
+  position:absolute;
+
+  right:14mm;
+  bottom:8mm;
+
+  color:#7a7a7a;
+
+  font-size:11px;
+}
+
+/* PDF FIX */
+
+canvas{
+  max-width:100% !important;
+}
+
+.chart-card,
+.chart-full{
+  break-inside:avoid;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="report-container" id="reportContent">
+
+<!-- PAGE 1 -->
+
+<div class="page cover-page">
+
+<div class="page-header">
+RIXI LAB ANALYTICS<br>
+BATCH <%= batch_no %>
+</div>
+
+<img src="/img/Rixi Lab New Logo PNG.png" class="logo">
+
+<h1 class="cover-title">
+BATCH REPORT
+</h1>
+
+<div class="cover-line"></div>
+
+<div class="cover-sub">
+Batch <%= batch_no %>
+</div>
+
+<div class="cover-info">
+Generated on
+<%= new Date().toLocaleDateString('en-IN',{
+day:'2-digit',
+month:'long',
+year:'numeric'
+}) %>
+<br>
+Rixi Lab Analytics Department
+</div>
+
+<div class="footer">
+<div>Confidential Report</div>
+<div>Rixi Lab</div>
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page page-break">
+
+<div class="page-header">
+Executive Intelligence
+</div>
+
+<div class="section-title">
+Executive Analytics
+</div>
+
+<div class="ai-badge">
+<%= (aiAnalysis && aiAnalysis.operationalRating)
+? aiAnalysis.operationalRating
+: 'AI Generated Insights' %>
+</div>
+
+<div class="glass ai-box" style="margin-bottom:16px;">
+
+<h4>Executive Summary</h4>
+
+<p>
+<%= (aiAnalysis && aiAnalysis.executiveSummary)
+? aiAnalysis.executiveSummary
+: 'Summary unavailable' %>
+</p>
+
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+<div class="glass ai-box">
+
+<h4>Key Highlights</h4>
+
+<ul style="padding-left:18px;">
+
+<% if (aiAnalysis && aiAnalysis.keyHighlights && aiAnalysis.keyHighlights.length) { %>
+
+<% aiAnalysis.keyHighlights.forEach(h => { %>
+
+<li style="margin-bottom:8px;">
+<%= h %>
+</li>
+
+<% }) %>
+
+<% } else { %>
+
+<li>No highlights available</li>
+
+<% } %>
+
+</ul>
+
+</div>
+
+<div class="glass ai-box">
+
+<h4>Areas For Improvement</h4>
+
+<ul style="padding-left:18px;">
+
+<% if (aiAnalysis && aiAnalysis.areasForImprovement && aiAnalysis.areasForImprovement.length) { %>
+
+<% aiAnalysis.areasForImprovement.forEach(i => { %>
+
+<li style="margin-bottom:8px;">
+<%= i %>
+</li>
+
+<% }) %>
+
+<% } else { %>
+
+<li>No improvement areas identified</li>
+
+<% } %>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="glass ai-box">
+
+<h4>Recommended Action Items</h4>
+
+<ul style="padding-left:18px;">
+
+<% if (aiAnalysis && aiAnalysis.actionItems && aiAnalysis.actionItems.length) { %>
+
+<% aiAnalysis.actionItems.forEach(a => { %>
+
+<li style="margin-bottom:8px;">
+<%= a %>
+</li>
+
+<% }) %>
+
+<% } else { %>
+
+<li>No action items suggested</li>
+
+<% } %>
+
+</ul>
+
+</div>
+
+<div class="page-number">
+Page 2
+</div>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page page-break">
+
+<div class="page-header">
+Performance Metrics
+</div>
+
+<div class="section-title">
+Performance Analytics
+</div>
+
+<div class="kpi-grid">
+
+<div class="glass kpi">
+<div class="kpi-value"><%= stats.totalInterns %></div>
+<div class="kpi-label">Total Interns</div>
+<div class="kpi-note">Active batch participation</div>
+</div>
+
+<div class="glass kpi">
+<div class="kpi-value"><%= stats.certificationRate %>%</div>
+<div class="kpi-label">Certification Rate</div>
+<div class="kpi-note">
+<%= stats.certificationRate > 75
+? 'Above benchmark performance'
+: 'Requires additional monitoring' %>
+</div>
+</div>
+
+<div class="glass kpi">
+<div class="kpi-value"><%= stats.averageQuizScore %>%</div>
+<div class="kpi-label">Average Quiz Score</div>
+<div class="kpi-note">
+<%= stats.averageQuizScore > 70
+? 'Strong theoretical retention'
+: 'Assessment quality improvement recommended' %>
+</div>
+</div>
+
+<div class="glass kpi">
+<div class="kpi-value"><%= stats.totalProjects %></div>
+<div class="kpi-label">Projects Submitted</div>
+<div class="kpi-note">Overall deliverable submissions</div>
+</div>
+
+<div class="glass kpi">
+<div class="kpi-value"><%= stats.certifiedInterns %></div>
+<div class="kpi-label">Certified Interns</div>
+<div class="kpi-note">Successful completion outcomes</div>
+</div>
+
+<div class="glass kpi">
+<div class="kpi-value">
+₹<%= Number(stats.totalIncome || 0).toLocaleString('en-IN') %>
+</div>
+<div class="kpi-label">Revenue</div>
+<div class="kpi-note">Gross operational revenue</div>
+</div>
+
+</div>
+
+<div class="chart-grid">
+
+<div class="glass chart-card">
+
+<div class="chart-title">
+Score Distribution
+</div>
+
+<div class="chart-canvas">
+<canvas id="scoreChart"></canvas>
+</div>
+
+</div>
+
+<div class="glass chart-card">
+
+<div class="chart-title">
+Project Status
+</div>
+
+<div class="chart-canvas">
+<canvas id="projectStatusChart"></canvas>
+</div>
+
+</div>
+
+</div>
+
+<div class="page-number">
+Page 3
+</div>
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div class="page page-break">
+
+<div class="page-header">
+Institutional Insights
+</div>
+
+<div class="section-title">
+Institutional Analytics
+</div>
+
+<div class="chart-grid">
+
+<div class="glass chart-card">
+
+<div class="chart-title">
+Domain Distribution
+</div>
+
+<div class="chart-canvas">
+<canvas id="domainChart"></canvas>
+</div>
+
+</div>
+
+<div class="glass chart-card">
+
+<div class="chart-title">
+Top Ambassador Referrals
+</div>
+
+<div class="chart-canvas">
+<canvas id="ambassadorChart"></canvas>
+</div>
+
+</div>
+
+</div>
+
+<div class="glass chart-full large-chart">
+
+<div class="chart-title">
+Top Colleges / Universities
+</div>
+
+<div class="chart-canvas">
+<canvas id="collegeChart"></canvas>
+</div>
+
+</div>
+
+<div class="page-number">
+Page 4
+</div>
+
+</div>
+
+<!-- PAGE 5 -->
+
+<div class="page page-break">
+
+<div class="page-header">
+Operational Directory
+</div>
+
+<div class="section-title">
+Intern Directory
+</div>
+
+<div class="glass table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Intern ID</th>
+<th>Domain</th>
+<th>Quiz</th>
+<th>Paid</th>
+<th style="width:170px;">Progress</th>
+</tr>
+</thead>
+
+<tbody>
+
+<% interns.forEach((intern, idx) => { %>
+
+<tr>
+
+<td><%= idx + 1 %></td>
+
+<td class="name">
+<%= intern.name %>
+</td>
+
+<td class="id">
+<%= intern.intern_id %>
+</td>
+
+<td>
+<%= intern.domain %>
+</td>
+
+<td>
+<%= intern.quizScore || 0 %>%
+</td>
+
+<td>
+₹<%= (intern.amountPaid || 0).toLocaleString('en-IN') %>
+</td>
+
+<td>
+
+<div style="display:flex;align-items:center;gap:10px;">
+
+<div class="progress">
+<div class="progress-fill"
+style="width:<%= intern.progress || 0 %>%;">
+</div>
+</div>
+
+<div style="font-size:11px;font-weight:700;color:#111;">
+<%= intern.progress || 0 %>%
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="page-number">
+Page 5
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const chartData = <%- JSON.stringify(graphs) %>;
+const statsData = <%- JSON.stringify(stats) %>;
+
+Chart.defaults.color = "#444";
+Chart.defaults.font.family = "Inter";
+
+/* DOMAIN CHART */
+
+new Chart(document.getElementById('domainChart'),{
+
+  type:'doughnut',
+
+  data:{
+    labels:chartData.domains,
+
+    datasets:[{
+      data:chartData.domainCounts,
+
+      radius:'92%',
+
+      backgroundColor:[
+        "#111111",
+        "#374151",
+        "#6b7280",
+        "#7c3aed",
+        "#0f766e",
+        "#b45309",
+        "#1d4ed8"
+      ],
+
+      borderColor:"#f4f4f2",
+      borderWidth:2
+    }]
+  },
+
+  options:{
+
+    responsive:true,
+    maintainAspectRatio:false,
+
+    cutout:'68%',
+
+    layout:{
+      padding:0
+    },
+
+    plugins:{
+
+      legend:{
+        position:'bottom',
+
+        labels:{
+          color:'#333',
+
+          boxWidth:10,
+          padding:10,
+
+          font:{
+            size:9,
+            weight:'600'
+          }
+        }
+      }
+    }
+  }
+});
+
+/* PROJECT STATUS */
+
+new Chart(document.getElementById('projectStatusChart'),{
+
+  type:'pie',
+
+  data:{
+    labels:['Accepted','Rejected','Pending'],
+
+    datasets:[{
+      data:[
+        statsData.projectsAccepted || 0,
+        statsData.projectsRejected || 0,
+        statsData.projectsPending || 0
+      ],
+
+      radius:'92%',
+
+      backgroundColor:[
+        "#15803d",
+        "#b91c1c",
+        "#b45309"
+      ],
+
+      borderColor:"#f4f4f2",
+      borderWidth:2
+    }]
+  },
+
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+
+    layout:{
+      padding:0
+    },
+
+    plugins:{
+      legend:{
+        position:'bottom',
+
+        labels:{
+          color:'#333',
+
+          boxWidth:10,
+          padding:10,
+
+          font:{
+            size:10,
+            weight:'600'
+          }
+        }
+      }
+    }
+  }
+});
+
+/* SCORE CHART */
+
+new Chart(document.getElementById('scoreChart'),{
+
+  type:'bar',
+
+  data:{
+    labels:chartData.scores,
+
+    datasets:[{
+      label:'Interns',
+
+      data:chartData.scoreCounts,
+
+      backgroundColor:"#444",
+
+      borderRadius:4,
+
+      barThickness:26
+    }]
+  },
+
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+
+    layout:{
+      padding:0
+    },
+
+    plugins:{
+      legend:{
+        display:false
+      }
+    },
+
+    scales:{
+
+      x:{
+        ticks:{
+          color:'#444',
+          font:{ size:10 }
+        },
+
+        grid:{
+          display:false
+        }
+      },
+
+      y:{
+        beginAtZero:true,
+
+        ticks:{
+          color:'#666',
+          precision:0
+        },
+
+        grid:{
+          color:'#e2e2e2'
+        }
+      }
+    }
+  }
+});
+
+/* COLLEGE CHART */
+
+const trimmedCollegeLabels = (chartData.colleges || []).map(name => {
+
+  if(name.length > 28){
+    return name.substring(0,28) + '...';
+  }
+
+  return name;
+
+});
+
+new Chart(document.getElementById('collegeChart'),{
+
+  type:'bar',
+
+  data:{
+    labels:trimmedCollegeLabels,
+
+    datasets:[{
+
+      label:'Interns',
+
+      data:chartData.collegeCounts,
+
+      backgroundColor:"#222",
+
+      borderRadius:4,
+
+      barThickness:28
+    }]
+  },
+
+  options:{
+
+    indexAxis:'y',
+
+    responsive:true,
+    maintainAspectRatio:false,
+
+    layout:{
+      padding:0
+    },
+
+    plugins:{
+      legend:{
+        display:false
+      }
+    },
+
+    scales:{
+
+      x:{
+        beginAtZero:true,
+
+        ticks:{
+          color:'#555',
+          precision:0
+        },
+
+        grid:{
+          color:'#e5e5e5'
+        }
+      },
+
+      y:{
+        ticks:{
+          color:'#555',
+
+          font:{
+            size:10,
+            weight:'600'
+          }
+        },
+
+        grid:{
+          display:false
+        }
+      }
+    }
+  }
+});
+
+/* AMBASSADOR */
+
+const trimmedAmbassadorLabels = (chartData.ambassadors || []).map(name => {
+
+  if(name.length > 20){
+    return name.substring(0,20) + '...';
+  }
+
+  return name;
+
+});
+
+new Chart(document.getElementById('ambassadorChart'),{
+
+  type:'bar',
+
+  data:{
+    labels:trimmedAmbassadorLabels,
+
+    datasets:[{
+
+      label:'Referrals',
+
+      data:chartData.ambassadorCounts,
+
+      backgroundColor:"#555",
+
+      borderRadius:4,
+
+      barThickness:28
+    }]
+  },
+
+  options:{
+
+    indexAxis:'y',
+
+    responsive:true,
+    maintainAspectRatio:false,
+
+    layout:{
+      padding:0
+    },
+
+    plugins:{
+      legend:{
+        display:false
+      }
+    },
+
+    scales:{
+
+      x:{
+        beginAtZero:true,
+
+        ticks:{
+          color:'#555',
+          precision:0
+        },
+
+        grid:{
+          color:'#e5e5e5'
+        }
+      },
+
+      y:{
+        ticks:{
+          color:'#555',
+
+          font:{
+            size:10,
+            weight:'600'
+          }
+        },
+
+        grid:{
+          display:false
+        }
+      }
+    }
+  }
+});
+
+/* PDF */
+
+window.downloadPDF = async function(){
+
+  window.scrollTo(0,0);
+
+  const element = document.getElementById('reportContent');
+
+  await new Promise(resolve => setTimeout(resolve,1000));
+
+  const opt = {
+
+    margin:0,
+
+    filename:`Batch_Report_${statsData.batchNo}.pdf`,
+
+    image:{
+      type:'jpeg',
+      quality:1
+    },
+
+    html2canvas:{
+      scale:2,
+      useCORS:true,
+      backgroundColor:"#f4f4f2",
+      scrollY:0,
+      scrollX:0
+    },
+
+    jsPDF:{
+      unit:'mm',
+      format:'a4',
+      orientation:'portrait'
+    },
+
+    pagebreak:{
+      mode:['css','legacy']
+    }
+  };
+
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save();
+
+}
+
+</script>
+
+</body>
+</html>

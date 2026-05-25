@@ -135,6 +135,11 @@
         <i class="bi bi-chat-square-text-fill"></i> 
         <span>Feedback Analytics</span>
       </a>
+      <div class="sidebar-nav-label">Reports</div>
+      <a href="#batchReportSection" class="nav-link" onclick="setActive(this)">
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+        <span>Batch Reports</span>
+      </a>
       
       <div class="sidebar-nav-label">Ambassador Program</div>
       <a href="#viewAmbassador" class="nav-link" onclick="setActive(this)">
@@ -934,6 +939,38 @@
   </div>
 
 </section>
+
+      <!-- Batch Reports -->
+      <section id="batchReportSection" class="content-section" style="display:none;">
+        <div class="page-header d-flex flex-wrap justify-content-between align-items-start gap-1">
+          <div>
+            <h4>Batch Reports</h4>
+            <p>Select a batch to preview and download the report.</p>
+          </div>
+        </div>
+        <div class="card shadow-sm p-4" style="border-radius: 15px; border-color: #ff6600 !important;">
+          <div class="row align-items-end mb-3">
+            <div class="col-md-6 col-lg-4">
+              <label for="batchSelect" class="form-label fw-bold">Select Batch</label>
+              <select id="batchSelect" class="form-select" style="border-radius: 10px;">
+                <option value="" selected disabled>Choose...</option>
+                <% batches.forEach(batch => { %>
+                  <option value="<%= batch %>">Batch <%= batch %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-6 col-lg-8 text-md-end mt-3 mt-md-0">
+              <button id="downloadBatchReportBtn" class="btn btn-primary px-4 py-2 rounded-pill" style="background-color: #ff6600; border: none;" disabled>
+                <i class="bi bi-download me-2"></i>Download PDF
+              </button>
+            </div>
+          </div>
+          <div class="report-preview-container" style="border: 1px solid #dee2e6; border-radius: 10px; overflow: hidden; background: #f8f9fa; min-height: 600px; display: flex; align-items: center; justify-content: center;">
+            <span id="previewPlaceholder" class="text-muted"><i class="bi bi-file-earmark-pdf fs-1 d-block text-center mb-2"></i>Select a batch to see the preview here</span>
+            <iframe id="reportPreviewFrame" src="" style="width: 100%; height: 600px; border: none; display: none;"></iframe>
+          </div>
+        </div>
+      </section>
 
       <!-- View Interns -->
       <section id="viewInterns" class="content-section" style="display:none;">
@@ -3537,6 +3574,48 @@ function updateIntern(id) {
         btn.disabled = false;
         if (overlay) overlay.classList.add('d-none');
       }
+    }
+    // Batch Report Script
+    const batchSelect = document.getElementById('batchSelect');
+    const reportPreviewFrame = document.getElementById('reportPreviewFrame');
+    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const downloadBatchReportBtn = document.getElementById('downloadBatchReportBtn');
+
+    if (batchSelect) {
+      batchSelect.addEventListener('change', function() {
+        const batchNo = this.value;
+        if (batchNo) {
+          const reportUrl = `/superAdmin/report/batch/${batchNo}`;
+          
+          reportPreviewFrame.style.display = 'none';
+          previewPlaceholder.innerHTML = '<div class="spinner-border text-primary" role="status"></div><div class="mt-2 fw-bold text-muted">Generating AI Analysis & Report...</div>';
+          previewPlaceholder.style.display = 'flex';
+          previewPlaceholder.style.flexDirection = 'column';
+          downloadBatchReportBtn.disabled = true;
+
+          reportPreviewFrame.onload = function() {
+            previewPlaceholder.style.display = 'none';
+            reportPreviewFrame.style.display = 'block';
+            downloadBatchReportBtn.disabled = false;
+          };
+
+          reportPreviewFrame.src = reportUrl;
+        } else {
+          reportPreviewFrame.src = '';
+          reportPreviewFrame.style.display = 'none';
+          previewPlaceholder.innerHTML = '<i class="bi bi-file-earmark-pdf fs-1 d-block text-center mb-2"></i>Select a batch to see the preview here';
+          previewPlaceholder.style.display = 'block';
+          downloadBatchReportBtn.disabled = true;
+        }
+      });
+      
+      downloadBatchReportBtn.addEventListener('click', function() {
+        if (reportPreviewFrame.contentWindow && typeof reportPreviewFrame.contentWindow.downloadPDF === 'function') {
+          reportPreviewFrame.contentWindow.downloadPDF();
+        } else {
+          alert('Report is still loading or PDF generation is not available. Please wait a moment.');
+        }
+      });
     }
   </script>
 

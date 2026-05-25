@@ -157,7 +157,7 @@ app.get("/", homeRoute);
 app.use("/", logoutRouter);   // ✅ attaches /logout route
 
 const verifyCertificateRouter = require('./routes/verifyCertificateRouter');
-app.get("/certificate", (req, res) => res.render("certificate"));
+app.get("/certificate", (req, res) => res.render("certificate", { query: req.query || {} }));
 app.use('/', verifyCertificateRouter);
 
 const downloadCertificateRoute = require('./routes/downloadCertificateRoute');

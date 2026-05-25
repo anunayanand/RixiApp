@@ -10,7 +10,7 @@ const Feedback = require("../models/Feedback");
 const Notification = require("../models/Notification");
 const { generateSignature } = require("./profileRoute");
 const { notify } = require("../services/notificationService");
-
+const { generateBatchAnalysis } = require("../services/groqService");
 
 router.get("/", authRole("superAdmin"), async (req, res, next) => {
   try {
@@ -143,7 +143,11 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
     // ==============================
     // Count successful referrals for each ambassador
     const referralMap = new Map();
-    ambassadors.forEach(amb => referralMap.set(amb.ambassador_id, 0));
+    ambassadors.forEach(amb => {
+      if (amb.referralId) {
+        referralMap.set(amb.referralId.trim(), 0);
+      }
+    });
     
     // We count interns who have a referral code matching an ambassador
     interns.forEach(intern => {
@@ -156,7 +160,8 @@ router.get("/", authRole("superAdmin"), async (req, res, next) => {
     const topAmbassadors = ambassadors
       .map(amb => {
         // Fallback: If calculated referrals is 0, use the ambassador's internCount
-        let calculatedRfs = referralMap.get(amb.ambassador_id) || 0;
+        let rCode = amb.referralId ? amb.referralId.trim() : "";
+        let calculatedRfs = referralMap.get(rCode) || 0;
         let finalRfs = Math.max(calculatedRfs, amb.internCount || 0);
 
         return {
@@ -319,6 +324,176 @@ router.get("/mail-center", authRole("superAdmin"), async (req, res, next) => {
   }
 });
 
+
+// GET: Batch Report PDF Preview
+router.get("/report/batch/:batch_no", authRole("superAdmin"), async (req, res, next) => {
+  try {
+    const { batch_no } = req.params;
+    
+    const interns = await User.find({ role: "intern", batch_no: batch_no });
+    
+    if (!interns || interns.length === 0) {
+      return res.status(404).send("<h2>No interns found for this batch.</h2>");
+    }
+
+    const totalInterns = interns.length;
+    let totalProjects = 0;
+    let totalIncome = 0;
+    
+    let certifiedInterns = 0;
+    let totalQuizScore = 0;
+    let quizTakers = 0;
+    let projectsAccepted = 0;
+    let projectsRejected = 0;
+    let projectsPending = 0;
+    let referralCount = 0;
+
+    const domainDistribution = {};
+    const durationDistribution = {};
+    const projectsPerInternDist = {};
+    const collegeDistribution = {};
+    
+    const scoreDistribution = {
+      "< 50%": 0,
+      "50-60%": 0,
+      "61-70%": 0,
+      "71-80%": 0,
+      "81-90%": 0,
+      "91-100%": 0
+    };
+    
+    const ambassadorsList = await Ambassador.find({});
+    const ambassadorMap = {};
+    ambassadorsList.forEach(amb => { 
+      if (amb.referralId) {
+        ambassadorMap[amb.referralId.trim()] = amb.name; 
+      }
+    });
+    const ambassadorDistribution = {};
+    
+    const internDetails = interns.map(intern => {
+      const income = intern.amountPaid || 0;
+      totalIncome += income;
+      
+      if (intern.isPassed) certifiedInterns++;
+      if (intern.quiz_score) {
+        totalQuizScore += intern.quiz_score;
+        quizTakers++;
+        
+        const score = intern.quiz_score;
+        if (score < 50) scoreDistribution["< 50%"]++;
+        else if (score <= 60) scoreDistribution["50-60%"]++;
+        else if (score <= 70) scoreDistribution["61-70%"]++;
+        else if (score <= 80) scoreDistribution["71-80%"]++;
+        else if (score <= 90) scoreDistribution["81-90%"]++;
+        else scoreDistribution["91-100%"]++;
+      }
+      if (intern.referal_code) {
+        referralCount++;
+        const rCode = intern.referal_code.trim();
+        const ambName = ambassadorMap[rCode] || rCode;
+        ambassadorDistribution[ambName] = (ambassadorDistribution[ambName] || 0) + 1;
+      }
+
+      let projectsCount = 0;
+      if (intern.projectAssigned && Array.isArray(intern.projectAssigned)) {
+        projectsCount = intern.projectAssigned.length;
+        intern.projectAssigned.forEach(p => {
+          if (p.status === 'accepted') projectsAccepted++;
+          else if (p.status === 'rejected') projectsRejected++;
+          else projectsPending++;
+        });
+      }
+      totalProjects += projectsCount;
+      
+      const domain = intern.domain || "Unknown";
+      domainDistribution[domain] = (domainDistribution[domain] || 0) + 1;
+      
+      const duration = intern.duration || 0;
+      durationDistribution[duration] = (durationDistribution[duration] || 0) + 1;
+      
+      const college = intern.college || "Unknown";
+      collegeDistribution[college] = (collegeDistribution[college] || 0) + 1;
+      
+      projectsPerInternDist[projectsCount] = (projectsPerInternDist[projectsCount] || 0) + 1;
+      
+      return {
+        name: intern.name,
+        intern_id: intern.intern_id,
+        domain: domain,
+        duration: duration,
+        amountPaid: income,
+        isPassed: intern.isPassed,
+        quizScore: intern.quiz_score || 0,
+        progress: intern.progress || 0
+      };
+    });
+    
+    internDetails.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+
+    // Find top domains and colleges
+    const topDomains = Object.entries(domainDistribution)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(entry => entry[0]);
+      
+    const topCollegesList = Object.entries(collegeDistribution)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(entry => entry[0]);
+
+    const averageQuizScore = quizTakers > 0 ? (totalQuizScore / quizTakers).toFixed(1) : 0;
+    const certificationRate = totalInterns > 0 ? Math.round((certifiedInterns / totalInterns) * 100) : 0;
+
+    const stats = {
+      batchNo: batch_no,
+      totalInterns,
+      totalProjects,
+      totalIncome,
+      certifiedInterns,
+      certificationRate,
+      averageQuizScore,
+      projectsAccepted,
+      projectsRejected,
+      projectsPending,
+      topDomains,
+      topColleges: topCollegesList,
+      referralCount
+    };
+
+    // Generate AI Analysis
+    const aiAnalysis = await generateBatchAnalysis(stats);
+
+    const topColleges = Object.entries(collegeDistribution).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const topAmbassadors = Object.entries(ambassadorDistribution).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+    const reportData = {
+      batch_no,
+      stats,
+      aiAnalysis,
+      graphs: {
+        domains: Object.keys(domainDistribution),
+        domainCounts: Object.values(domainDistribution),
+        durations: Object.keys(durationDistribution),
+        durationCounts: Object.values(durationDistribution),
+        projects: Object.keys(projectsPerInternDist),
+        projectCounts: Object.values(projectsPerInternDist),
+        colleges: topColleges.map(e => e[0]),
+        collegeCounts: topColleges.map(e => e[1]),
+        ambassadors: topAmbassadors.map(e => e[0]),
+        ambassadorCounts: topAmbassadors.map(e => e[1]),
+        scores: Object.keys(scoreDistribution),
+        scoreCounts: Object.values(scoreDistribution)
+      },
+      interns: internDetails
+    };
+
+    res.render("batchReportPDF", reportData);
+  } catch (err) {
+    console.error("Batch Report Error:", err);
+    res.status(500).send("Server Error generating report.");
+  }
+});
 
 module.exports = router;
 

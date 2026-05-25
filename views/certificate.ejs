@@ -81,11 +81,11 @@
               <form id="loginForm" class="php-email-form" action="/verify-certificate" method="POST">
                 <div class="mb-3">
                   <label for="Intern_ID" class="form-label">Intern ID </label>
-                  <input type="text" name="intern_id" class="form-control" id="Intern_ID" placeholder="Enter your Intern ID" required>
+                  <input type="text" name="intern_id" class="form-control" id="Intern_ID" placeholder="Enter your Intern ID" value="<%= typeof query !== 'undefined' && query.intern_id ? query.intern_id : '' %>" <%= typeof query !== 'undefined' && query.intern_id ? 'readonly' : '' %> required>
                 </div>
                 <div class="mb-3">
                   <label for="CertificateID" class="form-label">Certificate No</label>
-                  <input type="text" name="certificate_id" class="form-control" id="CertificateID" placeholder="Enter your Certificate No" required>
+                  <input type="text" name="certificate_id" class="form-control" id="CertificateID" placeholder="Enter your Certificate No" value="<%= typeof query !== 'undefined' && query.certificate_id ? query.certificate_id : '' %>" <%= typeof query !== 'undefined' && query.certificate_id ? 'readonly' : '' %> required>
                 </div>
 
                 <div class="mb-2 text-center" id="errorMsg"></div>
