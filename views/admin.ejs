@@ -1741,6 +1741,17 @@
                                           <span class="spinner-border spinner-border-sm d-none" role="status"
                                             aria-hidden="true"></span>
                                         </button>
+
+                                        <% if(sub.driveLink){ %>
+                                          <a href="<%= sub.driveLink %>" target="_blank"
+                                            class="btn btn-sm btn-outline-success align-items-center gap-1"
+                                            title="View Link">
+                                            <i class="bi bi-link-45deg btn-icon"></i>
+                                          </a>
+                                          <% } else { %>
+                                            <span
+                                              class="btn btn-sm btn-outline-secondary align-items-center gap-1 disabled">N/A</span>
+                                            <% } %>
                                       </div>
                                     </td>
                                   </tr>

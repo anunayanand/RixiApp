@@ -82,6 +82,7 @@ router.post('/intern/submit-project', authRole('intern'), (req, res, next) => {
     );
     if (projectIndex !== -1) {
       intern.projectAssigned[projectIndex].status = 'submitted';
+      intern.projectAssigned[projectIndex].driveLink = driveLink;
       await intern.save();
     }
 

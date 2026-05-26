@@ -81,6 +81,7 @@ const userSchema = new mongoose.Schema({
         enum: ["pending", "submitted", "accepted", "rejected"],
         default: "pending",
       },
+      driveLink: { type: String }
     },
   ],
 
