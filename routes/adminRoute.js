@@ -250,8 +250,26 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
           }
           await ambassador.save();
         }
+
+        // ✅ Update referring intern if referral code matches an intern_id
+        const referrerIntern = await User.findOne({ intern_id: registration.referral_code.trim() });
+        if (referrerIntern) {
+          referrerIntern.points = (referrerIntern.points || 0) + 100;
+          if (!referrerIntern.referredInterns) referrerIntern.referredInterns = [];
+          
+          const existingRefIndex = referrerIntern.referredInterns.findIndex(i => i.email === registration.email);
+          if (existingRefIndex === -1) {
+            referrerIntern.referredInterns.push({
+              name: registration.name,
+              email: registration.email,
+              domain: registration.domain,
+              dateJoined: new Date()
+            });
+          }
+          await referrerIntern.save();
+        }
       } catch (ambErr) {
-        console.error("Failed to update ambassador on accept:", ambErr.message);
+        console.error("Failed to update ambassador/intern on accept:", ambErr.message);
       }
     }
 
@@ -407,6 +425,27 @@ router.get("/download-salary-slip/:slipIndex", authRole("admin"), async (req, re
     }
 
     generateSalarySlip(admin, slipIndex, res);
+  } catch (error) {
+    console.error("Download slip error:", error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Admin downloads PF slip
+router.get("/download-pf-slip/:slipIndex", authRole("admin"), async (req, res) => {
+  try {
+    const adminId = req.session.user;
+    const slipIndex = parseInt(req.params.slipIndex);
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) return res.status(404).send("Admin not found");
+
+    if (isNaN(slipIndex) || slipIndex < 0 || slipIndex >= admin.pfWithdrawals.length) {
+      return res.status(404).send("PF slip not found");
+    }
+
+    const { generatePFSlip } = require("../services/salarySlipGenerator");
+    generatePFSlip(admin, slipIndex, res);
   } catch (error) {
     console.error("Download slip error:", error);
     res.status(500).send("Server Error");

@@ -65,15 +65,10 @@ body {
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
-  scrollbar-width: none;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   transition: var(--transition);
-}
-
-.sidebar::-webkit-scrollbar {
-  display: none;
 }
 
 /* Brand */
@@ -128,6 +123,11 @@ body {
 .sidebar-nav {
   flex: 1;
   padding: 5px 12px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sidebar-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-nav-label {

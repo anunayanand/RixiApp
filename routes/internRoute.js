@@ -5,6 +5,8 @@ const User = require("../models/User");
 const Admin = require("../models/Admin");
 const Project = require("../models/Project");
 const Notification = require("../models/Notification");
+const NewRegistration = require("../models/NewRegistration");
+const RedemptionRequest = require("../models/RedemptionRequest");
 const authRole = require('../middleware/authRole');
 
 router.get("/intern", authRole("intern"), async (req, res, next) => {
@@ -98,6 +100,12 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
         }) 
       : 'Not assigned';
     
+    // Fetch referred interns directly from the user's DB entry
+    const referredInterns = intern.referredInterns || [];
+
+    // Fetch the intern's redemption requests
+    const redemptionRequests = await RedemptionRequest.find({ internId: intern._id }).sort({ createdAt: -1 });
+
     res.render("intern", {
       intern,
       projects,
@@ -111,7 +119,9 @@ router.get("/intern", authRole("intern"), async (req, res, next) => {
       unreadCount,
       startingDate,
       allLectures,
-      lectureProgress
+      lectureProgress,
+      referredInterns,
+      redemptionRequests
     });
 
   } catch (err) {
@@ -273,5 +283,56 @@ function parseDurationToSeconds(str) {
 
   return 0;
 }
+
+
+
+router.post('/intern/redeem', authRole('intern'), async (req, res) => {
+  try {
+    const { rewardType } = req.body;
+    if (!rewardType) {
+      return res.status(400).json({ success: false, message: "Reward type is required" });
+    }
+
+    const intern = await User.findById(req.session.user);
+    if (!intern) {
+      return res.status(404).json({ success: false, message: "Intern not found" });
+    }
+
+    // Define reward costs
+    const rewardCosts = {
+      "Crunchyroll Premium 1 Month": 500,
+      "Amazon/Flipkart/Myntra Rs 200": 1000,
+      "Amazon/Flipkart/Myntra Rs 500": 2000,
+      "Amazon Rs 200 Voucher": 1000,
+      "Amazon Rs 500 Voucher": 2000
+    };
+
+    const cost = rewardCosts[rewardType];
+    if (!cost) {
+      return res.status(400).json({ success: false, message: "Invalid reward type" });
+    }
+
+    if ((intern.points || 0) < cost) {
+      return res.status(400).json({ success: false, message: "Insufficient points" });
+    }
+
+    // Deduct points
+    intern.points -= cost;
+    await intern.save();
+
+    // Create redemption request
+    const request = new RedemptionRequest({
+      internId: intern._id,
+      rewardType,
+      pointsUsed: cost
+    });
+    await request.save();
+
+    res.json({ success: true, message: `Successfully redeemed ${rewardType}!`, newBalance: intern.points });
+  } catch (error) {
+    console.error("Redemption Error:", error);
+    res.status(500).json({ success: false, message: "Server error during redemption" });
+  }
+});
 
 module.exports = router;

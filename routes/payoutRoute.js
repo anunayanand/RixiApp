@@ -4,12 +4,13 @@ const PaymentTransaction = require("../models/PaymentTransaction");
 const Ambassador = require("../models/Ambassador");
 const Admin = require("../models/Admin");
 const authRole = require("../middleware/authRole");
-const { sendPayoutSuccessMail } = require("../services/payoutMailScript");
+const { sendPayoutSuccessMail, sendVoucherEmail } = require("../services/payoutMailScript");
 const { generateSalarySlip } = require("../services/salarySlipGenerator");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const SuperAdmin = require("../models/SuperAdmin");
 const Expenditure = require("../models/Expenditure");
+const RedemptionRequest = require("../models/RedemptionRequest");
 
 const getAvailableBalance = async () => {
   const users = await User.find();
@@ -59,6 +60,8 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
     const users = await User.find();
     const totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
 
+    const redemptionRequests = await RedemptionRequest.find().populate('internId', 'name email').sort({ createdAt: -1 });
+
     res.render("payoutCenter", {
       transactions,
       admins,
@@ -67,6 +70,7 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
       hasSecretKey: !!superAdmin.secretKey,
       interns,
       expenditures,
+      redemptionRequests,
       stats: {
         totalIncome,
         totalPaidOut,
@@ -432,6 +436,7 @@ router.post("/payouts/admin/pf-approve/:adminId/:pfId", authRole("superAdmin"), 
     pfRequest.processedAt = new Date();
 
     admin.pfBalance -= pfRequest.amount;
+    admin.totalEarnings = (admin.totalEarnings || 0) + pfRequest.amount;
     await admin.save();
 
     const tx = await PaymentTransaction.findOne({ recipientId: admin._id, type: "PFWithdrawal", status: "Pending", amount: pfRequest.amount }).sort({ requestedAt: -1 });
@@ -515,6 +520,94 @@ router.get("/payouts/download-slip/:adminId/:slipIndex", authRole("superAdmin"),
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
+  }
+});
+
+// POST /superAdmin/payouts/intern/approve-redemption/:id
+router.post("/payouts/intern/approve-redemption/:id", authRole("superAdmin"), async (req, res) => {
+  try {
+    const { moneySpent, voucherCode, title, transactionId, sendMail } = req.body;
+    const request = await RedemptionRequest.findById(req.params.id).populate('internId');
+    
+    if (!request || request.status !== "Pending") {
+      return res.status(400).json({ success: false, message: "Invalid request" });
+    }
+    if (!transactionId) {
+      return res.status(400).json({ success: false, message: "Transaction ID is required" });
+    }
+    const available = await getAvailableBalance();
+    if (Number(moneySpent) > available) {
+      return res.status(400).json({ success: false, message: "Insufficient available balance" });
+    }
+
+    request.status = "Approved";
+    request.moneySpent = Number(moneySpent);
+    request.voucherCode = voucherCode;
+    request.transactionId = transactionId;
+    request.processedAt = new Date();
+    await request.save();
+
+    // Create payment transaction for transaction history
+    await PaymentTransaction.create({
+      recipientId: request.internId._id,
+      recipientModel: 'User',
+      recipientName: request.internId.name,
+      recipientEmail: request.internId.email,
+      amount: Number(moneySpent),
+      type: 'InternRedemption',
+      status: 'Approved',
+      transactionId: request.transactionId,
+      title: title || `Intern Redemption - ${request.rewardType}`,
+      paymentDetails: `Voucher: ${request.rewardType}`,
+      processedAt: new Date(),
+      processedBy: req.session.user ? req.session.user._id : null
+    });
+
+    if (sendMail) {
+      try {
+        await sendVoucherEmail({
+          name: request.internId.name,
+          email: request.internId.email,
+          rewardType: request.rewardType,
+          voucherCode: request.voucherCode,
+          pointsUsed: request.pointsUsed,
+          date: request.processedAt
+        });
+      } catch (err) {
+        console.error("Voucher Email Error:", err);
+      }
+    }
+
+    res.json({ success: true, message: "Redemption approved successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// POST /superAdmin/payouts/intern/reject-redemption/:id
+router.post("/payouts/intern/reject-redemption/:id", authRole("superAdmin"), async (req, res) => {
+  try {
+    const request = await RedemptionRequest.findById(req.params.id);
+    if (!request || request.status !== "Pending") {
+      return res.status(400).json({ success: false, message: "Invalid request" });
+    }
+
+    request.status = "Rejected";
+    request.processedAt = new Date();
+    await request.save();
+
+    // Refund points to intern
+    const intern = await User.findById(request.internId);
+    if (intern) {
+      intern.points = (intern.points || 0) + request.pointsUsed;
+      await intern.save();
+    }
+
+    res.json({ success: true, message: "Redemption rejected and points refunded." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 

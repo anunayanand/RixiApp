@@ -75,6 +75,12 @@ router.post("/validate-referral", async (req, res) => {
     if (ambassador) {
       return res.json({ valid: true, discountPercent: ambassador.discountPercent || 0 });
     }
+
+    const intern = await User.findOne({ intern_id: referralCode.trim() });
+    if (intern) {
+      return res.json({ valid: true, discountPercent: 0, internName: intern.name });
+    }
+
     return res.json({ valid: false, message: "Invalid referral code" });
   } catch (err) {
     console.error("Referral validation error:", err);
@@ -279,6 +285,9 @@ router.get("/payment/callback", async (req, res) => {
       );
 
       if (registration) {
+        
+
+
         // Send to sheets
         const d = new Date();
 

@@ -671,8 +671,12 @@
             });
             const data = await response.json();
             if (data.valid) {
-              currentReferralDiscountPercent = data.discountPercent;
-              msgEl.textContent = `Valid! ${currentReferralDiscountPercent}% discount applied.`;
+              currentReferralDiscountPercent = data.discountPercent || 0;
+              if (data.internName) {
+                msgEl.textContent = `Valid! Referred by ${data.internName}.`;
+              } else {
+                msgEl.textContent = `Valid! ${currentReferralDiscountPercent}% discount applied.`;
+              }
               msgEl.style.color = "#4ade80"; // green
               updateBillingTable();
             } else {

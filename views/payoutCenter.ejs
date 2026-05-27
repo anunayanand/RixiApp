@@ -95,6 +95,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         <i class="bi bi-receipt"></i>
         <span>Expenditures</span>
       </a>
+      <a href="#tab-intern-redemptions" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-intern-redemptions" role="tab">
+        <i class="bi bi-gift-fill"></i>
+        <span>Intern Redemptions</span>
+      </a>
       <a href="#tab-history" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-history" role="tab">
         <i class="bi bi-clock-history"></i>
         <span>Transaction History</span>
@@ -186,7 +190,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
       
       <div class="tab-content" id="payoutTabsContent">
         <script id="payoutDataJSON" type="application/json">
-          {"transactions": <%- JSON.stringify(transactions || []).replace(/</g, '\\u003c') %>, "interns": <%- JSON.stringify(interns || []).replace(/</g, '\\u003c') %>}
+          {"transactions": <%- JSON.stringify(transactions || []).replace(/</g, '\\u003c') %>, "interns": <%- JSON.stringify(interns || []).replace(/</g, '\\u003c') %>, "expenditures": <%- JSON.stringify(typeof expenditures !== 'undefined' ? expenditures : []).replace(/</g, '\\u003c') %>, "redemptionRequests": <%- JSON.stringify(typeof redemptionRequests !== 'undefined' ? redemptionRequests : []).replace(/</g, '\\u003c') %>}
         </script>
         <!-- Dashboard -->
         <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel">
@@ -264,21 +268,37 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                     </tr>
                   </thead>
                   <tbody>
-                    <% const amWithdrawals = transactions.filter(t => t.type === 'AmbassadorWithdrawal' && t.status === 'Pending'); %>
+                    <% const amWithdrawals = transactions.filter(t => t.type === 'AmbassadorWithdrawal').sort((a, b) => new Date(b.requestedAt) - new Date(a.requestedAt)); %>
                     <% if(amWithdrawals.length === 0) { %>
-                      <tr><td colspan="7" class="text-center py-4 text-muted">No pending requests</td></tr>
+                      <tr><td colspan="7" class="text-center py-4 text-muted">No ambassador withdrawals found</td></tr>
                     <% } else { %>
                       <% amWithdrawals.forEach(t => { %>
                         <tr id="row-<%= t._id %>">
-                          <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
+                          <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                            }) %></td>
                           <td data-label="Name"><span class="fw-semibold"><%= t.recipientName %></span></td>
                           <td data-label="Email"><%= t.recipientEmail %></td>
                           <td data-label="Amount"><strong class="text-dark">₹<%= Number(t.amount).toFixed(2) %></strong></td>
                           <td data-label="Details"><span class="badge bg-light text-dark border"><%= t.paymentDetails %></span></td>
-                          <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
+                          <td data-label="Status">
+                            <% if(t.status === 'Approved'){ %>
+                              <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                            <% } else if(t.status === 'Rejected'){ %>
+                              <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                            <% } else { %>
+                              <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                            <% } %>
+                          </td>
                           <td data-label="Action">
-                            <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador')"><i class="bi bi-check-lg"></i></button>
-                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg"></i></button>
+                            <% if(t.status === 'Pending') { %>
+                              <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador', '', '<%= t.paymentDetails %>')"><i class="bi bi-check-lg"></i></button>
+                              <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg"></i></button>
+                            <% } else { %>
+                              <span class="text-muted">-</span>
+                            <% } %>
                           </td>
                         </tr>
                       <% }) %>
@@ -290,7 +310,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
               <!-- Mobile Card Grid (< md) -->
               <div class="intern-card-grid d-md-none mt-3">
                 <% if(amWithdrawals.length === 0) { %>
-                  <div class="text-center py-4 text-muted w-100">No pending requests</div>
+                  <div class="text-center py-4 text-muted w-100">No ambassador withdrawals found</div>
                 <% } else { %>
                   <% amWithdrawals.forEach(t => { %>
                     <div class="intern-card" id="card-<%= t._id %>">
@@ -299,7 +319,13 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                           <div class="fw-bold"><%= t.recipientName %></div>
                           <div class="small font-monospace text-muted"><%= t.recipientEmail %></div>
                         </div>
-                        <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                        <% if(t.status === 'Approved'){ %>
+                          <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                        <% } else if(t.status === 'Rejected'){ %>
+                          <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                        <% } else { %>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                        <% } %>
                       </div>
                       <div class="intern-card-meta mb-2">
                         <div class="d-flex justify-content-between w-100">
@@ -307,13 +333,15 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                            <strong class="text-dark fs-5">₹<%= Number(t.amount).toFixed(2) %></strong>
                         </div>
                       </div>
-                      <div class="intern-card-meta mb-3">
+                      <div class="intern-card-meta <% if(t.status === 'Pending') { %>mb-3<% } %>">
                         <span class="badge bg-light text-dark border"><%= t.paymentDetails %></span>
                       </div>
-                      <div class="intern-card-actions d-flex gap-2">
-                        <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador')"><i class="bi bi-check-lg me-1"></i>Approve</button>
-                        <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg me-1"></i>Reject</button>
-                      </div>
+                      <% if(t.status === 'Pending') { %>
+                        <div class="intern-card-actions d-flex gap-2">
+                          <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= t._id %>', '<%= t.recipientName %>', '<%= t.amount %>', 'ambassador', '', '<%= t.paymentDetails %>')"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                          <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectTransaction('<%= t._id %>', 'ambassador')"><i class="bi bi-x-lg me-1"></i>Reject</button>
+                        </div>
+                      <% } %>
                     </div>
                   <% }) %>
                 <% } %>
@@ -399,41 +427,51 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
               <table class="mail-table">
                   <thead>
                     <tr>
-                      <th>Date</th><th>Admin Name</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th>
+                      <th>Admin Name</th><th>Available PF</th><th>Withdrawn PF</th><th>Req. Amount</th><th>Date</th><th>Status</th><th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <% let hasPF = false; %>
                     <% admins.forEach(admin => { %>
-                      <% (admin.pfWithdrawals || []).forEach(pf => { %>
-                        <% if(pf.status === 'Pending') { hasPF = true; %>
+                      <% const pendingPFs = (admin.pfWithdrawals || []).filter(pf => pf.status === 'Pending'); %>
+                      <% const withdrawnPF = (admin.pfWithdrawals || []).filter(pf => pf.status === 'Approved').reduce((sum, pf) => sum + pf.amount, 0); %>
+                      <% if(pendingPFs.length > 0) { %>
+                        <% pendingPFs.forEach(pf => { %>
                           <tr id="pf-row-<%= pf._id %>">
-                            <td data-label="Date"><%= new Date(pf.requestedAt).toLocaleDateString() %></td>
                             <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
-                            <td data-label="Amount"><strong class="text-dark">₹<%= Number(pf.amount).toFixed(2) %></strong></td>
-                            <td data-label="Details"><span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span></td>
+                            <td data-label="Available PF" class="text-success fw-semibold">₹<%= Number(admin.pfBalance || 0).toFixed(2) %></td>
+                            <td data-label="Withdrawn PF" class="text-danger fw-semibold">₹<%= Number(withdrawnPF || 0).toFixed(2) %></td>
+                            <td data-label="Req. Amount"><strong class="text-dark">₹<%= Number(pf.amount).toFixed(2) %></strong></td>
+                            <td data-label="Date"><%= new Date(pf.requestedAt).toLocaleDateString() %></td>
                             <td data-label="Status"><span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span></td>
                             <td data-label="Action">
-                              <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>')"><i class="bi bi-check-lg"></i></button>
+                              <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>', '<%= pf.paymentDetails %>')"><i class="bi bi-check-lg"></i></button>
                               <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectPF('<%= admin._id %>', '<%= pf._id %>')"><i class="bi bi-x-lg"></i></button>
                             </td>
                           </tr>
-                        <% } %>
-                      <% }) %>
+                        <% }) %>
+                      <% } else { %>
+                        <tr>
+                          <td data-label="Admin Name"><span class="fw-semibold"><%= admin.name %></span></td>
+                          <td data-label="Available PF" class="text-success fw-semibold">₹<%= Number(admin.pfBalance || 0).toFixed(2) %></td>
+                          <td data-label="Withdrawn PF" class="text-danger fw-semibold">₹<%= Number(withdrawnPF || 0).toFixed(2) %></td>
+                          <td data-label="Req. Amount" class="text-muted">-</td>
+                          <td data-label="Date" class="text-muted">-</td>
+                          <td data-label="Status"><span class="text-muted">No Request</span></td>
+                          <td data-label="Action" class="text-muted">-</td>
+                        </tr>
+                      <% } %>
                     <% }) %>
-                    <% if(!hasPF) { %>
-                      <tr><td colspan="6" class="text-center py-4 text-muted">No pending requests</td></tr>
-                    <% } %>
                   </tbody>
                 </table>
               </div>
 
               <!-- Mobile Card Grid (< md) -->
               <div class="intern-card-grid d-md-none mt-3">
-                <% let hasPFCard = false; %>
                 <% admins.forEach(admin => { %>
-                  <% (admin.pfWithdrawals || []).forEach(pf => { %>
-                    <% if(pf.status === 'Pending') { hasPFCard = true; %>
+                  <% const pendingPFs = (admin.pfWithdrawals || []).filter(pf => pf.status === 'Pending'); %>
+                  <% const withdrawnPF = (admin.pfWithdrawals || []).filter(pf => pf.status === 'Approved').reduce((sum, pf) => sum + pf.amount, 0); %>
+                  <% if(pendingPFs.length > 0) { %>
+                    <% pendingPFs.forEach(pf => { %>
                       <div class="intern-card" id="card-pf-<%= pf._id %>">
                         <div class="intern-card-top">
                           <div class="intern-card-info">
@@ -442,23 +480,41 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                           </div>
                           <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
                         </div>
-                        <div class="intern-card-meta mb-2">
+                        <div class="intern-card-meta mb-2 mt-2">
                           <div class="d-flex justify-content-between w-100 align-items-center">
-                             <span class="badge bg-light text-dark border"><%= pf.paymentDetails %></span>
-                             <strong class="text-dark fs-5">₹<%= Number(pf.amount).toFixed(2) %></strong>
+                             <div>
+                               <div class="small text-muted">Available PF</div>
+                               <div class="fw-semibold text-success">₹<%= Number(admin.pfBalance || 0).toFixed(2) %></div>
+                             </div>
+                             <div>
+                               <div class="small text-muted">Withdrawn PF</div>
+                               <div class="fw-semibold text-danger">₹<%= Number(withdrawnPF || 0).toFixed(2) %></div>
+                             </div>
+                             <div class="text-end">
+                               <div class="small text-muted">Requested</div>
+                               <strong class="text-dark fs-5">₹<%= Number(pf.amount).toFixed(2) %></strong>
+                             </div>
                           </div>
                         </div>
                         <div class="intern-card-actions d-flex gap-2 mt-3">
-                          <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>')"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                          <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveModal('<%= admin._id %>', '<%= admin.name %>', '<%= pf.amount %>', 'pf', '<%= pf._id %>', '<%= pf.paymentDetails %>')"><i class="bi bi-check-lg me-1"></i>Approve</button>
                           <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectPF('<%= admin._id %>', '<%= pf._id %>')"><i class="bi bi-x-lg me-1"></i>Reject</button>
                         </div>
                       </div>
-                    <% } %>
-                  <% }) %>
+                    <% }) %>
+                  <% } else { %>
+                    <div class="intern-card">
+                      <div class="intern-card-top">
+                        <div class="intern-card-info">
+                          <div class="fw-bold"><%= admin.name %></div>
+                          <div class="small text-muted mt-1"><i class="bi bi-wallet me-1"></i>Available PF: <span class="text-success fw-semibold">₹<%= Number(admin.pfBalance || 0).toFixed(2) %></span></div>
+                          <div class="small text-muted mt-1"><i class="bi bi-cash-stack me-1"></i>Withdrawn PF: <span class="text-danger fw-semibold">₹<%= Number(withdrawnPF || 0).toFixed(2) %></span></div>
+                        </div>
+                        <span class="text-muted small">No Request</span>
+                      </div>
+                    </div>
+                  <% } %>
                 <% }) %>
-                <% if(!hasPFCard) { %>
-                  <div class="text-center py-4 text-muted w-100">No pending requests</div>
-                <% } %>
               </div>
           </div>
         </div>
@@ -518,7 +574,11 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                       <% if(typeof expenditures !== 'undefined' && expenditures.length > 0) { %>
                         <% expenditures.forEach(exp => { %>
                           <tr>
-                            <td data-label="Date"><%= new Date(exp.date).toLocaleDateString() %></td>
+                            <td data-label="Date"><%= new Date(exp.date).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                            }) %></td>
                             <td data-label="Title"><span class="fw-semibold"><%= exp.title %></span></td>
                             <td data-label="Amount"><strong class="text-danger">₹<%= Number(exp.amount).toFixed(2) %></strong></td>
                             <td data-label="Description"><small class="text-muted"><%= exp.description || '-' %></small></td>
@@ -536,6 +596,97 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
           </div>
         </div>
 
+        <!-- Intern Redemptions -->
+        <div class="tab-pane fade" id="tab-intern-redemptions" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Intern Name</th><th>Reward</th><th>Points</th><th>Status</th><th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% const allRedemptions = (typeof redemptionRequests !== 'undefined' ? redemptionRequests : []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); %>
+                    <% if(allRedemptions.length === 0) { %>
+                      <tr><td colspan="6" class="text-center py-4 text-muted">No intern redemptions found</td></tr>
+                    <% } else { %>
+                      <% allRedemptions.forEach(r => { %>
+                        <tr id="row-red-<%= r._id %>">
+                          <td data-label="Date"><%= new Date(r.createdAt).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                            }) %></td>
+                          <td data-label="Intern Name">
+                            <span class="fw-semibold"><%= r.internId ? r.internId.name : 'Unknown' %></span>
+                            <br><small class="text-muted"><%= r.internId ? r.internId.email : '' %></small>
+                          </td>
+                          <td data-label="Reward"><span class="badge bg-info text-dark"><%= r.rewardType %></span></td>
+                          <td data-label="Points"><strong class="text-dark"><%= r.pointsUsed %></strong></td>
+                          <td data-label="Status">
+                            <% if(r.status === 'Approved'){ %>
+                              <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                            <% } else if(r.status === 'Rejected'){ %>
+                              <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                            <% } else { %>
+                              <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                            <% } %>
+                          </td>
+                          <td data-label="Action">
+                            <% if(r.status === 'Pending') { %>
+                              <button class="btn btn-sm btn-success rounded-pill px-3 me-1" onclick="openApproveRedemptionModal('<%= r._id %>', '<%= r.internId ? r.internId.name : 'Intern' %>', '<%= r.rewardType %>')"><i class="bi bi-check-lg"></i></button>
+                              <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="rejectRedemption('<%= r._id %>')"><i class="bi bi-x-lg"></i></button>
+                            <% } else { %>
+                              <span class="text-muted">-</span>
+                            <% } %>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% if(allRedemptions.length === 0) { %>
+                  <div class="text-center py-4 text-muted w-100">No intern redemptions found</div>
+                <% } else { %>
+                  <% allRedemptions.forEach(r => { %>
+                    <div class="intern-card" id="card-red-<%= r._id %>">
+                      <div class="intern-card-top">
+                        <div class="intern-card-info">
+                          <div class="fw-bold"><%= r.internId ? r.internId.name : 'Unknown' %></div>
+                          <div class="small text-muted"><i class="bi bi-calendar3 me-1"></i><%= new Date(r.createdAt).toLocaleDateString() %></div>
+                        </div>
+                        <% if(r.status === 'Approved'){ %>
+                          <span class="mail-badge mail-badge-sent"><i class="bi bi-check-circle me-1"></i>Approved</span>
+                        <% } else if(r.status === 'Rejected'){ %>
+                          <span class="mail-badge mail-badge-pending" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="bi bi-x-circle me-1"></i>Rejected</span>
+                        <% } else { %>
+                          <span class="mail-badge mail-badge-pending"><i class="bi bi-clock me-1"></i>Pending</span>
+                        <% } %>
+                      </div>
+                      <div class="intern-card-meta mb-2 mt-2">
+                        <div class="d-flex justify-content-between w-100 align-items-center">
+                           <span class="badge bg-info text-dark border"><%= r.rewardType %></span>
+                           <strong class="text-dark fs-5"><%= r.pointsUsed %> pts</strong>
+                        </div>
+                      </div>
+                      <% if(r.status === 'Pending') { %>
+                        <div class="intern-card-actions d-flex gap-2 mt-3">
+                          <button class="btn btn-sm btn-success flex-fill rounded-pill" onclick="openApproveRedemptionModal('<%= r._id %>', '<%= r.internId ? r.internId.name : 'Intern' %>', '<%= r.rewardType %>')"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                          <button class="btn btn-sm btn-outline-danger flex-fill rounded-pill" onclick="rejectRedemption('<%= r._id %>')"><i class="bi bi-x-lg me-1"></i>Reject</button>
+                        </div>
+                      <% } %>
+                    </div>
+                  <% }) %>
+                <% } %>
+              </div>
+          </div>
+        </div>
+
         <!-- Transaction History -->
         <div class="tab-pane fade" id="tab-history" role="tabpanel">
           <div class="mail-section-card">
@@ -549,7 +700,12 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                   <tbody>
                     <% transactions.forEach(t => { %>
                       <tr>
-                        <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString() %></td>
+                        <td data-label="Date"><%= new Date(t.requestedAt).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric'
+                          });
+                        %></td>
                         <td data-label="Recipient"><span class="fw-semibold"><%= t.recipientName %></span></td>
                         <td data-label="Type"><span class="badge bg-secondary"><%= t.type %></span></td>
                         <td data-label="Amount"><strong class="text-dark">₹<%= Number(t.amount).toFixed(2) %></strong></td>
@@ -607,6 +763,49 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
   
 <!-- MODALS -->
 
+  <!-- Approve Intern Redemption Modal -->
+  <div class="modal fade" tabindex="-1" id="approveRedemptionModal">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h3 id="approveRedemptionTitle">Approve Redemption</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="approveRedemptionForm">
+        <input type="hidden" id="red_id">
+        <div class="mb-3">
+          <label>Intern Name</label>
+          <input type="text" id="red_name" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label>Reward Requested</label>
+          <input type="text" id="red_reward" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+          <label>Money Spent (₹) <span class="text-danger">*</span></label>
+          <input type="number" id="red_money" class="form-control" required placeholder="Cost of the voucher">
+        </div>
+        <div class="mb-3">
+          <label>Voucher / Gift Card Code <span class="text-danger">*</span></label>
+          <input type="text" id="red_code" class="form-control" required placeholder="Enter the code to send to the intern">
+        </div>
+        <div class="mb-3">
+          <label>Payment Title (for Records)</label>
+          <input type="text" id="red_title" class="form-control" required placeholder="e.g., Rs 200 Amazon Voucher">
+        </div>
+        <div class="mb-3">
+          <label>Transaction ID (Bank/UPI)</label>
+          <input type="text" id="red_txnId" class="form-control" required placeholder="Enter bank reference number">
+        </div>
+        <div class="mb-3 form-check" style="margin-left: 5px;">
+          <input type="checkbox" class="form-check-input" id="red_sendMail" checked>
+          <label class="form-check-label" for="red_sendMail">Send Email with Code to Intern</label>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline" onclick="closeModal('approveRedemptionModal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Approve & Send Code</button>
+        </div>
+      </form></div></div></div>
+
   <!-- Approve Ambassador/PF Modal -->
   <div class="modal fade" tabindex="-1" id="approveModal">
     <div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4 border-0 shadow">
@@ -626,6 +825,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
           <label>Amount (₹)</label>
           <input type="text" id="app_amount" class="form-control" readonly>
         </div>
+        <div id="qrCodeContainer" class="mb-3 text-center" style="display: none;"></div>
         <div class="mb-3">
           <label>Payment Title/Description</label>
           <input type="text" id="app_title" class="form-control" required placeholder="e.g., Payout for May">
@@ -724,6 +924,8 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
           <input type="checkbox" class="form-check-input" id="set_sendMail" checked>
           <label class="form-check-label" for="set_sendMail">Send Email Notification</label>
         </div>
+
+        <div id="settleQrCodeContainer" class="mt-3 text-center" style="display: none;"></div>
 
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-top: 15px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -880,12 +1082,28 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
     }
 
     // Approve Flow
-    function openApproveModal(txId, name, amount, type, pfId = '') {
+    function openApproveModal(txId, name, amount, type, pfId = '', upiId = '') {
       document.getElementById('app_txId').value = txId;
       document.getElementById('app_name').value = name;
       document.getElementById('app_amount').value = amount;
       document.getElementById('app_type').value = type;
       document.getElementById('app_pfId').value = pfId;
+      
+      const qrContainer = document.getElementById('qrCodeContainer');
+      if (qrContainer) {
+        if (upiId && upiId.includes('@')) {
+          const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}`;
+          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+          qrContainer.innerHTML = `<img src="${qrUrl}" alt="UPI QR Code" class="img-fluid rounded border p-2 mb-1" style="background: white;" />
+                                   <div class="small fw-bold text-success">${upiId}</div>`;
+          qrContainer.style.display = 'block';
+        } else if (upiId) {
+          qrContainer.innerHTML = `<div class="alert alert-secondary border small text-center m-0">Payment Details:<br><strong>${upiId}</strong></div>`;
+          qrContainer.style.display = 'block';
+        } else {
+          qrContainer.style.display = 'none';
+        }
+      }
       
       document.getElementById('approveTitle').innerText = type === 'pf' ? 'Approve PF Withdrawal' : 'Approve Ambassador Withdrawal';
       document.getElementById('approveModal').classList.add('active');
@@ -1031,10 +1249,13 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
     });
 
     let currentAdminPayroll = [];
+    let currentSettleAdmin = null;
 
     function updateSettleCalculations() {
       const selectedMonth = document.getElementById('set_month').value;
       const p = currentAdminPayroll.find(m => m.month === selectedMonth);
+      const qrContainer = document.getElementById('settleQrCodeContainer');
+      
       if (p) {
         const gross = (p.basicSalary || 0) + (p.performanceBonus || 0);
         const ded = (p.providentFund || 0) + (p.professionalTax || 0);
@@ -1043,15 +1264,33 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         document.getElementById('set_ded').innerText = `₹${ded.toFixed(2)}`;
         document.getElementById('set_net').innerText = `₹${net.toFixed(2)}`;
         document.getElementById('set_title').value = `Salary for ${selectedMonth}`;
+        
+        if (qrContainer && currentSettleAdmin) {
+          const upiId = currentSettleAdmin.upiId;
+          if (upiId && upiId.includes('@')) {
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(currentSettleAdmin.name)}&am=${net}`;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+            qrContainer.innerHTML = `<img src="${qrUrl}" alt="UPI QR Code" class="img-fluid rounded border p-2 mb-1" style="background: white;" />
+                                     <div class="small fw-bold text-success">${upiId}</div>`;
+            qrContainer.style.display = 'block';
+          } else if (upiId) {
+            qrContainer.innerHTML = `<div class="alert alert-secondary border small text-center m-0">UPI ID:<br><strong>${upiId}</strong></div>`;
+            qrContainer.style.display = 'block';
+          } else {
+            qrContainer.style.display = 'none';
+          }
+        }
       } else {
         document.getElementById('set_gross').innerText = `₹0.00`;
         document.getElementById('set_ded').innerText = `₹0.00`;
         document.getElementById('set_net').innerText = `₹0.00`;
         document.getElementById('set_title').value = ``;
+        if (qrContainer) qrContainer.style.display = 'none';
       }
     }
 
     function openSettleSalaryModal(admin) {
+      currentSettleAdmin = admin;
       document.getElementById('set_adminId').value = admin._id;
       document.getElementById('set_name').value = admin.name;
       
@@ -1332,6 +1571,76 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
       }
     });
 
+    // Intern Redemption Logic
+    function openApproveRedemptionModal(id, name, reward) {
+      document.getElementById('red_id').value = id;
+      document.getElementById('red_name').value = name;
+      document.getElementById('red_reward').value = reward;
+      document.getElementById('red_money').value = '';
+      document.getElementById('red_code').value = '';
+      document.getElementById('red_title').value = reward + ' Redemption';
+      document.getElementById('red_txnId').value = '';
+      
+      getModal('approveRedemptionModal').show();
+    }
+
+    document.getElementById('approveRedemptionForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      disableButton(btn);
+      showLoader();
+      const id = document.getElementById('red_id').value;
+      const payload = {
+        moneySpent: document.getElementById('red_money').value,
+        voucherCode: document.getElementById('red_code').value,
+        title: document.getElementById('red_title').value,
+        transactionId: document.getElementById('red_txnId').value,
+        sendMail: document.getElementById('red_sendMail').checked
+      };
+
+      try {
+        const res = await axios.post(`/superAdmin/payouts/intern/approve-redemption/${id}`, payload);
+        if(res.data.success) {
+          closeModal('approveRedemptionModal');
+          e.target.reset();
+          await customAlert('Redemption approved successfully!', 'Success');
+          // Hide row visually
+          const row = document.getElementById(`row-red-${id}`);
+          if (row) row.style.display = 'none';
+          const card = document.getElementById(`card-red-${id}`);
+          if (card) card.style.display = 'none';
+        }
+      } catch(err) {
+        console.error(err);
+        await customAlert(err.response?.data?.message || 'Error processing redemption', 'Error');
+      } finally {
+        enableButton(btn);
+        hideLoader();
+      }
+    });
+
+    async function rejectRedemption(id) {
+      const confirmAction = await customAlert('Are you sure you want to reject this request? Points will be refunded to the intern.', 'Confirm Rejection', 'confirm');
+      if(confirmAction) {
+        showLoader();
+        try {
+          const res = await axios.post(`/superAdmin/payouts/intern/reject-redemption/${id}`);
+          if(res.data.success) {
+            await customAlert('Redemption rejected.', 'Success');
+            const row = document.getElementById(`row-red-${id}`);
+            if (row) row.style.display = 'none';
+            const card = document.getElementById(`card-red-${id}`);
+            if (card) card.style.display = 'none';
+          }
+        } catch(err) {
+          console.error(err);
+          await customAlert(err.response?.data?.message || 'Error rejecting request', 'Error');
+        } finally {
+          hideLoader();
+        }
+      }
+    }
+
   </script>
 
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1376,12 +1685,29 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
     }
     
     const originalOpenApprove = typeof openApproveModal === 'function' ? openApproveModal : null;
-    window.openApproveModal = function(txId, name, amount, type, pfId = '') {
+    window.openApproveModal = function(txId, name, amount, type, pfId = '', upiId = '') {
       document.getElementById('app_txId').value = txId;
       document.getElementById('app_name').value = name;
       document.getElementById('app_amount').value = amount;
       document.getElementById('app_type').value = type;
       document.getElementById('app_pfId').value = pfId;
+      
+      const qrContainer = document.getElementById('qrCodeContainer');
+      if (qrContainer) {
+        if (upiId && upiId.includes('@')) {
+          const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}`;
+          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+          qrContainer.innerHTML = `<img src="${qrUrl}" alt="UPI QR Code" class="img-fluid rounded border p-2 mb-1" style="background: white;" />
+                                   <div class="small fw-bold text-success">${upiId}</div>`;
+          qrContainer.style.display = 'block';
+        } else if (upiId) {
+          qrContainer.innerHTML = `<div class="alert alert-secondary border small text-center m-0">Payment Details:<br><strong>${upiId}</strong></div>`;
+          qrContainer.style.display = 'block';
+        } else {
+          qrContainer.style.display = 'none';
+        }
+      }
+      
       document.getElementById('approveTitle').innerText = type === 'pf' ? 'Approve PF Withdrawal' : 'Approve Ambassador Withdrawal';
       getModal('approveModal').show();
     };
@@ -1402,6 +1728,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
 
     const originalOpenSettle = typeof openSettleSalaryModal === 'function' ? openSettleSalaryModal : null;
     window.openSettleSalaryModal = function(admin) {
+      currentSettleAdmin = admin;
       document.getElementById('set_adminId').value = admin._id;
       document.getElementById('set_name').value = admin.name;
       currentAdminPayroll = admin.monthlyPayroll || [];
@@ -1487,11 +1814,15 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
       const parsedData = JSON.parse(dataEl.textContent);
       const transactions = parsedData.transactions;
       const interns = parsedData.interns;
+      const expenditures = parsedData.expenditures || [];
+      const redemptionRequests = parsedData.redemptionRequests || [];
       
       // Data Processing for Doughnut Chart
       let ambassadorTotal = 0;
       let adminTotal = 0;
       let pfTotal = 0;
+      let expTotal = 0;
+      let redTotal = 0;
       
       const monthlyData = {};
       const monthlyIncomeData = {};
@@ -1543,6 +1874,31 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         }
       });
 
+      expenditures.forEach(exp => {
+        expTotal += exp.amount || 0;
+        if (exp.date) {
+            const date = new Date(exp.date);
+            const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);
+            if (monthlyData[label] !== undefined) {
+              monthlyData[label] += exp.amount || 0;
+            }
+        }
+      });
+
+      redemptionRequests.forEach(r => {
+        if (r.status === "Approved") {
+          const moneySpent = r.moneySpent || 0;
+          redTotal += moneySpent;
+          if (r.processedAt) {
+            const date = new Date(r.processedAt);
+            const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);
+            if (monthlyData[label] !== undefined) {
+              monthlyData[label] += moneySpent;
+            }
+          }
+        }
+      });
+
       // Render Doughnut Chart
       const doughnutCtx = document.getElementById('payoutDoughnutChart');
       if (doughnutCtx) {
@@ -1550,10 +1906,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         doughnutChart = new Chart(doughnutCtx, {
           type: 'doughnut',
           data: {
-            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals'],
+            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals', 'Expenditures', 'Intern Redeemed'],
             datasets: [{
-              data: [ambassadorTotal, adminTotal, pfTotal],
-              backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+              data: [ambassadorTotal, adminTotal, pfTotal, expTotal, redTotal],
+              backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'],
               borderWidth: 0,
               hoverOffset: 4
             }]

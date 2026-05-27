@@ -623,8 +623,8 @@
                           <input type="number" id="pfAmount" class="form-control" max="<%= admin.pfBalance || 0 %>" required>
                         </div>
                         <div class="mb-4">
-                          <label class="form-label text-muted small fw-bold">UPI ID / Bank Details</label>
-                          <input type="text" id="pfDetails" class="form-control" required placeholder="e.g. name@upi">
+                          <label class="form-label text-muted small fw-bold">UPI ID</label>
+                          <input type="text" id="pfDetails" class="form-control" required pattern="^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$" title="Please enter a valid UPI ID (e.g. name@upi)" placeholder="e.g. name@upi">
                         </div>
                         <button type="submit" class="btn btn-primary-custom w-100 rounded-pill text-white fw-bold">Request Withdrawal</button>
                       </form>
@@ -635,15 +635,24 @@
                         <% if(!admin.pfWithdrawals || admin.pfWithdrawals.length === 0) { %>
                           <div class="text-center text-muted small py-3">No recent requests.</div>
                         <% } else { %>
-                          <% [...admin.pfWithdrawals].reverse().forEach(req => { %>
-                            <div class="meeting-item mb-2">
+                          <% [...admin.pfWithdrawals].reverse().forEach((req, idx) => { 
+                               const realIndex = admin.pfWithdrawals.length - 1 - idx;
+                          %>
+                            <div class="meeting-item mb-2 d-flex justify-content-between align-items-center">
                               <div>
                                 <strong class="text-primary d-block">₹<%= req.amount %></strong>
                                 <span><%= new Date(req.requestedAt).toLocaleDateString() %></span>
                               </div>
-                              <span class="badge <%= req.status === 'Approved' ? 'badge-approved' : (req.status === 'Rejected' ? 'badge-rejected' : 'badge-pending') %>">
-                                <%= req.status %>
-                              </span>
+                              <div class="d-flex align-items-center justify-content-end gap-2">
+                                <% if(req.status === 'Approved') { %>
+                                  <a href="/admin/download-pf-slip/<%= realIndex %>" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.75rem;">
+                                    <i class="bi bi-download"></i> Slip
+                                  </a>
+                                <% } %>
+                                <span class="badge <%= req.status === 'Approved' ? 'badge-approved' : (req.status === 'Rejected' ? 'badge-rejected' : 'badge-pending') %>">
+                                  <%= req.status %>
+                                </span>
+                              </div>
                             </div>
                           <% }) %>
                         <% } %>
@@ -658,6 +667,12 @@
                   e.preventDefault();
                   const amount = document.getElementById('pfAmount').value;
                   const paymentDetails = document.getElementById('pfDetails').value;
+                  
+                  const upiPattern = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+                  if (!upiPattern.test(paymentDetails)) {
+                    showToast('Please enter a valid UPI ID (e.g. name@upi)', 'error');
+                    return;
+                  }
                   
                   try {
                     const res = await fetch('/admin/request-pf-withdrawal', {

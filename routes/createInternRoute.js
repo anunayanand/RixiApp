@@ -60,6 +60,22 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
       await user.save();
     }
 
+    // ✅ Award referral points if referal_code exists
+    if (referal_code && referal_code.trim() !== "") {
+      const referrerIntern = await User.findOne({ intern_id: referal_code.trim() });
+      if (referrerIntern) {
+        referrerIntern.points = (referrerIntern.points || 0) + 100;
+        if (!referrerIntern.referredInterns) referrerIntern.referredInterns = [];
+        referrerIntern.referredInterns.push({
+          name: name,
+          email: email,
+          domain: domain,
+          dateJoined: new Date()
+        });
+        await referrerIntern.save();
+      }
+    }
+
     res.json({ success: true, message: `Intern ${name} created successfully!` });
 
   } catch (err) {

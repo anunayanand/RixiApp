@@ -112,6 +112,15 @@ const userSchema = new mongoose.Schema({
   amountPaid: { type: Number, default: 0 },
   paymentTransactionId: { type: String, default: "" },
 
+  points: { type: Number, default: 0 },
+  
+  referredInterns: [{
+    name: String,
+    email: String,
+    domain: String,
+    dateJoined: { type: Date, default: Date.now }
+  }],
+
   meetings: [
     {
       _id: { type: mongoose.Schema.Types.ObjectId, required: true },

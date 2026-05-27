@@ -721,7 +721,7 @@
 
                     <div class="mb-4">
                       <label class="form-label fw-bold" style="color: #94a3b8; font-size: 0.95rem;">Payment Details <span class="text-danger">*</span></label>
-                      <textarea name="paymentDetails" id="withdrawPaymentDetails" class="dark-form-input w-100" style="resize: none;" rows="3" placeholder="UPI ID or Bank Details (A/C No, IFSC)" required></textarea>
+                      <input type="text" name="paymentDetails" id="withdrawPaymentDetails" class="dark-form-input w-100" pattern="^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$" title="Please enter a valid UPI ID (e.g. name@upi)" placeholder="UPI ID" required>
                     </div>
 
                     <button type="submit" id="submitWithdrawBtn" class="btn dark-submit-btn w-100 mt-2">
@@ -1064,6 +1064,12 @@ async function submitWithdrawalRequest(event) {
 
   if (!paymentDetails) {
     showToast("Please enter your payment details.", "error");
+    return;
+  }
+
+  const upiPattern = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+  if (!upiPattern.test(paymentDetails)) {
+    showToast("Please enter a valid UPI ID (e.g. name@upi)", "error");
     return;
   }
 

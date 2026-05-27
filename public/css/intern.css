@@ -86,8 +86,8 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1000;
-    overflow-y: auto;
-    scrollbar-width: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
     transition: var(--transition);
 }
@@ -208,6 +208,11 @@ body {
 .id-sidebar-nav {
     flex: 1;
     padding: 5px 12px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.id-sidebar-nav::-webkit-scrollbar {
+    display: none;
 }
 
 .id-sidebar-nav-label {

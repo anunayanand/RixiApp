@@ -374,6 +374,51 @@
       flex-grow: 1 !important;
       height: auto !important;
     }
+    
+    /* Referred Intern Table Styles */
+    .amb-intern-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 102, 0, 0.1);
+      color: var(--primary, #ff6600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-right: 16px;
+    }
+    .amb-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .amb-table th {
+      padding: 16px 20px;
+      text-align: left;
+      color: var(--text-muted, #9ca3af);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid rgba(255, 102, 0, 0.2);
+      white-space: nowrap;
+    }
+    .amb-table td {
+      padding: 10px 20px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-primary, #ffffff);
+    }
+    .amb-table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+    .amb-table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+    .amb-table tbody tr:last-child td {
+      border-bottom: none;
+    }
   </style>
 </head>
 
@@ -404,7 +449,7 @@
       <h4><%= formattedName %></h4>
       <p><%= intern.intern_id %></p>
       
-      <div class=" id-sidebar-profile-stats">
+      <!-- <div class=" id-sidebar-profile-stats">
           <div>
             <span>Batch No</span>
             <strong>
@@ -417,7 +462,7 @@
               <%= intern.duration %> Weeks
             </strong>
           </div>
-      </div>
+      </div> -->
       </div>
 
       <!-- Navigation -->
@@ -431,7 +476,7 @@
           <i class="bi bi-kanban-fill"></i>
           <span>Projects Timeline</span>
         </a>
-        <a href="#quiz" class="nav-link d-none d-md-flex" onclick="switchSection('quiz', this)">
+        <a href="#quiz" class="nav-link" onclick="switchSection('quiz', this)">
           <i class="bi bi-patch-question-fill"></i>
           <span>Quiz Assessment</span>
         </a>
@@ -446,6 +491,14 @@
         <a href="#documents" class="nav-link" onclick="switchSection('documents', this)">
           <i class="bi bi-file-earmark-text-fill"></i>
           <span>Documents</span>
+        </a>
+        <a href="#rewards" class="nav-link" onclick="switchSection('rewards', this)">
+          <i class="bi bi-gift-fill"></i>
+          <span>Refer & Earn</span>
+        </a>
+        <a href="#referred-interns" class="nav-link" onclick="switchSection('referred-interns', this)">
+          <i class="bi bi-people-fill"></i>
+          <span>Referred Interns</span>
         </a>
 
         <a href="#chat" class="nav-link d-lg-none" onclick="switchSection('chat', this)" id="navChatLink">
@@ -622,6 +675,9 @@
                     <li><span class="id-info-label">Year/Sem</span><span class="id-info-value">
                         <%= intern.year_sem %>
                       </span></li>
+                    <li><span class="id-info-label">Phone No.</span><span class="id-info-value">
+                        <%= intern.phone %>
+                      </span></li>
                   </ul>
                 </div>
               </div>
@@ -638,6 +694,9 @@
                       </span></li>
                     <li><span class="id-info-label">Duration</span><span class="id-info-value">
                         <%= intern.duration %> Weeks
+                      </span></li>
+                    <li><span class="id-info-label">Batch No.</span><span class="id-info-value">
+                        <%= intern.batch_no %> 
                       </span></li>
                     <li><span class="id-info-label">Start Date</span><span class="id-info-value">
                         <%= startingDate %>
@@ -732,7 +791,8 @@
           <h4 class="mb-4" style="font-weight: 700; color: var(--text-primary);"><i
               class="bi bi-patch-question-fill me-2" style="color: #ff6600;"></i> Assigned Quizzes</h4>
 
-          <div class="row g-3">
+          <!-- Desktop View: Actual Quiz Content -->
+          <div class="row g-3 d-none d-md-flex">
             <% if (progress===100 && assignedQuizzes && assignedQuizzes.length> 0) { %>
               <% assignedQuizzes.forEach(q=> { %>
                 <div class="col-12 mt-4">
@@ -813,6 +873,17 @@
                       </p>
                     </div>
                     <% } %>
+          </div>
+
+          <!-- Mobile View: Info Message -->
+          <div class="row g-3 d-flex d-md-none mt-2">
+            <div class="col-12 text-center py-5">
+              <div class="id-glass-panel p-5">
+                <i class="bi bi-laptop fs-1 mb-3 d-block" style="color: #ff6600;"></i>
+                <h5 class="text-white fw-bold mb-3">Desktop Only Feature</h5>
+                <p class="text-secondary mb-0">The quiz assessment can only be attempted on a desktop or laptop computer to ensure the best experience and proper functioning of our assessment system. Please log in from a desktop device to attempt your quiz.</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1214,6 +1285,325 @@
           </div>
         </section>
 
+        <!-- 4.5 REWARDS SECTION -->
+        <section id="rewards" class="id-section">
+          <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);">
+            Refer & Earn
+          </h3>
+          
+          <% 
+             const myRedemptions = (typeof redemptionRequests !== 'undefined' ? redemptionRequests : []).slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+             let redeemedPoints = 0;
+             myRedemptions.forEach(r => {
+               if (r.status !== 'Rejected') {
+                 redeemedPoints += (r.pointsUsed || 0);
+               }
+             });
+             const availablePoints = intern.points || 0;
+             const totalEarnedPoints = availablePoints + redeemedPoints;
+          %>
+
+          <!-- KPI Cards Row -->
+          <div class="row g-4 mb-5">
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="id-stat-card h-100">
+                <div class="id-stat-icon"><i class="bi bi-trophy-fill" style="color: #ff6600;"></i></div>
+                <div class="id-stat-title">Total Earned Points</div>
+                <div class="id-stat-value">
+                  <%= totalEarnedPoints %>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="id-stat-card h-100">
+                <div class="id-stat-icon"><i class="bi bi-coin" style="color: #28a745;"></i></div>
+                <div class="id-stat-title">Available Points</div>
+                <div class="id-stat-value" id="userPointsBalance">
+                  <%= availablePoints %>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="id-stat-card h-100">
+                <div class="id-stat-icon"><i class="bi bi-gift-fill" style="color: #0dcaf0;"></i></div>
+                <div class="id-stat-title">Redeemed Points</div>
+                <div class="id-stat-value">
+                  <%= redeemedPoints %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <!-- Referral Link Card -->
+            <div class="col-12">
+              <div class="p-3 px-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4" style="border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px);">
+                <div class="d-flex align-items-center gap-3">
+                  <div style="background: rgba(255, 102, 0, 0.1); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-link-45deg" style="font-size: 1.5rem; color: #ff6600;"></i>
+                  </div>
+                  <div>
+                    <h6 class="fw-bold mb-1 text-white" style="letter-spacing: 0.3px;">Your Referral Link</h6>
+                    <p class="text-secondary mb-0" style="font-size: 0.85rem;">Share this link to earn 100 points per registration.</p>
+                  </div>
+                </div>
+                
+                <div class="d-flex align-items-center gap-2 p-2 px-3 flex-grow-1" style="max-width: 450px; background: rgba(0, 0, 0, 0.2); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                  <span class="text-white-50 text-truncate flex-grow-1" id="userReferralLink" style="font-family: monospace; font-size: 0.85rem;">https://rixilab.tech/internship?referral_code=<%= intern.intern_id %></span>
+                  <button class="btn btn-sm" onclick="copyReferralLink()" title="Copy Link" style="background: rgba(255, 102, 0, 0.1); color: #ff6600; border: none; border-radius: 6px; padding: 4px 12px; font-weight: 600; font-size: 0.8rem; transition: background 0.2s;" onmouseover="this.style.background='rgba(255, 102, 0, 0.2)'" onmouseout="this.style.background='rgba(255, 102, 0, 0.1)'">
+                    <i class="bi bi-clipboard me-1"></i> 
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Redemption Options -->
+          <h4 class="mt-5 mb-4 fw-bold text-white"> Redeem Rewards</h4>
+          
+          <% const hasPendingRedemption = myRedemptions.some(r => r.status === 'Pending'); %>
+          <% if(hasPendingRedemption) { %>
+            <div class="mb-4 p-3 d-flex align-items-center" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
+              <i class="bi bi-clock me-3 text-secondary fs-5"></i>
+              <div class="text-secondary small" style="line-height: 1.5; letter-spacing: 0.3px;">
+                <strong class="text-white fw-medium">Request in progress</strong> &nbsp;&mdash;&nbsp; You have a pending redemption request. Please wait for it to be processed before making a new one.
+              </div>
+            </div>
+          <% } %>
+
+          <div class="row g-4 mb-5">
+            <!-- Crunchyroll -->
+            <div class="col-12 col-md-4">
+              <div class="id-glass-panel h-100 p-4 text-center d-flex flex-column position-relative overflow-hidden hover-elevate" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: <%= hasPendingRedemption ? '0.6' : '1' %>;">
+                <div class="position-absolute top-0 end-0 bg-info text-dark fw-bold px-3 py-1 rounded-bottom-start small" style="box-shadow: -2px 2px 5px rgba(0,0,0,0.2);">500 Points</div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Crunchyroll_Logo.png" alt="Crunchyroll" style="height: 50px; object-fit: contain; margin-bottom: 20px; filter: brightness(0) invert(1) sepia(1) saturate(10000%) hue-rotate(15deg);" class="mt-3">
+                <h5 class="fw-bold text-white mb-2">Crunchyroll Premium</h5>
+                <p class="text-secondary small flex-grow-1">Get 1 Month of Crunchyroll Premium subscription.</p>
+                <button class="btn btn-info w-100 fw-bold mt-3" style="border-radius: 12px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.3), inset -2px -2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(13,202,240,0.4); text-transform: uppercase; letter-spacing: 1px;" <%- (hasPendingRedemption || intern.points < 500) ? 'disabled' : `onclick="showRedeemConfirm('Crunchyroll Premium 1 Month', 500)"` %>>
+                  <%= hasPendingRedemption ? 'Request Pending' : (intern.points < 500 ? 'Not Enough Points' : 'Redeem Now') %>
+                </button>
+              </div>
+            </div>
+
+            <!-- Rs 200 Voucher -->
+            <div class="col-12 col-md-4">
+              <div class="id-glass-panel h-100 p-4 text-center d-flex flex-column position-relative overflow-hidden hover-elevate" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: <%= hasPendingRedemption ? '0.6' : '1' %>;">
+                <div class="position-absolute top-0 end-0 bg-warning text-dark fw-bold px-3 py-1 rounded-bottom-start small" style="box-shadow: -2px 2px 5px rgba(0,0,0,0.2);">1000 Points</div>
+                <div class="d-flex justify-content-center gap-3 mb-4 mt-3">
+                  <i class="bi bi-amazon fs-1 text-white" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></i>
+                </div>
+                <h5 class="fw-bold text-white mb-2">Amazon Rs 200 Voucher</h5>
+                <p class="text-secondary small flex-grow-1">Amazon Gift Voucher worth Rs 200.</p>
+                <button class="btn btn-warning w-100 fw-bold mt-3 text-dark" style="border-radius: 12px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.5), inset -2px -2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(255,193,7,0.4); text-transform: uppercase; letter-spacing: 1px;" <%- (hasPendingRedemption || intern.points < 1000) ? 'disabled' : `onclick="showRedeemConfirm('Amazon Rs 200 Voucher', 1000)"` %>>
+                  <%= hasPendingRedemption ? 'Request Pending' : (intern.points < 1000 ? 'Not Enough Points' : 'Redeem Now') %>
+                </button>
+              </div>
+            </div>
+
+            <!-- Rs 500 Voucher -->
+            <div class="col-12 col-md-4">
+              <div class="id-glass-panel h-100 p-4 text-center d-flex flex-column position-relative overflow-hidden hover-elevate" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: <%= hasPendingRedemption ? '0.6' : '1' %>;">
+                <div class="position-absolute top-0 end-0 bg-success text-white fw-bold px-3 py-1 rounded-bottom-start small" style="box-shadow: -2px 2px 5px rgba(0,0,0,0.2);">2000 Points</div>
+                <div class="d-flex justify-content-center gap-3 mb-4 mt-3">
+                  <i class="bi bi-amazon fs-1 text-white" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));"></i>
+                </div>
+                <h5 class="fw-bold text-white mb-2">Amazon Rs 500 Voucher</h5>
+                <p class="text-secondary small flex-grow-1">Amazon Gift Voucher worth Rs 500.</p>
+                <button class="btn btn-success w-100 fw-bold mt-3" style="border-radius: 12px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.3), inset -2px -2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(40,167,69,0.4); text-transform: uppercase; letter-spacing: 1px;" <%- (hasPendingRedemption || intern.points < 2000) ? 'disabled' : `onclick="showRedeemConfirm('Amazon Rs 500 Voucher', 2000)"` %>>
+                  <%= hasPendingRedemption ? 'Request Pending' : (intern.points < 2000 ? 'Not Enough Points' : 'Redeem Now') %>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Rewards History -->
+          <h4 class="mt-5 mb-4 fw-bold text-white"> My Rewards History</h4>
+          <% if(myRedemptions.length === 0) { %>
+            <div class="id-glass-panel p-4 text-center" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(255,255,255,0.05);">
+              <i class="bi bi-gift fs-1 text-secondary mb-3"></i>
+              <p class="text-secondary mb-0">You haven't redeemed any rewards yet.</p>
+            </div>
+          <% } else { %>
+            <div class="reward-history-list" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+              <% myRedemptions.forEach((r, idx) => { %>
+                <div class="col-12 mb-3">
+                  <div class="id-project-card" style="flex-direction: column; align-items: stretch;">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center w-100">
+                      
+                      <!-- Info Section -->
+                      <div class="id-project-info d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+                          <% if (r.rewardType && r.rewardType.toLowerCase().includes('amazon')) { %>
+                            <i class="bi bi-amazon" style="font-size: 1.5rem;"></i>
+                          <% } else if (r.rewardType && r.rewardType.toLowerCase().includes('crunchyroll')) { %>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Crunchyroll_Logo.png" alt="Crunchyroll" style="height: 20px; object-fit: contain; filter: brightness(0) invert(1) sepia(1) saturate(10000%) hue-rotate(15deg);">
+                          <% } else { %>
+                            <i class="bi bi-gift" style="font-size: 1.2rem;"></i>
+                          <% } %>
+                        </div>
+                        <div>
+                          <h5><%= r.rewardType %></h5>
+                          <p>
+                            <i class="bi bi-calendar3 me-1"></i> Requested on <%= new Date(r.createdAt).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %>
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <!-- Actions/Status Section -->
+                      <div class="id-project-actions mt-3 mt-md-0 d-flex align-items-center gap-3 flex-wrap">
+                        
+                        <div class="text-start text-md-end d-none d-md-block me-2">
+                          <div class="text-white-50" style="font-size: 0.75rem; letter-spacing: 0.5px;">Points Used</div>
+                          <h6 class="mb-0 text-danger fw-bold"><%= r.pointsUsed %> pts</h6>
+                        </div>
+
+                        <% if (r.status === 'Approved') { %>
+                          <span class="id-status-badge id-status-accepted"><i class="bi bi-check-circle-fill me-1"></i> Approved</span>
+                        <% } else if (r.status === 'Rejected') { %>
+                          <span class="id-status-badge id-status-rejected"><i class="bi bi-x-circle-fill me-1"></i> Rejected</span>
+                        <% } else { %>
+                          <span class="id-status-badge id-status-pending"><i class="bi bi-clock-fill me-1"></i> Pending</span>
+                        <% } %>
+                        
+                      </div>
+                    </div>
+                    
+                    <!-- Voucher Code Row -->
+                    <% if (r.status === 'Approved' && r.voucherCode) { %>
+                    <div class="w-100 mt-3 pt-3 border-top border-secondary border-opacity-25">
+                      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
+                        <div class="text-success fw-semibold mb-2 mb-sm-0"> Your Voucher Code is ready!</div>
+                        
+                        <div class="d-flex align-items-center mx-auto ms-sm-auto me-sm-0 mt-2 mt-sm-0" style="background: #1e2024; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 4px; max-width: 350px; width: 100%;">
+                          <input type="password" id="voucherCode-<%= idx %>" value="<%= r.voucherCode %>" readonly 
+                            style="background: transparent; border: none; color: #ffc107; font-weight: bold; letter-spacing: 3px; outline: none; width: 100%; text-align: center; padding: 4px 8px;">
+                          
+                          <div class="d-flex border-start border-secondary border-opacity-25 ps-2 ms-1">
+                            <button class="btn btn-sm text-secondary p-1" type="button" onclick="toggleVoucherCode('voucherCode-<%= idx %>')" title="Show/Hide" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--bs-secondary)'">
+                              <i class="bi bi-eye" id="eyeIcon-<%= idx %>"></i>
+                            </button>
+                            <button class="btn btn-sm text-secondary p-1 ms-1" type="button" onclick="copyVoucherCode('voucherCode-<%= idx %>')" title="Copy Code" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--bs-secondary)'">
+                              <i class="bi bi-clipboard"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <% } else if (r.status === 'Rejected') { %>
+                    <div class="w-100 mt-4 pt-3 text-danger small border-top border-secondary border-opacity-25"><i class="bi bi-info-circle me-1"></i> Points have been refunded.</div>
+                    <% } else if (r.status === 'Pending') { %>
+                    <div class="w-100 mt-4 pt-3 text-secondary small border-top border-secondary border-opacity-25"><i class="bi bi-info-circle me-1"></i> Awaiting for verification. Usually 24-48 hours.</div>
+                    <% } %>
+                    
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+
+        </section>
+
+        <!-- REFERRED INTERNS SECTION -->
+        <section id="referred-interns" class="id-section">
+          <h3 class="mb-4" style="font-weight: 700; color: var(--text-primary);">
+            <i class="bi bi-people-fill me-2" style="color: #ff6600;"></i> Referred Interns
+          </h3>
+          
+          <% if (typeof referredInterns !== 'undefined' && referredInterns.length > 0) { %>
+            <!-- Desktop Table View -->
+            <div class="id-glass-panel p-0 overflow-hidden d-none d-md-block mb-5" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
+              <div class="table-responsive">
+                <table class="amb-table">
+                  <thead>
+                    <tr>
+                      <th>Intern</th>
+                      <th class="d-none d-md-table-cell">Domain</th>
+                      <th class="d-none d-sm-table-cell">Joining Date</th>
+                      <th class="text-end">Points Earned</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% referredInterns.forEach((ref) => { %>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <% if (ref.img_url) { %>
+                              <img src="<%= ref.img_url %>" alt="<%= ref.name %>" class="rounded-circle me-3 flex-shrink-0" style="width: 48px; height: 48px; object-fit: cover; border: 2px solid rgba(255,102,0,0.3);">
+                            <% } else { %>
+                              <div class="amb-intern-avatar me-3 flex-shrink-0" style="margin-right: 16px !important;">
+                                <%= ref.name.charAt(0).toUpperCase() %>
+                              </div>
+                            <% } %>
+                            <div>
+                              <h6 class="mb-1 text-white fw-bold"><%= ref.name %></h6>
+                              <p class="mb-0 text-secondary small"><%= ref.email %></p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                          <span class="text-white-50"><%= ref.domain || 'N/A' %></span>
+                        </td>
+                        <td class="d-none d-sm-table-cell text-white-50 small">
+                          <%= new Date(ref.createdAt || ref.joining_date || Date.now()).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %>
+                        </td>
+                        <td class="text-end">
+                          <h6 class="mb-1 text-success fw-bold">+100 <i class="bi bi-coin"></i></h6>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="d-block d-md-none mb-5">
+              <div class="row g-3" style="max-height: 450px; overflow-y: auto; padding-right: 5px;">
+                <% referredInterns.forEach((ref) => { %>
+                  <div class="col-12">
+                    <div class="id-glass-panel p-3 d-flex flex-column gap-2" style="background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05);">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div class="d-flex align-items-center">
+                          <% if (ref.img_url) { %>
+                            <img src="<%= ref.img_url %>" alt="<%= ref.name %>" class="rounded-circle me-3 flex-shrink-0" style="width: 48px; height: 48px; object-fit: cover; border: 2px solid rgba(255,102,0,0.3);">
+                          <% } else { %>
+                            <div class="amb-intern-avatar me-3 flex-shrink-0" style="margin-right: 16px !important;">
+                              <%= ref.name.charAt(0).toUpperCase() %>
+                            </div>
+                          <% } %>
+                          <div>
+                            <h6 class="mb-1 text-white fw-bold text-truncate" style="max-width: 150px;"><%= ref.name %></h6>
+                            <p class="mb-0 text-secondary small text-truncate" style="max-width: 150px;"><%= ref.email %></p>
+                          </div>
+                        </div>
+                        <div class="text-end ps-2 flex-shrink-0">
+                          <h6 class="mb-1 text-success fw-bold">+100</h6>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between mt-2 pt-2 border-top border-secondary border-opacity-25">
+                        <span class="text-white-50 small"><i class="bi bi-briefcase me-1"></i><%= ref.domain || 'N/A' %></span>
+                        <span class="text-white-50 small"><i class="bi bi-calendar-event me-1"></i><%= new Date(ref.createdAt || ref.joining_date || Date.now()).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) %></span>
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="id-glass-panel p-4 mb-5" style="border-radius: 20px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -3px -3px 7px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(255,255,255,0.05);">
+              <div class="text-center py-5">
+                <div style="background: rgba(255, 255, 255, 0.03); width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.05), inset -3px -3px 7px rgba(0,0,0,0.2);">
+                  <i class="bi bi-person-slash fs-1 text-secondary"></i>
+                </div>
+                <p class="text-secondary mb-0">You haven't referred anyone yet. Share your link to start earning points!</p>
+              </div>
+            </div>
+          <% } %>
+        </section>
+
         <!-- 5. CHAT SECTION -->
         <section id="chat" class="id-section">
           <h3 class="mb-4 d-flex align-items-center" style="font-weight: 700; color: var(--text-primary);">
@@ -1445,6 +1835,25 @@
               </div>
             </div>
 
+            <!-- Redeem Confirm Modal -->
+            <div class="modal fade" id="redeemConfirmModal" tabindex="-1" aria-labelledby="redeemConfirmModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content shadow-lg" style="background: #151515; border-radius: 24px; border: 1px solid rgba(255,102,0,0.3);">
+                  <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                      <i class="bi bi-gift text-warning" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold text-white mb-2 fs-4">Confirm Redemption</h5>
+                    <p class="text-secondary mb-4" style="font-size: 0.95rem;">Are you sure you want to spend <br> <strong class="text-warning" id="redeemModalPoints"></strong> points for <strong class="text-white" id="redeemModalReward"></strong>?</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                      <button type="button" class="btn w-50 text-secondary" data-bs-dismiss="modal" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: transparent;">Cancel</button>
+                      <button type="button" class="btn btn-warning w-50 fw-bold" id="redeemConfirmBtn" style="border-radius: 12px; color: #000; border: none; background: #ffc107;">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Custom Lecture Video Modal -->
             <div class="modal fade" id="lectureVideoModal" tabindex="-1" aria-labelledby="lectureVideoModalLabel"
               aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -1567,6 +1976,104 @@
                   const target = document.getElementById('feedback_section');
                   if (target) target.classList.add('active');
                   document.getElementById('topbarTitle').innerText = 'Internship Feedback';
+                }
+
+                // Rewards & Referrals Logic
+                function copyReferralLink() {
+                  const linkElement = document.getElementById('userReferralLink');
+                  if (!linkElement) return;
+                  const link = linkElement.innerText.trim();
+                  navigator.clipboard.writeText(link).then(() => {
+                    showToast('Referral link copied to clipboard!', 'success');
+                  }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    showToast('Failed to copy referral link.', 'danger');
+                  });
+                }
+
+                let pendingRedeemType = '';
+                
+                function showRedeemConfirm(rewardType, pointsCost) {
+                  const currentPoints = parseInt(document.getElementById('userPointsBalance').innerText) || 0;
+
+                  pendingRedeemType = rewardType;
+                  document.getElementById('redeemModalPoints').innerText = pointsCost;
+                  document.getElementById('redeemModalReward').innerText = rewardType;
+                  
+                  const btn = document.getElementById('redeemConfirmBtn');
+                  
+                  if (currentPoints < pointsCost) {
+                    btn.disabled = true;
+                    btn.innerText = "Not Enough Points";
+                    btn.style.background = "#3f434a";
+                    btn.style.color = "#111";
+                  } else {
+                    btn.disabled = false;
+                    btn.innerText = "Confirm";
+                    btn.style.background = "#ffc107";
+                    btn.style.color = "#000";
+                    btn.onclick = () => executeRedemption();
+                  }
+                  
+                  const modal = new bootstrap.Modal(document.getElementById('redeemConfirmModal'));
+                  modal.show();
+                }
+
+                async function executeRedemption() {
+                  if (!pendingRedeemType) return;
+                  const btn = document.getElementById('redeemConfirmBtn');
+                  const originalText = btn.innerHTML;
+                  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+                  btn.disabled = true;
+
+                  try {
+                    const response = await axios.post('/intern/redeem', { rewardType: pendingRedeemType });
+                    if (response.data.success) {
+                      showToast(response.data.message, 'success');
+                      document.getElementById('userPointsBalance').innerText = response.data.newBalance;
+                      
+                      const modalEl = document.getElementById('redeemConfirmModal');
+                      const modal = bootstrap.Modal.getInstance(modalEl);
+                      if (modal) modal.hide();
+                      
+                      setTimeout(() => window.location.reload(), 1500); // Reload to show in history
+                    } else {
+                      showToast(response.data.message || 'Failed to redeem reward', 'danger');
+                      btn.innerHTML = originalText;
+                      btn.disabled = false;
+                    }
+                  } catch (error) {
+                    console.error('Redemption error:', error);
+                    const msg = error.response?.data?.message || 'Server error occurred during redemption';
+                    showToast(msg, 'danger');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                  }
+                }
+
+                function toggleVoucherCode(inputId) {
+                  const input = document.getElementById(inputId);
+                  const icon = document.getElementById('eyeIcon-' + inputId.split('-')[1]);
+                  if (input.type === 'password') {
+                    input.type = 'text';
+                    input.style.letterSpacing = '1px';
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                  } else {
+                    input.type = 'password';
+                    input.style.letterSpacing = '3px';
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                  }
+                }
+                
+                function copyVoucherCode(inputId) {
+                  const input = document.getElementById(inputId);
+                  navigator.clipboard.writeText(input.value).then(() => {
+                    showToast('Voucher code copied to clipboard!', 'success');
+                  }).catch(err => {
+                    showToast('Failed to copy code.', 'danger');
+                  });
                 }
 
                 // Custom Lecture Video Logic
