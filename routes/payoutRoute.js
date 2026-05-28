@@ -11,6 +11,7 @@ const User = require("../models/User");
 const SuperAdmin = require("../models/SuperAdmin");
 const Expenditure = require("../models/Expenditure");
 const RedemptionRequest = require("../models/RedemptionRequest");
+const EnrollmentHistory = require("../models/EnrollmentHistory");
 
 const getAvailableBalance = async () => {
   const users = await User.find();
@@ -62,6 +63,8 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
 
     const redemptionRequests = await RedemptionRequest.find().populate('internId', 'name email').sort({ createdAt: -1 });
 
+    const enrollmentHistory = await EnrollmentHistory.find().sort({ enrollmentDate: -1 }).populate('internId', 'name email');
+
     res.render("payoutCenter", {
       transactions,
       admins,
@@ -71,6 +74,7 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
       interns,
       expenditures,
       redemptionRequests,
+      enrollmentHistory,
       stats: {
         totalIncome,
         totalPaidOut,

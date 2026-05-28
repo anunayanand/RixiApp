@@ -103,6 +103,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         <i class="bi bi-clock-history"></i>
         <span>Transaction History</span>
       </a>
+      <a href="#tab-enrollment-history" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-enrollment-history" role="tab">
+        <i class="bi bi-journal-check"></i>
+        <span>Enrollment History</span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -753,6 +757,61 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                     </div>
                   </div>
                 <% }) %>
+              </div>
+      </div>
+        </div>
+
+        <!-- Enrollment History -->
+        <div class="tab-pane fade" id="tab-enrollment-history" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Intern Name</th><th>Email</th><th>Amount Paid</th><th>Txn ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (typeof enrollmentHistory !== 'undefined' && enrollmentHistory.length > 0) { %>
+                      <% enrollmentHistory.forEach(e => { %>
+                        <tr>
+                          <td data-label="Date"><%= new Date(e.enrollmentDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) %></td>
+                          <td data-label="Intern Name"><span class="fw-semibold"><%= e.name %></span></td>
+                          <td data-label="Email"><small class="text-muted"><%= e.email %></small></td>
+                          <td data-label="Amount Paid"><strong class="text-success">₹<%= Number(e.amountPaid).toFixed(2) %></strong></td>
+                          <td data-label="Txn ID"><small class="text-muted"><%= e.transactionId || '-' %></small></td>
+                        </tr>
+                      <% }) %>
+                    <% } else { %>
+                      <tr><td colspan="5" class="text-center py-4 text-muted">No enrollment history found</td></tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% if (typeof enrollmentHistory !== 'undefined' && enrollmentHistory.length > 0) { %>
+                  <% enrollmentHistory.forEach(e => { %>
+                    <div class="intern-card">
+                      <div class="intern-card-top">
+                        <div class="intern-card-info">
+                          <div class="fw-bold"><%= e.name %></div>
+                          <div class="small text-muted"><%= e.email %></div>
+                          <div class="small font-monospace text-muted mt-1"><i class="bi bi-hash me-1"></i><%= e.transactionId || 'N/A' %></div>
+                        </div>
+                      </div>
+                      <div class="intern-card-meta mb-2">
+                        <div class="d-flex justify-content-between w-100">
+                           <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(e.enrollmentDate).toLocaleDateString() %></span>
+                           <strong class="text-dark fs-5">₹<%= Number(e.amountPaid).toFixed(2) %></strong>
+                        </div>
+                      </div>
+                    </div>
+                  <% }) %>
+                <% } else { %>
+                  <div class="text-center py-4 text-muted w-100">No enrollment history found</div>
+                <% } %>
               </div>
           </div>
         </div>

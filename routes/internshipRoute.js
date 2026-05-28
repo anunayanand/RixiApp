@@ -3,11 +3,11 @@ const router = express.Router();
 const NewRegistration = require("../models/NewRegistration");
 const User = require("../models/User");
 const Ambassador = require("../models/Ambassador");
+const EnrollmentHistory = require("../models/EnrollmentHistory");
 const axios = require("axios");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
-
 const SHEET_URL = process.env.SHEET_URL;
 const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
 const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
@@ -285,6 +285,19 @@ router.get("/payment/callback", async (req, res) => {
       );
 
       if (registration) {
+        // Log Enrollment History on successful payment
+        
+        try {
+          await EnrollmentHistory.create({
+            name: registration.name,
+            email: registration.email,
+            amountPaid: registration.final_amount || 0,
+            transactionId: transactionId,
+            enrollmentDate: new Date()
+          });
+        } catch (err) {
+          console.error("Failed to create EnrollmentHistory:", err);
+        }
         
 
 
