@@ -209,7 +209,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
       year_sem: registration.year_sem,
       img_url: registration.profile_image_url,
       img_public_id: registration.profile_image_public_id,
-      referral_code: registration.referral_code,
+      referal_code: registration.referral_code,
       intern_id,
       batch_no,
       starting_date: startDate,
@@ -223,7 +223,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
     // ✅ Update Ambassador if referral code exists
     if (registration.referral_code && registration.referral_code.trim() !== "") {
       try {
-        const ambassador = await Ambassador.findOne({ referralId: registration.referral_code.trim() });
+        const ambassador = await Ambassador.findOne({ referralId: new RegExp(`^${registration.referral_code.trim()}$`, "i") });
         if (ambassador) {
           const existingInternIndex = ambassador.referred_interns.findIndex(i => i.email === registration.email);
           
@@ -252,7 +252,7 @@ router.post("/accept-registration/:id", authRole("admin"), async (req, res) => {
         }
 
         // ✅ Update referring intern if referral code matches an intern_id
-        const referrerIntern = await User.findOne({ intern_id: registration.referral_code.trim() });
+        const referrerIntern = await User.findOne({ intern_id: new RegExp(`^${registration.referral_code.trim()}$`, "i") });
         if (referrerIntern) {
           referrerIntern.points = (referrerIntern.points || 0) + 100;
           if (!referrerIntern.referredInterns) referrerIntern.referredInterns = [];

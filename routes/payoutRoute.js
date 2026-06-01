@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const PaymentTransaction = require("../models/PaymentTransaction");
+const CertificatePurchase = require("../models/CertificatePurchase");
 const Ambassador = require("../models/Ambassador");
 const Admin = require("../models/Admin");
 const authRole = require("../middleware/authRole");
@@ -17,13 +18,18 @@ const getAvailableBalance = async () => {
   const users = await User.find();
   const rawIncome = users.reduce((sum, u) => sum + (u.amountPaid || 0), 0);
   
+  const certPurchases = await CertificatePurchase.find();
+  const certIncome = certPurchases.reduce((sum, cp) => sum + (cp.amount || 0), 0);
+
+  const totalRawIncome = rawIncome + certIncome;
+  
   const expenditures = await Expenditure.find();
   const expTotal = expenditures.reduce((sum, exp) => sum + (exp.amount || 0), 0);
   
   const transactions = await PaymentTransaction.find({ status: "Approved" });
   const paidTotal = transactions.reduce((sum, t) => sum + t.amount, 0);
   
-  return rawIncome - expTotal - paidTotal;
+  return totalRawIncome - expTotal - paidTotal;
 };
 
 // GET /superAdmin/payouts -> Render Payout Center
@@ -59,14 +65,33 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
     const thisMonthPayouts = Number((thisMonthPayoutsTransactions + thisMonthExpenditures).toFixed(2));
 
     const users = await User.find();
-    const totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
+    let totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
+
+    const certPurchasesForIncome = await CertificatePurchase.find();
+    const certIncome = certPurchasesForIncome.reduce((sum, cp) => sum + (cp.amount || 0), 0);
+    totalIncome = Number((totalIncome + certIncome).toFixed(2));
 
     const redemptionRequests = await RedemptionRequest.find().populate('internId', 'name email').sort({ createdAt: -1 });
 
     const enrollmentHistory = await EnrollmentHistory.find().sort({ enrollmentDate: -1 }).populate('internId', 'name email');
 
+    const certificatePurchases = await CertificatePurchase.find().sort({ date: -1 });
+    const formattedCertPurchases = certificatePurchases.map(cp => ({
+      _id: cp._id,
+      requestedAt: cp.date,
+      recipientName: cp.name,
+      recipientEmail: cp.email,
+      amount: cp.amount,
+      type: 'CertificatePurchase',
+      status: 'Approved',
+      transactionId: cp.transactionId
+    }));
+
+    const allTransactions = [...transactions, ...formattedCertPurchases].sort((a, b) => new Date(b.requestedAt) - new Date(a.requestedAt));
+
     res.render("payoutCenter", {
-      transactions,
+      transactions: allTransactions,
+      certificatePurchases,
       admins,
       ambassadors,
       superAdmin,
@@ -131,7 +156,12 @@ router.post("/payouts/verify-secret", authRole("superAdmin"), async (req, res) =
     if (superAdmin.secretKey === secret_key) {
       // Calculate total income and return it
       const users = await User.find();
-      const totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
+      let totalIncome = Number(users.reduce((sum, u) => sum + (u.amountPaid || 0), 0).toFixed(2));
+      
+      const certPurchases = await CertificatePurchase.find();
+      const certIncome = certPurchases.reduce((sum, cp) => sum + (cp.amount || 0), 0);
+      
+      totalIncome = Number((totalIncome + certIncome).toFixed(2));
       
       const expenditures = await Expenditure.find();
       const totalExpenditure = Number(expenditures.reduce((sum, exp) => sum + (exp.amount || 0), 0).toFixed(2));

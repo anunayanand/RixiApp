@@ -62,7 +62,7 @@ router.post("/create-user", authRole("admin"), async (req, res) => {
 
     // ✅ Award referral points if referal_code exists
     if (referal_code && referal_code.trim() !== "") {
-      const referrerIntern = await User.findOne({ intern_id: referal_code.trim() });
+      const referrerIntern = await User.findOne({ intern_id: new RegExp(`^${referal_code.trim()}$`, "i") });
       if (referrerIntern) {
         referrerIntern.points = (referrerIntern.points || 0) + 100;
         if (!referrerIntern.referredInterns) referrerIntern.referredInterns = [];

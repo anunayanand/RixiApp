@@ -107,6 +107,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         <i class="bi bi-journal-check"></i>
         <span>Enrollment History</span>
       </a>
+      <a href="#tab-certificate-purchases" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-certificate-purchases" role="tab">
+        <i class="bi bi-award-fill"></i>
+        <span>Certificate Purchases</span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -811,6 +815,62 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
                   <% }) %>
                 <% } else { %>
                   <div class="text-center py-4 text-muted w-100">No enrollment history found</div>
+                <% } %>
+              </div>
+          </div>
+        </div>
+
+        <!-- Certificate Purchases -->
+        <div class="tab-pane fade" id="tab-certificate-purchases" role="tabpanel">
+          <div class="mail-section-card">
+            <div class="table-responsive d-none d-md-block" style="max-height: 500px; overflow-y: auto; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);">
+              <table class="mail-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Intern Name</th><th>Email</th><th>Domain</th><th>Amount Paid</th><th>Txn ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (typeof certificatePurchases !== 'undefined' && certificatePurchases.length > 0) { %>
+                      <% certificatePurchases.forEach(cp => { %>
+                        <tr>
+                          <td data-label="Date"><%= new Date(cp.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) %></td>
+                          <td data-label="Intern Name"><span class="fw-semibold"><%= cp.name %></span></td>
+                          <td data-label="Email"><small class="text-muted"><%= cp.email %></small></td>
+                          <td data-label="Domain"><small class="text-muted"><%= cp.domain %></small></td>
+                          <td data-label="Amount Paid"><strong class="text-success">₹<%= Number(cp.amount).toFixed(2) %></strong></td>
+                          <td data-label="Txn ID"><small class="text-muted"><%= cp.transactionId || '-' %></small></td>
+                        </tr>
+                      <% }) %>
+                    <% } else { %>
+                      <tr><td colspan="6" class="text-center py-4 text-muted">No certificate purchases found</td></tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Card Grid (< md) -->
+              <div class="intern-card-grid d-md-none mt-3">
+                <% if (typeof certificatePurchases !== 'undefined' && certificatePurchases.length > 0) { %>
+                  <% certificatePurchases.forEach(cp => { %>
+                    <div class="intern-card">
+                      <div class="intern-card-top">
+                        <div class="intern-card-info">
+                          <div class="fw-bold"><%= cp.name %></div>
+                          <div class="small text-muted"><%= cp.email %> | <%= cp.domain %></div>
+                          <div class="small font-monospace text-muted mt-1"><i class="bi bi-hash me-1"></i><%= cp.transactionId || 'N/A' %></div>
+                        </div>
+                      </div>
+                      <div class="intern-card-meta mb-2">
+                        <div class="d-flex justify-content-between w-100">
+                           <span><i class="bi bi-calendar3 me-1"></i> <%= new Date(cp.date).toLocaleDateString() %></span>
+                           <strong class="text-dark fs-5">₹<%= Number(cp.amount).toFixed(2) %></strong>
+                        </div>
+                      </div>
+                    </div>
+                  <% }) %>
+                <% } else { %>
+                  <div class="text-center py-4 text-muted w-100">No certificate purchases found</div>
                 <% } %>
               </div>
           </div>
@@ -1882,6 +1942,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
       let pfTotal = 0;
       let expTotal = 0;
       let redTotal = 0;
+      let certIncomeTotal = 0;
       
       const monthlyData = {};
       const monthlyIncomeData = {};
@@ -1905,13 +1966,19 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
           if (t.type === "AmbassadorWithdrawal") ambassadorTotal += t.amount;
           else if (t.type === "AdminSalary") adminTotal += t.amount;
           else if (t.type === "PFWithdrawal") pfTotal += t.amount;
+          else if (t.type === "CertificatePurchase") certIncomeTotal += t.amount;
           
           // Process Monthly Trend
-          if (t.processedAt) {
-            const date = new Date(t.processedAt);
+          const dateStr = t.processedAt || t.requestedAt;
+          if (dateStr) {
+            const date = new Date(dateStr);
             const label = monthNames[date.getMonth()] + " " + date.getFullYear().toString().slice(-2);
             if (monthlyData[label] !== undefined) {
-              monthlyData[label] += t.amount;
+              if (t.type === "CertificatePurchase") {
+                monthlyIncomeData[label] += t.amount;
+              } else {
+                monthlyData[label] += t.amount;
+              }
             }
           }
         }
@@ -1965,10 +2032,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         doughnutChart = new Chart(doughnutCtx, {
           type: 'doughnut',
           data: {
-            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals', 'Expenditures', 'Intern Redeemed'],
+            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals', 'Expenditures', 'Intern Redeemed', 'Certificates'],
             datasets: [{
-              data: [ambassadorTotal, adminTotal, pfTotal, expTotal, redTotal],
-              backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'],
+              data: [ambassadorTotal, adminTotal, pfTotal, expTotal, redTotal, certIncomeTotal],
+              backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#8b5cf6'],
               borderWidth: 0,
               hoverOffset: 4
             }]

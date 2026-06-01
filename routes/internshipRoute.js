@@ -71,12 +71,12 @@ router.post("/validate-referral", async (req, res) => {
     if (!referralCode) {
        return res.json({ valid: false, message: "No referral code provided" });
     }
-    const ambassador = await Ambassador.findOne({ referralId: referralCode.trim() });
+    const ambassador = await Ambassador.findOne({ referralId: new RegExp(`^${referralCode.trim()}$`, "i") });
     if (ambassador) {
       return res.json({ valid: true, discountPercent: ambassador.discountPercent || 0 });
     }
 
-    const intern = await User.findOne({ intern_id: referralCode.trim() });
+    const intern = await User.findOne({ intern_id: new RegExp(`^${referralCode.trim()}$`, "i") });
     if (intern) {
       return res.json({ valid: true, discountPercent: 0, internName: intern.name });
     }
@@ -162,7 +162,7 @@ router.post("/create-order", async (req, res) => {
     // Apply referral discount
     let discountPercent = 0;
     if (referral_code && referral_code.trim() !== "") {
-      const ambassador = await Ambassador.findOne({ referralId: referral_code.trim() });
+      const ambassador = await Ambassador.findOne({ referralId: new RegExp(`^${referral_code.trim()}$`, "i") });
       if (ambassador && ambassador.discountPercent) {
         discountPercent = ambassador.discountPercent;
       }

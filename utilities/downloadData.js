@@ -147,104 +147,456 @@ async function exportData() {
         }).join("");
 
         const body = `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-<body style="margin:0; padding:0; background-color:#f4f0ed; font-family:'Segoe UI', Arial, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f0ed; padding: 30px 0;">
-    <tr><td align="center">
-      <table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.10);">
-        
-        <!-- HEADER -->
-        <tr>
-          <td style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #ff6600 200%); padding: 36px 40px; text-align:center;">
-            <img src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png" alt="Rixi Lab" width="130" style="display:block; margin: 0 auto 16px auto; filter: brightness(10);">
-            <h1 style="margin:0; font-size:22px; color:#ffffff; font-weight:700; letter-spacing:0.5px;">Database Backup Report</h1>
-            <p style="margin:6px 0 0; font-size:13px; color:rgba(255,255,255,0.70); letter-spacing:0.3px;">${dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(mm)-1]} 20${yy} &nbsp;|&nbsp; Auto-Generated</p>
-          </td>
-        </tr>
 
-        <!-- STATUS BADGE -->
-        <tr>
-          <td style="padding:24px 40px 0; text-align:center;">
-            <span style="display:inline-block; background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; border-radius:20px; padding:6px 20px; font-size:13px; font-weight:600;">✅ &nbsp;Backup Completed Successfully</span>
-          </td>
-        </tr>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <!-- SUMMARY CARDS -->
-        <tr>
-          <td style="padding: 20px 40px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="50%" style="padding-right:8px;">
-                  <div style="background:#fff8f4; border:1px solid #ffe0cc; border-radius:8px; padding:16px 18px; text-align:center;">
-                    <p style="margin:0 0 4px; font-size:26px; font-weight:700; color:#ff6600;">${collections.length}</p>
-                    <p style="margin:0; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px;">Collections Backed Up</p>
-                  </div>
-                </td>
-                <td width="50%" style="padding-left:8px;">
-                  <div style="background:#f3f4ff; border:1px solid #d0d3ff; border-radius:8px; padding:16px 18px; text-align:center;">
-                    <p style="margin:0 0 4px; font-size:26px; font-weight:700; color:#3f51b5;">${folderName}</p>
-                    <p style="margin:0; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px;">Backup Reference</p>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+<style>
 
-        <!-- FILES TABLE -->
-        <tr>
-          <td style="padding: 0 40px 24px;">
-            <p style="font-size:14px; font-weight:600; color:#444; margin:0 0 10px;">📎 Attached Files</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #f0ece8; border-radius:8px; overflow:hidden;">
-              <thead>
-                <tr style="background:#faf5f2;">
-                  <th style="padding:10px 14px; text-align:left; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; border-bottom:1px solid #f0ece8;">Collection</th>
-                  <th style="padding:10px 14px; text-align:right; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; border-bottom:1px solid #f0ece8;">Size</th>
-                </tr>
-              </thead>
-              <tbody>${tableRows}</tbody>
-            </table>
-          </td>
-        </tr>
+body{
+  margin:0;
+  padding:0;
+  background:#f5f5f5;
+  font-family:Arial,sans-serif;
+}
 
-        <!-- NOTE -->
-        <tr>
-          <td style="padding: 0 40px 28px;">
-            <div style="background:#fffbf0; border-left:4px solid #ffca28; border-radius:6px; padding:12px 16px;">
-              <p style="margin:0; font-size:13px; color:#7a6000;">⚠️ This email contains sensitive data. Please store the attached files securely and do not share them externally.</p>
-            </div>
-          </td>
-        </tr>
+table{
+  border-spacing:0;
+}
 
-        <!-- DIVIDER -->
-        <tr><td style="padding: 0 40px;"><hr style="border:none; border-top:1px solid #f0ece8; margin:0;"></td></tr>
+img{
+  border:0;
+  display:block;
+}
 
-        <!-- FOOTER -->
-        <tr>
-          <td style="padding:22px 40px; text-align:center;">
-            <p style="margin:0 0 10px; font-size:15px; font-weight:700; color:#1a1a2e;">Rixi Lab</p>
-            <p style="margin:0 0 12px; font-size:12px; color:#aaa; font-style:italic;">"Rethink Innovate eXecute Inspire"</p>
-            <a href="https://www.instagram.com/rixilab.in" target="_blank" style="margin:0 6px;">
-              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="22" style="vertical-align:middle;">
-            </a>
-            <a href="https://www.linkedin.com/company/rixilab" target="_blank" style="margin:0 6px;">
-              <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="22" style="vertical-align:middle;">
-            </a>
-            <a href="https://www.facebook.com/rixilab" target="_blank" style="margin:0 6px;">
-              <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="22" style="vertical-align:middle;">
-            </a>
-            <p style="margin:14px 0 0; font-size:11px; color:#ccc;">© 2026 Rixi Lab &nbsp;|&nbsp; <a href="https://rixilab.tech" style="color:#ff6600; text-decoration:none;">www.rixilab.tech</a></p>
-          </td>
-        </tr>
+@media screen and (max-width:600px){
 
+  .container{
+    width:100% !important;
+  }
+
+  .content{
+    padding:24px 18px !important;
+  }
+
+  .heading{
+    font-size:24px !important;
+    line-height:1.3 !important;
+  }
+
+  .mobile-stack{
+    display:block !important;
+    width:100% !important;
+  }
+
+  .card-padding{
+    padding:18px !important;
+  }
+
+  .footer-text{
+    font-size:11px !important;
+  }
+
+  .badge{
+    font-size:12px !important;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center" style="padding:24px 12px;">
+
+<table
+  width="620"
+  class="container"
+  cellpadding="0"
+  cellspacing="0"
+  bgcolor="#ffffff"
+  style="
+    max-width:620px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid #ececec;
+  "
+>
+
+<!-- TOP ACCENT -->
+<tr>
+  <td height="6" bgcolor="#ff6600"></td>
+</tr>
+
+<tr>
+<td class="content" style="padding:42px 34px;">
+
+<!-- LOGO -->
+<table width="100%">
+<tr>
+<td align="center">
+
+<table
+  width="90"
+  height="90"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fff3eb;
+    border-radius:50%;
+  "
+>
+<tr>
+<td align="center" valign="middle">
+
+<img
+  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  width="54"
+  alt="Rixi Lab"
+/>
+
+</td>
+</tr>
+</table>
+
+<h1
+  class="heading"
+  style="
+    margin:24px 0 0;
+    font-size:32px;
+    line-height:1.25;
+    color:#ff6600;
+    font-weight:bold;
+  "
+>
+  Database Backup Report
+</h1>
+
+<p
+  style="
+    margin:12px 0 0;
+    color:#777;
+    font-size:14px;
+    line-height:1.7;
+  "
+>
+  ${dd} ${
+    ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(mm)-1]
+  } 20${yy} • Automated Backup
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- SUMMARY -->
+<table width="100%" style="margin-top:24px;">
+<tr>
+
+<td
+  class="mobile-stack"
+  width="50%"
+  style="padding-right:8px;"
+>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#fffaf7;
+    border:1px solid #ffd8c2;
+    border-radius:18px;
+  "
+>
+<tr>
+<td align="center" style="padding:24px;">
+
+<div
+  style="
+    font-size:32px;
+    font-weight:bold;
+    color:#ff6600;
+  "
+>
+  ${collections.length}
+</div>
+
+<div
+  style="
+    margin-top:8px;
+    color:#777;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  "
+>
+  Collections
+</div>
+
+</td>
+</tr>
+</table>
+
+</td>
+
+<td
+  class="mobile-stack"
+  width="50%"
+  style="padding-left:8px;"
+>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    background:#f5f7ff;
+    border:1px solid #d8deff;
+    border-radius:18px;
+  "
+>
+<tr>
+<td align="center" style="padding:24px;">
+
+<div
+  style="
+    font-size:18px;
+    font-weight:bold;
+    color:#3f51b5;
+  "
+>
+  ${folderName}
+</div>
+
+<div
+  style="
+    margin-top:8px;
+    color:#777;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  "
+>
+  Backup Reference
+</div>
+
+</td>
+</tr>
+</table>
+
+</td>
+
+</tr>
+</table>
+
+<!-- ATTACHMENTS -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:30px;
+    background:#fafafa;
+    border:1px solid #ececec;
+    border-radius:18px;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0 0 18px;
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  📎 Attached Backup Files
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+${attachments.map(file => {
+  const stats = fs.statSync(file.path);
+  const sizeKB = (stats.size / 1024).toFixed(1);
+
+  return `
+  <tr>
+    <td style="
+      padding:12px 0;
+      border-bottom:1px solid #ececec;
+    ">
+
+      <table width="100%">
+      <tr>
+
+      <td>
+        <span style="
+          background:#fff3eb;
+          color:#ff6600;
+          border:1px solid #ffd3bc;
+          padding:6px 10px;
+          border-radius:8px;
+          font-size:12px;
+          font-weight:bold;
+          display:inline-block;
+        ">
+          ${file.name}
+        </span>
+      </td>
+
+      <td
+        align="right"
+        style="
+          color:#777;
+          font-size:12px;
+        "
+      >
+        ${sizeKB} KB
+      </td>
+
+      </tr>
       </table>
-    </td></tr>
-  </table>
-</body>
-</html>`;
 
-        const encodedMail = makeMultipartBody(recipientEmail, process.env.EMAIL, subject, body, attachments);
+    </td>
+  </tr>
+  `;
+}).join("")}
+</table>
+
+</td>
+</tr>
+</table>
+
+<!-- SECURITY NOTICE -->
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  style="
+    margin-top:24px;
+    background:#fffaf7;
+    border-radius:18px;
+    border:1px solid #ffd8c2;
+  "
+>
+<tr>
+<td class="card-padding" style="padding:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:13px;
+    font-weight:bold;
+    color:#ff6600;
+  "
+>
+  🔒 Security Notice
+</p>
+
+<p
+  style="
+    margin:12px 0 0;
+    font-size:13px;
+    color:#555;
+    line-height:1.8;
+  "
+>
+  This email contains database exports and potentially sensitive
+  information. Store all attachments securely and avoid sharing
+  them outside authorized environments.
+</p>
+
+</td>
+</tr>
+</table>
+
+<!-- FOOTER -->
+<table
+  width="100%"
+  style="
+    margin-top:40px;
+    border-top:1px solid #ececec;
+  "
+>
+<tr>
+<td align="center" style="padding-top:24px;">
+
+<p
+  style="
+    margin:0;
+    font-size:14px;
+    font-weight:bold;
+    color:#222;
+  "
+>
+  Rixi Lab
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:10px 0 0;
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+  "
+>
+  Rethink Innovate eXecute Inspire
+</p>
+
+<p style="margin:20px 0 0;">
+
+<a href="https://www.instagram.com/rixilab.in" style="display:inline-block;margin:0 6px;">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24"/>
+</a>
+
+<a href="https://www.linkedin.com/company/rixilab" style="display:inline-block;margin:0 6px;">
+<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="24"/>
+</a>
+
+<a href="https://www.facebook.com/rixilab" style="display:inline-block;margin:0 6px;">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="24"/>
+</a>
+
+</p>
+
+<p
+  class="footer-text"
+  style="
+    margin:18px 0 0;
+    color:#999;
+    font-size:11px;
+  "
+>
+  © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+</p>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+`;
+
+        const encodedMail = makeMultipartBody(recipientEmail, `"Rixi Lab" <${process.env.EMAIL}>`, subject, body, attachments);
         
         // console.log(`Sending email to ${recipientEmail}...`);
         await gmail.users.messages.send({

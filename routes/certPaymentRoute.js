@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const User = require('../models/User');
+const CertificatePurchase = require('../models/CertificatePurchase');
 const authRole = require('../middleware/authRole');
 
 const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
@@ -77,6 +78,16 @@ router.get('/cert-payment/callback', async (req, res) => {
                 intern.certificatePaymentId = transactionId;
                 if (!intern.completion_date) intern.completion_date = new Date();
                 await intern.save();
+
+                await CertificatePurchase.create({
+                    internId: intern._id,
+                    name: intern.name,
+                    email: intern.email,
+                    domain: intern.domain || "N/A",
+                    amount: CERT_PRICE,
+                    transactionId: transactionId
+                });
+
                 req.flash("success", "Payment Successfull!");
             }
             res.redirect("/intern");
