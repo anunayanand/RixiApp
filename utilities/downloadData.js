@@ -2,6 +2,8 @@ const { MongoClient, BSON } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
+const BASE_URL = rawUrl.replace('https://', 'www.');
 // dotenv is loaded by app.js when run via cron; keep this only for standalone runs
 if (require.main === module) {
     require("dotenv").config({ path: path.join(__dirname, "../.env") });
@@ -256,9 +258,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -537,7 +539,7 @@ ${attachments.map(file => {
     color:#222;
   "
 >
-  Rixi Lab
+  Rixi Lab Technologies
 </p>
 
 <p
@@ -576,7 +578,7 @@ ${attachments.map(file => {
     font-size:11px;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -596,7 +598,7 @@ ${attachments.map(file => {
 </html>
 `;
 
-        const encodedMail = makeMultipartBody(recipientEmail, `"Rixi Lab" <${process.env.EMAIL}>`, subject, body, attachments);
+        const encodedMail = makeMultipartBody(recipientEmail, `"Rixi Lab Technologies" <${process.env.EMAIL}>`, subject, body, attachments);
         
         // console.log(`Sending email to ${recipientEmail}...`);
         await gmail.users.messages.send({

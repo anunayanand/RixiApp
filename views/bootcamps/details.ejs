@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title><%= bootcamp.name %> | Rixi Lab Bootcamps</title>
+  <title><%= bootcamp.name %> | Rixi Lab Technologies Bootcamps</title>
   <meta name="description" content="<%= bootcamp.description.substring(0, 155) %>">
 
   <!-- Favicons -->
@@ -433,8 +433,7 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo" />
-        <h1 class="sitename">Rixi Lab</h1>
+       <img src="/img/New Web Logo.svg" alt="" style="min-height: 55px; max-height: 55px; margin-left: 0px;">
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -648,7 +647,6 @@
   <%- include('../partials/footer') %>
 
   <!-- Registration Confirmation Modal -->
- ```html
 <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background-color: #040000; color: #f8f8f8; border-radius: var(--radius); border: none; box-shadow: var(--shadow-md);">
@@ -721,7 +719,7 @@
       const twitterShare  = document.getElementById('twitterShare');
 
       const pageUrl   = window.location.href;
-      const pageTitle = '<%= bootcamp.name %> — Rixi Lab Bootcamp';
+      const pageTitle = '<%= bootcamp.name %> — Rixi Lab Technologies Bootcamp';
 
       // Set dynamic share URLs
       if (whatsappShare) {

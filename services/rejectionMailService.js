@@ -1,5 +1,7 @@
 const { google } = require("googleapis");
 require("dotenv").config();
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
+const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
 // CONFIGURATION
@@ -41,7 +43,7 @@ function makeBody(to, from, subject, message) {
 // ==============================
 async function sendRejectionMail(email, name, projectTitle, reason) {
   try {
-    const subject = `Rixi Lab ${projectTitle} - Rejected`;
+    const subject = `Rixi Lab Technologies ${projectTitle} - Rejected`;
     const BASE_URL = process.env.BASE_URL;
 
     const body = `
@@ -150,9 +152,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://www.rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://www.rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="52"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -330,7 +332,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <!-- Social Icons -->
@@ -391,7 +393,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -413,7 +415,7 @@ img{
 
     const encodedMail = makeBody(
       email,
-      `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`,
+      `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`,
       subject,
       body
     );

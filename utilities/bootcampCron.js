@@ -198,9 +198,9 @@ cron.schedule("* * * * *", async () => {
             <td align="center" valign="middle">
 
               <img 
-                src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+                src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
                 width="52"
-                alt="Rixi Lab"
+                alt="Rixi Lab Technologies"
               />
 
             </td>
@@ -403,7 +403,7 @@ cron.schedule("* * * * *", async () => {
             line-height:1.8;
           "
         >
-          Rixi Lab Bootcamp • Learn. Build. Grow.
+          Rixi Lab Technologies Bootcamp • Learn. Build. Grow.
         </p>
 
         <!-- Social Icons -->
@@ -464,7 +464,7 @@ cron.schedule("* * * * *", async () => {
             line-height:1.8;
           "
         >
-          © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+          © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
         </p>
 
       </td>

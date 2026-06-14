@@ -21,7 +21,8 @@ router.get(
         duration: user.duration,
         intern_id: user.intern_id,
         starting_date: user.starting_date, // raw date
-        college_name: user.college    // ✅ FIXED FIELD
+        college_name: user.college,    // ✅ FIXED FIELD
+        internship_type: user.internshipType || "internship"
       });
 
       res.setHeader("Content-Type", "application/pdf");

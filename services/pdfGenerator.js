@@ -9,7 +9,7 @@ async function generateCertificatePDF(data) {
   return new Promise(async (resolve, reject) => {
     try {
       // 🔹 SELECT TEMPLATE IMAGE
-      let imageName = "certificate_bg.png";
+      let imageName = "Internship_Certificate.png";
 
       const imagePath = path.join(__dirname, "../public/templet", imageName);
 
@@ -29,10 +29,10 @@ async function generateCertificatePDF(data) {
 
       // Certificate ID
       doc.font('Montserrat');
-      doc.fontSize(15); // approximate for 17px
+      doc.fontSize(12); // approximate for 17px
       doc.fillColor('black');
-      doc.text(`CERTIFICATE ID: ${data.certificate_id}`, 822, 33);
-
+      doc.text(`Certificate ID: ${data.certificate_id}`, 900, 230, { lineBreak: false });
+      
       // QR Code
       const baseUrl = process.env.BASE_URL || "https://rixilab.tech";
       const verifyUrl = `${baseUrl}/certificate?intern_id=${data.intern_id}&certificate_id=${data.certificate_id}`;
@@ -41,14 +41,14 @@ async function generateCertificatePDF(data) {
         margin: 1,
         color: { dark: "#000000", light: "#ffffff" }
       });
-      
-      doc.image(qrBuffer, 958, 120, { fit: [100, 100] }); // Adjust QR position top-right corner
+
+      doc.image(qrBuffer, 958, 250, { fit: [110, 110] }); // Adjust QR position top-right corner
 
       // Name
       doc.font('Allura'); // cursive
       doc.fontSize(80); // approximate for 5em
       doc.fillColor('#1800ad');
-      doc.text(data.name, 80, 360);
+      doc.text(data.name, 80, 355);
 
       // Certificate Text
       doc.font('Montserrat');
@@ -91,7 +91,7 @@ async function generateOfferLetterPDF(data) {
     // =============================
     const imagePath = path.join(
       __dirname,
-      "../public/templet/offer_letter_bg.png"
+      "../public/templet/Offer_Letter.png"
     );
     doc.image(imagePath, 0, 0, { width: 595, height: 842 });
 
@@ -106,6 +106,10 @@ async function generateOfferLetterPDF(data) {
       "Montserrat-Bold",
       path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf")
     );
+    doc.registerFont(
+      "Montserrat-Medium",
+      path.join(__dirname, "../public/fonts/Montserrat-Medium.ttf")
+    )
 
     // =============================
     // Dates
@@ -117,106 +121,66 @@ async function generateOfferLetterPDF(data) {
     const formatDate = (d) =>
       d.toLocaleDateString("en-GB", {
         day: "2-digit",
-        month: "short",
+        month: "long",
         year: "numeric"
       });
 
-    // =============================
-    // Header Text (Locked Positions)
-    // =============================
-
-    // To Name
-    doc.font("Montserrat-Bold")
-       .fontSize(14)
-       .fillColor("#000")
-       .text(`To ${data.name}`, 60, 210);
-
-    // College
-    doc.font("Montserrat")
-       .fontSize(12)
-       .text(data.college_name, 60, 230,{width:230});
-
-    // Date (Right)
-    doc.font("Montserrat-Bold")
-       .fontSize(12)
-       .text(formatDate(assignedDate), 465, 210);
-
-    // Intern ID
-    doc.font("Montserrat")
-       .fontSize(12)
-       .text(`Intern ID: ${data.intern_id}`, 410, 230);
+    // Intern ID & Date
+    doc.font("Montserrat-Medium")
+       .fontSize(11)
+       .text(`Intern ID: ${data.intern_id}`, 40, 170);
+    doc.text(`Date: ${formatDate(assignedDate)}`, 425, 170, { width: 130, align: "right" });
 
     // =============================
     // Body Content
     // =============================
 
-    const bodyX = 50;
-    const bodyWidth = 495;
-    let y = 300;
-
     // Dear Name
     doc.font("Montserrat-Bold")
-       .fontSize(14)
-       .text(`Dear ${data.name}`, 60, 315);
+       .fontSize(12)
+       .text(`Dear ${data.name}`, 40, 210);
 
-    // y += 30;
+    doc.font("Montserrat-Medium")
+       .fontSize(11);
 
-    // Paragraph in one flow
-    // Intro line (NOT justified)
-doc.font("Montserrat")
-   .fontSize(13)
-   .text(
-     "Welcome to Rixi Lab,",
-     60,
-     350
-   );
+    const paraOptions = { width: 515, align: "justify", lineGap: 4 };
 
-// Body paragraph (LEFT aligned)
-doc.font("Montserrat")
-   .fontSize(13)
-   .text(
-     `We are pleased to offer you an appointment (internship) with Rixi Lab. Your effective date of joining with us will be from ${formatDate(startDate)}. You will begin your internship journey after giving a formal acceptance of this letter. As an intern, you will receive a "${data.domain} intern" status for the duration of ${data.duration} week subject to completion and acceptance of Terms & Conditions.
-     `,
-     60,
-     375,
-     {
-       width: 480,
-       align: "justify",
-     }
-   );
-   doc.font("Montserrat")
-   .fontSize(13)
-   .text(
-    `We hope that you are excited to embark on a transformational journey with our team. We believe that our team is our biggest strength and we take pride in welcoming any new talent who is having a great desire to learn. We are sure that you will play a pivotal role in achieving and will strengthen the core values of the company.`,
-     60,
-     490,
-     {
-       width: 480,
-       align: "justify",
-     }
-   )
-   doc.font("Montserrat")
-   .fontSize(13)
-   .text(
-   `Your appointment as an Intern will be governed by the Terms and Conditions.`,
-      60,
-      585,
-      {
-        width: 480,
-        align: "justify",
-      }
-   )
-    doc.font("Montserrat")
-   .fontSize(13)
-   .text(
-   `Congratulations !!`,
-      60,
-      620,
-      {
-        width: 480,
-        align: "justify",
-      }
-   )
+    // Paragraph 1
+    doc.text("We are delighted to welcome you at Rixi Lab Technologies.", 40, 250);
+
+    // Paragraph 2
+    doc.text(
+      `We are pleased to offer you an ${data.internship_type} position as a "${data.domain} Intern" with Rixi Lab Technologies. Your internship is scheduled to commence on ${formatDate(startDate)}, subject to your formal acceptance of this offer and compliance with the applicable Terms and Conditions.`,
+      40, 280, paraOptions
+    );
+
+    // Paragraph 3
+    doc.text(
+      `The duration of your online internship will be ${data.duration} weeks, during which you will have the opportunity to enhance your technical skills, gain practical industry experience, and work on real-world projects under the guidance of experienced mentors.`,
+      40, 352, paraOptions
+    );
+
+    // Paragraph 4
+    doc.text(
+      `At Rixi Lab, we believe that our people are our greatest asset. We are committed to fostering a learning-driven environment that encourages innovation, professional growth, and continuous development. We are confident that your enthusiasm, dedication, and willingness to learn will contribute positively to our organization and help you achieve your professional goals.`,
+      40, 411, paraOptions
+    );
+
+    // Paragraph 5
+    doc.text(
+      `Your appointment as an Intern shall be governed by the company's Internship Terms and Conditions.`,
+      40, 503, paraOptions
+    );
+
+    // Paragraph 6
+    doc.text(
+      `We are excited to have you join our team and look forward to supporting you throughout this enriching learning journey.`,
+      40, 555, paraOptions
+    );
+
+    // Paragraph 7
+    doc.text(`Congratulations !!`, 40, 600, paraOptions);
+
     doc.end();
   });
 }

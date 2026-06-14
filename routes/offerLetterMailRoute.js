@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
@@ -49,7 +49,7 @@ async function sendBulkOfferLetterMails(interns) {
     try {
       const { name, email, intern_id } = intern;
 
-      const subject = `Internship Offer Letter Available, Login to Rixi Lab Portal`;
+      const subject = `Internship Offer Letter Available, Login to Rixi Lab Technologies Portal`;
       const body = `
       
 <!DOCTYPE html>
@@ -161,9 +161,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -225,7 +225,7 @@ img{
 >
   We are pleased to inform you that your
   <strong>Internship Offer Letter</strong>
-  is now available on the official Rixi Lab portal.
+  is now available on the official Rixi Lab Technologies portal.
 </p>
 
 <p
@@ -328,7 +328,7 @@ img{
   "
 >
 
-1. Visit the Rixi Lab website<br/>
+1. Visit the Rixi Lab Technologies website<br/>
 2. Navigate to the Login page<br/>
 3. Login using your registered email ID<br/>
 4. Use your Intern ID as the default password<br/>
@@ -422,7 +422,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <p style="margin:18px 0 0;">
@@ -470,7 +470,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -490,7 +490,7 @@ img{
 </html>
       `;
 
-      const encodedMail = makeBody(email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, body);
+      const encodedMail = makeBody(email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, body);
       await gmail.users.messages.send({
         userId: 'me',
         resource: {

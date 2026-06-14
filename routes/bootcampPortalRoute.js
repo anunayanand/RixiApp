@@ -4,7 +4,7 @@ const { google } = require("googleapis");
 const BootcampUser = require("../models/BootcampUser");
 const Bootcamp = require("../models/Bootcamp");
 
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
@@ -83,7 +83,7 @@ router.post("/send-otp", async (req, res) => {
       expires: Date.now() + 10 * 60 * 1000, // 10 minutes valid
     };
 
-    const subject = `Your Rixi Lab Bootcamp Login OTP`;
+    const subject = `Your Rixi Lab Technologies Bootcamp Login OTP`;
     const body = `
 
 <!DOCTYPE html>
@@ -203,9 +203,9 @@ img{
 <td align="center" valign="middle">
 
 <img 
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="52"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -266,7 +266,7 @@ img{
     color:#555;
   "
 >
-  You requested to log in to your Rixi Lab Bootcamp portal.
+  You requested to log in to your Rixi Lab Technologies Bootcamp portal.
   Please use the OTP below to continue securely.
 </p>
 
@@ -378,7 +378,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab Bootcamp • Learn. Build. Grow.
+  Rixi Lab Technologies Bootcamp • Learn. Build. Grow.
 </p>
 
 <!-- Social Icons -->
@@ -439,7 +439,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -459,7 +459,7 @@ img{
 </html>
  `;
 
-    const encodedMail = makeBody(user.email, `"Rixi Lab" <${process.env.OTP_EMAIL}>`, subject, body);
+    const encodedMail = makeBody(user.email, `"Rixi Lab Technologies" <${process.env.OTP_EMAIL}>`, subject, body);
     await gmail.users.messages.send({
       userId: "me",
       resource: { raw: encodedMail },

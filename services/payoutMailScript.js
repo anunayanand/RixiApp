@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -33,7 +33,7 @@ function makeBody(to, from, subject, message) {
 async function sendPayoutSuccessMail({ name, email, amount, transactionId, title }) {
   let date = new Date();
   const formattedDate = date.toLocaleDateString('en-GB');
-  const subject = "Payment Processed - Rixi Lab";
+  const subject = "Payment Processed - Rixi Lab Technologies";
 
   const htmlBody = `
 
@@ -145,7 +145,7 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://www.rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://www.rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
   alt="Rixi Lab"
 />
@@ -220,7 +220,7 @@ img{
     color:#555;
   "
 >
-  Thank you for being part of Rixi Lab.
+  Thank you for being part of Rixi Lab Technologies.
 </p>
 
 </td>
@@ -344,7 +344,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <!-- Social Icons -->
@@ -405,7 +405,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -425,7 +425,7 @@ img{
 </html>
 `;
 
-  const encodedMail = makeBody(email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
+  const encodedMail = makeBody(email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {
@@ -436,7 +436,7 @@ img{
 
 async function sendVoucherEmail({ name, email, rewardType, voucherCode, pointsUsed, date }) {
   const formattedDate = date.toLocaleDateString('en-GB');
-  const subject = "Reward Redeemed Successfully - Rixi Lab";
+  const subject = "Reward Redeemed Successfully - Rixi Lab Technologies";
   
   const htmlBody = `
 <!DOCTYPE html>
@@ -552,7 +552,7 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://www.rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://www.rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
   alt="Rixi Lab"
 />
@@ -715,7 +715,7 @@ img{
     color:#555;
   "
 >
-  Thank you for being part of the Rixi Lab community and actively participating in our referral program.
+  Thank you for being part of the Rixi Lab Technologies community and actively participating in our referral program.
 </p>
 
 <p
@@ -781,7 +781,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <p style="margin:18px 0 0;">
@@ -841,7 +841,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • www.rixilab.tech
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -861,7 +861,7 @@ img{
 </html>
   `;
 
-  const encodedMail = makeBody(email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
+  const encodedMail = makeBody(email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: { raw: encodedMail }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Admin Dashboard | Rixi Lab</title>
+  <title>Super Admin Dashboard | Rixi Lab Technologies</title>
 
   <!-- Bootstrap 5 CSS -->
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -66,11 +66,7 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <img src="/img/Rixi Lab New Logo PNG.png" alt="Rixi Lab Logo">
-      <div class="sidebar-brand-text">
-        <h2>Rixi Lab</h2>
-        <span class="sidebar-badge" style="border-color: #ff6600;">SUPER ADMIN</span>
-      </div>
+      <img src="/img/New Web Logo.svg" alt="" style="min-height: 50px; max-height: 50px; margin:auto;">
     </div>
 
     <nav class="sidebar-nav nav flex-column" role="tablist">
@@ -2032,10 +2028,10 @@ const totalInterns = (typeof interns !== 'undefined' && interns) ? interns.lengt
         doughnutChart = new Chart(doughnutCtx, {
           type: 'doughnut',
           data: {
-            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals', 'Expenditures', 'Intern Redeemed', 'Certificates'],
+            labels: ['Ambassadors', 'Admin Salary', 'PF Withdrawals', 'Expenditures', 'Intern Redeemed'],
             datasets: [{
-              data: [ambassadorTotal, adminTotal, pfTotal, expTotal, redTotal, certIncomeTotal],
-              backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#8b5cf6'],
+              data: [ambassadorTotal, adminTotal, pfTotal, expTotal, redTotal],
+              backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'],
               borderWidth: 0,
               hoverOffset: 4
             }]

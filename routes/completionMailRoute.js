@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
@@ -52,7 +52,7 @@ async function sendBulkCompletionMails(interns) {
       const { intern_id, name, email, domain } = intern;
       // console.log("🔍 [DEBUG] Processing intern:", { intern_id, email, name });
 
-      const subject = `Congratulations on Completing Your Internship at Rixi Lab`;
+      const subject = `Congratulations on Completing Your Internship at Rixi Lab Technologies`;
       const body = `
        
 <!DOCTYPE html>
@@ -160,9 +160,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -223,7 +223,7 @@ img{
   "
 >
   We are delighted to inform you that your internship with
-  <strong>Rixi Lab</strong> in the domain of
+  <strong>Rixi Lab Technologies</strong> in the domain of
   <strong>${domain}</strong> has been successfully completed.
   Congratulations on reaching this important milestone in your journey.
 </p>
@@ -330,7 +330,7 @@ img{
 >
   As a token of appreciation, you now have access to
   <strong>Canva Premium for 1 Year</strong>.
-  Simply log in to Canva using your Rixi Lab registered email ID
+  Simply log in to Canva using your Rixi Lab Technologies registered email ID
   and start exploring premium features.
 </p>
 
@@ -379,7 +379,7 @@ img{
   "
 >
   We encourage you to share your internship certificate on LinkedIn
-  and tag <strong>Rixi Lab</strong> in your post.
+  and tag <strong>Rixi Lab Technologies</strong> in your post.
   Celebrate your achievement and inspire others through your journey.
 </p>
 
@@ -401,7 +401,7 @@ img{
     color:#555;
   "
 >
-  Thank you for being part of the Rixi Lab community.
+  Thank you for being part of the Rixi Lab Technologies community.
   We are confident you will continue achieving greater milestones ahead.
 </p>
 
@@ -439,7 +439,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <p style="margin:18px 0 0;">
@@ -485,7 +485,7 @@ img{
     font-size:11px;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -505,7 +505,7 @@ img{
 </html>
       `;
 
-      const encodedMail = makeBody(email, `"Rixi Lab" <${process.env.EMAIL}>`, subject, body);
+      const encodedMail = makeBody(email, `"Rixi Lab Technologies" <${process.env.EMAIL}>`, subject, body);
       await gmail.users.messages.send({
         userId: 'me',
         resource: {

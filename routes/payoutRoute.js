@@ -76,21 +76,9 @@ router.get("/payouts", authRole("superAdmin"), async (req, res) => {
     const enrollmentHistory = await EnrollmentHistory.find().sort({ enrollmentDate: -1 }).populate('internId', 'name email');
 
     const certificatePurchases = await CertificatePurchase.find().sort({ date: -1 });
-    const formattedCertPurchases = certificatePurchases.map(cp => ({
-      _id: cp._id,
-      requestedAt: cp.date,
-      recipientName: cp.name,
-      recipientEmail: cp.email,
-      amount: cp.amount,
-      type: 'CertificatePurchase',
-      status: 'Approved',
-      transactionId: cp.transactionId
-    }));
-
-    const allTransactions = [...transactions, ...formattedCertPurchases].sort((a, b) => new Date(b.requestedAt) - new Date(a.requestedAt));
 
     res.render("payoutCenter", {
-      transactions: allTransactions,
+      transactions: transactions,
       certificatePurchases,
       admins,
       ambassadors,

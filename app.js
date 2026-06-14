@@ -1,19 +1,30 @@
+require('dotenv').config();
 const express = require("express");
 const cron = require("node-cron");
 const { exportData } = require("./utilities/downloadData");
 const axios = require('axios');
-const url = "https://rixilab.tech";
+const urlIn = "https://rixilab.in";
+const urlTech = "https://rixilab.tech";
 
 const interval = 60000;
 
 function reloadWebsite() {
   axios
-    .get(url)
+    .get(urlIn)
     .then((response) => {
-      // console.log("website reloded");
+      // console.log("website reloded .in");
     })
     .catch((error) => {
-      console.error(`Error : ${error.message}`);
+      console.error(`Error (.in) : ${error.message}`);
+    });
+
+  axios
+    .get(urlTech)
+    .then((response) => {
+      // console.log("website reloded .tech");
+    })
+    .catch((error) => {
+      console.error(`Error (.tech) : ${error.message}`);
     });
 }
 
@@ -25,7 +36,6 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
-require('dotenv').config();
 const flash = require('connect-flash');
 require("./db"); // Mongoose connection
 require("./utilities/bootcampCron"); // Initialize bootcamp cron jobs

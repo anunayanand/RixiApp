@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -31,7 +31,7 @@ function makeBody(to, from, subject, message) {
 }
 // 2️⃣ Send confirmation mail for ONE intern
 async function sendResetPasswordMail(user, otp) {
-  var subject = "Reset Password - Rixi Lab";
+  var subject = "Reset Password - Rixi Lab Technologies";
 
   var htmlBody = `
 <!DOCTYPE html>
@@ -157,9 +157,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="52"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -221,7 +221,7 @@ img{
   "
 >
   We received a request to reset your password for your
-  <strong>Rixi Lab</strong> account.
+  <strong>Rixi Lab Technologies</strong> account.
 </p>
 
 <p
@@ -393,7 +393,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <p style="margin:18px 0 0;">
@@ -441,7 +441,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -462,7 +462,7 @@ img{
 
 `;
 
-  const encodedMail = makeBody(user.email, `"Rixi Lab" <${process.env.OTP_EMAIL}>`, subject, htmlBody);
+  const encodedMail = makeBody(user.email, `"Rixi Lab Technologies" <${process.env.OTP_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {

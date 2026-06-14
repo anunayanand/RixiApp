@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -161,7 +161,7 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
   alt="Rixi Lab"
 />
@@ -225,7 +225,7 @@ img{
 >
   Congratulations! We are excited to inform you that your
   application for the internship at
-  <strong>Rixi Lab</strong> has been successfully accepted.
+  <strong>Rixi Lab Technologies</strong> has been successfully accepted.
 </p>
 
 <p
@@ -391,7 +391,7 @@ img{
     color:#555;
   "
 >
-  We are excited to have you as part of the Rixi Lab community.
+  We are excited to have you as part of the Rixi Lab Technologies community.
   Get ready to collaborate, learn new skills, and work on impactful projects.
 </p>
 
@@ -430,7 +430,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <!-- Social Icons -->
@@ -491,7 +491,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -512,7 +512,7 @@ img{
 
 `;
 
-  const encodedMail = makeBody(intern.email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
+  const encodedMail = makeBody(intern.email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {

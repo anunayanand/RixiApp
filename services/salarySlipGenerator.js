@@ -71,7 +71,7 @@ function generateSalarySlip(admin, slipIndex, res) {
   // Paragraph 1
   doc.font("Montserrat").fontSize(10)
      .text(`Dear ${admin.name},`, 50, 130)
-     .text(`This letter confirms the payment of your salary for the period ${payStart} to ${payEnd} in your role as ${admin.designation || 'Employee'} – ${admin.domain || 'Department'} at Rixi Lab.`, 50, 145, { width: 495, align: 'justify', lineGap: 2 });
+     .text(`This letter confirms the payment of your salary for the period ${payStart} to ${payEnd} in your role as ${admin.designation || 'Employee'} – ${admin.domain || 'Department'} at Rixi Lab Technologies.`, 50, 145, { width: 495, align: 'justify', lineGap: 2 });
 
   // Paragraph 2
   const words = numberToWords(slip.netPay);
@@ -81,7 +81,7 @@ function generateSalarySlip(admin, slipIndex, res) {
   doc.text(`This payment includes all applicable salary components and statutory deductions. Please consider this letter as an official record of salary payment for the mentioned period.`, 50, 225, { width: 495, align: 'justify', lineGap: 2 });
 
   // Paragraph 4
-  doc.text(`We sincerely appreciate your continued leadership and contribution to Rixi Lab.`, 50, 265)
+  doc.text(`We sincerely appreciate your continued leadership and contribution to Rixi Lab Technologies.`, 50, 265)
      .text(`Thank you.`, 50, 280);
 
 
@@ -95,7 +95,7 @@ function generateSalarySlip(admin, slipIndex, res) {
   // 1. Header Box
   doc.rect(startX, y, fullW, 40).fillAndStroke('#f0f0f0', '#000000');
   doc.fillColor('#000000').font("Montserrat-Bold").fontSize(14)
-     .text("RIXI LAB - SALARY SLIP", startX, y + 13, { width: fullW, align: 'center' });
+     .text("Rixi Lab Technologies - SALARY SLIP", startX, y + 13, { width: fullW, align: 'center' });
 
   // 2. Employee Details
   y += 40;
@@ -247,7 +247,7 @@ function generatePFSlip(admin, slipIndex, res) {
   doc.text(`Please consider this letter as an official record of your PF withdrawal.`, 50, 215, { width: 495, align: 'justify', lineGap: 2 });
 
   // Paragraph 4
-  doc.text(`We sincerely appreciate your continued leadership and contribution to Rixi Lab.`, 50, 245)
+  doc.text(`We sincerely appreciate your continued leadership and contribution to Rixi Lab Technologies.`, 50, 245)
      .text(`Thank you.`, 50, 260);
 
 
@@ -261,7 +261,7 @@ function generatePFSlip(admin, slipIndex, res) {
   // 1. Header Box
   doc.rect(startX, y, fullW, 40).fillAndStroke('#f0f0f0', '#000000');
   doc.fillColor('#000000').font("Montserrat-Bold").fontSize(14)
-     .text("RIXI LAB - PF WITHDRAWAL SLIP", startX, y + 13, { width: fullW, align: 'center' });
+     .text("Rixi Lab Technologies - PF WITHDRAWAL SLIP", startX, y + 13, { width: fullW, align: 'center' });
 
   // 2. Employee Details
   y += 40;

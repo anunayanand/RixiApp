@@ -73,21 +73,14 @@ body {
 
 /* Brand */
 .sidebar-brand {
-  padding: 24px 20px 16px;
+  padding: 16px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.sidebar-brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  object-fit: contain;
-  background: rgba(255, 102, 0, 0.15);
-  padding: 4px;
-}
+
 
 .sidebar-brand-text h2 {
   font-size: 1.1rem;

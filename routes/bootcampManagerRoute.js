@@ -9,7 +9,7 @@ const cloudinary = require("cloudinary").v2;
 const { google } = require("googleapis");
 const mongoose = require("mongoose");
 
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 // ==============================
@@ -46,9 +46,9 @@ function makeBody(to, from, subject, message) {
 }
 
 async function sendCompletionEmail(user, bootcamp) {
-  const certificateLink = `${process.env.BASE_URL || "https://www.rixilab.tech"}/bootcamp-portal/login`;
+  const certificateLink = `${process.env.BASE_URL || "https://www.rixilab.in"}/bootcamp-portal/login`;
 
-  const subject = `Congratulations on Completing ${bootcamp.name} - Rixi Lab`;
+  const subject = `Congratulations on Completing ${bootcamp.name} - Rixi Lab Technologies`;
 
   const body = `
 
@@ -177,9 +177,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="52"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -380,7 +380,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab Bootcamp • Learn. Build. Grow.
+  Rixi Lab Technologies Bootcamp • Learn. Build. Grow.
 </p>
 
 <!-- Social Icons -->
@@ -441,7 +441,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -461,7 +461,7 @@ img{
 </html>
 `;
 
-  const encodedMail = makeBody(user.email, `"Rixi Lab" <${process.env.EMAIL}>`, subject, body);
+  const encodedMail = makeBody(user.email, `"Rixi Lab Technologies" <${process.env.EMAIL}>`, subject, body);
 
   try {
     await gmail.users.messages.send({

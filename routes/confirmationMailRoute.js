@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { google } = require("googleapis");
 const User = require("../models/User");
-const BASE_URL=process.env.BASE_URL;
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
+const BASE_URL = rawUrl.replace('https://', 'www.');
+
 
 // ==============================
 // CONFIGURATION
@@ -47,7 +49,7 @@ async function sendBulkConfirmationMails(interns, whatsappLink) {
     try {
       const { intern_id, name, email, domain, duration } = intern;
 
-      const subject = `Internship Confirmation - Welcome to Rixi Lab!`;
+      const subject = `Internship Confirmation - Welcome to Rixi Lab Technologies!`;
       const body = `
      
 <!DOCTYPE html>
@@ -159,9 +161,9 @@ img{
 <td align="center" valign="middle">
 
 <img
-  src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
+  src="https://rixilab.in/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -178,7 +180,7 @@ img{
     font-weight:bold;
   "
 >
-  Welcome to Rixi Lab 
+  Welcome to Rixi Lab Technologies 
 </h1>
 
 <p
@@ -222,7 +224,7 @@ img{
   "
 >
   Congratulations! We are excited to inform you that your application
-  for the internship at <strong>Rixi Lab</strong> has been successfully accepted.
+  for the internship at <strong>Rixi Lab Technologies</strong> has been successfully accepted.
 </p>
 
 <p
@@ -386,7 +388,7 @@ img{
     color:#555;
   "
 >
-  We are excited to have you as part of the Rixi Lab community.
+  We are excited to have you as part of the Rixi Lab Technologies community.
   Get ready to learn, collaborate, and work on impactful projects.
 </p>
 
@@ -425,7 +427,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <p style="margin:18px 0 0;">
@@ -473,7 +475,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -493,7 +495,7 @@ img{
 </html>
       `;
 
-      const encodedMail = makeBody(email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, body);
+      const encodedMail = makeBody(email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, body);
       await gmail.users.messages.send({
         userId: 'me',
         resource: {

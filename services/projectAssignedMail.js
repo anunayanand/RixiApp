@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
+const rawUrl = process.env.BASE_URL || 'https://rixilab.in';
 const BASE_URL = rawUrl.replace('https://', 'www.');
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -31,7 +31,7 @@ function makeBody(to, from, subject, message) {
 }
 // 2️⃣ Send confirmation mail for ONE intern
 async function sendProjectAssignedMail(user, project) {
-  var subject = "Project Assigned - Rixi Lab";
+  var subject = "Project Assigned - Rixi Lab Technologies";
 
   let dueDateText = "Available in Dashboard";
   if (project && project.week) {
@@ -164,7 +164,7 @@ img{
 <img
   src="https://rixilab.tech/img/Rixi%20Lab%20New%20Logo%20PNG.png"
   width="54"
-  alt="Rixi Lab"
+  alt="Rixi Lab Technologies"
 />
 
 </td>
@@ -225,7 +225,7 @@ img{
   "
 >
   A new project has been assigned to you as part of your
-  internship journey with <strong>Rixi Lab</strong>.
+  internship journey with <strong>Rixi Lab Technologies</strong>.
 </p>
 
 <p
@@ -373,7 +373,7 @@ img{
     line-height:1.8;
   "
 >
-  Rixi Lab • Rethink Innovate eXecute Inspire
+  Rixi Lab Technologies • Rethink Innovate eXecute Inspire
 </p>
 
 <!-- Social Icons -->
@@ -434,7 +434,7 @@ img{
     line-height:1.8;
   "
 >
-  © ${new Date().getFullYear()} Rixi Lab • ${BASE_URL}
+  © ${new Date().getFullYear()} Rixi Lab Technologies • ${BASE_URL}
 </p>
 
 </td>
@@ -455,7 +455,7 @@ img{
 
 `;
 
-  const encodedMail = makeBody(user.email, `"Rixi Lab" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
+  const encodedMail = makeBody(user.email, `"Rixi Lab Technologies" <${process.env.PROJECT_INFO_EMAIL}>`, subject, htmlBody);
   return gmail.users.messages.send({
     userId: 'me',
     resource: {
