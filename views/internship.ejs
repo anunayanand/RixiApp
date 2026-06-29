@@ -69,9 +69,8 @@
     </header>
 
     <main class="main">
-      <br /><br />
       <!-- Contact Section -->
-      <section id="contact" class="contact section">
+      <section id="contact" class="contact section" style="padding-top: 120px;">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
           <h2>Internship</h2>
@@ -80,109 +79,372 @@
         <!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row d-flex justify-content-center">
-            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-              <div class="contact-form-wrapper">
-                <div class="form-header" style="margin-bottom: 1rem">
-                  <h3>Summer Internship Registration Form</h3>
-                  <p style="text-align: justify">
-                    At Rixi Lab Technologies an MSME registerd startup, internships and
+          <div class="row g-5">
+            <!-- LEFT COLUMN: Info Panel -->
+            <div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
+              <div class="info-panel glass-panel position-sticky" style="top: 100px;">
+                <div class="form-header mb-4">
+                  <h3 class="fw-bold" style="color: #ff6600;">Summer Internship Program</h3>
+                  <p class="text-light" style="text-align: justify; font-size: 0.95rem;">
+                    At Rixi Lab Technologies an MSME registered startup, internships and
                     training are designed to provide hands-on experience through
                     live projects, aimed at nurturing future-ready skills in
                     technology and design. Our programs are tailored to students
                     and freshers who are eager to dive into real-world projects,
                     gaining practical insights and building their portfolios.
-                  </p>
-                  <hr />
-                  <h5>Online Project Based Internship Program</h5>
+                  </p>  
+                  <hr style="border-color: rgba(255,102,0,0.5);" />
+                  <h5 class="fw-bold text-light">Online Project Based Internship Program</h5>
                 </div>
 
-                <!-- <marquee><h5>The deadline has passed. If you still want to start from <span style="color: #00ff00;">1<sup>st</sup> Oct</span>, fill out this form with <span style="color: yellow;">only 199/-</span> registration fee.</h5></marquee> -->
-                <h5>Internship Important Dates:</h5>
-                <%
-                  const dateObj = new Date();
-                  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-                  
-                  // Last day of current month
-                  const lastDay = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0);
-                  const lastDayStr = `${lastDay.getDate()} ${monthNames[lastDay.getMonth()]} ${lastDay.getFullYear()}`;
-                  
-                  // 1st day of next month
-                  const firstDayNext = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 1);
-                  const nextDayStr = `1 ${monthNames[firstDayNext.getMonth()]} ${firstDayNext.getFullYear()}`;
-                %>
-                <ul>
-                  <li>Last date to apply: <%= lastDayStr %></li>
-                  <!-- <li style="color: #00ff00;">Extended date to apply: 30 Sept 2025</li> -->
-                  <li>Offer Letter provide: <%= lastDayStr %></li>
-                  <li>Internship Start Date: <%= nextDayStr %></li>
-                  <li>Project Assign Date: <%= nextDayStr %></li>
-                </ul>
+                <div class="info-card mb-4 p-4 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                  <h5 class="text-light fw-bold mb-3"> Important Dates</h5>
+                  <%
+                    const dateObj = new Date();
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+                    const lastDay = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0);
+                    const lastDayStr = `${lastDay.getDate()} ${monthNames[lastDay.getMonth()]} ${lastDay.getFullYear()}`;
+                    const firstDayNext = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 1);
+                    const nextDayStr = `1 ${monthNames[firstDayNext.getMonth()]} ${firstDayNext.getFullYear()}`;
+                  %>
+                  <ul class="text-light mb-0 ">
+                    <li class="mb-2">Last date to apply: <strong><%= lastDayStr %></strong></li>
+                    <li class="mb-2">Offer Letter provide: <strong><%= lastDayStr %></strong></li>
+                    <li class="mb-2">Internship Start Date: <strong><%= nextDayStr %></strong></li>
+                    <li>Project Assign Date: <strong><%= nextDayStr %></strong></li>
+                  </ul>
+                </div>
 
-                <h5>Benefites for Students:</h5>
-                <ul>
-                  <li>Internship Offer Letter</li>
-                  <li>Internship Certificate</li>
-                  <li>Work on real time projects</li>
-                  <li>Canva Premium free for 1 Year</li>
-                </ul>
-                <h5 class="mt-3">
-                  Read notification for more info before apply :
-                  <a href="/brochure/Notice.pdf" target="_blank" class="btn btn-outline rounded-pill"
-                    style="border: 1px solid #ff6600; color: #ff6600" download><i class="bi bi-download"></i> Notice</a>
-                </h5>
-                <hr />
+                <div class="info-card mb-4 p-4 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                  <h5 class="text-light fw-bold" style="color: #ff6600; font-size: 1.2rem; font-weight: 500;">Benefits for Students</h5>
+                  <ul class="text-light mb-0 ">
+                    <li class="mb-2">Internship Offer Letter</li>
+                    <li class="mb-2">Internship Certificate</li>
+                    <li class="mb-2">Work on real time projects</li>
+                    <li>Canva Premium free for 1 Year</li>
+                  </ul>
+                </div>
+
+                <div class="notice-card text-center mt-4">
+                  <h6 class="text-light mb-3">Read notification for more info before apply</h6>
+                  <a href="/brochure/Notice.pdf" target="_blank" class="btn btn-outline-warning rounded-pill px-4 py-2" style="border-color: #ff6600; color: #ff6600; transition: all 0.3s;">
+                    <i class="bi bi-download me-1"></i> Download Notice
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Multi-Step Form -->
+            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+              <div class="contact-form-wrapper glass-panel">
+                <style>
+/* Info Panel Styles */
+.info-panel {
+    background: rgba(15, 15, 15, 0.4) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+.info-panel .btn-outline-warning:hover {
+    background: #ff6600 !important;
+    color: #fff !important;
+    box-shadow: 0 0 15px rgba(255,102,0,0.4);
+</style>
+                <style>
+.contact.section {
+    position: relative;
+    overflow: hidden;
+    background: #111111;
+    z-index: 1;
+}
+.contact.section::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(255, 102, 0, 0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: floatOrb 12s infinite alternate;
+}
+.contact.section::after {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    right: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(255, 102, 0, 0.1) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: floatOrb 15s infinite alternate-reverse;
+}
+@keyframes floatOrb {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+/* Typography Enhancements */
+.contact-form-wrapper h3, 
+.contact-form-wrapper h5, 
+.contact-form-wrapper label,
+.contact-form-wrapper li,
+.contact-form-wrapper p {
+    color: #f0f0f0;
+}
+.contact-form-wrapper h3 { font-weight: 700; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.contact-form-wrapper h5 { font-weight: 600; }
+
+/* Glassmorphism for main container */
+.contact-form-wrapper {
+    background: rgba(30, 30, 30, 0.45) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+    padding: 40px 35px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* Glassmorphic cards for details */
+.contact-form-wrapper ul,
+.form-header p {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: inset 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Modern Inputs */
+.form-control, .form-select, select.form-control {
+    background: rgba(15, 15, 15, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    padding: 14px 18px !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus, select.form-control:focus {
+    border-color: #ff6600 !important;
+    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.25) !important;
+    background: rgba(10, 10, 10, 0.8) !important;
+    outline: none !important;
+}
+
+/* Steps Indicator */
+.form-step { display: none; animation: fadeIn 0.5s; }
+.form-step.active { display: block; }
+.step-indicator { display: flex; justify-content: space-between; margin-bottom: 40px; position: relative; }
+.step-indicator::before { 
+    content: ''; position: absolute; top: 22px; left: 10%; width: 80%; height: 6px; 
+    background: rgba(255,255,255,0.1); z-index: 1; border-radius: 10px;
+}
+.step { 
+    width: 50px; height: 50px; border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; 
+    font-weight: 700; color: #777; z-index: 2; position: relative; transition: all 0.4s ease;
+    background: #1f1f1f;
+    border: 2px solid rgba(255,255,255,0.1);
+    font-size: 1.1rem;
+}
+.step.active { 
+    background: #ff6600; color: white; text-shadow: none;
+    border-color: #ff6600;
+    box-shadow: 0 0 15px rgba(255,102,0,0.4);
+    transform: scale(1.1);
+}
+.step.completed { 
+    background: #28a745; color: white; text-shadow: none;
+    border-color: #28a745;
+}
+.step-title { text-align: center; font-size: 0.9rem; margin-top: 12px; color: #bbb; font-weight: 500; transition: color 0.3s; }
+.step.active + .step-title { color: #fff; font-weight: 600; }
+
+/* Modern Buttons */
+.btn-next, .btn-prev, .submit-btn { 
+    border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; 
+    transition: all 0.3s ease; font-weight: 600; display: flex; align-items: center; gap: 8px; 
+    font-size: 1rem; letter-spacing: 0.5px; text-shadow: none;
+}
+.btn-next, .submit-btn { 
+    background: #ff6600; color: #fff;
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+}
+.btn-next:hover, .submit-btn:hover {
+    background: #e65c00;
+    box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
+    transform: translateY(-2px);
+}
+.btn-next:active, .submit-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(255, 102, 0, 0.3);
+}
+.btn-prev { 
+    background: #2a2a2a; color: #eee; 
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.btn-prev:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+.btn-prev:active {
+    transform: translateY(1px);
+}
+
+.form-navigation { display: flex; justify-content: space-between; margin-top: 35px; align-items: center; gap: 15px; flex-wrap: wrap; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Upload Spinner */
+.img-upload-spinner { display: none; width: 1.8rem; height: 1.8rem; border: 3px solid rgba(255,102,0, 0.2); border-radius: 50%; border-top-color: #ff6600; animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Billing Table */
+.alert-secondary {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px dashed rgba(255, 102, 0, 0.5) !important;
+    border-radius: 16px !important;
+    box-shadow: inset 3px 3px 8px rgba(0,0,0,0.4);
+    color: #eee !important;
+}
+.billing-table {
+    background: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-radius: 16px !important;
+    box-shadow: inset 3px 3px 8px rgba(0,0,0,0.4);
+    padding: 20px;
+    display: block; /* Table wrapper */
+}
+.billing-table tbody { display: table; width: 100%; }
+.billing-table td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ddd; }
+.billing-table tr:last-child td { border-bottom: none; }
+.billing-table tr:last-child td { color: #fff; }
+
+/* File input modern style */
+input[type="file"] {
+    padding: 14px 18px !important;
+    line-height: 1.5;
+}
+input[type="file"]::file-selector-button {
+    background: #ff6600 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    border: none !important;
+    padding: 14px 18px !important;
+    margin: -14px -18px; /* Offset parent padding */
+    margin-inline-end: 18px;
+    border-radius: 12px 0 0 12px !important; /* Match the form control rounded corners on left side */
+    box-shadow: none !important; /* Removed box shadow to match flat aesthetic perfectly within input */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+input[type="file"]::file-selector-button:hover {
+    background: #e65c00 !important;
+}
+input[type="file"]::file-selector-button:active {
+    background: #cc5200 !important;
+}
+</style>
+
+                <div class="step-indicator">
+                  <div class="step-wrapper"><div class="step active" id="indicator-1">1</div><div class="step-title">Personal</div></div>
+                  <div class="step-wrapper"><div class="step" id="indicator-2">2</div><div class="step-title">Education</div></div>
+                  <div class="step-wrapper"><div class="step" id="indicator-3">3</div><div class="step-title">Payment</div></div>
+                </div>
+
                 <form id="internship-form" action="/internship/register" method="POST" class="php-email-form"
                   enctype="multipart/form-data">
                   <!-- <input type="hidden" name="access_key" value="db870915-874b-4d37-acd1-c71aa371eb7c"> -->
 
-                  <!-- Profile Image Upload -->
+                  <!-- STEP 1 -->
+                  <div class="form-step active" id="step-1">
+                    <p class="mb-3" style="color: #ff6600; font-size: 1.2rem; font-weight: 500;"> Step 1: Personal Details</p  ` >
 
                   <div class="mb-3">
-                    <label for="contactName" class="form-label">Full Name</label>
+                    <label for="contactName" class="form-label">Full Name <span class="text-danger">*</span></label>
                     <input type="text" name="data[Name]" class="form-control" id="contactName"
                       placeholder="Enter your full name" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactEmail" class="form-label">Email Address</label>
+                    <label for="contactEmail" class="form-label">Email Address <span class="text-danger">*</span></label>
                     <input type="email" class="form-control" name="data[Email]" id="contactEmail"
                       placeholder="Enter your email address" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactPhone" class="form-label">Phone Number</label>
+                    <label for="contactPhone" class="form-label">Phone Number <span class="text-danger">*</span></label>
                     <input type="tel" class="form-control" name="data[Phone]" id="contactPhone"
                       placeholder="Enter your phone number" pattern="[0-9]{10}"
                       title="Please enter a 10-digit phone number" required="" />
                   </div>
 
+                  <!-- Profile Image Upload -->
                   <div class="mb-3">
-                    <label for="contactuniversity" class="form-label">University Name</label>
+                    <label for="profileImage" class="form-label">Upload Your Photograph <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="file" class="form-control" name="profileImage" id="profileImage" accept="image/*"
+                        onchange="handleImageUpload(event)" style="cursor: pointer" required />
+
+                      <!-- Preview thumbnail -->
+                      <div id="imagePreviewContainer" class="d-flex align-items-center ms-2" style="display: none !important;">
+                        <div class="img-upload-spinner me-2" id="imgUploadSpinner"></div>
+                        <img id="imagePreviewThumb" src="" alt="Preview" class="rounded ms-2" style="
+                            display: none;
+                            width: 50px;
+                            height: 50px;
+                            object-fit: cover;
+                            cursor: pointer;
+                            border-radius: 12px;
+                          " onclick="openImagePreviewModal()" />
+                      </div>
+                    </div>
+                    <div class="text-sm form-text text-white" style="font-size: 0.75rem; font-style: italic">
+                      Please upload a clear profile picture (Max size: 5MB). You can proceed to the next step while it uploads!
+                    </div>
+                  </div>
+
+                  <div class="form-navigation justify-content-end">
+                      <button type="button" class="btn-next" onclick="nextStep(1)">Next <i class="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+
+                  <!-- STEP 2 -->
+                  <div class="form-step" id="step-2">
+                    <p class="mb-3" style="color: #ff6600; font-size: 1.2rem; font-weight: 500;"> Step 2: Educational Details</p>
+
+                  <div class="mb-3">
+                    <label for="contactuniversity" class="form-label">University Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="data[University]" id="contactuniversity"
                       placeholder="Enter your university name" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactCollege" class="form-label">College Name</label>
+                    <label for="contactCollege" class="form-label">College Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="data[College]" id="contactCollege"
                       placeholder="Enter your college name" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactCourse" class="form-label">Course</label>
+                    <label for="contactCourse" class="form-label">Course <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="data[Course]" id="contactCourse"
                       placeholder="Enter your course name" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactBranch" class="form-label">Branch</label>
+                    <label for="contactBranch" class="form-label">Branch <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="data[Branch]" id="contactBranch"
                       placeholder="Enter your branch name" required="" />
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactyear" class="form-label">Year/Semester</label>
+                    <label for="contactyear" class="form-label">Year/Semester <span class="text-danger">*</span></label>
                     <select class="form-control" name="data[Y/S]" id="contactyear" required>
                       <option value="" disabled selected>
                         -- Select Year/Semester --
@@ -197,8 +459,18 @@
                     </select>
                   </div>
 
+                  <div class="form-navigation">
+                      <button type="button" class="btn-prev" onclick="prevStep(2)"><i class="bi bi-arrow-left"></i> Previous</button>
+                      <button type="button" class="btn-next" onclick="nextStep(2)">Next <i class="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+
+                  <!-- STEP 3 -->
+                  <div class="form-step" id="step-3">
+                    <p class="mb-3" style="color: #ff6600; font-size: 1.2rem; font-weight: 500;"> Step 3: Internship Details</p>
+
                   <div class="mb-3">
-                    <label for="contactDomain" class="form-label">Internship Domain</label>
+                    <label for="contactDomain" class="form-label">Internship Domain <span class="text-danger">*</span></label>
                     <select class="form-control" name="data[Domain]" id="contactDomain" required>
                       <option value="" disabled selected>
                         -- Select internship domain --
@@ -215,7 +487,7 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="contactDuration" class="form-label">Internship Duration</label>
+                    <label for="contactDuration" class="form-label">Internship Duration <span class="text-danger">*</span></label>
                     <select class="form-control" name="data[Duration]" id="contactDuration" required>
                       <option value="" disabled selected>
                         -- Select internship duration --
@@ -225,52 +497,6 @@
                       <option value="8 Week">8 Week</option>
                       <!-- <option value="12 Week">12 Week</option> -->
                     </select>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="profileImage" class="form-label">Upload Your Photograph</label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" name="profileImage" id="profileImage" accept="image/*"
-                        onchange="handleImageUpload(event)" style="cursor: pointer" required />
-
-                      <!-- Preview thumbnail -->
-                      <div id="imagePreviewContainer" style="display: none">
-                        <img id="imagePreviewThumb" src="" alt="Preview" class="rounded ms-2" style="
-                            width: 50px;
-                            height: 50px;
-                            object-fit: cover;
-                            cursor: pointer;
-                            border-radius: 12px;
-                          " onclick="openImagePreviewModal()" />
-                      </div>
-                    </div>
-                    <div class="text-sm form-text text-white" style="font-size: 0.75rem; font-style: italic">
-                      Please upload a clear profile picture (Max size: 5MB)
-                    </div>
-                  </div>
-
-                  <!-- Image Preview Modal (View & Delete) -->
-                  <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Profile Picture</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                          <img id="imagePreviewFull" src="" alt="Full Preview" class="img-fluid rounded"
-                            style="max-height: 400px" />
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                          </button>
-                          <button type="button" class="btn btn-danger" onclick="deleteImage()">
-                            <i class="bi bi-trash"></i> Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                   <div class="mb-3">
@@ -313,13 +539,13 @@
                       <td>Service Change</td>
                       <td style="text-align: right">₹<span id="serviceTaxDisplay">0.00</span></td>
                     </tr>
-                    <tr style="border-top: 1px solid #ddd">
-                      <td style="padding: 10px 0 0 0; font-weight: bold">
+                    <tr style="border-top: 1px solid rgba(255, 255, 255, 0.1)">
+                      <td style="padding-top: 15px; font-weight: bold">
                         Total Registration Fee
                         <span style="font-weight: 400">(Only online Payment Accepted)</span>
                       </td>
                       <td
-                        style="padding: 10px 0 0 0; text-align: right; font-weight: bold; color: #ffff; font-size: 1.1em;">
+                        style="padding-top: 15px; text-align: right; font-weight: bold; color: #ffff; font-size: 1.1em;">
                         ₹<span id="totalFeeDisplay">102.40</span>/-
                       </td>
                     </tr>
@@ -327,7 +553,7 @@
 
                   <div class="mt-1">
                     <input type="checkbox" class="form-check-input" name="data[Terms]" id="contactTerms" required="" />
-                    <label for="contactTerms" class="form-label"><a href="/terms-and-conditions#returnno" style="color: #ddd !important;">I accept the <span style="color: #ff6600;">Terms and Conditions.</span></a></label>
+                    <label for="contactTerms" class="form-label"><a href="/terms-and-conditions#returnno" style="color: #ddd !important                                                                                                               ;">I accept the <span style="color: #ff6600;">Terms and Conditions.</span></a></label>
                   </div>
                   <p>
                     <i>After submitting this registration form. You will receive
@@ -342,10 +568,14 @@
                   <hr />
                   <div class="mb-2 text-center" id="result"></div>
 
-                  <button type="submit" class="submit-btn" id="payID">
+                  <div class="form-navigation justify-content-end">
+                      <button type="button" class="btn-prev d-none" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> Previous</button>
+                      <button type="submit" class="submit-btn m-0" id="payID">
                     <span>Continue to Payment & Submit</span>
                     <i class="bi bi-arrow-right"></i>
                   </button>
+                    </div>
+                  </div>
                   <!-- Popup -->
                   <div class="popup-overlay" id="popup">
                     <div class="popup-box">
@@ -365,6 +595,30 @@
 
     <%- include('partials/toaster') %>
      
+  <!-- Image Preview Modal (View & Delete) -->
+  <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: #222; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <h5 class="modal-title" style="color: #fff;">Profile Picture</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="imagePreviewFull" src="" alt="Full Preview" class="img-fluid rounded"
+            style="max-height: 400px" />
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" onclick="deleteImage()">
+            <i class="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <%- include('partials/footer') %>
 
       <!-- Scroll Top -->
@@ -382,6 +636,59 @@
 
       <!-- Main JS File -->
       <script src="/js/main.js"></script>
+
+      
+      <!-- Multi-step Form Script -->
+      <script>
+        function validateStep(stepIndex) {
+          const stepContainer = document.getElementById(`step-${stepIndex}`);
+          const inputs = stepContainer.querySelectorAll('input[required], select[required]');
+          
+          for (let input of inputs) {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              return false;
+            }
+          }
+          
+          if (stepIndex === 1 && !uploadedImageUrl) {
+            const fileInput = document.getElementById("profileImage");
+            if (fileInput && fileInput.files.length > 0) {
+                showToast("Please wait for the image to finish uploading", "warning");
+                return false;
+            } else {
+                showToast("Please select a profile picture to upload", "error");
+                return false;
+            }
+          }
+          
+          return true;
+        }
+
+        function nextStep(currentStep) {
+          if (!validateStep(currentStep)) return;
+          
+          document.getElementById(`step-${currentStep}`).classList.remove('active');
+          document.getElementById(`indicator-${currentStep}`).classList.remove('active');
+          document.getElementById(`indicator-${currentStep}`).classList.add('completed');
+          
+          const nextStep = currentStep + 1;
+          document.getElementById(`step-${nextStep}`).classList.add('active');
+          document.getElementById(`indicator-${nextStep}`).classList.add('active');
+          window.scrollTo({top: document.querySelector('.contact-form-wrapper').offsetTop - 100, behavior: 'smooth'});
+        }
+
+        function prevStep(currentStep) {
+          document.getElementById(`step-${currentStep}`).classList.remove('active');
+          document.getElementById(`indicator-${currentStep}`).classList.remove('active');
+          
+          const prevStep = currentStep - 1;
+          document.getElementById(`step-${prevStep}`).classList.add('active');
+          document.getElementById(`indicator-${prevStep}`).classList.add('active');
+          document.getElementById(`indicator-${prevStep}`).classList.remove('completed');
+          window.scrollTo({top: document.querySelector('.contact-form-wrapper').offsetTop - 100, behavior: 'smooth'});
+        }
+      </script>
 
       <!-- Image Preview Script -->
       <script>
@@ -432,14 +739,17 @@
             const formData = new FormData();
             formData.append("profileImage", file);
 
-            showLoader();
+            document.getElementById("imagePreviewContainer").style.setProperty("display", "flex", "important");
+            document.getElementById("imgUploadSpinner").style.display = "block";
+            document.getElementById("imagePreviewThumb").style.display = "none";
+
             const response = await fetch("/internship/upload-profile-image", {
               method: "POST",
               body: formData,
             });
 
             const data = await response.json();
-            hideLoader();
+            document.getElementById("imgUploadSpinner").style.display = "none";
 
             if (data.success) {
               uploadedImageUrl = data.imageUrl;
@@ -447,16 +757,17 @@
 
               // Show preview thumbnail
               document.getElementById("imagePreviewThumb").src = uploadedImageUrl;
-              document.getElementById("imagePreviewContainer").style.display =
-                "block";
+              document.getElementById("imagePreviewThumb").style.display = "block";
 
               showToast("Profile picture uploaded successfully", "success");
             } else {
               showToast(data.message || "Failed to upload image", "error");
               event.target.value = "";
+              document.getElementById("imagePreviewContainer").style.setProperty("display", "none", "important");
             }
           } catch (error) {
-            hideLoader();
+            document.getElementById("imgUploadSpinner").style.display = "none";
+            document.getElementById("imagePreviewContainer").style.setProperty("display", "none", "important");
             console.error("Error uploading image:", error);
             showToast("Error uploading image", "error");
             event.target.value = "";
@@ -482,7 +793,8 @@
           document.getElementById("profileImage").value = "";
 
           // Hide preview
-          document.getElementById("imagePreviewContainer").style.display = "none";
+          document.getElementById("imagePreviewContainer").style.setProperty("display", "none", "important");
+          document.getElementById("imagePreviewThumb").style.display = "none";
 
           // Close modal
           const modalEl = document.getElementById("imagePreviewModal");
