@@ -39,7 +39,8 @@ function getWhatsappLinkByBatch(batch_no) {
     "2604": "https://chat.whatsapp.com/ICEsV5PcfirBK7DcJ22ahY?mode=gi_t",
     "2605": "https://chat.whatsapp.com/KYesxuI7eIT8zzGjyEEYKU?mode=gi_t",
     "2606": "https://chat.whatsapp.com/FgUkJka0h5lGZ0Y4kjUqay?mode=hqctcla",
-    "2607": "https://chat.whatsapp.com/KJYOikJIlsCCeEwWK9MRqy?mode=gi_t"
+    "2607": "https://chat.whatsapp.com/KJYOikJIlsCCeEwWK9MRqy?mode=gi_t",
+    "2608": "https://chat.whatsapp.com/EdIcax4jgvGADoUZCVwujs"
   };
 
   return links[String(batch_no)] || "";

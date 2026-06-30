@@ -577,10 +577,21 @@ input[type="file"]::file-selector-button:active {
                     </div>
                   </div>
                   <!-- Popup -->
+                  <style>
+                    #invoiceLink:hover {
+                      background-color: #ff6600 !important;
+                      color: #ffffff !important;
+                    }
+                  </style>
                   <div class="popup-overlay" id="popup">
                     <div class="popup-box">
                       <h3>Application Submitted!</h3>
                       <p id="popupMsg"></p>
+                      <div id="invoiceBtnContainer" style="display: none; margin-bottom: 20px;">
+                        <a id="invoiceLink" href="#" target="_blank" class="btn rounded-pill px-4 py-2" style="border: 1px solid #ff6600; color: #ff6600; text-decoration: none; transition: all 0.3s; font-weight: 500;">
+                          <i class="bi bi-download me-1"></i> Download Receipt
+                        </a>
+                      </div>
                       <button onclick="closePopup()">OK</button>
                     </div>
                   </div>
@@ -1162,6 +1173,16 @@ input[type="file"]::file-selector-button:active {
           const popup = document.getElementById("popup");
           const msgEl = document.getElementById("popupMsg");
           msgEl.innerHTML = message;
+          
+          const invoiceBtnContainer = document.getElementById("invoiceBtnContainer");
+          const invoiceLink = document.getElementById("invoiceLink");
+          if (invoiceUrl && invoiceUrl !== "undefined" && invoiceUrl !== "null" && invoiceUrl !== "") {
+            invoiceLink.href = invoiceUrl;
+            if(invoiceBtnContainer) invoiceBtnContainer.style.display = "block";
+          } else {
+            if(invoiceBtnContainer) invoiceBtnContainer.style.display = "none";
+          }
+          
           popup.style.display = "flex";
         }
         function closePopup() {
@@ -1176,11 +1197,12 @@ input[type="file"]::file-selector-button:active {
           const orderId = params.get("order_id");
           const transactionId = params.get("transaction_id");
           const invoiceUrl = params.get("invoice_url");
+          const queryName = params.get("name");
           if (paymentSuccess === "true") {
             // Get user name before clearing
-            let userName = "User";
+            let userName = queryName || "User";
             const formData = localStorage.getItem("internshipFormData");
-            if (formData) {
+            if (!queryName && formData) {
               const data = JSON.parse(formData);
               userName = data["data[Name]"]?.trim() || "User";
             }
@@ -1202,6 +1224,10 @@ input[type="file"]::file-selector-button:active {
               "Payment failed or was cancelled. Please try again.",
               "error",
             );
+          }
+
+          if (paymentSuccess) {
+            window.history.replaceState({}, document.title, window.location.pathname);
           }
         });
       </script>

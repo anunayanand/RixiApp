@@ -347,13 +347,16 @@ router.get("/payment/callback", async (req, res) => {
 
       }
 
+      const userName = registration ? registration.name : "User";
       res.redirect(
         "/internship?payment_success=true&order_id=" +
           order_id +
           "&transaction_id=" +
           transactionId +
           "&invoice_url=" +
-          encodeURIComponent(invoiceUrl)
+          encodeURIComponent(invoiceUrl) +
+          "&name=" +
+          encodeURIComponent(userName)
       );
     } else {
       await NewRegistration.findOneAndUpdate(
