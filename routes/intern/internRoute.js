@@ -1,0 +1,338 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const User = require("../../models/User");
+const Admin = require("../../models/Admin");
+const Project = require("../../models/Project");
+const Notification = require("../../models/Notification");
+const NewRegistration = require("../../models/NewRegistration");
+const RedemptionRequest = require("../../models/RedemptionRequest");
+const authRole = require('../../middleware/authRole');
+
+router.get("/intern", authRole("intern"), async (req, res, next) => {
+  try {
+    const intern = await User.findById(req.session.user)
+      .populate('quizAssignments.quizId')
+      .populate('lectureAssigned.lectureId');
+
+    if (!intern) {
+      req.flash("error", "Intern not found");
+      return res.redirect("/login");
+    }
+    intern.isOnline = true;
+    await intern.save();
+    // Fetch projects for intern’s domain + batch
+    const projects = await Project.find({ 
+      domain: intern.domain, 
+      batch_no: intern.batch_no 
+    });
+
+    // Intern's project progress
+    const assignedProjects = intern.projectAssigned || [];
+    const assignedMeetings = intern.meetings || [];
+    const acceptedCount = assignedProjects.filter(p => p.status === 'accepted').length;
+    
+    let expectedTotalProjects = assignedProjects.length;
+    if (intern.duration === 4) {
+      expectedTotalProjects = 4;
+    } else if (intern.duration === 6) {
+      expectedTotalProjects = 5;
+    } else if (intern.duration === 8) {
+      expectedTotalProjects = 6;
+    }
+
+    // Recalculate and update progress
+    intern.progress = expectedTotalProjects > 0 ? Math.min(100, Math.round((acceptedCount / expectedTotalProjects) * 100)) : 0;
+    await intern.save();
+    
+    const progress = intern.progress;
+
+    // Attendance
+    const totalMeetings = assignedMeetings.length;
+    const attended = assignedMeetings.filter(m => m.attendance === "present").length;  
+    const attendanceRate = totalMeetings > 0 ? Math.round((attended / totalMeetings) * 100) : 0;
+
+    const totalProjects = assignedProjects.length;
+    const mentor = await Admin.findOne({ domain: intern.domain }).select("name");
+    const mentorName = mentor?.name ?? "No Mentor";
+
+    // Get unread notification count
+    const unreadCount = await Notification.countDocuments({
+      recipientId: intern._id,
+      recipientModel: "User",
+      isRead: false
+    });
+
+    // Assigned quizzes with populated quiz (only for intern's current batch and matching duration)
+    const assignedQuizzes = (intern.quizAssignments || [])
+      .filter(a => a && a.assigned && a.quizId && a.batch === intern.batch_no && a.quizId.week <= intern.duration)
+      .map(a => ({
+        quiz: a.quizId,
+        score: a.score,
+        attemptCount: a.attemptCount,
+        isClosed: a.quizId?.isClosed || false
+      }));
+
+    req.flash('success_msg', 'Welcome to Intern Dashboard');
+    
+    // Prepare lectures
+    const allLectures = (intern.lectureAssigned || [])
+      .filter(la => la.lectureId)
+      .map(la => ({
+        _id: la._id, // Assignment subdocument ID used for tracking progress
+        title: la.lectureId.title,
+        description: la.lectureId.description,
+        duration: la.lectureId.duration,
+        videoId: la.lectureId.videoId,
+        watchedTime: la.watchedTime,
+        completed: la.completed
+      }));
+
+    // Lecture progress is stored in intern.lectureProgress (updated by the sync endpoint)
+    const lectureProgress = intern.lectureProgress || 0;
+
+    // Format starting date
+    const startingDate = intern.starting_date 
+      ? new Date(intern.starting_date).toLocaleDateString('en-IN', { 
+          day: '2-digit', 
+          month: 'long', 
+          year: 'numeric' 
+        }) 
+      : 'Not assigned';
+    
+    // Fetch referred interns directly from the user's DB entry
+    const referredInterns = intern.referredInterns || [];
+
+    // Fetch the intern's redemption requests
+    const redemptionRequests = await RedemptionRequest.find({ internId: intern._id }).sort({ createdAt: -1 });
+
+    res.render("intern", {
+      intern,
+      projects,
+      progress,
+      attendanceRate,
+      mentorName,
+      totalProjects,
+      assignedMeetings,
+      showPasswordPopup: intern.isFirstLogin,
+      assignedQuizzes,
+      unreadCount,
+      startingDate,
+      allLectures,
+      lectureProgress,
+      referredInterns,
+      redemptionRequests
+    });
+
+  } catch (err) {
+    console.error("🔥 Intern Route Error:", err);
+    next(err);
+  }
+});
+
+
+router.post('/intern/lecture/:id/progress', authRole('intern'), async (req, res) => {
+  try {
+    const { watchedTime, duration } = req.body;
+    const reqLectureId = req.params.id;
+
+    if (typeof watchedTime !== 'number') {
+      return res.status(400).json({ success: false, message: "Invalid watchedTime" });
+    }
+
+    const intern = await User.findById(req.session.user)
+      .populate('lectureAssigned.lectureId');
+    if (!intern) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Find the lecture assignment subdocument
+    let lecture = null;
+
+    if (intern.lectureAssigned) {
+      lecture = intern.lectureAssigned.id(reqLectureId);
+      if (!lecture) {
+        lecture = intern.lectureAssigned.find(a => a.lectureId && (
+          a.lectureId._id.toString() === reqLectureId || a.lectureId.toString() === reqLectureId
+        ));
+      }
+    }
+
+    if (!lecture) {
+      return res.status(404).json({ success: false, message: "Lecture not found" });
+    }
+
+    // If already completed, skip all recalculations and DB writes, just return cached state
+    if (lecture.completed) {
+      return res.json({
+        success: true,
+        watchedTime: lecture.watchedTime,
+        completed: lecture.completed,
+        overallProgress: intern.lectureProgress // return cached overall progress
+      });
+    }
+
+    // Only update watchedTime if it is greater than the currently saved one
+    if (watchedTime > lecture.watchedTime) {
+      lecture.watchedTime = watchedTime;
+    }
+
+    // Check completion condition (99% threshold)
+    if (duration > 0 && (lecture.watchedTime / duration) >= 0.99) {
+      lecture.completed = true;
+    }
+
+    // ── Recalculate overall lecture progress ──
+    // Progress = (sum of all watchedTime) / (sum of all lecture durations) * 100
+    let totalDurationSecs = 0;
+    let totalWatchedSecs = 0;
+
+    for (const la of intern.lectureAssigned) {
+      let watched = la.watchedTime || 0;
+
+      // Try to get the real duration from the populated Lecture document
+      let lecDurationSecs = 0;
+
+      if (la.lectureId && typeof la.lectureId === 'object') {
+        // Parse the duration string (formats: "MM:SS", "H:MM:SS", or plain number in minutes)
+        const durStr = la.lectureId.duration || '';
+        lecDurationSecs = parseDurationToSeconds(durStr);
+      }
+
+      // If we couldn't parse it and this is the current lecture, use the client-sent value
+      if (lecDurationSecs <= 0 && la._id.toString() === (lecture._id || '').toString() && duration > 0) {
+        lecDurationSecs = duration;
+      }
+
+      // Fallback: if we still have no duration but have watchedTime, use watchedTime as floor
+      // (a lecture with no duration set shouldn't penalize progress)
+      if (lecDurationSecs <= 0 && watched > 0) {
+        lecDurationSecs = watched;
+      }
+
+      // If the lecture is completed, count it fully towards progress
+      if (la.completed && lecDurationSecs > 0) {
+        watched = Math.max(watched, lecDurationSecs);
+      }
+      
+      // Ensure watched never exceeds duration if duration is valid, to cap at 100% exactly
+      if (lecDurationSecs > 0 && watched > lecDurationSecs) {
+        watched = lecDurationSecs;
+      }
+
+      totalWatchedSecs += watched;
+      totalDurationSecs += lecDurationSecs;
+    }
+
+    const overallProgress = totalDurationSecs > 0
+      ? Math.min(100, Math.round((totalWatchedSecs / totalDurationSecs) * 100))
+      : 0;
+
+    await User.updateOne(
+      { _id: intern._id, "lectureAssigned._id": lecture._id },
+      { 
+        $set: {
+          "lectureAssigned.$.watchedTime": lecture.watchedTime,
+          "lectureAssigned.$.completed": lecture.completed,
+          lectureProgress: overallProgress
+        }
+      }
+    );
+
+    res.json({
+      success: true,
+      watchedTime: lecture.watchedTime,
+      completed: lecture.completed,
+      overallProgress
+    });
+
+  } catch (error) {
+    console.error('Lecture Progress Sync Error:', error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+/**
+ * Parse a duration string to seconds.
+ * Supports: "MM:SS", "H:MM:SS", "10 min", "1h 30m", or plain number (treated as minutes).
+ */
+function parseDurationToSeconds(str) {
+  if (!str) return 0;
+  str = str.trim();
+
+  // "H:MM:SS" or "MM:SS"
+  if (/^\d+:\d{2}(:\d{2})?$/.test(str)) {
+    const parts = str.split(':').map(Number);
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+  }
+
+  // "10 min", "5 mins", "1 hr", "1h 30m"
+  let secs = 0;
+  const hrMatch = str.match(/(\d+)\s*(h|hr|hrs|hour|hours)/i);
+  const minMatch = str.match(/(\d+)\s*(m|min|mins|minute|minutes)/i);
+  const secMatch = str.match(/(\d+)\s*(s|sec|secs|second|seconds)/i);
+  if (hrMatch) secs += parseInt(hrMatch[1]) * 3600;
+  if (minMatch) secs += parseInt(minMatch[1]) * 60;
+  if (secMatch) secs += parseInt(secMatch[1]);
+  if (secs > 0) return secs;
+
+  // Plain number → treat as minutes
+  const num = parseFloat(str);
+  if (!isNaN(num) && num > 0) return num * 60;
+
+  return 0;
+}
+
+
+
+router.post('/intern/redeem', authRole('intern'), async (req, res) => {
+  try {
+    const { rewardType } = req.body;
+    if (!rewardType) {
+      return res.status(400).json({ success: false, message: "Reward type is required" });
+    }
+
+    const intern = await User.findById(req.session.user);
+    if (!intern) {
+      return res.status(404).json({ success: false, message: "Intern not found" });
+    }
+
+    // Define reward costs
+    const rewardCosts = {
+      "Crunchyroll Premium 1 Month": 500,
+      "Amazon/Flipkart/Myntra Rs 200": 1000,
+      "Amazon/Flipkart/Myntra Rs 500": 2000,
+      "Amazon Rs 200 Voucher": 1000,
+      "Amazon Rs 500 Voucher": 2000
+    };
+
+    const cost = rewardCosts[rewardType];
+    if (!cost) {
+      return res.status(400).json({ success: false, message: "Invalid reward type" });
+    }
+
+    if ((intern.points || 0) < cost) {
+      return res.status(400).json({ success: false, message: "Insufficient points" });
+    }
+
+    // Deduct points
+    intern.points -= cost;
+    await intern.save();
+
+    // Create redemption request
+    const request = new RedemptionRequest({
+      internId: intern._id,
+      rewardType,
+      pointsUsed: cost
+    });
+    await request.save();
+
+    res.json({ success: true, message: `Successfully redeemed ${rewardType}!`, newBalance: intern.points });
+  } catch (error) {
+    console.error("Redemption Error:", error);
+    res.status(500).json({ success: false, message: "Server error during redemption" });
+  }
+});
+
+module.exports = router;

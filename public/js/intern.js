@@ -126,8 +126,18 @@ document.addEventListener("DOMContentLoaded", () => {
 const HEARTBEAT_INTERVAL = 30000; // Send heartbeat every 30 seconds
 
 // Send heartbeat to server
-async function sendHeartbeat() {
+async function sendHeartbeat(force = false) {
   try {
+    const now = Date.now();
+    const lastHeartbeat = localStorage.getItem('lastHeartbeatTime');
+    
+    // Throttle heartbeats to once every 50 seconds across all tabs/reloads
+    if (!force && lastHeartbeat && (now - parseInt(lastHeartbeat)) < 50000) {
+      return;
+    }
+    
+    localStorage.setItem('lastHeartbeatTime', now.toString());
+
     const response = await fetch('/heartbeat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
