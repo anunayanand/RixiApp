@@ -94,7 +94,7 @@
                     gaining practical insights and building their portfolios.
                   </p>  
                   <hr style="border-color: rgba(255,102,0,0.5);" />
-                  <h5 class="fw-bold text-light">Online Project Based Internship Program</h5>
+                  <h5 class="fw-bold text-light">Registration Open for August Batch</h5>
                 </div>
 
                 <div class="info-card mb-4 p-4 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
@@ -1004,60 +1004,7 @@ input[type="file"]::file-selector-button:active {
         var form = document.getElementById("internship-form");
         form.addEventListener("submit", (e) => {
           e.preventDefault();
-          const submitButton = form.querySelector('button[type="submit"]');
-          submitButton.disabled = true;
-          showLoader();
-          const formData = new FormData(form);
-          const data = {};
-          for (let [key, value] of formData.entries()) {
-            data[key] = value;
-          }
-
-          if (!uploadedImageUrl) {
-            hideLoader();
-            showToast("Please upload your profile picture", "error");
-            submitButton.disabled = false;
-            return;
-          }
-
-          // Add profile image data
-          data["data[ProfileImageUrl]"] = uploadedImageUrl;
-          data["data[ProfileImagePublicId]"] = uploadedImagePublicId || "";
-
-          fetch(form.action, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              hideLoader();
-              if (data.success) {
-                let userName = document
-                  .getElementById("contactName")
-                  .value.trim();
-                if (userName === "") userName = "User";
-                showToast(data.message, "success");
-                let message = `Thank you ${userName}! Your internship application has been submitted successfully. You will receive a confirmation email shortly with further instructions.`;
-                const invoiceUrl = localStorage.getItem("invoiceUrl");
-                showPopup(message, invoiceUrl);
-                if (invoiceUrl) {
-                  localStorage.removeItem("invoiceUrl"); // Clear after use
-                }
-                submitButton.disabled = false;
-                document.getElementById("internship-form").reset();
-                document.getElementById("payID").disabled = true;
-                document.getElementById("payID").textContent = "Submitted";
-              } else {
-                showToast(data.message, "error");
-                submitButton.disabled = false;
-              }
-            })
-            .catch((err) => {
-              hideLoader();
-              showToast("An error occurred. Please try again.", "error");
-              submitButton.disabled = false;
-            });
+          document.getElementById("payID").click();
         });
 
         // Payment initiation

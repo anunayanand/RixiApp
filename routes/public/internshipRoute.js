@@ -180,7 +180,7 @@ router.post("/create-order", async (req, res) => {
     // Ensure final amount is at least 1 INR for Cashfree
     if (finalAmount < 1) {
       finalAmount = 1;
-      discountAmount = domainPrice - 1;
+      discountAmount = baseAmount - 1;
     }
 
     // Create registration with profile image
