@@ -592,29 +592,10 @@ input[type="file"]::file-selector-button:active {
 
                   <div class="form-navigation">
                       <button type="button" class="btn-prev" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> Previous</button>
-                      <button type="submit" class="submit-btn m-0" id="payID">
+                      <button type="button" class="submit-btn m-0" id="payID">
                     <span><span class="hide-mobile">Continue to </span>Payment & Submit</span>
                     <i class="bi bi-arrow-right"></i>
                   </button>
-                    </div>
-                  </div>
-                  <!-- Popup -->
-                  <style>
-                    #invoiceLink:hover {
-                      background-color: #ff6600 !important;
-                      color: #ffffff !important;
-                    }
-                  </style>
-                  <div class="popup-overlay" id="popup">
-                    <div class="popup-box">
-                      <h3>Application Submitted!</h3>
-                      <p id="popupMsg"></p>
-                      <div id="invoiceBtnContainer" style="display: none; margin-bottom: 20px;">
-                        <a id="invoiceLink" href="#" target="_blank" class="btn rounded-pill px-4 py-2" style="border: 1px solid #ff6600; color: #ff6600; text-decoration: none; transition: all 0.3s; font-weight: 500;">
-                          <i class="bi bi-download me-1"></i> Download Receipt
-                        </a>
-                      </div>
-                      <button onclick="closePopup()">OK</button>
                     </div>
                   </div>
                 </form>
@@ -649,6 +630,25 @@ input[type="file"]::file-selector-button:active {
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <style>
+    #invoiceLink:hover {
+      background-color: #ff6600 !important;
+      color: #ffffff !important;
+    }
+  </style>
+  <div class="popup-overlay" id="popup" style="display:none;">
+    <div class="popup-box">
+      <h3>Application Submitted!</h3>
+      <p id="popupMsg"></p>
+      <div id="invoiceBtnContainer" style="display: none; margin-bottom: 20px;">
+        <a id="invoiceLink" href="#" target="_blank" class="btn rounded-pill px-4 py-2" style="border: 1px solid #ff6600; color: #ff6600; text-decoration: none; transition: all 0.3s; font-weight: 500;">
+          <i class="bi bi-download me-1"></i> Download Receipt
+        </a>
+      </div>
+      <button type="button" onclick="closePopup()">OK</button>
     </div>
   </div>
 
@@ -841,10 +841,7 @@ input[type="file"]::file-selector-button:active {
       </script>
 
       <script>
-        // Initialize Cashfree
-        const cashfree = new Cashfree({
-          mode: "production",
-        });
+        // Cashfree will be initialized dynamically before checkout
 
         // Domain-wise prices (must match backend DOMAIN_PRICES)
         const domainPrices = {
@@ -965,36 +962,19 @@ input[type="file"]::file-selector-button:active {
 
 
 
-        function showToast(message, type) {
-          const toastContainer =
-            document.querySelector(".toast-container") || document.body;
-          const toastClass =
-            type === "success" ? "text-bg-success" : "text-bg-danger";
-          const toastHTML = `
-               <div class="toast ${toastClass} show" role="alert">
-                   <div class="d-flex">
-                       <div class="toast-body">${message}</div>
-                       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                   </div>
-               </div>
-           `;
-          toastContainer.insertAdjacentHTML("beforeend", toastHTML);
-          const toastEl = toastContainer.lastElementChild;
-          const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
-          toast.show();
-          toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
-        }
+
 
         function showLoader() {
-          const loaderWrapper = document.getElementById("pageLoaderWrapper");
+          const loaderWrapper = document.getElementById("rixiLoaderOverlay");
           if (loaderWrapper) {
             loaderWrapper.style.display = "flex";
+            void loaderWrapper.offsetWidth; // force reflow
             loaderWrapper.classList.remove("hidden");
           }
         }
 
         function hideLoader() {
-          const loaderWrapper = document.getElementById("pageLoaderWrapper");
+          const loaderWrapper = document.getElementById("rixiLoaderOverlay");
           if (loaderWrapper) {
             loaderWrapper.classList.add("hidden");
             setTimeout(() => (loaderWrapper.style.display = "none"), 600);
@@ -1082,7 +1062,7 @@ input[type="file"]::file-selector-button:active {
               hideLoader();
               if (result.success) {
                 // Check if Cashfree is loaded
-                if (!window.Cashfree || !cashfree.checkout) {
+                if (!window.Cashfree) {
                   showToast(
                     "Payment system not loaded. Please refresh and try again.",
                     "error",
@@ -1091,6 +1071,10 @@ input[type="file"]::file-selector-button:active {
                   payBtn.textContent = "Continue to Payment & Submit";
                   return;
                 }
+                
+                // Initialize Cashfree with the correct environment from backend
+                const cashfree = Cashfree({ mode: result.environment || "production" });
+                
                 try {
                   // Initiate Cashfree checkout
                   cashfree.checkout({
@@ -1142,22 +1126,25 @@ input[type="file"]::file-selector-button:active {
         function showPopup(message, invoiceUrl = null) {
           const popup = document.getElementById("popup");
           const msgEl = document.getElementById("popupMsg");
+          if (!popup || !msgEl) return;
+          
           msgEl.innerHTML = message;
           
           const invoiceBtnContainer = document.getElementById("invoiceBtnContainer");
           const invoiceLink = document.getElementById("invoiceLink");
           if (invoiceUrl && invoiceUrl !== "undefined" && invoiceUrl !== "null" && invoiceUrl !== "") {
-            invoiceLink.href = invoiceUrl;
-            if(invoiceBtnContainer) invoiceBtnContainer.style.display = "block";
+            if (invoiceLink) invoiceLink.href = invoiceUrl;
+            if (invoiceBtnContainer) invoiceBtnContainer.style.display = "block";
           } else {
-            if(invoiceBtnContainer) invoiceBtnContainer.style.display = "none";
+            if (invoiceBtnContainer) invoiceBtnContainer.style.display = "none";
           }
           
-          popup.style.display = "flex";
+          // Show the popup
+          popup.style.cssText = "display: flex !important; opacity: 1 !important; visibility: visible !important; z-index: 999999 !important;";
         }
         function closePopup() {
           const popup = document.getElementById("popup");
-          popup.style.display = "none";
+          if (popup) popup.style.cssText = "display: none !important;";
         }
 
         // Check for payment success
@@ -1168,37 +1155,48 @@ input[type="file"]::file-selector-button:active {
           const transactionId = params.get("transaction_id");
           const invoiceUrl = params.get("invoice_url");
           const queryName = params.get("name");
+
+          // Clean URL first to avoid issues on refresh
+          if (paymentSuccess) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+
           if (paymentSuccess === "true") {
-            // Get user name before clearing
-            let userName = queryName || "User";
+            // Get user name
+            let userName = queryName ? decodeURIComponent(queryName) : "User";
             const formData = localStorage.getItem("internshipFormData");
             if (!queryName && formData) {
-              const data = JSON.parse(formData);
-              userName = data["data[Name]"]?.trim() || "User";
+              try {
+                const data = JSON.parse(formData);
+                userName = data["data[Name]"]?.trim() || "User";
+              } catch (e) {
+                console.error("Failed to parse formData", e);
+              }
             }
             // Clear localStorage
             localStorage.removeItem("internshipFormData");
-            // Store invoice URL for later use
-            if (invoiceUrl) {
-              localStorage.setItem("invoiceUrl", invoiceUrl);
-            }
-            // Show success message
-            const message = `Thank you ${userName}! Your internship application and payment have been successfully processed. You will receive a confirmation email shortly with further instructions.`;
-            const customReceiptUrl = orderId ? `/internship/receipt/${orderId}` : invoiceUrl;
-            showPopup(message, customReceiptUrl);
-            // Reset form
-            document.getElementById("internship-form").reset();
-            document.getElementById("payID").disabled = true;
-            document.getElementById("payID").textContent = "Submitted";
-          } else if (paymentSuccess === "false") {
-            showToast(
-              "Payment failed or was cancelled. Please try again.",
-              "error",
-            );
-          }
 
-          if (paymentSuccess) {
-            window.history.replaceState({}, document.title, window.location.pathname);
+            const message = `Thank you ${userName}! Your internship application and payment have been successfully processed. You will receive a confirmation email shortly with further instructions.`;
+            const customReceiptUrl = orderId ? `/internship/receipt/${orderId}` : (invoiceUrl || null);
+
+            // Show toast and popup after a short delay to ensure page is fully rendered
+            setTimeout(() => {
+              showToast("Payment Successful! 🎉", "success");
+              showPopup(message, customReceiptUrl);
+            }, 300);
+
+            // Reset form state
+            const form = document.getElementById("internship-form");
+            const payBtn = document.getElementById("payID");
+            if (form) form.reset();
+            if (payBtn) {
+              payBtn.disabled = true;
+              payBtn.textContent = "Submitted";
+            }
+          } else if (paymentSuccess === "false") {
+            setTimeout(() => {
+              showToast("Payment failed or was cancelled. Please try again.", "error");
+            }, 300);
           }
         });
       </script>

@@ -9,9 +9,11 @@ const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 const SHEET_URL = process.env.SHEET_URL;
-const CASHFREE_BASE_URL = "https://api.cashfree.com/pg";
 const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
+const CASHFREE_BASE_URL = CASHFREE_APP_ID && CASHFREE_APP_ID.startsWith("TEST") 
+  ? "https://sandbox.cashfree.com/pg" 
+  : "https://api.cashfree.com/pg";
 
 // Cloudinary storage for profile images
 const profileStorage = new CloudinaryStorage({
@@ -147,8 +149,8 @@ router.post("/create-order", async (req, res) => {
       });
     }
 
-    // Check if email already exists
-    if (await User.findOne({ email: sanitizedEmail })) {
+    // Check if email already exists in User or NewRegistration
+    if (await User.findOne({ email: sanitizedEmail }) || await NewRegistration.findOne({ email: sanitizedEmail })) {
       return res.status(400).json({
         success: false,
         message: "Email already registered",
@@ -221,7 +223,7 @@ router.post("/create-order", async (req, res) => {
       },
 
       order_meta: {
-        return_url: `${process.env.BASE_URL}/internship/payment/callback?order_id=${orderId}`,
+        return_url: `${process.env.BASE_URL || 'http://localhost:3000'}/internship/payment/callback?order_id=${orderId}`,
       },
     };
 
@@ -245,9 +247,20 @@ router.post("/create-order", async (req, res) => {
       success: true,
       order_id: orderId,
       payment_session_id: paymentSessionId,
+      environment: CASHFREE_APP_ID && CASHFREE_APP_ID.startsWith("TEST") ? "sandbox" : "production"
     });
   } catch (error) {
     console.error("Cashfree Error:", error.response?.data || error.message);
+    
+    // Handle MongoDB duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue || {})[0];
+      return res.status(400).json({
+        success: false,
+        message: `${field ? field.charAt(0).toUpperCase() + field.slice(1) : 'Record'} already registered`
+      });
+    }
+    
     res.status(500).json({
       success: false,
       message: "Failed to create order",
@@ -272,8 +285,34 @@ router.get("/payment/callback", async (req, res) => {
         },
       }
     );
-    const payments = response.data;
-    const payment = payments[0];
+    
+    // Safely handle both array and object responses from Cashfree
+    const responseData = response.data;
+    let payment = null;
+    
+    console.log("Cashfree payment verification response:", JSON.stringify(responseData));
+    
+    if (Array.isArray(responseData)) {
+      if (responseData.length === 0) {
+        // No payment attempts yet - treat as failed/pending
+        console.log("No payment attempts found for order:", order_id);
+        await NewRegistration.findOneAndUpdate({ order_id }, { payment_status: "FAILED" });
+        return res.redirect("/internship?payment_success=false");
+      }
+      // Find the successful payment if there are multiple attempts
+      payment = responseData.find(p => p.payment_status === "SUCCESS") || responseData[0];
+    } else if (responseData && responseData.payment_status) {
+      payment = responseData;
+    } else if (responseData && Array.isArray(responseData.payments)) {
+      payment = responseData.payments.find(p => p.payment_status === "SUCCESS") || responseData.payments[0];
+    }
+
+    if (!payment) {
+      console.log("Could not parse payment from Cashfree response for order:", order_id);
+      await NewRegistration.findOneAndUpdate({ order_id }, { payment_status: "FAILED" });
+      return res.redirect("/internship?payment_success=false");
+    }
+
     if (payment && payment.payment_status === "SUCCESS") {
       const invoiceUrl = payment.invoice_url || "";
       const transactionId = payment.cf_payment_id || order_id; // Use cf_payment_id as transaction_id, fallback to order_id
