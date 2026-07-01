@@ -52,7 +52,8 @@ const DOMAIN_PRICES = {
   "Python Programming": 149,
   "Java Programming": 174,
   "Full Stack Development": 124,
-  "Machine Learning": 200
+  "Machine Learning": 200,
+  "Artificial Intelligence": 200
 };
 
 // Helper function to convert text to Title Case
@@ -368,6 +369,32 @@ router.get("/payment/callback", async (req, res) => {
   } catch (error) {
     console.error(error.response?.data || error.message);
     res.redirect("/internship?payment_success=false");
+  }
+});
+
+const { generateReceiptPDF } = require("../../services/documents/pdfGenerator");
+
+router.get("/receipt/:orderId", async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const registration = await NewRegistration.findOne({ order_id: orderId });
+    
+    if (!registration) {
+      return res.status(404).send("Receipt not found for this order.");
+    }
+    
+    const pdfBuffer = await generateReceiptPDF(registration);
+    
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="RixiLab_Receipt_${registration.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf"`
+    );
+    
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error("Error generating receipt PDF:", error);
+    res.status(500).send("An error occurred while generating the receipt.");
   }
 });
 

@@ -2,6 +2,23 @@ const PDFDocument = require("pdfkit");
 const path = require("path");
 const fs = require("fs");
 const QRCode = require("qrcode");
+const https = require("https");
+const http = require("http");
+
+async function fetchImageBuffer(url) {
+  return new Promise((resolve) => {
+    if (!url) return resolve(null);
+    const client = url.startsWith('https') ? https : http;
+    client.get(url, (res) => {
+      if (res.statusCode !== 200) {
+        return resolve(null);
+      }
+      const chunks = [];
+      res.on('data', (chunk) => chunks.push(chunk));
+      res.on('end', () => resolve(Buffer.concat(chunks)));
+    }).on('error', () => resolve(null));
+  });
+}
 const rawUrl = process.env.BASE_URL || 'https://rixilab.tech';
 const formattedBaseUrl = rawUrl.replace('https://', 'www.');
 
@@ -11,7 +28,7 @@ async function generateCertificatePDF(data) {
       // 🔹 SELECT TEMPLATE IMAGE
       let imageName = "Internship_Certificate.png";
 
-      const imagePath = path.join(__dirname, "../public/templet", imageName);
+      const imagePath = path.join(__dirname, "../../public/templet", imageName);
 
       const doc = new PDFDocument({ size: [1123, 794] });
       const chunks = [];
@@ -21,8 +38,8 @@ async function generateCertificatePDF(data) {
       doc.on('error', reject);
 
       // Register custom fonts
-      doc.registerFont('Montserrat', path.join(__dirname, '../public/fonts/Montserrat-Regular.ttf'));
-      doc.registerFont('Allura', path.join(__dirname, '../public/fonts/Allura-Regular.ttf'));
+      doc.registerFont('Montserrat', path.join(__dirname, '../../public/fonts/Montserrat-Regular.ttf'));
+      doc.registerFont('Allura', path.join(__dirname, '../../public/fonts/Allura-Regular.ttf'));
 
       // Add background image covering full page
       doc.image(imagePath, 0, 0, { width: 1123, height: 794 });
@@ -91,7 +108,7 @@ async function generateOfferLetterPDF(data) {
     // =============================
     const imagePath = path.join(
       __dirname,
-      "../public/templet/Offer_Letter.png"
+      "../../public/templet/Offer_Letter.png"
     );
     doc.image(imagePath, 0, 0, { width: 595, height: 842 });
 
@@ -100,15 +117,15 @@ async function generateOfferLetterPDF(data) {
     // =============================
     doc.registerFont(
       "Montserrat",
-      path.join(__dirname, "../public/fonts/Montserrat-Regular.ttf")
+      path.join(__dirname, "../../public/fonts/Montserrat-Regular.ttf")
     );
     doc.registerFont(
       "Montserrat-Bold",
-      path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf")
+      path.join(__dirname, "../../public/fonts/Montserrat-Bold.ttf")
     );
     doc.registerFont(
       "Montserrat-Medium",
-      path.join(__dirname, "../public/fonts/Montserrat-Medium.ttf")
+      path.join(__dirname, "../../public/fonts/Montserrat-Medium.ttf")
     )
 
     // =============================
@@ -190,7 +207,7 @@ async function generateBootcampCertificatePDF(data) {
   return new Promise(async (resolve, reject) => {
     try {
       const imageName = "bootcamp_certificate.png";
-      const imagePath = path.join(__dirname, "../public/templet", imageName);
+      const imagePath = path.join(__dirname, "../../public/templet", imageName);
 
       const doc = new PDFDocument({ size: [1123, 794], margins: { top: 0, left: 0, right: 0, bottom: 0 } });
       const chunks = [];
@@ -199,9 +216,9 @@ async function generateBootcampCertificatePDF(data) {
       doc.on("end", () => resolve(Buffer.concat(chunks)));
       doc.on("error", reject);
 
-      doc.registerFont("Montserrat", path.join(__dirname, "../public/fonts/Montserrat-Regular.ttf"));
-      doc.registerFont("Montserrat-Bold", path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf"));
-      doc.registerFont("Allura", path.join(__dirname, "../public/fonts/Allura-Regular.ttf"));
+      doc.registerFont("Montserrat", path.join(__dirname, "../../public/fonts/Montserrat-Regular.ttf"));
+      doc.registerFont("Montserrat-Bold", path.join(__dirname, "../../public/fonts/Montserrat-Bold.ttf"));
+      doc.registerFont("Allura", path.join(__dirname, "../../public/fonts/Allura-Regular.ttf"));
 
       doc.image(imagePath, 0, 0, { width: 1123, height: 794 });
 
@@ -260,4 +277,154 @@ async function generateBootcampCertificatePDF(data) {
 }
 
 
-module.exports = { generateCertificatePDF,generateOfferLetterPDF, generateBootcampCertificatePDF };
+async function generateReceiptPDF(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const doc = new PDFDocument({
+        size: [595, 842], // A4
+        margins: { top: 40, left: 50, right: 50, bottom: 40 }
+      });
+      const chunks = [];
+
+      doc.on("data", c => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
+
+      doc.registerFont("Montserrat", path.join(__dirname, "../../public/fonts/Montserrat-Regular.ttf"));
+      doc.registerFont("Montserrat-Bold", path.join(__dirname, "../../public/fonts/Montserrat-Bold.ttf"));
+
+      const watermarkPath = path.join(__dirname, "../../public/img/Rixi Lab New Logo PNG.png");
+      const templatePath = path.join(__dirname, "../../public/templet/Internship Application.png");
+      
+      // 1. Background Template
+      if (fs.existsSync(templatePath)) {
+        doc.image(templatePath, 0, 0, { width: 595, height: 842 });
+      } else if (fs.existsSync(watermarkPath)) {
+        doc.save();
+        doc.opacity(0.03);
+        doc.image(watermarkPath, (595 - 350) / 2, (842 - 350) / 2, { fit: [350, 350], align: 'center', valign: 'center' });
+        doc.restore();
+      }
+
+      // 2. Content Start Position
+      let currentY = 170;
+
+      // 3. Candidate Information
+      doc.font("Montserrat-Bold").fontSize(15).fillColor("#ff6600").text("Intern Information", 50, currentY);
+      currentY += 25;
+
+      const labelX = 50;
+      const colonX = 190;
+      const valueX = 205;
+      const valueWidth = 240; // Stop before photo
+
+      // Function to render single column list
+      const renderList = (fields, vW) => {
+        for (let i = 0; i < fields.length; i++) {
+          const row = fields[i];
+          
+          doc.font("Montserrat-Bold").fontSize(11).fillColor("#374151").text(row.label, labelX, currentY);
+          doc.text(":", colonX, currentY);
+          
+          let maxLineHeight = 24; // Strict spacing for rows
+          
+          if (row.isBadge) {
+             let badgeColor = "#F59E0B"; // Orange
+             const valUpper = (row.value || "").toUpperCase();
+             if (valUpper === "SUCCESS" || valUpper === "APPROVED") badgeColor = "#10B981";
+             else if (valUpper === "FAILED" || valUpper === "REJECTED") badgeColor = "#EF4444";
+
+             doc.roundedRect(valueX, currentY - 2, 70, 18, 2).fill(badgeColor);
+             doc.font("Montserrat-Bold").fontSize(9).fillColor("#ffffff").text(valUpper, valueX, currentY + 3, { width: 70, align: "center" });
+             maxLineHeight = Math.max(maxLineHeight, 26);
+          } else {
+             const fontName = row.isBold ? "Montserrat-Bold" : "Montserrat";
+             const fontSize = row.fontSize || 11;
+             const fontColor = row.color || "#000000";
+             const height = doc.font(fontName).fontSize(fontSize).fillColor(fontColor).heightOfString(row.value, { width: vW });
+             doc.text(row.value, valueX, currentY, { width: vW });
+             maxLineHeight = Math.max(maxLineHeight, height + 8);
+          }
+          currentY += maxLineHeight;
+        }
+      };
+
+      const candidateFields = [
+        { label: "Name", value: data.name || "N/A" },
+        { label: "Email", value: data.email || "N/A" },
+        { label: "Phone", value: data.phone || "N/A" },
+        { label: "Branch", value: data.branch || "N/A" },
+        { label: "Course", value: data.course || "N/A" },
+        { label: "Year / Semester", value: data.year_sem || "N/A" },
+        { label: "College", value: data.college || "N/A" },
+        { label: "University", value: data.university || "N/A" },
+        { label: "Program", value: `${data.domain || "N/A"} ${data.internshipType || "Internship"}` },
+        { label: "Duration", value: `${data.duration || "N/A"} Weeks` },
+        { label: "Applied Date", value: new Date(data.createdAt || Date.now()).toLocaleDateString("en-GB") }
+      ];
+
+      // Save Y for photo placement
+      const photoStartY = currentY;
+      
+      renderList(candidateFields, valueWidth);
+
+      // Draw Photo
+      const photoWidth = 100;
+      const photoHeight = 100;
+      const photoX = 445;
+      
+      // doc.rect(photoX, photoStartY, photoWidth, photoHeight).lineWidth(1).strokeColor("#9ca3af").stroke();
+      
+      let photoRendered = false;
+      if (data.profile_image_url) {
+         let imgBuffer = await fetchImageBuffer(data.profile_image_url);
+         if (imgBuffer) {
+           try {
+             doc.image(imgBuffer, photoX + 2, photoStartY + 2, { fit: [photoWidth - 4, photoHeight - 4], align: 'center', valign: 'center' });
+             photoRendered = true;
+           } catch (e) {
+             console.error("Error drawing photo buffer");
+           }
+         }
+      } 
+      if (!photoRendered) {
+         doc.font("Montserrat-Bold").fontSize(10).fillColor("#9ca3af").text("PHOTO", photoX, photoStartY + 50, { width: photoWidth, align: "center" });
+      }
+
+      currentY += 15;
+      doc.moveTo(50, currentY).lineTo(545, currentY).lineWidth(1).strokeColor("#d1d5db").stroke();
+      currentY += 20;
+
+      // 4. Payment Details
+      doc.font("Montserrat-Bold").fontSize(15).fillColor("#ff6600").text("Payment Details", 50, currentY);
+      currentY += 25;
+
+      const txFields = [
+        { label: "Receipt Number", value: "REC-" + (data.order_id ? data.order_id.substring(data.order_id.length - 8) : "00000000") },
+        { label: "Order ID", value: data.order_id || "N/A" },
+        { label: "Payment ID", value: data.payID || "N/A" },
+        { label: "Amount Paid", value: "Rs. " + (data.final_amount || data.amount || "0")},
+        { label: "Payment Status", value: data.payment_status || "SUCCESS"},
+        { label: "Transaction Time", value: new Date(data.createdAt || Date.now()).toLocaleString("en-GB") }
+      ];
+      
+      renderList(txFields, 340); // wider width here as no photo on right
+
+      // 5. Footer
+      currentY = 750; // Fixed at bottom
+      doc.moveTo(50, currentY).lineTo(545, currentY).lineWidth(1).strokeColor("#d1d5db").stroke();
+      currentY += 15;
+      
+      doc.font("Montserrat").fontSize(7).fillColor("#6b7280")
+         .text("This is a computer generated receipt. No signature is required.", 50, currentY);
+      
+      doc.text("Generated On: " + new Date().toLocaleString("en-GB"), 50, currentY, { align: "right", width: 495 });
+      
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+module.exports = { generateCertificatePDF, generateOfferLetterPDF, generateBootcampCertificatePDF, generateReceiptPDF };

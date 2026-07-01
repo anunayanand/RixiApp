@@ -34,11 +34,11 @@ function generateSalarySlip(admin, slipIndex, res) {
   doc.pipe(res);
 
   // Fonts
-  doc.registerFont("Montserrat", path.join(__dirname, "../public/fonts/Montserrat-Regular.ttf"));
-  doc.registerFont("Montserrat-Bold", path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf"));
+  doc.registerFont("Montserrat", path.join(__dirname, "../../public/fonts/Montserrat-Regular.ttf"));
+  doc.registerFont("Montserrat-Bold", path.join(__dirname, "../../public/fonts/Montserrat-Bold.ttf"));
 
   // Template Image
-  const imagePath = path.join(__dirname, "../public/templet/Salary Slip Template.png");
+  const imagePath = path.join(__dirname, "../../public/templet/Salary Slip Template.png");
   doc.image(imagePath, 0, 0, { width: 595.28, height: 841.89 });
 
   // Helpers
@@ -205,11 +205,11 @@ function generatePFSlip(admin, slipIndex, res) {
   doc.pipe(res);
 
   // Fonts
-  doc.registerFont("Montserrat", path.join(__dirname, "../public/fonts/Montserrat-Regular.ttf"));
-  doc.registerFont("Montserrat-Bold", path.join(__dirname, "../public/fonts/Montserrat-Bold.ttf"));
+  doc.registerFont("Montserrat", path.join(__dirname, "../../public/fonts/Montserrat-Regular.ttf"));
+  doc.registerFont("Montserrat-Bold", path.join(__dirname, "../../public/fonts/Montserrat-Bold.ttf"));
 
   // Template Image
-  const imagePath = path.join(__dirname, "../public/templet/Salary Slip Template.png");
+  const imagePath = path.join(__dirname, "../../public/templet/Salary Slip Template.png");
   doc.image(imagePath, 0, 0, { width: 595.28, height: 841.89 });
 
   // Helpers

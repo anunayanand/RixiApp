@@ -11,6 +11,7 @@ const Notification = require("../../models/Notification");
 const { generateSignature } = require("../common/profileRoute");
 const { notify } = require("../../services/notifications/notificationService");
 const { generateBatchAnalysis } = require("../../services/ai/groqService");
+const { generateReceiptPDF } = require("../../services/documents/pdfGenerator");
 
 router.get("/", authRole("superAdmin"), async (req, res, next) => {
   try {
@@ -492,6 +493,25 @@ router.get("/report/batch/:batch_no", authRole("superAdmin"), async (req, res, n
   } catch (err) {
     console.error("Batch Report Error:", err);
     res.status(500).send("Server Error generating report.");
+  }
+});
+
+router.get("/receipt/:id", authRole("superAdmin"), async (req, res) => {
+  try {
+    const registration = await NewRegistration.findById(req.params.id);
+    if (!registration) {
+      return res.status(404).send("Registration not found");
+    }
+    const pdfBuffer = await generateReceiptPDF(registration);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="RixiLab_Receipt_${registration.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf"`
+    );
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error("Error generating receipt PDF:", error);
+    res.status(500).send("An error occurred while generating the receipt.");
   }
 });
 

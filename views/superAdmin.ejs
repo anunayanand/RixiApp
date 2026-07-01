@@ -535,6 +535,7 @@
           <option value="Java Programming">Java Programming</option>
           <option value="Python Programming">Python Programming</option>
           <option value="Full Stack Development">Full Stack Development</option>
+          <option value="Artificial Intelligence">Artificial Intelligence</option>
         </select>
       </div>
 
@@ -1187,6 +1188,7 @@
                        <option value="Java Programming">Java Programming</option>
                        <option value="Python Programming">Python Programming</option>
                        <option value="Full Stack Development">Full Stack Development</option>
+                       <option value="Artificial Intelligence">Artificial Intelligence</option>
                      </select>
                    </div>
                  </div>
@@ -2898,55 +2900,8 @@ function updateIntern(id) {
   });
 
   // PDF Download Logic
-  async function downloadRegistrationPDF(regId, regName) {
-    try {
-      const { jsPDF } = window.jspdf;
-      const templateId = 'pdfTemplate' + regId;
-      const templateElement = document.getElementById(templateId);
-
-      if (!templateElement) {
-        alert('Template not found for registration!');
-        return;
-      }
-
-      // We temporarily display it block to render it, then hide it again.
-      // It's vital that it renders outside of the scrollable modal container boundary to avoid cutoff.
-      const originalParent = templateElement.parentElement;
-      const originalDisplay = templateElement.style.display;
-      
-      // Move to body specifically so it can render fully without hidden overflows
-      document.body.appendChild(templateElement);
-      templateElement.style.display = 'block';
-
-      // Add a small loading indicator or button disable logic here if desired
-
-      const canvas = await html2canvas(templateElement, {
-        scale: 2, 
-        useCORS: true, 
-        allowTaint: true,
-        logging: false
-      });
-
-      // Restore original position and hidden state immediately after capturing
-      originalParent.appendChild(templateElement);
-      templateElement.style.display = originalDisplay;
-
-      const imgData = canvas.toDataURL('image/png');
-      
-      // A4 Paper Dimensions (in mm)
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      
-      const fileName = `RixiLab_Registration_${regName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-      pdf.save(fileName);
-      
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert('An error occurred while generating the document. Please try again.');
-    }
+  function downloadRegistrationPDF(regId, regName) {
+      window.open('/superadmin/receipt/' + regId, '_blank');
   }
   </script>
   <!-- Global Modals Stacking Fix -->

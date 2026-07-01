@@ -298,7 +298,7 @@
     transform: translateY(1px);
 }
 
-.form-navigation { display: flex; justify-content: space-between; margin-top: 35px; align-items: center; gap: 15px; flex-wrap: wrap; }
+.form-navigation { display: flex; justify-content: space-between; margin-top: 35px; align-items: center; gap: 15px; flex-wrap: nowrap; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Upload Spinner */
@@ -349,6 +349,27 @@ input[type="file"]::file-selector-button:hover {
 }
 input[type="file"]::file-selector-button:active {
     background: #cc5200 !important;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .info-panel {
+        padding: 20px !important;
+    }
+    .contact-form-wrapper {
+        padding: 25px 15px !important;
+    }
+    .form-header p {
+        padding: 15px !important;
+        text-align: left !important;
+    }
+    .btn-next, .btn-prev, .submit-btn {
+        padding: 10px 15px !important;
+        font-size: 0.85rem !important;
+    }
+    .submit-btn span.hide-mobile {
+        display: none;
+    }
 }
 </style>
 
@@ -406,7 +427,7 @@ input[type="file"]::file-selector-button:active {
                       </div>
                     </div>
                     <div class="text-sm form-text text-white" style="font-size: 0.75rem; font-style: italic">
-                      Please upload a clear profile picture (Max size: 5MB). You can proceed to the next step while it uploads!
+                      Please upload a clear profile picture (Max size: 1MB). You can proceed to the next step while it uploads!
                     </div>
                   </div>
 
@@ -483,6 +504,7 @@ input[type="file"]::file-selector-button:active {
                       <option value="Graphics Design">Graphics Design</option>
                       <option value="Full Stack Development">Full Stack Development</option>
                       <option value="Machine Learning">Machine Learning</option>
+                      <option value="Artificial Intelligence">Artificial Intelligence</option>
                     </select>
                   </div>
 
@@ -568,10 +590,10 @@ input[type="file"]::file-selector-button:active {
                   <hr />
                   <div class="mb-2 text-center" id="result"></div>
 
-                  <div class="form-navigation justify-content-end">
-                      <button type="button" class="btn-prev d-none" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> Previous</button>
+                  <div class="form-navigation">
+                      <button type="button" class="btn-prev" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> Previous</button>
                       <button type="submit" class="submit-btn m-0" id="payID">
-                    <span>Continue to Payment & Submit</span>
+                    <span><span class="hide-mobile">Continue to </span>Payment & Submit</span>
                     <i class="bi bi-arrow-right"></i>
                   </button>
                     </div>
@@ -717,9 +739,9 @@ input[type="file"]::file-selector-button:active {
             return;
           }
 
-          // Validate file size (max 5MB)
-          if (file.size > 5 * 1024 * 1024) {
-            showToast("Image size should be less than 5MB", "error");
+          // Validate file size (max 1MB)
+          if (file.size > 1 * 1024 * 1024) {
+            showToast("Image size should be less than 1MB", "error");
             event.target.value = "";
             return;
           }
@@ -833,7 +855,8 @@ input[type="file"]::file-selector-button:active {
           "Python Programming": 149,
           "Java Programming": 174,
           "Full Stack Development": 124,
-          "Machine Learning": 200
+          "Machine Learning": 200,
+          "Artificial Intelligence": 200
         };
 
         let currentDomainPrice = 100;
@@ -1214,7 +1237,8 @@ input[type="file"]::file-selector-button:active {
             }
             // Show success message
             const message = `Thank you ${userName}! Your internship application and payment have been successfully processed. You will receive a confirmation email shortly with further instructions.`;
-            showPopup(message, invoiceUrl);
+            const customReceiptUrl = orderId ? `/internship/receipt/${orderId}` : invoiceUrl;
+            showPopup(message, customReceiptUrl);
             // Reset form
             document.getElementById("internship-form").reset();
             document.getElementById("payID").disabled = true;
