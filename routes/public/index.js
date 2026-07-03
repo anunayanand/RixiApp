@@ -8,6 +8,7 @@ const downloadOfferLetterRoute = require('./downloadOfferLetterRoute');
 const internshipRoute = require('./internshipRoute');
 const bootcampPublicRoute = require('./bootcampPublicRoute');
 const feedbackRoute = require('./feedbackRoute');
+const chatRoute = require('./chatRoute');
 
 // Inline routes from app.js
 router.get("/cap", (req, res) => res.render("cap"));
@@ -22,5 +23,6 @@ router.use('/', downloadOfferLetterRoute);
 router.use('/internship', internshipRoute);
 router.use('/bootcamps', bootcampPublicRoute);
 router.use('/', feedbackRoute);
+router.use('/', chatRoute);
 
 module.exports = router;
