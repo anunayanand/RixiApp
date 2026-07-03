@@ -360,7 +360,7 @@ async function generateReceiptPDF(data) {
         { label: "University", value: data.university || "N/A" },
         { label: "Domain", value: `${data.domain || "N/A"} ${data.internshipType || "Internship"}` },
         { label: "Duration", value: `${data.duration || "N/A"} Weeks` },
-        { label: "Applied Date", value: new Date(data.createdAt || Date.now()).toLocaleDateString("en-GB") }
+        { label: "Applied Date", value: new Date(data.createdAt || Date.now()).toLocaleDateString("en-GB", { timeZone: "Asia/Kolkata" }) }
       ];
 
       // Save Y for photo placement
@@ -405,7 +405,7 @@ async function generateReceiptPDF(data) {
         { label: "Payment ID", value: data.payID || "N/A" },
         { label: "Amount Paid", value: "Rs. " + (data.final_amount || data.amount || "0")},
         { label: "Payment Status", value: data.payment_status || "SUCCESS"},
-        { label: "Transaction Time", value: new Date(data.createdAt || Date.now()).toLocaleString("en-GB", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase() }
+        { label: "Transaction Time", value: new Date(data.createdAt || Date.now()).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase() }
       ];
       
       renderList(txFields, 340); // wider width here as no photo on right
@@ -418,7 +418,7 @@ async function generateReceiptPDF(data) {
       doc.font("Montserrat").fontSize(7).fillColor("#6b7280")
          .text("This is a computer generated receipt. No signature is required.", 50, currentY);
       
-      doc.text("Generated On: " + new Date().toLocaleString("en-GB", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase(), 50, currentY, { align: "right", width: 495 });
+      doc.text("Generated On: " + new Date().toLocaleString("en-GB", { timeZone: "Asia/Kolkata", day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase(), 50, currentY, { align: "right", width: 495 });
       
       doc.end();
     } catch (err) {

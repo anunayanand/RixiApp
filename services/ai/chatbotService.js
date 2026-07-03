@@ -44,7 +44,7 @@ async function getDynamicContext() {
     const internshipText = `
 Internship Programs:
 RixiLab Technologies offers virtual internships and training programs. Students can register, complete projects, submit feedback, and get certified.
-To learn more, direct users to the specific page at the endpoint: /internships
+To learn more, direct users to the specific page at the endpoint: /internship
 Available Internship Domains & Registration Charges (in INR):
 - Web Development: ₹100
 - Data Analytics: ₹150
@@ -116,7 +116,7 @@ Rules:
 3. Do not make up any courses, bootcamps, or prices that are not listed above.
 4. If you don't know the answer, politely say you don't know and advise them to contact support.
 5. You are an AI, keep your responses relatively short so they fit well in a chat window. However, when listing multiple items (like courses, domains, or prices), ALWAYS format them as a Markdown bulleted list for better readability.
-6. When a user asks to be directed to a specific page or if you are providing a link, ALWAYS construct the full URL by combining the Base URL provided above with the specific endpoint/path (e.g., ${baseUrl}/internships). You MUST format links as Markdown hyperlinks using a short, descriptive name instead of raw URLs (e.g., [Internships](${baseUrl}/internships), [CAP](${baseUrl}/cap)). Never output the raw URL directly.
+6. When a user asks to be directed to a specific page or if you are providing a link, ALWAYS construct the full URL by combining the Base URL provided above with the specific endpoint/path (e.g., ${baseUrl}/internship). You MUST format links as Markdown hyperlinks using a short, descriptive name instead of raw URLs (e.g., [Internships](${baseUrl}/internship), [CAP](${baseUrl}/cap)). Never output the raw URL directly.
 7. You MUST respond with a valid JSON object in the exact following format:
 {
   "reply": "Your markdown-formatted text response to the user here.",
