@@ -46,6 +46,40 @@
     fill: currentColor;
   }
 
+  @keyframes rixiPulse {
+    0% { box-shadow: var(--rixi-shadow), 0 0 0 0 rgba(255, 102, 0, 0.7); }
+    70% { box-shadow: var(--rixi-shadow), 0 0 0 15px rgba(255, 102, 0, 0); }
+    100% { box-shadow: var(--rixi-shadow), 0 0 0 0 rgba(255, 102, 0, 0); }
+  }
+
+  #rixi-toggle-btn.attention {
+    animation: rixiPulse 2s infinite;
+  }
+
+  #rixi-attention-bubble {
+    position: absolute;
+    right: 70px;
+    bottom: 8px;
+    background: var(--rixi-bg);
+    color: var(--rixi-text);
+    border: 1px solid var(--rixi-border);
+    padding: 10px 16px;
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: var(--rixi-shadow);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(15px) scale(0.9);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  #rixi-attention-bubble.show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
   #rixi-chat-window {
     position: absolute;
     bottom: 76px;
@@ -358,6 +392,7 @@
     </div>
   </div>
 
+  <div id="rixi-attention-bubble">Hello! How can I help you?</div>
   <button id="rixi-toggle-btn" aria-label="Open Chat">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
   </button>
@@ -497,6 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       return;
     }
+    toggleBtn.classList.remove('attention');
+    const attentionBubble = document.getElementById('rixi-attention-bubble');
+    if (attentionBubble) attentionBubble.classList.remove('show');
     toggleChat();
   });
   closeBtn.addEventListener('click', toggleChat);
@@ -686,13 +724,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (storedOpenState === 'true') {
     chatWindow.classList.add('open');
     messageContainer.scrollTop = messageContainer.scrollHeight;
-  } else if (storedOpenState === null && window.location.pathname === '/') {
-    // Auto-open on Home Page only if the user hasn't explicitly closed it this session
+  } else {
+    // Subtly animate the toggle button instead of auto-opening
     setTimeout(() => {
       if (!chatWindow.classList.contains('open')) {
-        toggleChat();
+        toggleBtn.classList.add('attention');
+        const attentionBubble = document.getElementById('rixi-attention-bubble');
+        if (attentionBubble) attentionBubble.classList.add('show');
       }
-    }, 2500); // Pop open after 2.5 seconds
+    }, 2500); // Pulse after 2.5 seconds
   }
 });
 </script>

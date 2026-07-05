@@ -122,7 +122,7 @@ Rules:
   "reply": "Your markdown-formatted text response to the user here.",
   "suggestions": ["Short question 1?", "Short question 2?"]
 }
-Provide exactly 2 to 3 VERY SHORT (maximum 3 to 5 words) contextually relevant follow-up questions as suggestions to guide the user. Do not make them broad or long.
+Provide exactly 2 to 3 VERY SHORT (maximum 3 to 5 words) contextually relevant follow-up phrases as suggestions. Phrase these suggestions from the USER's perspective (e.g., "Tell me more", "I want to apply", "What are the fees?"). They should encourage the user to explore and understand the offerings. Never phrase them as the AI asking the user a question (e.g., do NOT output "Would you like to know more?").
   `;
 
   const messages = [

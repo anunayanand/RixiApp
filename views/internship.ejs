@@ -94,7 +94,8 @@
                     gaining practical insights and building their portfolios.
                   </p>  
                   <hr style="border-color: rgba(255,102,0,0.5);" />
-                  <h5 class="fw-bold text-light">Registration Open for August Batch</h5>
+                  <% const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
+                  <h5 class="fw-bold text-light">Registration Open for <%= fullMonthNames[(new Date().getMonth() + 1) % 12] %> Batch</h5>
                 </div>
 
                 <div class="info-card mb-4 p-4 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
