@@ -57,6 +57,7 @@ exports.updateIntern = asyncHandler(async (req, res) => {
       if (assignmentScore !== "") {
         user.quizAssignments[0].score = Number(assignmentScore);
       }
+      user.markModified('quizAssignments');
     } else {
       user.quizAssignments.push({
         assigned: true,
