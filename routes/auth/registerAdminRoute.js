@@ -1,19 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const User = require("../../models/User");
+const registerAdminController = require('../../controllers/auth/registerAdminController');
 
 // Register first admin
-router.get("/register-admin", (req, res) => res.render("register"));
+router.get("/register-admin", registerAdminController.getRegisterAdmin);
 
-router.post("/register-admin", async (req, res) => {
-  const { name, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const admin = new User({ name, email, password: hashedPassword, role: "admin" });
-  await admin.save();
-  req.session.user = admin._id;
-  req.session.role = "admin";
-  res.redirect("/admin");
-});
+router.post("/register-admin", registerAdminController.postRegisterAdmin);
 
 module.exports = router;

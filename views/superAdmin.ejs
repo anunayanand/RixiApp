@@ -1079,18 +1079,18 @@
 
                 <!-- Delete Intern Modal -->
                 <div class="modal fade" id="deleteModal<%= i._id %>" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog">
+                  <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Delete <%= i.name %>?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>
-                      <div class="modal-body text-start">Are you sure you want to delete this intern?</div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <form action="/delete-user/<%= i._id %>" method="POST">
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                      <div class="modal-body text-center p-4">
+                        <i class="bi bi-exclamation-circle text-danger fs-1 mb-3"></i>
+                        <h5>Delete <%= i.name %>?</h5>
+                        <p class="text-muted small mb-4">Are you sure you want to delete this intern? This action cannot be undone.</p>
+                        <div class="d-flex gap-2 justify-content-center">
+                          <button type="button" class="btn btn-light w-50" data-bs-dismiss="modal">Cancel</button>
+                          <form action="/delete-user/<%= i._id %>" method="POST" class="w-50 m-0 p-0">
+                            <button type="submit" class="btn btn-danger w-100">Delete</button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2580,18 +2580,16 @@ function updateIntern(id) {
 
 <!-- Logout Confirmation Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" style="margin-top: 10vh;"> <!-- Adjust top margin -->
+  <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Confirm Logout</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        Do you really want to log out?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <a href="/logout" class="btn btn-danger">Logout</a>
+      <div class="modal-body text-center p-4">
+        <i class="bi bi-box-arrow-right text-danger fs-1 mb-3"></i>
+        <h5>Logging Out?</h5>
+        <p class="text-muted small mb-4">You will be returned to the login screen.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button type="button" class="btn btn-light w-50" data-bs-dismiss="modal">Cancel</button>
+          <a href="/logout" class="btn btn-danger w-50">Logout</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2996,18 +2994,18 @@ function updateIntern(id) {
 
       <!-- Delete Ambassador Modal -->
       <div class="modal fade" id="deleteAmbassadorModal<%= ambassador._id %>" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Delete <%= ambassador.name %>?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">Are you sure you want to delete this ambassador?</div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <form action="/delete-ambassador/<%= ambassador._id %>" method="POST">
-                <button class="btn btn-danger">Delete</button>
-              </form>
+            <div class="modal-body text-center p-4">
+              <i class="bi bi-exclamation-circle text-danger fs-1 mb-3"></i>
+              <h5>Delete <%= ambassador.name %>?</h5>
+              <p class="text-muted small mb-4">Are you sure you want to delete this ambassador? This action cannot be undone.</p>
+              <div class="d-flex gap-2 justify-content-center">
+                <button type="button" class="btn btn-light w-50" data-bs-dismiss="modal">Cancel</button>
+                <form action="/delete-ambassador/<%= ambassador._id %>" method="POST" class="w-50 m-0 p-0">
+                  <button type="submit" class="btn btn-danger w-100">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -3145,18 +3143,18 @@ function updateIntern(id) {
 
       <!-- Delete Admin Modal -->
       <div class="modal fade" id="deleteAdminModal<%= admin._id %>" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Delete <%= admin.name %>?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">Are you sure you want to delete this admin?</div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <form action="/delete-admin/<%= admin._id %>" method="POST">
-                <button class="btn btn-danger">Delete</button>
-              </form>
+            <div class="modal-body text-center p-4">
+              <i class="bi bi-exclamation-circle text-danger fs-1 mb-3"></i>
+              <h5>Delete <%= admin.name %>?</h5>
+              <p class="text-muted small mb-4">Are you sure you want to delete this admin? This action cannot be undone.</p>
+              <div class="d-flex gap-2 justify-content-center">
+                <button type="button" class="btn btn-light w-50" data-bs-dismiss="modal">Cancel</button>
+                <form action="/delete-admin/<%= admin._id %>" method="POST" class="w-50 m-0 p-0">
+                  <button type="submit" class="btn btn-danger w-100">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -3238,22 +3236,20 @@ function updateIntern(id) {
   <!-- Meeting Modals loop -->
   <% meetings.forEach(meeting => { %>
     <div class="modal fade" id="deleteMeetingModal<%= meeting._id %>" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Delete <%= meeting.title %>?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            Are you sure you want to delete this meeting for all interns in <%= meeting.domain %> - Batch <%= meeting.batch_no %>?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <form action="/delete-meeting/<%= meeting._id %>" method="POST">
-              <input type="hidden" name="domain" value="<%= meeting.domain %>">
-              <input type="hidden" name="batch_no" value="<%= meeting.batch_no %>">
-              <button class="btn btn-danger">Delete</button>
-            </form>
+          <div class="modal-body text-center p-4">
+            <i class="bi bi-exclamation-circle text-danger fs-1 mb-3"></i>
+            <h5>Delete <%= meeting.title %>?</h5>
+            <p class="text-muted small mb-4">Are you sure you want to delete this meeting for all interns in <%= meeting.domain %> - Batch <%= meeting.batch_no %>? This action cannot be undone.</p>
+            <div class="d-flex gap-2 justify-content-center">
+              <button type="button" class="btn btn-light w-50" data-bs-dismiss="modal">Cancel</button>
+              <form action="/delete-meeting/<%= meeting._id %>" method="POST" class="w-50 m-0 p-0">
+                <input type="hidden" name="domain" value="<%= meeting.domain %>">
+                <input type="hidden" name="batch_no" value="<%= meeting.batch_no %>">
+                <button type="submit" class="btn btn-danger w-100">Delete</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

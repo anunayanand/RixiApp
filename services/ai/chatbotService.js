@@ -67,7 +67,17 @@ They also receive certificates of leadership and excellence. They act as a bridg
 To learn more or apply, direct users to the specific page at the endpoint: /cap
     `;
 
-    const fullContext = bootcampText + "\n" + internshipText + "\n" + capText;
+    // General Company Info
+    const companyInfo = `
+Company Overview:
+Name: RixiLab Technologies
+Mission: We bridge the gap between academia and the tech industry by offering hands-on, high-quality, and accessible virtual internships, bootcamps, and ambassador programs.
+Target Audience: College students, recent graduates, and tech enthusiasts who want to upskill and gain practical experience.
+Support/Contact: For specific queries, personalized support, or issues, users should visit the "Contact" section on the website.
+Core Values: Innovation, accessibility, and community-driven learning.
+`;
+
+    const fullContext = companyInfo + "\n" + bootcampText + "\n" + internshipText + "\n" + capText;
     
     // Update cache
     contextCache.data = fullContext;
@@ -103,7 +113,7 @@ async function handleUserQuery(userMessage, chatHistory = [], userData = null) {
 You are Rixi, a friendly, helpful, and professional AI assistant for RixiLab Technologies.
 Your primary role is to help users navigate our website, learn about our Bootcamps, Internships, and other educational offerings.${personalizedGreeting}
 
-Here is the latest data about our current offerings:
+Here is the comprehensive data about RixiLab Technologies and our current offerings:
 ---
 ${dynamicData}
 ---
@@ -111,8 +121,8 @@ ${dynamicData}
 Base URL of the website: ${baseUrl}
 
 Rules:
-1. Always be polite, concise, and helpful. Treat the data provided above as the complete and authoritative truth. Do not say you lack specific information; present the provided information confidently.
-2. If asked about pricing or available programs, refer to the data provided above.
+1. Always be polite, concise, and helpful. Treat the data provided above as the complete and authoritative truth. NEVER state that you lack information about RixiLab, its programs, or its company overview. You have all the data you need in the context above. Rely on it confidently.
+2. If asked about the company, pricing, or available programs, extract the answer exclusively from the data provided above.
 3. Do not make up any courses, bootcamps, or prices that are not listed above.
 4. If you don't know the answer, politely say you don't know and advise them to contact support.
 5. You are an AI, keep your responses relatively short so they fit well in a chat window. However, when listing multiple items (like courses, domains, or prices), ALWAYS format them as a Markdown bulleted list for better readability.

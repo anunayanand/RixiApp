@@ -1,0 +1,173 @@
+const User = require("../../models/User");
+const Admin = require("../../models/Admin");
+const SuperAdmin = require("../../models/SuperAdmin");
+const Quiz = require("../../models/Quiz");
+const asyncHandler = require('../../utils/asyncHandler');
+
+// GET /intern/quiz/:quizId - render quiz page
+exports.renderQuizPage = asyncHandler(async (req, res) => {
+  const userAgent = req.headers["user-agent"];
+
+  if (/mobile|android|iphone|ipad|tablet/i.test(userAgent)) {
+    req.flash("error", "Quiz can only be taken on a desktop / laptop.");
+    return res.redirect("/intern");
+  }
+
+  const intern_id = req.session.user;
+  const { quizId } = req.params;
+
+  const intern = await User.findById(intern_id);
+  if (!intern) {
+    req.flash("error", "Unauthorized access");
+    return res.redirect("/login");
+  }
+
+  const quiz = await Quiz.findById(quizId);
+  if (!quiz) {
+    req.flash("error", "Quiz not found");
+    return res.redirect("/intern");
+  }
+
+  const assignment = intern.quizAssignments.find(
+    (a) => a.quizId.toString() === quizId.toString()
+  );
+
+  if (!assignment) {
+    req.flash("error", "This quiz is not assigned to you");
+    return res.redirect("/intern");
+  }
+
+  if (assignment.attemptCount >= 3) {
+    req.flash("error", "You have reached the maximum attempts for this quiz");
+    return res.redirect("/intern");
+  }
+
+  // Quiz duration: 1.5 minutes per question
+  const numQuestions = quiz.questions.length;
+  const quizDuration = numQuestions * 1.5;
+
+  // Shuffle questions dynamically
+  const questionsWithIndices = quiz.questions.map((q, i) => ({ ...q.toObject(), originalIndex: i }));
+  for (let i = questionsWithIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [questionsWithIndices[i], questionsWithIndices[j]] = [questionsWithIndices[j], questionsWithIndices[i]];
+  }
+
+  res.render("quiz", {
+    quiz,
+    questions: questionsWithIndices,
+    intern,
+    assignment,
+    messages: req.flash(),
+    quizDuration,
+  });
+});
+
+// POST /intern/quiz/:quizId/submit - handle quiz submission
+exports.submitQuiz = asyncHandler(async (req, res) => {
+  const intern_id = req.session.user;
+  const { quizId } = req.params;
+
+  // 1️⃣ Find intern
+  const intern = await User.findById(intern_id);
+  if (!intern) {
+    req.flash("error", "Unauthorized access");
+    return res.redirect("/login");
+  }
+
+  // 2️⃣ Find quiz
+  const quiz = await Quiz.findById(quizId);
+  if (!quiz) {
+    req.flash("error", "Quiz not found");
+    return res.redirect("/intern"); // updated from /intern/my-quizzes to match style
+  }
+
+  // 3️⃣ Find assignment
+  const assignmentIndex = intern.quizAssignments.findIndex(
+    (a) => a.quizId.toString() === quizId.toString()
+  );
+
+  if (assignmentIndex === -1) {
+    req.flash("error", "This quiz is not assigned to you");
+    return res.redirect("/intern"); // updated from /intern/my-quizzes to match style
+  }
+
+  const assignment = intern.quizAssignments[assignmentIndex];
+
+  // 4️⃣ Check attempt limit
+  if (assignment.attemptCount >= 3) {
+    req.flash("error", "You have reached the maximum attempts for this quiz");
+    return res.redirect("/intern");
+  }
+
+  // 5️⃣ Calculate score
+  const answers = req.body.answers || {};
+  let score = 0;
+
+  quiz.questions.forEach((q, index) => {
+    const key = index.toString();
+    const selected = answers[key];
+    if (selected != null && Number(selected) === Number(q.correctAnswer)) {
+      score += 1;
+    }
+  });
+
+  const totalQuestions = quiz.questions.length;
+  const percentage = ((score / totalQuestions) * 100).toFixed(2);
+
+  // 6️⃣ Update intern record
+  if (percentage >= 60) {
+    intern.isPassed = true;
+  }
+
+  assignment.score = score;
+  assignment.attemptCount += 1;
+  intern.quizAssignments[assignmentIndex] = assignment;
+
+  if (!intern.quiz_score || score > intern.quiz_score) {
+    intern.quiz_score = score;
+  }
+
+  await intern.save();
+
+  // 7️⃣ Notify SuperAdmin and Admins
+  const notificationMessage = `${intern.name} has submitted the quiz "${quiz.title}" (Week ${quiz.week}) in domain "${quiz.domain}".`;
+
+  const { notify } = require("../../services/notifications/notificationService");
+  const notificationPayloads = [];
+
+  // SuperAdmin notification
+  const superAdmin = await SuperAdmin.findOne({});
+  if (superAdmin) {
+    notificationPayloads.push({
+      recipientId: superAdmin._id,
+      recipientModel: "SuperAdmin",
+      title: "Quiz Submitted by Intern",
+      message: notificationMessage,
+      type: "quizSubmitted"
+    });
+  }
+
+  // Admin notification
+  const admins = await Admin.find({ domain: intern.domain });
+  for (let admin of admins) {
+    notificationPayloads.push({
+      recipientId: admin._id,
+      recipientModel: "Admin",
+      title: "Quiz Submitted",
+      message: notificationMessage,
+      type: "quizSubmitted"
+    });
+  }
+
+  if (notificationPayloads.length > 0) {
+    await notify(notificationPayloads);
+  }
+
+  // 8️⃣ Confirmation message to intern
+  req.flash(
+    "success",
+    `Quiz submitted successfully! You scored ${score}/${totalQuestions} (${percentage}%).`
+  );
+  res.redirect("/intern");
+});

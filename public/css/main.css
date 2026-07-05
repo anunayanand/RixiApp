@@ -600,7 +600,7 @@ h6 {
   position: fixed;
   visibility: hidden;
   opacity: 0;
-  right: 15px;
+  right: 30px;
   bottom: -50px;
   z-index: 99999;
   background-color: var(--accent-color);

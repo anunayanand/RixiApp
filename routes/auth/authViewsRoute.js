@@ -1,28 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const authViewsController = require("../../controllers/auth/authViewsController");
 
-router.get("/login", (req, res) => {
-  const randomText = Math.random().toString(36).substring(2, 7).toUpperCase();
-  req.session.captcha = randomText;
-  res.render("login", { captchaText: randomText });
-});
+router.get("/login", authViewsController.getLogin);
 
-router.get("/reset-password", (req, res) => {
-  res.render("resetPassword");
-});
+router.get("/reset-password", authViewsController.getResetPassword);
 
-router.get("/generate-captcha", (req, res) => {
-  const newCaptcha = Math.random().toString(36).substring(2, 7).toUpperCase();
-  req.session.captcha = newCaptcha;
-  res.json({ captcha: newCaptcha });
-});
+router.get("/generate-captcha", authViewsController.generateCaptcha);
 
-router.get("/admin-login", (req, res) => { 
-  res.render("orgLogin", { messages: req.flash() });
-});
+router.get("/admin-login", authViewsController.getAdminLogin);
 
-router.get("/terms-and-conditions", (req, res) => {
-  res.render("termsAndConditions");
-});
+router.get("/terms-and-conditions", authViewsController.getTermsAndConditions);
 
 module.exports = router;

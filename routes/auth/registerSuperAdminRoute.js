@@ -1,42 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const SuperAdmin = require("../../models/SuperAdmin");
+const registerSuperAdminController = require('../../controllers/auth/registerSuperAdminController');
 
 // Register first superAdmin (disabled by default)
-// router.get("/register-superAdmin", async (req, res) => {
-//   try {
-//     const superAdminExists = await SuperAdmin.findOne({});
-//     if (superAdminExists) return res.redirect("/login");
-//     res.render("register");
-//   } catch (err) {
-//     req.flash("error", "Server Error");
-//     res.redirect("/login");
-//   }
-// });
+// router.get("/register-superAdmin", async (req, res) => { ... });
 
-router.post("/register-superAdmin", async (req, res) => {
-  try{
-    // Check if superadmin already exists
-    const existingSuperAdmin = await SuperAdmin.findOne({});
-    if (existingSuperAdmin) {
-      req.flash("error", "Super Admin already exists");
-      return res.redirect("/login");
-    }
-    
-    const { name, email, password,phone } = req.body;
-   const hashedPassword = await bcrypt.hash(password, 10);
-   const superadmin = new SuperAdmin({ name, email, phone,password: hashedPassword });
-   await superadmin.save();
-    req.session.user = superadmin._id;
-    req.session.role = "superAdmin";
-    req.flash("success", "Super Admin registered successfully");
-    res.redirect("/superAdmin");
-   }catch(err){
-      console.error(err);
-      req.flash("error", "Super Admin registration failed");
-      res.redirect("/register-superAdmin");
-   }
- });
+router.post("/register-superAdmin", registerSuperAdminController.postRegisterSuperAdmin);
 
 module.exports = router;
