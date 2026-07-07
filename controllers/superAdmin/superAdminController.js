@@ -9,6 +9,7 @@ const { generateSignature } = require("../../routes/common/profileRoute");
 const { notify } = require("../../services/notifications/notificationService");
 const { generateBatchAnalysis } = require("../../services/ai/groqService");
 const { generateReceiptPDF } = require("../../services/documents/pdfGenerator");
+const { sendInternApprovedMail } = require("../../services/emails/internApprovedMailScript");
 const asyncHandler = require('../../utils/asyncHandler');
 
 exports.renderDashboard = asyncHandler(async (req, res, next) => {
@@ -206,11 +207,20 @@ exports.approveOrRejectRegistration = asyncHandler(async (req, res) => {
   const superAdmin = await SuperAdmin.findOne({});
 
   if (action === "approve") {
-    await NewRegistration.findByIdAndUpdate(id, {
+    const updatedRegistration = await NewRegistration.findByIdAndUpdate(id, {
       status: "approved",
       approvedBy: superAdmin._id,
       approvedAt: new Date()
-    });
+    }, { new: true });
+
+    // Send email to domain admin
+    const domainAdmin = await Admin.findOne({ domain: updatedRegistration.domain });
+    if (domainAdmin) {
+      sendInternApprovedMail(updatedRegistration, domainAdmin).catch(err => {
+        console.error("Error sending intern approval email to admin:", err);
+      });
+    }
+
     res.json({ success: true, message: "Registration approved" });
   } else if (action === "reject") {
     await NewRegistration.findByIdAndUpdate(id, {
