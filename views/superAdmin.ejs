@@ -1553,7 +1553,8 @@
                   data-batch="<%= i.batch_no %>"
                   data-domain="<%= i.domain %>"
                   data-duration="<%= i.duration %>"
-                  data-id="<%= i.intern_id %>">
+                  data-id="<%= i.intern_id %>"
+                  data-obj-id="<%= i._id %>">
 
                 <td class="text-center text-muted serial-no"><%= completedSerial %></td>
                 <td>
@@ -1638,7 +1639,8 @@
                data-batch="<%= i.batch_no %>"
                data-domain="<%= i.domain %>"
                data-duration="<%= i.duration %>"
-               data-id="<%= i.intern_id %>">
+               data-id="<%= i.intern_id %>"
+               data-obj-id="<%= i._id %>">
             <div class="intern-card-top">
               <div class="intern-avatar-wrap">
                 <img src="<%= i.img_url || '/img/default-avatar.png' %>" alt="<%= i.name %>" class="intern-avatar intern-avatar-lg">
@@ -2552,16 +2554,25 @@ function updateIntern(id) {
     .then(res => {
         if (res.success) {
 
-            // Update UI in table
-            const row = document.querySelector(`tr[data-id="${id}"]`);
-            if (row) {
-                row.querySelector(".quiz-score").innerText = data.quiz_score;
+            // Update UI in table and mobile cards
+            const rows = document.querySelectorAll(`.intern-row[data-obj-id="${id}"]`);
+            rows.forEach(row => {
+                const quizScoreEl = row.querySelector(".quiz-score");
+                if (quizScoreEl) {
+                    if (quizScoreEl.innerHTML.includes("Quiz Score:")) {
+                        quizScoreEl.innerHTML = `Quiz Score: <strong>${data.quiz_score}</strong>`;
+                    } else if (quizScoreEl.innerHTML.includes("Quiz:")) {
+                        quizScoreEl.innerHTML = `<strong>Quiz:</strong> ${data.quiz_score}`;
+                    }
+                }
 
-                row.querySelector(".status-cell").innerHTML =
-                    data.isPassed === "true"
+                const statusCell = row.querySelector(".status-cell");
+                if (statusCell) {
+                    statusCell.innerHTML = data.isPassed === "true"
                         ? '<span class="badge bg-success">Pass</span>'
                         : '<span class="badge bg-danger">Fail</span>';
-            }
+                }
+            });
 
             // Close modal smoothly
             const modalEl = document.getElementById(`updateModal${id}`);
