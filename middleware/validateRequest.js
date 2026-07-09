@@ -12,9 +12,9 @@ const validateRequest = (schema) => {
       });
 
       // Optionally, attach the validated data back to the request
-      req.body = validData.body;
-      req.query = validData.query;
-      req.params = validData.params;
+      if (validData.body !== undefined) req.body = validData.body;
+      if (validData.query !== undefined) req.query = validData.query;
+      if (validData.params !== undefined) req.params = validData.params;
 
       next();
     } catch (error) {

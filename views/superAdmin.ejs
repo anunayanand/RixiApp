@@ -2578,10 +2578,17 @@ function updateIntern(id) {
             const modalEl = document.getElementById(`updateModal${id}`);
             const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.hide();
+            showToast("Intern updated successfully!", "success");
+        } else {
+            showToast(res.message || "Failed to update intern.", "error");
+            if (res.errors) {
+                console.error("Validation Errors:", res.errors);
+            }
         }
     })
     .catch(err => {
         console.error("Update Error:", err);
+        showToast("An error occurred while updating.", "error");
     });
 }
 </script>
@@ -3205,7 +3212,7 @@ function updateIntern(id) {
             </div>
             <div class="row align-items-center mb-3">
               <div class="col-12 d-flex align-items-center">
-                <label class="form-label mb-0 me-3" style="width: 180px;">Quiz Score</label>
+                <label class="form-label mb-0 me-3" style="width: 180px;">Assignment Score</label>
                 <input type="number" id="assignmentScore-<%= i._id %>" class="form-control" value="<%= i.quizAssignments?.[0]?.score || 0 %>" min="0">
               </div>
             </div>
@@ -3235,7 +3242,7 @@ function updateIntern(id) {
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" onclick="updateIntern('<%= i._id %>')">Save Changes</button>
+            <button type="button" class="btn btn-success" onclick="updateIntern('<%= i._id %>')">Save Changes</button>
           </div>
         </div>
       </div>
