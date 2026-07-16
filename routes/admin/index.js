@@ -12,6 +12,7 @@ const updateProjectRoute = require('./updateProjectRoute');
 const deleteProjectRouter = require('./deleteProjectRouter');
 const viewInternRoute = require('./viewInternRoute');
 const projectStatusRoute = require('./projectStatusRoute');
+const supportCenterRoute = require('./supportCenterRoute');
 
 // Match the mount points from app.js
 router.use('/admin', adminRoute);
@@ -21,6 +22,7 @@ router.use('/', updateProjectRoute);
 router.use('/', deleteProjectRouter);
 router.use('/', viewInternRoute);
 router.use('/admin', projectStatusRoute);
+router.use('/admin', supportCenterRoute);
 
 router.use('/', updateUserRoute);
 

@@ -44,7 +44,7 @@ const adminSchema = new mongoose.Schema({
       message: { type: String, required: true },
       type: {
         type: String,
-        enum: ["meeting", "project", "quizAssigned", "quizSubmitted", "progress"],
+        enum: ["meeting", "project", "quizAssigned", "quizSubmitted", "progress", "ticket"],
         required: true,
       },
       createdAt: { type: Date, default: Date.now },

@@ -1,6 +1,8 @@
 const Ambassador = require("../../models/Ambassador");
 const bcrypt = require("bcrypt");
 const User = require("../../models/User");
+const Admin = require("../../models/Admin");
+const SuperAdmin = require("../../models/SuperAdmin");
 const asyncHandler = require("../../utils/asyncHandler");
 
 exports.ambassadorChangePassword = asyncHandler(async (req, res) => {
@@ -38,13 +40,15 @@ exports.ambassadorChangePassword = asyncHandler(async (req, res) => {
 exports.internChangePassword = asyncHandler(async (req, res) => {
   const { newPassword, confirmPassword } = req.body;
 
-  const intern = await User.findById(req.session.user);
+  let intern = await User.findById(req.session.user);
+  if (!intern) intern = await Admin.findById(req.session.user);
+  if (!intern) intern = await SuperAdmin.findById(req.session.user);
 
   if (!intern) {
     if (req.xhr || req.headers.accept?.includes('application/json')) {
-      return res.status(404).json({ success: false, message: "Intern not found" });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
-    req.flash("error", "Intern not found");
+    req.flash("error", "User not found");
     return res.redirect("/login");
   }
 

@@ -4,6 +4,9 @@ const ChatTicket = require("../../models/ChatTicket");
 const ChatMessage = require("../../models/ChatMessage");
 const User = require("../../models/User");
 const Admin = require("../../models/Admin");
+const { notify } = require("../../services/notifications/notificationService");
+const { sendSupportTicketMail } = require("../../services/emails/supportTicketMailScript");
+const { sendTicketAcceptedMail } = require("../../services/emails/ticketAcceptedMailScript");
 
 // Check authentication
 const checkAuth = (req, res, next) => {
@@ -41,13 +44,13 @@ router.post("/ticket", checkAuth, async (req, res) => {
             return res.status(400).json({ success: false, message: "You already have an active ticket" });
         }
 
-        // Get intern to find their domain
+        // Get intern to find their details
         const intern = await User.findById(internId);
         if (!intern) return res.status(404).json({ success: false, message: "Intern not found" });
 
-        // Find the admin/mentor for this domain
-        const admin = await Admin.findOne({ domain: intern.domain });
-        if (!admin) return res.status(404).json({ success: false, message: "No mentor found for your domain" });
+        // Find the Support Team Head (case-insensitive)
+        const admin = await Admin.findOne({ designation: { $regex: /support team head/i } });
+        if (!admin) return res.status(404).json({ success: false, message: "Support Team Head not found" });
 
         const newTicket = new ChatTicket({
             internId,
@@ -56,6 +59,24 @@ router.post("/ticket", checkAuth, async (req, res) => {
         });
 
         await newTicket.save();
+        
+        // Send notification to Support Team Head using notify service
+        await notify({
+            recipientId: admin._id,
+            recipientModel: "Admin",
+            title: "New Support Ticket",
+            message: `${intern.name} has raised a new support ticket: ${subject}`,
+            type: "ticket",
+            link: "/admin/support-center"
+        });
+
+        // Send email to Support Team Head
+        try {
+            await sendSupportTicketMail(intern, admin, subject);
+        } catch (mailErr) {
+            console.error("Error sending support ticket email:", mailErr);
+        }
+
         res.json({ success: true, ticket: newTicket });
 
     } catch (err) {
@@ -112,9 +133,15 @@ router.get("/tickets", checkAuth, async (req, res) => {
         if (req.session.role !== "admin") return res.status(403).json({ success: false, message: "Forbidden" });
 
         const adminId = req.session.user;
+        const admin = await Admin.findById(adminId);
+        
+        let query = { adminId, status: { $ne: "closed" } };
+        if (admin && admin.designation && admin.designation.trim().toLowerCase() === "support team head") {
+            query = { status: { $ne: "closed" } }; // Support Team Head can see all non-closed tickets
+        }
 
         // Fetch tickets
-        const tickets = await ChatTicket.find({ adminId })
+        const tickets = await ChatTicket.find(query)
             .populate("internId", "name intern_id img_url batch_no isOnline")
             .sort({ updatedAt: -1 });
 
@@ -133,7 +160,7 @@ router.get("/tickets", checkAuth, async (req, res) => {
         res.json({ success: true, tickets: augmentedTickets });
     } catch (err) {
         console.error("Error fetching tickets:", err);
-        res.status(500).json({ success: false, message: "Server error" });
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -143,12 +170,29 @@ router.post("/ticket/:id/accept", checkAuth, async (req, res) => {
         if (req.session.role !== "admin") return res.status(403).json({ success: false, message: "Forbidden" });
 
         const ticket = await ChatTicket.findOneAndUpdate(
-            { _id: req.params.id, adminId: req.session.user },
-            { status: "accepted" },
+            { _id: req.params.id },
+            { status: "accepted", adminId: req.session.user },
             { new: true }
-        );
+        ).populate('internId');
 
         if (!ticket) return res.status(404).json({ success: false, message: "Ticket not found" });
+
+        // Notify intern
+        await notify({
+            recipientId: ticket.internId._id,
+            recipientModel: "User",
+            title: "Ticket Accepted",
+            message: `Your support ticket "${ticket.subject}" has been accepted.`,
+            type: "ticket",
+            link: "/intern/support-center"
+        });
+
+        // Send email to intern
+        try {
+            await sendTicketAcceptedMail(ticket.internId, ticket.subject);
+        } catch (mailErr) {
+            console.error("Error sending ticket accepted email:", mailErr);
+        }
 
         res.json({ success: true, ticket });
     } catch (err) {
@@ -163,8 +207,7 @@ router.post("/ticket/:id/close", checkAuth, async (req, res) => {
          if (req.session.role !== "admin") return res.status(403).json({ success: false, message: "Forbidden" });
 
          const ticket = await ChatTicket.findOneAndDelete({
-            _id: req.params.id,
-            adminId: req.session.user
+            _id: req.params.id
          });
 
          if (!ticket) return res.status(404).json({ success: false, message: "Ticket not found" });
@@ -325,6 +368,16 @@ router.get("/unread-badge", checkAuth, async (req, res) => {
          res.status(500).json({ success: false, message: "Server error" });
     }
 });
+// Helper to check if a user is online based on heartbeat
+const isUserOnline = (user) => {
+    if (!user || !user.isOnline) return false;
+    if (user.lastHeartbeat) {
+        const diff = Date.now() - new Date(user.lastHeartbeat).getTime();
+        if (diff > 60000) return false; // offline if no heartbeat for 60 seconds
+    }
+    return true;
+};
+
 // 10. Ping admin online status
 router.get("/ping-admin", checkAuth, async (req, res) => {
     try {
@@ -332,14 +385,16 @@ router.get("/ping-admin", checkAuth, async (req, res) => {
         const intern = await User.findById(req.session.user);
         if (!intern) return res.json({ success: false });
         
-        const admin = await Admin.findOne({ domain: intern.domain });
+        // Find the Support Team Head (case-insensitive)
+        const admin = await Admin.findOne({ designation: { $regex: /support team head/i } });
         if (!admin) return res.json({ success: false });
         
-        res.json({ success: true, isOnline: admin.isOnline });
+        res.json({ success: true, isOnline: isUserOnline(admin) });
     } catch (err) {
         res.json({ success: false });
     }
 });
+
 // 11. Ping intern online status
 router.get("/ping-intern/:internId", checkAuth, async (req, res) => {
     try {
@@ -347,9 +402,31 @@ router.get("/ping-intern/:internId", checkAuth, async (req, res) => {
         const intern = await User.findById(req.params.internId);
         if (!intern) return res.json({ success: false });
         
-        res.json({ success: true, isOnline: intern.isOnline });
+        res.json({ success: true, isOnline: isUserOnline(intern) });
     } catch (err) {
         res.json({ success: false });
+    }
+});
+
+// 12. Update online status
+router.post("/status", checkAuth, async (req, res) => {
+    try {
+        const userId = req.session.user;
+        const role = req.session.role;
+        const { isOnline } = req.body;
+
+        const update = { isOnline, lastHeartbeat: new Date() };
+
+        if (role === "admin") {
+            await Admin.findByIdAndUpdate(userId, update);
+        } else if (role === "intern") {
+            await User.findByIdAndUpdate(userId, update);
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error("Error updating status:", err);
+        res.status(500).json({ success: false });
     }
 });
 

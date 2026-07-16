@@ -1603,10 +1603,10 @@
         <!-- 5. CHAT SECTION -->
         <section id="chat" class="id-section">
           <h3 class="mb-4 d-flex align-items-center" style="font-weight: 700; color: var(--text-primary);">
-            <span><i class="bi bi-chat-dots me-2" style="color: #ff6600;"></i> Chat with Mentor</span>
+            <span><i class="bi bi-chat-dots me-2" style="color: #ff6600;"></i> Chat with Support Team</span>
             <div class="ms-auto d-flex align-items-center" style="font-size: 0.85rem; font-weight: 500;">
               <div class="spinner-grow spinner-grow-sm text-secondary me-2" role="status" id="pingStatusDot"></div>
-              <span id="pingStatusText" class="text-secondary">Checking Status...</span>
+              <!-- <span id="pingStatusText" class="text-secondary">Checking Status...</span> -->
             </div>
           </h3>
 
@@ -1616,8 +1616,7 @@
               <i class="bi bi-chat-square-text " style="font-size: 3rem; color: #ff6600;"></i>
             </div>
             <h4 class="text-white fw-bold mb-2">Need Help?</h4>
-            <p class="text-secondary small mb-4">Raise a support ticket to start a one-to-one chat with your assigned
-              mentor.</p>
+            <p class="text-secondary small mb-4">Raise a support ticket to start a one-to-one chat with support team</p>
             <form id="raiseTicketForm">
               <div class="mb-3 text-start">
                 <label class="form-label text-white small fw-semibold">Subject</label>
@@ -1641,7 +1640,7 @@
             <h4 class="text-white fw-bold mb-2">Ticket Raised</h4>
             <p class="text-secondary small mb-2">Subject: <strong id="pendingSubject" class="text-white">...</strong>
             </p>
-            <p class="text-secondary small mb-0">Waiting for your mentor to accept the request. Please check back soon.
+            <p class="text-secondary small mb-0">Waiting for the support team to accept the request. Please check back soon.
             </p>
           </div>
 
@@ -2587,7 +2586,7 @@
                 function setupActiveChat(ticket) {
                   document.getElementById('activeSubject').innerText = ticket.subject;
                   if (ticket.adminId) {
-                    document.getElementById('chatAdminName').innerText = ticket.adminId.name || 'Mentor';
+                    document.getElementById('chatAdminName').innerText = ticket.adminId.name || 'Support Team';
 
                   }
                 }
@@ -2641,7 +2640,7 @@
                       // Check if ticket closed or accepted while pending
                       if (data.status === 'closed') {
                         clearInterval(chatPollInterval);
-                        showToast('Chat session ended by mentor.', 'info');
+                        showToast('Chat session ended by Support Team.', 'info');
                         setTimeout(() => location.reload(), 2000);
                         return;
                       }
@@ -2683,10 +2682,13 @@
                 }
 
                 function renderMessage(msg) {
+                  if (document.getElementById(`msg-${msg._id}`)) return;
+
                   const isIntern = msg.senderRole === 'intern';
-                  const time = new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                  const time = new Date(msg.createdAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
 
                   const bubbleWrap = document.createElement('div');
+                  bubbleWrap.id = `msg-${msg._id}`;
                   bubbleWrap.className = `chat-bubble ${isIntern ? 'chat-bubble-intern' : 'chat-bubble-admin'}`;
 
                   bubbleWrap.innerHTML = `
@@ -3233,6 +3235,28 @@
                 }
               </script>
               <script src="/js/notifications.js"></script>
-</body>
 
+<script>
+  // Online/Offline Status Tracking
+  function updateOnlineStatus(isOnline) {
+    if (!isOnline && navigator.sendBeacon) {
+      navigator.sendBeacon('/chat/status', new Blob([JSON.stringify({ isOnline: false })], { type: 'application/json' }));
+    } else {
+      fetch('/chat/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isOnline })
+      }).catch(console.error);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    updateOnlineStatus(true);
+    setInterval(() => updateOnlineStatus(true), 30000); // 30s heartbeat
+  });
+
+  window.addEventListener('beforeunload', () => updateOnlineStatus(false));
+  document.addEventListener('visibilitychange', () => updateOnlineStatus(document.visibilityState !== 'hidden'));
+</script>
+</body>
 </html>
