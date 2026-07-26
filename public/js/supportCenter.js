@@ -1,9 +1,43 @@
 let activeTicketId = null;
   let lastAdminMessageId = null;
-  let adminChatPollInterval = null;
   let currentInternObjectId = null;
+  let socket = null;
+  let allTicketsData = [];
 
   window.addEventListener("DOMContentLoaded", () => {
+    socket = io();
+    
+    socket.on('new_message', (msg) => {
+      if (activeTicketId === msg.ticketId) {
+        renderAdminMessage(msg, document.getElementById('adminChatMessagesBox'));
+        const box = document.getElementById('adminChatMessagesBox');
+        box.scrollTop = box.scrollHeight;
+        
+        // If it's from the intern, mark it as read immediately and notify server via socket
+        if (msg.senderRole === 'intern') {
+          markAdminMessagesAsRead(activeTicketId);
+          socket.emit('message_read', { messageId: msg._id, ticketId: activeTicketId });
+        } else {
+          // If it's my own message from another session maybe, just update last message ID
+          lastAdminMessageId = msg._id;
+        }
+      }
+    });
+
+    socket.on('message_status_update', (data) => {
+      if (!activeTicketId) return;
+      const tickSpan = document.getElementById(`tick-${data.messageId}`);
+      if (tickSpan) {
+        if (data.status === 'delivered') {
+          tickSpan.innerHTML = '<i class="bi bi-check-all"></i>';
+          tickSpan.classList.remove('read');
+        } else if (data.status === 'read') {
+          tickSpan.innerHTML = '<i class="bi bi-check-all"></i>';
+          tickSpan.classList.add('read');
+        }
+      }
+    });
+
     fetchTicketList();
     setInterval(fetchTicketList, 10000);
     
@@ -43,6 +77,7 @@ let activeTicketId = null;
           document.getElementById('adminTicketList').innerHTML = `<div class="text-center text-danger p-4 small">Error: ${escapeHtml(data.message)}</div>`;
           return;
         }
+        allTicketsData = data.tickets || [];
         renderTicketList(data.tickets);
       }).catch(err => {
         console.error(err);
@@ -112,7 +147,10 @@ let activeTicketId = null;
 
     document.getElementById('adminChatInternName').innerText = internName;
     document.getElementById('adminChatSubject').innerText = subject;
-    if (internImg) document.getElementById('adminChatInternImg').src = internImg;
+    const internImgEl = document.getElementById('adminChatInternImg');
+    if (internImg) internImgEl.src = internImg;
+    internImgEl.style.cursor = 'pointer';
+    internImgEl.setAttribute('onclick', 'openInternDetailsModal()');
 
     document.getElementById('adminChatMessagesBox').innerHTML = ''; 
 
@@ -126,9 +164,11 @@ let activeTicketId = null;
       document.getElementById('adminChatInputMessage').disabled = false;
       document.getElementById('adminChatSendBtn').disabled = false;
 
-      if (adminChatPollInterval) clearInterval(adminChatPollInterval);
-      pollAdminMessages();
-      adminChatPollInterval = setInterval(pollAdminMessages, 3000);
+      // Socket Join Room
+      socket.emit('join_ticket', ticketId);
+
+      // Load Historical Messages once
+      loadAdminHistoricalMessages();
       markAdminMessagesAsRead(ticketId);
     }
 
@@ -205,7 +245,6 @@ let activeTicketId = null;
     }).then(res => res.json()).then(data => {
       if (data.success) {
         activeTicketId = null;
-        if (adminChatPollInterval) clearInterval(adminChatPollInterval);
         document.getElementById('adminChatEmpty').classList.remove('d-none');
         document.getElementById('adminChatActive').classList.add('d-none');
         fetchTicketList();
@@ -214,10 +253,9 @@ let activeTicketId = null;
     });
   }
 
-  function pollAdminMessages() {
+  function loadAdminHistoricalMessages() {
     if (!activeTicketId) return;
     let url = `/chat/messages/${activeTicketId}`;
-    if (lastAdminMessageId) url += `?lastMessageId=${lastAdminMessageId}`;
 
     fetch(url, { cache: 'no-store' })
       .then(res => res.json())
@@ -225,14 +263,19 @@ let activeTicketId = null;
         if (!data.success) return;
         if (data.status === 'closed') { closeTicket(activeTicketId); return; }
 
-        if (data.messages && data.messages.length > 0 && data.status === 'accepted') {
+        if (data.messages && data.messages.length > 0) {
           const box = document.getElementById('adminChatMessagesBox');
+          box.innerHTML = ''; // clear first just in case
           data.messages.forEach(msg => {
             renderAdminMessage(msg, box);
             lastAdminMessageId = msg._id;
+            
+            // If it's a message from the intern and not read yet, send a delivery receipt if we just opened it
+            if (msg.senderRole === 'intern' && !msg.isRead) {
+               socket.emit('message_read', { messageId: msg._id, ticketId: activeTicketId });
+            }
           });
           box.scrollTop = box.scrollHeight;
-          markAdminMessagesAsRead(activeTicketId);
         }
       }).catch(console.error);
   }
@@ -242,10 +285,46 @@ let activeTicketId = null;
     
     const isAdmin = msg.senderRole === 'admin';
     const time = new Date(msg.createdAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+    
+    let isRead     = msg.status === 'read' || msg.isRead;
+    let isDelivered = msg.status === 'delivered';
+
+    // Determine tick icon and read state
+    let tickIcon = '';
+    let tickReadClass = '';
+    if (isAdmin) {
+      if (isRead) {
+        tickIcon = '<i class="bi bi-check-all"></i>';
+        tickReadClass = 'read';
+      } else if (isDelivered) {
+        tickIcon = '<i class="bi bi-check-all"></i>';
+      } else {
+        tickIcon = '<i class="bi bi-check"></i>';
+      }
+    }
+
+    // Build meta row (time + ticks) — floated right
+    const metaHtml = `<span class="chat-meta">
+      <span class="chat-time">${time}</span>
+      ${isAdmin ? `<span class="chat-ticks ${tickReadClass}" id="tick-${msg._id}">${tickIcon}</span>` : ''}
+    </span>`;
+
+    // Invisible tail spacer so meta never overlaps text
+    const tailHtml = `<span class="chat-bubble-tail"></span>`;
+
+    let contentHtml = '';
+    if (msg.type === 'image' && msg.imageUrl) {
+      // For image messages, show meta below the image inline
+      contentHtml = `<img src="${msg.imageUrl}" alt="Image" class="chat-image-attachment" onclick="openImageLightbox('${msg.imageUrl}')">
+        <span class="chat-bubble-body">${escapeHtml(msg.text || '')}${tailHtml}</span>${metaHtml}`;
+    } else {
+      contentHtml = `<span class="chat-bubble-body">${escapeHtml(msg.text)}${tailHtml}</span>${metaHtml}`;
+    }
+
     const bubbleWrap = document.createElement('div');
     bubbleWrap.id = `msg-${msg._id}`;
     bubbleWrap.className = `chat-bubble ${isAdmin ? 'chat-bubble-admin' : 'chat-bubble-intern'}`;
-    bubbleWrap.innerHTML = `<span style="white-space: pre-wrap;">${escapeHtml(msg.text)}</span><span class="chat-time">${time}</span>`;
+    bubbleWrap.innerHTML = contentHtml;
     box.appendChild(bubbleWrap);
   }
 
@@ -259,23 +338,120 @@ let activeTicketId = null;
     const text = input.value.trim();
     if (!text || !activeTicketId) return;
     input.value = '';
+    input.style.height = 'auto'; // Reset height after send
     document.getElementById('adminEmojiPanel').classList.remove('show');
+
+    // Create a temporary message bubble for instant feedback (optional, skipping for simplicity)
 
     fetch('/chat/message', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ticketId: activeTicketId, text })
     }).then(res => res.json()).then(data => {
-      if (data.success) {
-        renderAdminMessage(data.message, document.getElementById('adminChatMessagesBox'));
-        lastAdminMessageId = data.message._id;
-        document.getElementById('adminChatMessagesBox').scrollTop = document.getElementById('adminChatMessagesBox').scrollHeight;
+      // Message rendered via socket on server broadcast
+      if(data.success && data.message) {
+         // Also emit sent receipt? The server broadcasts so we just wait for socket, 
+         // but since we don't broadcast to sender in standard io.to() if it's the same socket? 
+         // Actually global.io.to() sends to everyone in the room. So we will receive it via socket.
+         // Let's just ensure we only render it once (which renderAdminMessage handles with msg._id check).
+      }
+    });
+  }
+
+  // Handle Image Upload via Modal
+  const adminModalImageInput = document.getElementById('adminModalImageInput');
+  const adminImagePreviewContainer = document.getElementById('adminImagePreviewContainer');
+  const adminImagePreview = document.getElementById('adminImagePreview');
+  const adminSendImageBtn = document.getElementById('adminSendImageBtn');
+  let currentSelectedFile = null;
+
+  adminModalImageInput?.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      currentSelectedFile = file;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        adminImagePreview.src = e.target.result;
+        adminImagePreviewContainer.classList.remove('d-none');
+      }
+      reader.readAsDataURL(file);
+    } else {
+      currentSelectedFile = null;
+      adminImagePreviewContainer.classList.add('d-none');
+      adminImagePreview.src = '';
+    }
+  });
+
+  // Handle modal closing to reset fields
+  const imageUploadModalEl = document.getElementById('adminImageUploadModal');
+  if (imageUploadModalEl) {
+    imageUploadModalEl.addEventListener('hidden.bs.modal', function () {
+      adminModalImageInput.value = '';
+      currentSelectedFile = null;
+      adminImagePreviewContainer.classList.add('d-none');
+      adminImagePreview.src = '';
+      document.getElementById('adminImageCaption').value = '';
+      adminSendImageBtn.disabled = false;
+      adminSendImageBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send';
+    });
+  }
+
+  adminSendImageBtn?.addEventListener('click', function() {
+    if (!currentSelectedFile || !activeTicketId) return;
+
+    const captionInput = document.getElementById('adminImageCaption');
+    const formData = new FormData();
+    formData.append("image", currentSelectedFile);
+    formData.append("ticketId", activeTicketId);
+    
+    if (captionInput.value.trim()) {
+      formData.append("text", captionInput.value.trim());
+    }
+
+    // Show loading state
+    adminSendImageBtn.disabled = true;
+    adminSendImageBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+
+    fetch('/chat/image', {
+      method: 'POST',
+      body: formData
+    }).then(res => res.json()).then(data => {
+      // Close modal on success
+      const modalInstance = bootstrap.Modal.getInstance(imageUploadModalEl);
+      if (modalInstance) modalInstance.hide();
+    }).catch(err => {
+      console.error(err);
+      adminSendImageBtn.disabled = false;
+      adminSendImageBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send';
+    });
+  });
+
+  // Auto-resize textarea
+  const adminChatInput = document.getElementById('adminChatInputMessage');
+  if (adminChatInput) {
+    adminChatInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      if (this.scrollHeight > 120) {
+        this.style.overflowY = 'auto';
+      } else {
+        this.style.overflowY = 'hidden';
       }
     });
   }
 
   function markAdminMessagesAsRead(ticketId) {
     fetch(`/chat/mark-read/${ticketId}`, { method: 'POST' });
+  }
+
+  function openImageLightbox(url) {
+    const lightboxImage = document.getElementById('adminLightboxImage');
+    if (lightboxImage) {
+      lightboxImage.src = url;
+      const modalEl = document.getElementById('adminImageLightboxModal');
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
   }
 
   const ADMIN_EMOJIS = ["👍", "👎", "😊", "😂", "🙌", "👏", "✅", "❌", "❓", "👀", "💡", "🚀", "💻", "😅", "😎", "🔥", "💼", "⭐", "🎉", "👍🏻"];
@@ -312,3 +488,33 @@ let activeTicketId = null;
 
   window.addEventListener('beforeunload', () => updateOnlineStatus(false));
   document.addEventListener('visibilitychange', () => updateOnlineStatus(document.visibilityState !== 'hidden'));
+
+  function openInternDetailsModal() {
+    if (!activeTicketId) return;
+    const ticket = allTicketsData.find(t => t._id === activeTicketId);
+    if (!ticket || !ticket.internId) return;
+    
+    const intern = ticket.internId;
+    const imgEl = document.getElementById('internDetailsImg');
+    if (imgEl) imgEl.src = intern.img_url || '/img/default-avatar.png';
+    
+    const fields = {
+      'internDetailsName': intern.name,
+      'internDetailsId': intern.intern_id,
+      'internDetailsEmail': intern.email,
+      'internDetailsDomain': intern.domain,
+      'internDetailsProgress': (intern.progress || 0) + '%',
+      'internDetailsQuizScore': intern.quiz_score || 0
+    };
+
+    for (const [id, value] of Object.entries(fields)) {
+      const el = document.getElementById(id);
+      if (el) el.innerText = value || 'N/A';
+    }
+    
+    const modalEl = document.getElementById('internDetailsModal');
+    if (modalEl) {
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  }

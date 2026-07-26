@@ -7,7 +7,18 @@ const Admin = require("../../models/Admin");
 const { notify } = require("../../services/notifications/notificationService");
 const { sendSupportTicketMail } = require("../../services/emails/supportTicketMailScript");
 const { sendTicketAcceptedMail } = require("../../services/emails/ticketAcceptedMailScript");
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../../config/cloudinary");
 
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "chat_images",
+        allowed_formats: ["jpg", "png", "jpeg", "gif", "webp"]
+    }
+});
+const upload = multer({ storage: storage });
 // Check authentication
 const checkAuth = (req, res, next) => {
     if (!req.session.user) {
@@ -142,7 +153,7 @@ router.get("/tickets", checkAuth, async (req, res) => {
 
         // Fetch tickets
         const tickets = await ChatTicket.find(query)
-            .populate("internId", "name intern_id img_url batch_no isOnline")
+            .populate("internId", "name intern_id email img_url batch_no isOnline progress quiz_score domain")
             .sort({ updatedAt: -1 });
 
         // Augment tickets with unread counts
@@ -233,12 +244,15 @@ router.post("/ticket/:id/close", checkAuth, async (req, res) => {
 // 6. Send a message
 router.post("/message", checkAuth, async (req, res) => {
     try {
-        const { ticketId, text } = req.body;
+        const { ticketId, text, type, imageUrl } = req.body;
         const senderId = req.session.user;
         const senderRole = req.session.role;
 
-        if (!ticketId || !text) {
-             return res.status(400).json({ success: false, message: "Ticket ID and text are required" });
+        if (!ticketId) {
+             return res.status(400).json({ success: false, message: "Ticket ID is required" });
+        }
+        if (!text && !imageUrl) {
+             return res.status(400).json({ success: false, message: "Message content is required" });
         }
 
         const ticket = await ChatTicket.findById(ticketId);
@@ -259,7 +273,10 @@ router.post("/message", checkAuth, async (req, res) => {
              ticketId,
              senderId,
              senderRole,
-             text
+             text,
+             type: type || 'text',
+             imageUrl,
+             status: 'sent'
         });
 
         await msg.save();
@@ -268,9 +285,67 @@ router.post("/message", checkAuth, async (req, res) => {
         ticket.updatedAt = new Date();
         await ticket.save();
 
+        // Emit real-time event
+        if (global.io) {
+            global.io.to(ticketId.toString()).emit("new_message", msg);
+        }
+
         res.json({ success: true, message: msg });
     } catch (err) {
         console.error("Error sending message:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+// 6.5. Send an image message
+router.post("/image", checkAuth, upload.single("image"), async (req, res) => {
+    try {
+        const { ticketId, text } = req.body;
+        const senderId = req.session.user;
+        const senderRole = req.session.role;
+
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "Image is required" });
+        }
+
+        const ticket = await ChatTicket.findById(ticketId);
+        if (!ticket) return res.status(404).json({ success: false, message: "Ticket not found" });
+
+        // Verify permission to post
+        if (senderRole === 'intern' && ticket.internId.toString() !== senderId.toString()) {
+            return res.status(403).json({ success: false, message: "Not your ticket" });
+        }
+        if (senderRole === 'admin' && ticket.adminId.toString() !== senderId.toString()) {
+             return res.status(403).json({ success: false, message: "Not your ticket" });
+        }
+        if (ticket.status !== 'accepted') {
+             return res.status(400).json({ success: false, message: "Ticket is not open for messaging" });
+        }
+
+        const msg = new ChatMessage({
+             ticketId,
+             senderId,
+             senderRole,
+             text: text || "",
+             type: 'image',
+             imageUrl: req.file.path,
+             status: 'sent'
+        });
+
+        await msg.save();
+        
+        // Update ticket timestamp
+        ticket.updatedAt = new Date();
+        await ticket.save();
+
+        // Emit real-time event
+        if (global.io) {
+            global.io.to(ticketId.toString()).emit("new_message", msg);
+        }
+
+        res.json({ success: true, message: msg });
+    } catch (err) {
+        console.error("Error sending image:", err);
         res.status(500).json({ success: false, message: "Server error" });
     }
 });
@@ -323,10 +398,24 @@ router.post("/mark-read/:ticketId", checkAuth, async (req, res) => {
         // The opposing role whose messages you are reading
         const targetRole = role === "intern" ? "admin" : "intern";
 
-        await ChatMessage.updateMany(
-            { ticketId, senderRole: targetRole, isRead: false },
-            { $set: { isRead: true } }
-        );
+        const updatedMessages = await ChatMessage.find({ ticketId, senderRole: targetRole, isRead: false });
+
+        if (updatedMessages.length > 0) {
+            await ChatMessage.updateMany(
+                { ticketId, senderRole: targetRole, isRead: false },
+                { $set: { isRead: true, status: 'read' } }
+            );
+
+            // Emit read receipt event
+            if (global.io) {
+                updatedMessages.forEach(msg => {
+                    global.io.to(ticketId.toString()).emit("message_status_update", {
+                        messageId: msg._id,
+                        status: 'read'
+                    });
+                });
+            }
+        }
 
         res.json({ success: true });
     } catch (err) {

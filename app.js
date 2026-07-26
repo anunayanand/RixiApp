@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require("express");
+const http = require("http");
 
 // 1. Initialize Database & Configurations
 require("./config/db");
@@ -10,6 +11,10 @@ require("./jobs/bootcampCron");
 require("./jobs/backgroundTasks");
 
 const app = express();
+const server = http.createServer(app);
+
+// Initialize Socket.io
+require('./utils/socketHandler')(server);
 
 // 3. Initialize Express Middleware (Sessions, Parsers, Views)
 require("./middleware/appMiddleware")(app);
@@ -21,4 +26,4 @@ app.use('/', require('./routes/index'));
 require("./middleware/errorHandlers")(app);
 
 // 6. Start Server
-app.listen(8080, () => console.log("Server running at http://localhost:8080"));
+server.listen(8080, () => console.log("Server running at http://localhost:8080"));

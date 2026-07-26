@@ -1674,11 +1674,52 @@
               <!-- Emoji Panel -->
               <div id="emojiPanel" class="emoji-panel"></div>
 
+              <button type="button" class="chat-emoji-btn" id="toggleAttachmentBtn" title="Attach Image" data-bs-toggle="modal" data-bs-target="#internImageUploadModal"><i class="bi bi-paperclip"></i></button>
+
               <button type="button" class="chat-emoji-btn" id="toggleEmojiBtn" title="Emojis"><i
                   class="bi bi-emoji-smile"></i></button>
               <textarea class="chat-input" id="chatInputMessage" placeholder="Type your message..." rows="1"></textarea>
               <button type="button" class="chat-send-btn" id="chatSendBtn" title="Send"><i
                   class="bi bi-send-fill"></i></button>
+            </div>
+          </div>
+
+          <!-- Socket.io Script -->
+          <script src="/socket.io/socket.io.js"></script>
+          </div>
+
+          <!-- Image Upload Modal -->
+          <div class="modal fade" id="internImageUploadModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content shadow border-0" style="border-radius: 12px; background: #ffffff; color: #111b21;">
+                <div class="modal-header border-0">
+                  <h5 class="modal-title fw-bold">Send Image</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                  <input type="file" id="internModalImageInput" accept="image/*" class="form-control mb-3">
+                  <div id="internImagePreviewContainer" class="mb-3 d-none">
+                    <img id="internImagePreview" src="" alt="Preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; object-fit: contain;">
+                  </div>
+                  <textarea id="internImageCaption" class="form-control chat-input w-100" placeholder="Add a caption..." rows="1" style="border: 1px solid #e9edef;"></textarea>
+                </div>
+                <div class="modal-footer border-0">
+                  <button type="button" class="btn rounded-pill px-4" style="background: #f5f6f6; color: #111b21; border: none;" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn rounded-pill px-4" id="internSendImageBtn" style="background: #00a884; color: white; border: none;"><i class="bi bi-send-fill me-2"></i> Send</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Lightbox Modal -->
+          <div class="modal fade" id="internImageLightboxModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: min(90vw, 700px);">
+              <div class="modal-content border-0" style="background: transparent; box-shadow: none;">
+                <div class="modal-body p-0 text-center position-relative">
+                  <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close" style="z-index:10; filter: drop-shadow(0 0 4px #000);"></button>
+                  <img id="internLightboxImage" src="" alt="Full Image" style="max-width: 100%; max-height: 85vh; border-radius: 10px; object-fit: contain;">
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2494,8 +2535,8 @@
                 // ==========================================
                 let currentTicketId = null;
                 let lastMessageId = null;
-                let chatPollInterval = null;
                 let isChatOpen = false;
+                let socket = null;
 
                 const chatStateNoTicket = document.getElementById('chatStateNoTicket');
                 const chatStatePending = document.getElementById('chatStatePending');
@@ -2504,6 +2545,40 @@
 
                 // Check initial chat status on load
                 window.addEventListener("DOMContentLoaded", () => {
+                  socket = io();
+
+                  socket.on('new_message', (msg) => {
+                    if (currentTicketId === msg.ticketId) {
+                      renderMessage(msg);
+                      chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
+                      
+                      // If it's from the admin, mark it as read immediately if chat is open
+                      if (msg.senderRole === 'admin' && isChatOpen) {
+                        markMessagesAsRead(currentTicketId);
+                        socket.emit('message_read', { messageId: msg._id, ticketId: currentTicketId });
+                      } else {
+                        lastMessageId = msg._id;
+                        if (!isChatOpen) {
+                          fetchUnreadCount(); // update badge
+                        }
+                      }
+                    }
+                  });
+
+                  socket.on('message_status_update', (data) => {
+                    if (!currentTicketId) return;
+                    const tickSpan = document.getElementById(`tick-${data.messageId}`);
+                    if (tickSpan) {
+                      if (data.status === 'delivered') {
+                        tickSpan.innerHTML = '<i class="bi bi-check-all"></i>';
+                        tickSpan.classList.remove('read');
+                      } else if (data.status === 'read') {
+                        tickSpan.innerHTML = '<i class="bi bi-check-all"></i>';
+                        tickSpan.classList.add('read');
+                      }
+                    }
+                  });
+
                   fetchTicketStatus();
                   fetchUnreadCount();
                   pingAdminOnlineStatus();
@@ -2567,7 +2642,8 @@
                       } else if (ticket.status === 'accepted') {
                         setupActiveChat(ticket);
                         showChatState('active');
-                        startChatPolling();
+                        socket.emit('join_ticket', ticket._id);
+                        loadHistoricalMessages();
                         if (isChatOpen) markMessagesAsRead(currentTicketId);
                       }
                     }).catch(console.error);
@@ -2621,32 +2697,37 @@
 
                 // Polling logic
                 function startChatPolling() {
-                  if (chatPollInterval) clearInterval(chatPollInterval);
-                  pollMessages(); // initial fetch
-                  chatPollInterval = setInterval(pollMessages, 3000);
+                  // Keep polling only for pending tickets to check acceptance
+                  pollPendingStatus();
                 }
 
-                function pollMessages() {
+                function pollPendingStatus() {
+                  if (!currentTicketId || chatStatePending.classList.contains('d-none')) return;
+                  fetch(`/chat/ticket/status`)
+                    .then(res => res.json())
+                    .then(data => {
+                       if (data.success && data.ticket && data.ticket.status === 'accepted') {
+                         fetchTicketStatus(); // This will transition to active
+                       } else {
+                         setTimeout(pollPendingStatus, 3000);
+                       }
+                    }).catch(console.error);
+                }
+
+                function loadHistoricalMessages() {
                   if (!currentTicketId) return;
 
                   let url = `/chat/messages/${currentTicketId}`;
-                  if (lastMessageId) url += `?lastMessageId=${lastMessageId}`;
 
                   fetch(url, { cache: 'no-store' })
                     .then(res => res.json())
                     .then(data => {
                       if (!data.success) return;
 
-                      // Check if ticket closed or accepted while pending
+                      // Check if ticket closed
                       if (data.status === 'closed') {
-                        clearInterval(chatPollInterval);
                         showToast('Chat session ended by Support Team.', 'info');
                         setTimeout(() => location.reload(), 2000);
-                        return;
-                      }
-                      if (!chatStateActive.classList.contains('d-none') === false && data.status === 'accepted') {
-                        // Transitioned from pending to accepted
-                        fetchTicketStatus();
                         return;
                       }
 
@@ -2669,10 +2750,15 @@
                       }
 
                       // Render new messages
-                      if (data.messages && data.messages.length > 0 && data.status === 'accepted') {
+                      if (data.messages && data.messages.length > 0) {
+                        chatMessagesBox.innerHTML = '';
                         data.messages.forEach(msg => {
                           renderMessage(msg);
                           lastMessageId = msg._id;
+                          
+                          if (msg.senderRole === 'admin' && !msg.isRead && isChatOpen) {
+                             socket.emit('message_read', { messageId: msg._id, ticketId: currentTicketId });
+                          }
                         });
                         chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
 
@@ -2687,14 +2773,44 @@
                   const isIntern = msg.senderRole === 'intern';
                   const time = new Date(msg.createdAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
 
+                  let isRead     = msg.status === 'read' || msg.isRead;
+                  let isDelivered = msg.status === 'delivered';
+
+                  // Ticks only on intern's own messages
+                  let tickIcon = '';
+                  let tickReadClass = '';
+                  if (isIntern) {
+                    if (isRead) {
+                      tickIcon = '<i class="bi bi-check-all"></i>';
+                      tickReadClass = 'read';
+                    } else if (isDelivered) {
+                      tickIcon = '<i class="bi bi-check-all"></i>';
+                    } else {
+                      tickIcon = '<i class="bi bi-check"></i>';
+                    }
+                  }
+
+                  // Meta row: time + ticks side by side
+                  const metaHtml = `<span class="chat-meta">
+                    <span class="chat-time-label">${time}</span>
+                    ${isIntern ? `<span class="chat-ticks ${tickReadClass}" id="tick-${msg._id}">${tickIcon}</span>` : ''}
+                  </span>`;
+
+                  // Invisible tail spacer so meta never overlaps text
+                  const tailHtml = `<span class="chat-bubble-tail"></span>`;
+
+                  let contentHtml = '';
+                  if (msg.type === 'image' && msg.imageUrl) {
+                    contentHtml = `<img src="${msg.imageUrl}" alt="Image" class="chat-image-attachment" onclick="openInternImageLightbox('${msg.imageUrl}')">
+                      <span class="chat-bubble-body">${escapeHtml(msg.text || '')}${tailHtml}</span>${metaHtml}`;
+                  } else {
+                    contentHtml = `<span class="chat-bubble-body">${escapeHtml(msg.text)}${tailHtml}</span>${metaHtml}`;
+                  }
+
                   const bubbleWrap = document.createElement('div');
                   bubbleWrap.id = `msg-${msg._id}`;
                   bubbleWrap.className = `chat-bubble ${isIntern ? 'chat-bubble-intern' : 'chat-bubble-admin'}`;
-
-                  bubbleWrap.innerHTML = `
-           <div>${escapeHtml(msg.text)}</div>
-           <span class="chat-time">${time}</span>
-        `;
+                  bubbleWrap.innerHTML = contentHtml;
                   chatMessagesBox.appendChild(bubbleWrap);
                 }
 
@@ -2713,6 +2829,7 @@
                   if (!text || !currentTicketId) return;
 
                   input.value = '';
+                  input.style.height = 'auto'; // Reset height
                   document.getElementById('emojiPanel').classList.remove('show');
 
                   fetch('/chat/message', {
@@ -2722,12 +2839,90 @@
                   })
                     .then(res => res.json())
                     .then(data => {
-                      if (data.success) {
-                        renderMessage(data.message);
-                        lastMessageId = data.message._id;
-                        chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
-                      }
+                      // Handled by socket
                     }).catch(console.error);
+                }
+                
+                // Handle Image Upload via Modal
+                const internModalImageInput = document.getElementById('internModalImageInput');
+                const internImagePreviewContainer = document.getElementById('internImagePreviewContainer');
+                const internImagePreview = document.getElementById('internImagePreview');
+                const internSendImageBtn = document.getElementById('internSendImageBtn');
+                let currentInternSelectedFile = null;
+
+                internModalImageInput?.addEventListener('change', function() {
+                  const file = this.files[0];
+                  if (file) {
+                    currentInternSelectedFile = file;
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                      internImagePreview.src = e.target.result;
+                      internImagePreviewContainer.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                  } else {
+                    currentInternSelectedFile = null;
+                    internImagePreviewContainer.classList.add('d-none');
+                    internImagePreview.src = '';
+                  }
+                });
+
+                // Handle modal closing to reset fields
+                const internImageUploadModalEl = document.getElementById('internImageUploadModal');
+                if (internImageUploadModalEl) {
+                  internImageUploadModalEl.addEventListener('hidden.bs.modal', function () {
+                    internModalImageInput.value = '';
+                    currentInternSelectedFile = null;
+                    internImagePreviewContainer.classList.add('d-none');
+                    internImagePreview.src = '';
+                    document.getElementById('internImageCaption').value = '';
+                    internSendImageBtn.disabled = false;
+                    internSendImageBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send';
+                  });
+                }
+
+                internSendImageBtn?.addEventListener('click', function() {
+                  if (!currentInternSelectedFile || !currentTicketId) return;
+
+                  const captionInput = document.getElementById('internImageCaption');
+                  const formData = new FormData();
+                  formData.append("image", currentInternSelectedFile);
+                  formData.append("ticketId", currentTicketId);
+                  
+                  if (captionInput.value.trim()) {
+                    formData.append("text", captionInput.value.trim());
+                  }
+
+                  // Show loading state
+                  internSendImageBtn.disabled = true;
+                  internSendImageBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+
+                  fetch('/chat/image', {
+                    method: 'POST',
+                    body: formData
+                  }).then(res => res.json()).then(data => {
+                    // Close modal on success
+                    const modalInstance = bootstrap.Modal.getInstance(internImageUploadModalEl);
+                    if (modalInstance) modalInstance.hide();
+                  }).catch(err => {
+                    console.error(err);
+                    internSendImageBtn.disabled = false;
+                    internSendImageBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send';
+                  });
+                });
+
+                // Auto-resize textarea
+                const internChatInput = document.getElementById('chatInputMessage');
+                if (internChatInput) {
+                  internChatInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                    if (this.scrollHeight > 120) {
+                      this.style.overflowY = 'auto';
+                    } else {
+                      this.style.overflowY = 'hidden';
+                    }
+                  });
                 }
 
                 function markMessagesAsRead(ticketId) {
@@ -2736,6 +2931,16 @@
                   const badgeDesktop = document.getElementById('chatUnreadBadgeDesktop');
                   if (badge) badge.classList.add('d-none');
                   if (badgeDesktop) badgeDesktop.classList.add('d-none');
+                }
+
+                function openInternImageLightbox(url) {
+                  const lightboxImage = document.getElementById('internLightboxImage');
+                  if (lightboxImage) {
+                    lightboxImage.src = url;
+                    const modalEl = document.getElementById('internImageLightboxModal');
+                    const modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+                  }
                 }
 
                 function fetchUnreadCount() {

@@ -29,9 +29,10 @@ exports.ambassadorChangePassword = asyncHandler(async (req, res) => {
     return res.redirect("/ambassador");
   }
 
-  ambassador.password = await bcrypt.hash(newPassword, 10);
-  ambassador.isFirstLogin = false;
-  await ambassador.save();
+  await ambassador.constructor.updateOne(
+    { _id: ambassador._id },
+    { $set: { password: await bcrypt.hash(newPassword, 10), isFirstLogin: false } }
+  );
 
   req.flash("success", "Password Changed");
   res.redirect("/ambassador");
@@ -83,10 +84,10 @@ exports.internChangePassword = asyncHandler(async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-  intern.password = hashedPassword;
-  intern.isFirstLogin = false;
-
-  await intern.save();
+  await intern.constructor.updateOne(
+    { _id: intern._id },
+    { $set: { password: hashedPassword, isFirstLogin: false } }
+  );
  
   if (req.xhr || req.headers.accept?.includes('application/json')) {
     return res.json({ success: true, message: "Password changed successfully!" });

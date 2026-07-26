@@ -993,7 +993,7 @@ body {
 
 .chat-bubble-intern {
     align-self: flex-end;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: #005c4b;
     color: #fff;
     border-bottom-right-radius: 4px;
 }
@@ -1012,6 +1012,97 @@ body {
     margin-top: 4px;
     display: block;
     text-align: right;
+}
+
+/* WhatsApp-style meta row */
+.chat-bubble {
+    display: inline-block;
+}
+
+.chat-bubble-body {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Invisible spacer so meta row never overlaps last line of text */
+.chat-bubble-tail {
+    display: inline-block;
+    width: 64px;
+    height: 0;
+    vertical-align: bottom;
+}
+
+/* Floated meta row: time + ticks */
+.chat-meta {
+    float: right;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    margin-top: -2px;
+    margin-bottom: -4px;
+    margin-left: 6px;
+    position: relative;
+    bottom: -1px;
+}
+
+.chat-time-label {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    line-height: 1;
+    opacity: 0.75;
+}
+
+/* Ticks on intern (own) bubbles - white by default, blue when read */
+.chat-bubble-intern .chat-ticks {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.75);  /* white/semi on orange */
+}
+
+.chat-bubble-intern .chat-ticks.read {
+    color: #4fc3f7;  /* bright WhatsApp blue, visible on orange */
+}
+
+/* Ticks on admin (incoming) bubbles */
+.chat-bubble-admin .chat-ticks {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--text-muted, #aaa);
+}
+
+.chat-bubble-admin .chat-ticks.read {
+    color: #53bdeb;
+}
+
+/* Time label color per bubble side */
+.chat-bubble-intern .chat-time-label {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.chat-bubble-admin .chat-time-label {
+    color: var(--text-secondary, #888);
+}
+
+
+.chat-image-attachment {
+    max-width: 240px;
+    max-height: 240px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.chat-image-attachment:hover {
+    opacity: 0.9;
 }
 
 .chat-input-bar {
@@ -1043,9 +1134,9 @@ body {
 
 .chat-send-btn,
 .chat-emoji-btn {
-    background: var(--primary-glow);
-    color: var(--primary);
-    border: 1px solid var(--primary-glow);
+    background: #00a884;
+    color: #fff;
+    border: 1px solid #00a884;
     border-radius: 50%;
     width: 48px;
     height: 48px;
@@ -1059,7 +1150,7 @@ body {
 
 .chat-send-btn:hover,
 .chat-emoji-btn:hover {
-    background: var(--primary);
+    background: #00a884;    
     color: #fff;
 }
 

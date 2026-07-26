@@ -17,7 +17,20 @@ const chatMessageSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: true
+    // No longer strictly required since an image might not have text
+  },
+  type: {
+    type: String,
+    enum: ["text", "image"],
+    default: "text"
+  },
+  imageUrl: {
+    type: String
+  },
+  status: {
+    type: String,
+    enum: ["sent", "delivered", "read"],
+    default: "sent"
   },
   isRead: {
     type: Boolean,

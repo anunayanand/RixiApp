@@ -8,7 +8,6 @@ const Ambassador = require("../models/Ambassador");
 const SuperAdmin = require("../models/SuperAdmin");
 
 const urlIn = "https://rixilab.in";
-const urlTech = "https://rixilab.tech";
 
 const interval = 60000;
 
@@ -20,15 +19,6 @@ function reloadWebsite() {
     })
     .catch((error) => {
       console.error(`Error (.in) : ${error.message}`);
-    });
-
-  axios
-    .get(urlTech)
-    .then((response) => {
-      // console.log("website reloded .tech");
-    })
-    .catch((error) => {
-      console.error(`Error (.tech) : ${error.message}`);
     });
 }
 

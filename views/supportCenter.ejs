@@ -84,6 +84,7 @@
 
       <div class="chat-input-bar">
         <div id="adminEmojiPanel" class="emoji-panel"></div>
+        <button type="button" class="chat-emoji-btn" id="adminToggleAttachmentBtn" title="Attach Image" data-bs-toggle="modal" data-bs-target="#adminImageUploadModal"><i class="bi bi-paperclip"></i></button>
         <button type="button" class="chat-emoji-btn" id="adminToggleEmojiBtn" title="Emojis"><i class="bi bi-emoji-smile"></i></button>
         <textarea class="chat-input" id="adminChatInputMessage" placeholder="Type a message" rows="1"></textarea>
         <button type="button" class="chat-send-btn" id="adminChatSendBtn" title="Send"><i class="bi bi-send-fill"></i></button>
@@ -109,8 +110,87 @@
   </div>
 </div>
 
+<!-- Image Upload Modal -->
+<div class="modal fade" id="adminImageUploadModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow border-0" style="border-radius: 12px; background: var(--sidebar-bg); color: var(--text-primary);">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">Send Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(var(--theme-invert, 0));"></button>
+      </div>
+      <div class="modal-body text-center">
+        <input type="file" id="adminModalImageInput" accept="image/*" class="form-control mb-3" style="background: var(--input-bg); color: var(--text-primary); border-color: var(--border-color);">
+        <div id="adminImagePreviewContainer" class="mb-3 d-none">
+          <img id="adminImagePreview" src="" alt="Preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; object-fit: contain;">
+        </div>
+        <textarea id="adminImageCaption" class="form-control chat-input w-100" placeholder="Add a caption..." rows="1" style="background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--border-color);"></textarea>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn rounded-pill px-4" style="background: var(--hover-bg); color: var(--text-primary); border: none;" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn rounded-pill px-4" id="adminSendImageBtn" style="background: var(--accent-color); color: white; border: none;"><i class="bi bi-send-fill me-2"></i> Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox Modal -->
+<div class="modal fade" id="adminImageLightboxModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: min(90vw, 700px);">
+    <div class="modal-content border-0" style="background: transparent; box-shadow: none;">
+      <div class="modal-body p-0 text-center position-relative">
+        <!-- <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close" style="z-index:10; filter: drop-shadow(0 0 4px #000);"></button> -->
+        <img id="adminLightboxImage" src="" alt="Full Image" style="max-width: 100%; max-height: 85vh; border-radius: 10px; object-fit: contain;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Intern Details Modal -->
+<div class="modal fade" id="internDetailsModal" tabindex="-1" aria-labelledby="internDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0" style="border-radius: 16px; background: var(--sidebar-bg); color: var(--text-primary); border: 1px solid var(--border-color) !important; overflow: hidden;">
+      <div class="modal-header border-0 pb-0 pt-4 px-4 position-relative z-1">
+        <h5 class="modal-title fw-bold" id="internDetailsModalLabel" style="font-size: 1.25rem;">Intern Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(var(--theme-invert, 0)); opacity: 0.8;"></button>
+      </div>
+      <div class="modal-body text-center px-4 pb-4 pt-2">
+        <div class="position-relative d-inline-block mb-3">
+          <div style="position: absolute; inset: -4px; background: linear-gradient(135deg, var(--accent-color), #00d2ff); border-radius: 50%; z-index: 0; filter: blur(8px); opacity: 0.6;"></div>
+          <img id="internDetailsImg" src="" alt="Intern Image" class="rounded-circle position-relative z-1" style="width: 110px; height: 110px; object-fit: cover; border: 3px solid var(--sidebar-bg); background: var(--bg-color);">
+        </div>
+        <h4 id="internDetailsName" class="fw-bold mb-1" style="font-size: 1.3rem;"></h4>
+        <p class="mb-4" id="internDetailsId" style="color: var(--text-secondary); font-size: 0.85rem; font-family: monospace; letter-spacing: 1px;"></p>
+        
+        <div class="row text-start g-3" style="background: var(--bg-color); border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); margin: 0;">
+          <div class="col-12 col-sm-6">
+            <small class="d-block mb-1" style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Email</small>
+            <span id="internDetailsEmail" class="fw-medium d-block text-truncate" style="color: var(--text-primary); font-size: 0.95rem;" title=""></span>
+          </div>
+          <div class="col-12 col-sm-6">
+            <small class="d-block mb-1" style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Domain</small>
+            <span id="internDetailsDomain" class="fw-medium d-block" style="color: var(--text-primary); font-size: 0.95rem;"></span>
+          </div>
+          <div class="col-6">
+            <small class="d-block mb-1" style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Project Progress</small>
+            <span id="internDetailsProgress" class="fw-bold" style="color: var(--accent-color); font-size: 1rem;"></span>
+          </div>
+          <div class="col-6">
+            <small class="d-block mb-1" style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Quiz Score</small>
+            <span id="internDetailsQuizScore" class="fw-bold" style="color: var(--text-primary); font-size: 1rem;"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 pt-0 px-4 pb-4">
+        <button type="button" class="btn rounded-pill px-4 w-100 fw-medium" style="background: var(--hover-bg); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 0; transition: all 0.2s;" data-bs-dismiss="modal" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='var(--hover-bg)'">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Socket.io Script -->
+<script src="/socket.io/socket.io.js"></script>
 <!-- Chat Logic Script -->
 <script src="/js/supportCenter.js"></script>
 </body>
