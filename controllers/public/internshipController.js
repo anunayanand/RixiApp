@@ -175,6 +175,10 @@ exports.createOrder = asyncHandler(async (req, res) => {
   }
 
   // Create registration with profile image
+  const now = new Date();
+  const formattedDate = now.toISOString().replace(/[-:T.Z]/g, '').slice(0, 14);
+  const receipt_number = `${domain.trim().substring(0, 3).toUpperCase()}${formattedDate}`;
+
   const newReg = new NewRegistration({
     name: sanitizedName,
     email: sanitizedEmail,
@@ -189,6 +193,7 @@ exports.createOrder = asyncHandler(async (req, res) => {
     referral_code: referral_code ? referral_code.trim() : "",
     payID: "",
     order_id: orderId,
+    receipt_number: receipt_number,
     terms: terms === "on",
     profile_image_url: profileImageUrl,
     profile_image_public_id: profileImagePublicId,

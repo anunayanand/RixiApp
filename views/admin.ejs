@@ -2818,33 +2818,36 @@
       </div>
     </div>
 
-    <!-- Password Modal (Force Change) -->
-    <% if (showPasswordPopup) { %>
-      <div class="modal fade" id="passwordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content shadow-lg border-primary">
-            <div class="modal-header bg-primary text-white">
-              <h5 class="modal-title">Security Update Required</h5>
-            </div>
-            <div class="modal-body">
+    <!-- Password Modal (Force Change / Manual Change) -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" <%= showPasswordPopup ? 'data-bs-backdrop="static" data-bs-keyboard="false"' : '' %>>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-primary">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title"><%= showPasswordPopup ? 'Security Update Required' : 'Change Password' %></h5>
+            <% if (!showPasswordPopup) { %>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <% } %>
+          </div>
+          <div class="modal-body">
+            <% if (showPasswordPopup) { %>
               <div class="alert alert-info small"><i class="bi bi-shield-lock me-1"></i> Please update your password to
                 continue.</div>
-              <form action="/intern/change-password" method="POST">
-                <div class="mb-3">
-                  <label class="form-label">New Password</label>
-                  <input type="password" name="newPassword" class="form-control" required minlength="6">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Confirm Password</label>
-                  <input type="password" name="confirmPassword" class="form-control" required minlength="6">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Update Password</button>
-              </form>
-            </div>
+            <% } %>
+            <form action="/intern/change-password" method="POST">
+              <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" name="newPassword" class="form-control" required minlength="6">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirmPassword" class="form-control" required minlength="6">
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Update Password</button>
+            </form>
           </div>
         </div>
       </div>
-      <% } %>
+    </div>
 
         <!-- Close Ticket Modal -->
         <div class="modal fade" id="closeTicketModal" tabindex="-1" aria-labelledby="closeTicketModalLabel"

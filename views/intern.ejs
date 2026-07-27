@@ -1031,7 +1031,30 @@
               </div>
             </div>
 
-            <!-- Feedback Form -->
+            <!-- Payment Receipt -->
+            <div class="col-12 col-xl-6">
+              <div class="id-doc-card">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="id-doc-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="bi bi-receipt"></i></div>
+                  <div>
+                    <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Payment Receipt</h5>
+                    <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Your internship application payment receipt.</p>
+                  </div>
+                </div>
+                <% if (typeof hasReceipt !== 'undefined' && hasReceipt) { %>
+                  <a href="<%= downloadReceiptUrl %>" target="_blank"
+                    class="btn btn-outline-primary-custom rounded-circle ">
+                    <i class="bi bi-download"></i>
+                  </a>
+                <% } else { %>
+                  <button type="button" class="btn btn-outline-primary-custom rounded-circle"
+                    onclick="showToast('Your internship receipt is not available yet.', 'warning')">
+                    <i class="bi bi-download"></i>
+                  </button>
+                <% } %>
+              </div>
+            </div>
+
             <% if (progress===100) { %>
               <div class="col-12 col-xl-6">
                 <div class="id-doc-card"
@@ -1100,6 +1123,24 @@
                                             <% } %>
                   </div>
                 </div>
+                <!-- Letter Of Recommendation-->
+                <% if(intern.letter_of_recommendation_link){ %>
+            <div class="col-12 col-xl-6">
+              <div class="id-doc-card">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="id-doc-icon"><i class="bi bi-file-earmark-person"></i></div>
+                  <div>
+                    <h5 class="fw-bold mb-1" style="color: var(--text-primary);">Letter of Recommendation</h5>
+                    <p class="mb-0 text-secondary" style="font-size: 0.85rem;">Official Letter of Recommendation document.</p>
+                  </div>
+                </div>
+                <a href="<%= intern.letter_of_recommendation_link %>" target="_blank"
+                  class="btn btn-outline-primary-custom rounded-circle ">
+                  <i class="bi bi-download"></i>
+                </a>
+              </div>
+            </div>
+                <% }%>
 
           </div>
         </section>

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/User");
+const Admin = require("../../models/Admin");
+const SuperAdmin = require("../../models/SuperAdmin");
 const Ambassador = require("../../models/Ambassador");
 const authRole = require("../../middleware/authRole");
 const multer = require("multer");
@@ -19,21 +21,29 @@ const upload = multer({ storage });
 d = multer({ storage });
 
 /* -----------------------------------
-   🔸 INTERN PROFILE IMAGE UPDATE
+   🔸 USER PROFILE IMAGE UPDATE (Intern, Admin, SuperAdmin)
 ----------------------------------- */
 router.post("/update-image", authRole(['intern','superAdmin','admin']), upload.single("image"), async (req, res) => {
   try {
-    const intern = await User.findById(req.session.user);
-    if (!intern) {
-      req.flash("error", "Intern not found");
+    let userRecord = await User.findById(req.session.user);
+    let role = "intern";
+    
+    if (!userRecord) {
+      userRecord = await Admin.findById(req.session.user);
+      if (userRecord) role = "admin";
+    }
+    
+    if (!userRecord) {
+      userRecord = await SuperAdmin.findById(req.session.user);
+      if (userRecord) role = "superAdmin";
+    }
+
+    if (!userRecord) {
+      req.flash("error", "User not found");
       return res.redirect("/login");
     }
     
-    
-    let redirectUrl = "/";
-    if (intern.role === "intern") redirectUrl = "/intern";
-    else if (intern.role === "admin") redirectUrl = "/admin";
-    else if (intern.role === "superAdmin") redirectUrl = "/superAdmin";
+    let redirectUrl = `/${role}`;
 
     if (!req.file) {
       if (req.xhr || req.headers.accept?.includes('application/json')) {
@@ -44,21 +54,21 @@ router.post("/update-image", authRole(['intern','superAdmin','admin']), upload.s
     }
 
     // Delete old image from Cloudinary (if exists)
-    if (intern.img_public_id) {
+    if (userRecord.img_public_id) {
       try {
-        await cloudinary.uploader.destroy(intern.img_public_id);
+        await cloudinary.uploader.destroy(userRecord.img_public_id);
       } catch (err) {
-        console.error("⚠️ Error deleting old intern image:", err);
+        console.error("⚠️ Error deleting old user image:", err);
       }
     }
 
     // Save new image info
-    intern.img_url = req.file.path;
-    intern.img_public_id = req.file.filename;
-    await intern.save();
+    userRecord.img_url = req.file.path;
+    userRecord.img_public_id = req.file.filename;
+    await userRecord.save();
 
     if (req.xhr || req.headers.accept?.includes('application/json')) {
-      return res.json({ success: true, message: "Profile picture updated successfully!", img_url: intern.img_url });
+      return res.json({ success: true, message: "Profile picture updated successfully!", img_url: userRecord.img_url });
     }
 
     req.flash("success", "Profile picture updated successfully!");

@@ -400,7 +400,7 @@ async function generateReceiptPDF(data) {
       currentY += 25;
 
       const txFields = [
-        { label: "Receipt Number", value: "REC-" + (data.order_id ? data.order_id.substring(data.order_id.length - 8) : "00000000") },
+        { label: "Receipt Number", value: data.receipt_number || "REC-" + (data.order_id ? data.order_id.substring(data.order_id.length - 8) : "00000000") },
         { label: "Order ID", value: data.order_id || "N/A" },
         { label: "Payment ID", value: data.payID || "N/A" },
         { label: "Amount Paid", value: "Rs. " + (data.final_amount || data.amount || "0")},

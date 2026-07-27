@@ -64,6 +64,7 @@ exports.updateInternQuizSchema = z.object({
     assignmentScore: z.string().optional().or(z.number().optional()),
     certificate_id: z.string().optional(),
     certificate_link: z.string().optional().or(z.literal("")),
+    letter_of_recommendation_link: z.string().optional().or(z.literal("")),
     starting_date: z.string().optional(),
     completion_date: z.string().optional(),
   })

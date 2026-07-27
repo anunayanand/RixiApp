@@ -9,4 +9,6 @@ router.post('/intern/lecture/:id/progress', authRole('intern'), internController
 
 router.post('/intern/redeem', authRole('intern'), internController.redeemReward);
 
+router.get('/intern/download-receipt', authRole('intern'), internController.downloadReceipt);
+
 module.exports = router;

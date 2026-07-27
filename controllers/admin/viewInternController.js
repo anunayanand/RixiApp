@@ -1,6 +1,8 @@
 const User = require("../../models/User");
 const Admin = require("../../models/Admin");
 const Project = require("../../models/Project");
+const NewRegistration = require("../../models/NewRegistration");
+const { generateReceiptPDF } = require("../../services/documents/pdfGenerator");
 const asyncHandler = require("../../utils/asyncHandler");
 
 exports.viewIntern = asyncHandler(async (req, res) => {
@@ -70,6 +72,36 @@ exports.viewIntern = asyncHandler(async (req, res) => {
   }
   const str_date = formatWithOrdinal(intern.starting_date);
 
+  // Check if receipt exists
+  const receiptRecord = await NewRegistration.findOne({ email: intern.email, payment_status: "SUCCESS" });
+  const hasReceipt = !!receiptRecord;
+  const downloadReceiptUrl = `/admin/intern/${intern._id}/download-receipt`;
+
   req.flash('info', `Viewing Intern: ${intern.name}`);
-  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,unreadCount,startingDate: str_date, allLectures, lectureProgress });
+  res.render("intern", { intern, projects,progress,attendanceRate,mentorName,totalProjects,assignedMeetings,showPasswordPopup,assignedQuizzes,unreadCount,startingDate: str_date, allLectures, lectureProgress, hasReceipt, downloadReceiptUrl });
+});
+
+exports.downloadInternReceipt = asyncHandler(async (req, res) => {
+  const intern = await User.findById(req.params.internId);
+  if (!intern || intern.role !== "intern") {
+    return res.status(404).send("Intern not found.");
+  }
+
+  const registration = await NewRegistration.findOne({
+    email: intern.email,
+    payment_status: "SUCCESS"
+  }).sort({ createdAt: -1 });
+
+  if (!registration) {
+    return res.status(404).send("No payment receipt found for this intern.");
+  }
+
+  const pdfBuffer = await generateReceiptPDF(registration);
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="RixiLab_Receipt_${registration.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf"`
+  );
+  res.send(pdfBuffer);
 });

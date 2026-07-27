@@ -19,6 +19,7 @@ const newRegistrationSchema = new mongoose.Schema({
   referral_code: { type: String, default: "" },
   payID: { type: String, default: "" },
   order_id: { type: String, default: "" },
+  receipt_number: { type: String, unique: true, sparse: true },
   terms: { type: Boolean, required: true },
   status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
   isCreated: { type: Boolean, default: false },

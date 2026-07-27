@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   referal_code: { type: String, default: "" },
   certificate_link: { type: String, default: "" },
+  letter_of_recommendation_link: { type: String, default: "" },
   offer_letter: { type: String, default: "" },
   img_url: {
     type: String,

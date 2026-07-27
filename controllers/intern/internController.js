@@ -3,6 +3,8 @@ const Admin = require("../../models/Admin");
 const Project = require("../../models/Project");
 const Notification = require("../../models/Notification");
 const RedemptionRequest = require("../../models/RedemptionRequest");
+const NewRegistration = require("../../models/NewRegistration");
+const { generateReceiptPDF } = require("../../services/documents/pdfGenerator");
 const asyncHandler = require('../../utils/asyncHandler');
 
 exports.getInternDashboard = asyncHandler(async (req, res, next) => {
@@ -101,6 +103,11 @@ exports.getInternDashboard = asyncHandler(async (req, res, next) => {
   // Fetch the intern's redemption requests
   const redemptionRequests = await RedemptionRequest.find({ internId: intern._id }).sort({ createdAt: -1 });
 
+  // Check if receipt exists
+  const receiptRecord = await NewRegistration.findOne({ email: intern.email, payment_status: "SUCCESS" });
+  const hasReceipt = !!receiptRecord;
+  const downloadReceiptUrl = "/intern/download-receipt";
+
   res.render("intern", {
     intern,
     projects,
@@ -116,7 +123,9 @@ exports.getInternDashboard = asyncHandler(async (req, res, next) => {
     allLectures,
     lectureProgress,
     referredInterns,
-    redemptionRequests
+    redemptionRequests,
+    hasReceipt,
+    downloadReceiptUrl
   });
 });
 
@@ -309,4 +318,30 @@ exports.redeemReward = asyncHandler(async (req, res) => {
   await request.save();
 
   res.json({ success: true, message: `Successfully redeemed ${rewardType}!`, newBalance: intern.points });
+});
+
+exports.downloadReceipt = asyncHandler(async (req, res) => {
+  const intern = await User.findById(req.session.user);
+  if (!intern) {
+    return res.status(404).send("Intern not found.");
+  }
+
+  // Find the registration record matching the intern's email
+  const registration = await NewRegistration.findOne({
+    email: intern.email,
+    payment_status: "SUCCESS"
+  }).sort({ createdAt: -1 }); // Latest successful registration
+
+  if (!registration) {
+    return res.status(404).send("No payment receipt found for your account.");
+  }
+
+  const pdfBuffer = await generateReceiptPDF(registration);
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="RixiLab_Receipt_${registration.name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf"`
+  );
+  res.send(pdfBuffer);
 });

@@ -8,7 +8,7 @@ exports.updateIntern = asyncHandler(async (req, res) => {
     attemptCount,
     assignmentScore,
     certificate_id,
-    certificate_link,
+    letter_of_recommendation_link,
     starting_date,
     completion_date
   } = req.body;
@@ -35,8 +35,8 @@ exports.updateIntern = asyncHandler(async (req, res) => {
     user.certificate_id = certificate_id;
   }
 
-  if (certificate_link !== undefined ) {
-    user.certificate_link = certificate_link;
+  if (letter_of_recommendation_link !== undefined) {
+    user.letter_of_recommendation_link = letter_of_recommendation_link;
   }
 
   if (starting_date !== undefined && starting_date !== "") {
