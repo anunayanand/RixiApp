@@ -912,6 +912,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function approveReject(id, action, btn) {
     const originalHTML = btn.innerHTML;
+    
+    // Check if details are downloaded
+    const row = btn.closest(".intern-row") || document.getElementById('reg-row-' + id);
+    let modalEl = btn.closest(".modal");
+    let isDownloaded = false;
+    
+    if (row && row.getAttribute('data-downloaded') === 'true') {
+        isDownloaded = true;
+    }
+    if (modalEl && modalEl.getAttribute('data-downloaded') === 'true') {
+        isDownloaded = true;
+    }
+    
+    if (!isDownloaded) {
+        // Hide the current modal if any
+        if (modalEl) {
+            const mInstance = bootstrap.Modal.getInstance(modalEl);
+            if (mInstance) mInstance.hide();
+        }
+        
+        // Update the download link in the warning modal
+        const downloadBtn = document.getElementById('downloadAndProceedBtn');
+        if (downloadBtn) {
+            downloadBtn.onclick = function() {
+                downloadRegistrationPDF(id, ''); 
+                setTimeout(() => { 
+                    const m = bootstrap.Modal.getInstance(document.getElementById('downloadWarningModal')); 
+                    if(m) m.hide(); 
+                }, 500);
+            };
+        }
+        
+        const warningModal = new bootstrap.Modal(document.getElementById('downloadWarningModal'));
+        warningModal.show();
+        return;
+    }
 
     // Show spinner
     btn.innerHTML = `
@@ -920,8 +956,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.disabled = true;
 
     // Disable the other button in the same row
-    const row = btn.closest("tr");
-    row.querySelectorAll("button").forEach(b => b.disabled = true);
+    if (row) {
+      row.querySelectorAll("button").forEach(b => b.disabled = true);
+    }
 
     fetch(`/superAdmin/registration/${id}/${action}`, {
       method: "POST",

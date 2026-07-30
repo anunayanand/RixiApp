@@ -6,8 +6,9 @@ exports.createAdminSchema = z.object({
     email: z.string().email("Invalid email format"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     emp_id: z.string().min(1, "Employee ID is required"),
-    phone: z.string().min(10, "Phone must be at least 10 characters").optional(),
+    phone: z.string().min(10, "Phone must be at least 10 characters"),
     domain: z.string().min(1, "Domain is required"),
+    designation: z.string().min(1, "Designation is required"),
   })
 });
 

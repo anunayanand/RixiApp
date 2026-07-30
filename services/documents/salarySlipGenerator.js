@@ -312,29 +312,29 @@ function generatePFSlip(admin, slipIndex, res) {
   const l1 = startX + 15; const l2 = startX + 115;
   const r1 = midX + 10; const r2 = midX + 100;
 
-  doc.font("Montserrat").fontSize(9).fillColor(secondaryColor);
+  doc.font("Montserrat").fontSize(9).fillColor(primaryColor);
   doc.text("Employee Name:", l1, ey);
   doc.fillColor(primaryColor).font("Montserrat-Bold").text(admin.name, l2, ey);
   
-  doc.font("Montserrat").fillColor(secondaryColor);
+  doc.font("Montserrat").fillColor(primaryColor);
   doc.text("Employee ID:", r1, ey);
   doc.fillColor(primaryColor).font("Montserrat-Bold").text(admin.emp_id || 'RL250201', r2, ey);
   
   ey += 18;
-  doc.font("Montserrat").fillColor(secondaryColor);
+  doc.font("Montserrat").fillColor(primaryColor);
   doc.text("Email ID:", l1, ey);
   doc.fillColor(primaryColor).text(admin.email, l2, ey);
   
-  doc.font("Montserrat").fillColor(secondaryColor);
+  doc.font("Montserrat").fillColor(primaryColor);
   doc.text("Designation:", r1, ey);
   doc.fillColor(primaryColor).text(admin.designation, r2, ey);
   
   ey += 18;
-  doc.font("Montserrat").fillColor(secondaryColor);
+  doc.font("Montserrat").fillColor(primaryColor);
   doc.text("Department:", l1, ey);
   doc.fillColor(primaryColor).text('Administration', l2, ey);
   
-  doc.font("Montserrat").fillColor(secondaryColor);
+  doc.font("Montserrat").fillColor(primaryColor);
   doc.text("Request Date:", r1, ey);
   doc.fillColor(primaryColor).text(formatDateForTable(slip.requestedAt), r2, ey);
 

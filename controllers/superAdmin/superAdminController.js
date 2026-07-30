@@ -18,7 +18,7 @@ exports.renderDashboard = asyncHandler(async (req, res, next) => {
   const admins = await Admin.find({});
   const ambassadors = await Ambassador.find({});
   const superAdmin = await SuperAdmin.findOne({});
-  const registrations = await NewRegistration.find({ status: "pending" }).sort({ createdAt: -1 });
+  const registrations = await NewRegistration.find({}).sort({ createdAt: -1 });
   const feedbacks = await Feedback.find({}).populate("userId", "name email domain batch_no duration img_url intern_id").sort({ submittedAt: -1 });
   
   if (!superAdmin) {
@@ -481,6 +481,11 @@ exports.downloadReceipt = asyncHandler(async (req, res) => {
   if (!registration) {
     return res.status(404).send("Registration not found");
   }
+  
+  // Mark details as downloaded
+  registration.isDetailsDownloaded = true;
+  await registration.save();
+
   const pdfBuffer = await generateReceiptPDF(registration);
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader(

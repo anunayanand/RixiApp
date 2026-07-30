@@ -22,6 +22,7 @@ const newRegistrationSchema = new mongoose.Schema({
   receipt_number: { type: String, unique: true, sparse: true },
   terms: { type: Boolean, required: true },
   status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
+  isDetailsDownloaded: { type: Boolean, default: false },
   isCreated: { type: Boolean, default: false },
   approvedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   approvedAt: { type: Date },
