@@ -2166,25 +2166,30 @@
           <div style="overflow: auto;">
             <div id="feedbackPngCard" style="width: 540px; height: 675px; position: relative; font-family: 'Montserrat', sans-serif; overflow: hidden; margin: 0 auto; box-shadow: 0 8px 32px rgba(0,0,0,0.18);">
               <!-- Template Background -->
-              <img src="/templet/Testimonial_Template.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;" crossorigin="anonymous">
+              <img src="/templet/Testimonial Template.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;" crossorigin="anonymous">
               
               <!-- Content Overlays -->
               <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;">
-                <!-- Name (Top Right) -->
-                <div id="previewName" style="position: absolute; top: 12%; right: 9%; width: 50%; text-align: right; font-size: 35px; font-weight: 700; color: #ff6600; text-transform: uppercase; line-height: 1.1 !important;"></div>
-                
-                <!-- Avatar (Left overlapping orange card) -->
-                <div style="position: absolute; top: 17%; left: 10%; width: 155px; height: 155px; border-radius: 50%; overflow: hidden;">
+
+                <!-- Avatar — sits inside the grey circle (top-left area) -->
+                <!-- Grey circle center is approx at left:23%, top:30% of the 540x675 card -->
+                <div style="position: absolute; top: 16%; left: 9%; width: 170px; height: 170px; border-radius: 50%; overflow: hidden;">
                   <img id="previewAvatar" src="" style="width: 100%; height: 100%; object-fit: cover;" crossorigin="anonymous" onerror="this.style.display='none'">
                 </div>
-                
-                <!-- Feedback Text (Centered in orange box) -->
-                <div style="position: absolute; top: 39%; left: 12%; width: 76%; height: 215px; display: flex; align-items: center; justify-content: center;">
-                  <div id="previewFeedback" style="color: #ffffff; font-size: 19px; font-weight: 400; text-align: center; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical;"></div>
+
+                <!-- Name — right of circle, above the orange bubble -->
+                <!-- approx top: 20%, starts after circle ~38% left -->
+                <div id="previewName" style="position: absolute; top: 20%; left: 40%; right: 6%; text-align: left; font-size: 26px; font-weight: 800; color: #1a1a1a; text-transform: uppercase; line-height: 1.15; word-break: break-word;"></div>
+
+                <!-- Feedback Text — inside the orange speech bubble -->
+                <!-- Orange box approx: top 32%, bottom 73%, left 13%, right 93% -->
+                <div style="position: absolute; top: 33%; left: 13%; width: 78%; height: 39%; display: flex; align-items: center; justify-content: center; padding: 10px;">
+                  <div id="previewFeedback" style="color: #ffffff; font-size: 17px; font-weight: 500; text-align: center; line-height: 1.45; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical;"></div>
                 </div>
-                
-                <!-- Stars (Bottom Left) -->
-                <div id="previewStars" style="position: absolute; top: 78%; left: 10%; display: flex; gap: 8px;"></div>
+
+                <!-- Stars — bottom-left, just below the orange box -->
+                <div id="previewStars" style="position: absolute; top: 78%; left: 8%; display: flex; gap: 6px;"></div>
+
               </div>
             </div>
           </div>
@@ -2209,10 +2214,10 @@
     </div>
   </div>
 
-      <!-- Desktop Table (md+) -->
-      <div class="intern-table-wrap d-none d-md-block" style="max-height: 75vh; overflow-y: auto;">
+      <!-- Responsive Table -->
+      <div class="intern-table-wrap" style="max-height: 75vh; overflow-y: auto;">
         <table class="table align-middle mb-0">
-          <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
+          <thead class="d-none d-md-table-header-group" style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
             <tr>
               <th width="56">Photo</th>
               <th>Name & Contact</th>
@@ -2223,8 +2228,10 @@
             </tr>
           </thead>
           <tbody id="registrationTable">
-            <% registrations.filter(r => r.status === 'pending').forEach(reg => { %>
-              <tr class="intern-row" id="reg-row-<%= reg._id %>" data-downloaded="<%= reg.isDetailsDownloaded %>">
+            <% const pendingRegs = registrations.filter(r => r.status === 'pending'); %>
+            <% if (pendingRegs.length > 0) { %>
+              <% pendingRegs.forEach(reg => { %>
+              <tr class="intern-row d-none d-md-table-row" id="reg-row-<%= reg._id %>" data-downloaded="<%= reg.isDetailsDownloaded %>">
                 <td>
                   <div class="intern-avatar-wrap">
                     <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="intern-avatar">
@@ -2523,6 +2530,14 @@
 
               </div>
             <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="6" class="text-center text-muted py-5">
+                  <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                  No pending registrations found.
+                </td>
+              </tr>
+            <% } %>
           </tbody>
         </table>
       </div>
@@ -2535,9 +2550,9 @@
         </div>
       </div>
       
-      <div class="intern-table-wrap d-none d-md-block" style="max-height: 75vh; overflow-y: auto;">
+      <div class="intern-table-wrap" style="max-height: 75vh; overflow-y: auto;">
         <table class="table align-middle mb-0">
-          <thead style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
+          <thead class="d-none d-md-table-header-group" style="position: sticky; top: 0; z-index: 2; background-color: #fff;">
             <tr>
               <th width="56">Photo</th>
               <th>Name & Contact</th>
@@ -2548,8 +2563,10 @@
             </tr>
           </thead>
           <tbody>
-            <% registrations.filter(r => r.status !== 'pending').forEach(reg => { %>
-              <tr class="intern-row">
+            <% const pastRegs = registrations.filter(r => r.status !== 'pending'); %>
+            <% if (pastRegs.length > 0) { %>
+              <% pastRegs.forEach(reg => { %>
+                <tr class="intern-row d-none d-md-table-row">
                 <td>
                   <div class="intern-avatar-wrap">
                     <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="intern-avatar">
@@ -2572,14 +2589,56 @@
                   </button>
                 </td>
               </tr>
+              <!-- Mobile View for Past Registrations -->
+              <tr class="d-md-none border-0 p-0 m-0">
+                <td colspan="6" class="p-0 border-0">
+                  <div class="intern-card-grid d-md-none" style="padding: 1rem 0;">
+                    <div class="intern-card intern-row">
+                      <div class="intern-card-top">
+                        <div class="intern-avatar-wrap">
+                          <img src="<%= reg.profile_image_url || '/img/default-avatar.png' %>" alt="<%= reg.name %>" class="intern-avatar intern-avatar-lg">
+                        </div>
+                        <div class="intern-card-info">
+                          <div class="fw-bold" style="text-align: left;"><%= reg.name %></div>
+                          <div class="small text-muted" style="text-align: left;"><%= reg.email %></div>
+                        </div>
+                      </div>
+                      
+                      <span class="batch-chip batch-chip-absolute d-inline-block"><%= reg.duration %>W</span>
+
+                      <div class="intern-card-meta mb-2">
+                        <span class="badge bg-info text-dark rounded-pill"><%= reg.domain %></span>
+                      </div>
+                      <div class="intern-card-meta mb-2 d-flex justify-content-between align-items-center">
+                        <div class="small text-muted">Status:</div>
+                        <div>
+                          <span class="badge bg-<%= reg.status === 'approved' ? 'success' : 'danger' %>">
+                            <%= reg.status %>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="intern-card-actions">
+                        <button class="icon-btn flex-grow-1 justify-content-center text-white" style="background-color: #ff6600; border-color: #ff6600;" onclick="downloadRegistrationPDF('<%= reg._id %>', '<%= reg.name %>')">
+                          <i class="bi bi-download me-1"></i>Download App
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
             <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="6" class="text-center text-muted py-5">
+                  <i class="bi bi-clock-history fs-1 d-block mb-2 text-secondary"></i>
+                  No past registrations found.
+                </td>
+              </tr>
+            <% } %>
           </tbody>
         </table>
       </div>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </section>
 
 
@@ -3563,7 +3622,7 @@ aria-labelledby="passwordModalLabel" aria-hidden="true"
       starsEl.innerHTML = '';
       for (let i = 1; i <= 5; i++) {
         const star = document.createElement('span');
-        star.style.cssText = `font-size:32px; line-height:1; color: ${i <= rating ? '#ffcc00' : '#ddd'}; text-shadow: 0 1px 2px rgba(0,0,0,0.1);`;
+        star.style.cssText = `font-size:28px; line-height:1; color: ${i <= rating ? '#ffcc00' : 'rgba(255,255,255,0.3)'}; text-shadow: 0 1px 3px rgba(0,0,0,0.2);`;
         star.textContent = '★';
         starsEl.appendChild(star);
       }
